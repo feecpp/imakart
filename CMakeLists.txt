@@ -16,4 +16,5 @@ add_subdirectory(glimac)
 
 set(ALL_LIBRARIES glew ${OPENGL_LIBRARIES} ${SDL_LIBRARY} glimac)
 
-add_subdirectory(shaders)
+add_subdirectory(application)
+
