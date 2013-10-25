@@ -1,6 +1,6 @@
 #include "Button.hpp"
 
-Button::Button(){
+Button2D::Button2D(){
 	vertices[0] = -0.5f;
 	vertices[1] = -0.5f;
 	vertices[2] = 0.5f;
@@ -11,7 +11,7 @@ Button::Button(){
 	vertices[7] = 0.5f;
 }
 
-Button::Button(const float x_bottom, const float y_left, const float width, const float height){
+Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height){
 	vertices[0] = x_bottom;
 	vertices[1] = y_left;
 	vertices[2] = x_bottom + width;
@@ -22,6 +22,6 @@ Button::Button(const float x_bottom, const float y_left, const float width, cons
 	vertices[7] = y_left + height;
 }
 
-const GLfloat* Button::getVertices() const{
+const GLfloat* Button2D::getVertices() const{
 	return vertices;
 }

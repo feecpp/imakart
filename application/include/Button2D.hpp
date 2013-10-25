@@ -4,10 +4,10 @@
 #include "Vertex2DRGB.hpp"
 #include <glm/glm.hpp>
 
-class Button{
+class Button2D{
 public:
-	Button(); // Unit square
-	Button(const float x_bottom, const float y_left, const float width, const float height);
+	Button2D(); // Unit square
+	Button2D(const float x_bottom, const float y_left, const float width, const float height);
 	
 	const GLfloat* getVertices() const;
 

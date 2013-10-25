@@ -32,7 +32,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	Button jouer(-1,-1,0.5,0.2);
+	Button2D jouer(-1,-1,0.5,0.2);
 	
 	// Initialisation VBO
 	glimac::LowLevelVBO vbo(jouer.getVertices(), 8 * sizeof(GLfloat), GL_STATIC_DRAW, GL_ARRAY_BUFFER);
