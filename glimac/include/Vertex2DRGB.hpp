@@ -1,6 +1,8 @@
 #ifndef VERTEX2DRGB_HPP
 #define VERTEX2DRGB_HPP
 
+#include <GL/gl.h>
+
 namespace glimac
 {
 
@@ -9,7 +11,8 @@ struct Vertex2D
   GLfloat x, y;
 
   Vertex2D(GLfloat x, GLfloat y):
-    x(x), y(y) {}
+    x(x), y(y) {
+  }
 
 };
 
