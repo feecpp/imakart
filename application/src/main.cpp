@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "VBO.hpp"
 #include "VAO.hpp"
-#include "Button.hpp"
+#include "Button2D.hpp"
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;

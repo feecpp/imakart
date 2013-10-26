@@ -3,6 +3,6 @@
 ButtonLogic::ButtonLogic(const char* name):
 	name(name), state(-1) {};
 
-ButtonLogic::changeState(){
+void ButtonLogic::changeState(){
 	state = -state;
 }

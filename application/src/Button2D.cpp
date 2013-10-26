@@ -1,4 +1,4 @@
-#include "Button.hpp"
+#include "Button2D.hpp"
 
 Button2D::Button2D(){
 	vertices[0] = -0.5f;
