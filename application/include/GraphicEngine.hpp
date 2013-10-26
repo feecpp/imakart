@@ -8,6 +8,7 @@ class Object3D;
 
 /**
  * @brief Les options graphiques bas niveau
+ * (pas forcément la meilleure manière de faire)
  */
 struct GraphicSettings
 {
