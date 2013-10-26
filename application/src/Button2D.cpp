@@ -1,5 +1,8 @@
 #include "Button2D.hpp"
+<<<<<<< HEAD
 #include <iostream>
+=======
+>>>>>>> 2c7adfefc05d84bf0a7359b7ecba3c0424d9aafc
 
 Button2D::Button2D(){
 	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), glm::vec3(0.f,1.f,0.f));
