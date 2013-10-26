@@ -12,12 +12,17 @@ class Object3D;
  */
 struct GraphicSettings
 {
-  Uint32 FPS = 30;
-  Uint32 FRAME_DURATION = 1000.f / FPS;
-
-  Uint32 WINDOW_WIDTH = 800;
-  Uint32 WINDOW_HEIGHT = 600;
-  Uint32 WINDOW_BPP = 32;
+  GraphicSettings()
+    : FPS(30), WINDOW_WIDTH(800), WINDOW_HEIGHT(600), WINDOW_BPP(32)
+  {
+    FRAME_DURATION = 1000.f / FPS;
+  }
+  
+  Uint32 FPS;
+  Uint32 FRAME_DURATION;
+  Uint32 WINDOW_WIDTH;
+  Uint32 WINDOW_HEIGHT;
+  Uint32 WINDOW_BPP;
 };
 
 /**
