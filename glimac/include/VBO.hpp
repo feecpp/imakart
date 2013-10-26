@@ -31,12 +31,15 @@ protected:
 class LowLevelVBO : public VBO
 {
 public:
+  LowLevelVBO(GLenum target = GL_ARRAY_BUFFER); //default constructor
   LowLevelVBO(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage, GLenum target = GL_ARRAY_BUFFER);
   ~LowLevelVBO();
 
   virtual void bind() const;
   virtual void unbind() const;
 
+  void setBufferData(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage);
+  
   LowLevelVBO(LowLevelVBO&& rvalue)
   {
     vboId = rvalue.vboId;

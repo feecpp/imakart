@@ -8,7 +8,7 @@ public:
 	
 	ButtonLogic(const char* name);
 	
-	changeState();
+	void changeState();
 };
 
 #endif // BUTTONLOGIC_HPP

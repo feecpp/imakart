@@ -2,6 +2,7 @@
 #define VERTEX2DRGB_HPP
 
 #include <GL/gl.h>
+#include <glm/glm.hpp>
 
 namespace glimac
 {
@@ -18,11 +19,19 @@ struct Vertex2D
 
 struct Vertex2DRGB
 {
-  GLfloat x, y;
-  GLfloat r, g, b;
+  glm::vec2 position;
+  glm::vec3 color;
 
-  Vertex2DRGB(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b):
-    x(x), y(y), r(r), g(g), b(b) {
+  Vertex2DRGB():
+	position(glm::vec2(0)), color(glm::vec3(0)){
+  }
+  
+  Vertex2DRGB(const glm::vec2 position, const glm::vec3 color):
+    position(position), color(color) {
+  }
+  
+  Vertex2DRGB(const float x, const float y, const float r, const float g, const float b):
+    position(glm::vec2(x,y)), color(glm::vec3(r,g,b)) {
   }
 
 };

@@ -14,10 +14,8 @@ Shader::Shader(GLenum shaderType, const std::string& shaderSource)
 bool Shader::compile(std::string& logInfo) const
 {
   glCompileShader(shaderId);
-
-  GLint compileStatus;
+  GLint compileStatus = 1;
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
-
   GLint logLength = 0;
   glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
   char log[logLength];

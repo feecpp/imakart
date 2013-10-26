@@ -9,6 +9,9 @@ include_directories(${OPENGL_INCLUDE_DIR} ${SDL_INCLUDE_DIR})
 include_directories(third-party/glew-1.10.0/include)
 include_directories(third-party/glm)
 
+file(COPY application/shaders DESTINATION ./application)
+file(COPY application/shaders DESTINATION ./)
+
 add_definitions(-DGLEW_STATIC=1)
 add_definitions(-Wall)
 add_subdirectory(third-party/glew-1.10.0)

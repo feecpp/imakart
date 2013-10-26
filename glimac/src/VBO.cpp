@@ -4,6 +4,11 @@
 
 using namespace glimac;
 
+LowLevelVBO::LowLevelVBO(GLenum target)
+  : target(target){
+	glGenBuffers(1, &vboId);
+}
+
 LowLevelVBO::LowLevelVBO(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage, GLenum target)
   : target(target){
   glGenBuffers(1, &vboId);
@@ -17,6 +22,13 @@ LowLevelVBO::~LowLevelVBO()
 {
   std::cout << "Deleting LowLevelVBO " << vboId << std::endl;
   glDeleteBuffers(1, &vboId);
+  OpenGLDebugger::checkError();
+}
+
+void LowLevelVBO::setBufferData(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage){
+  bind();
+  glBufferData(target, dataSizeInBytes, data, usage);
+  unbind();
   OpenGLDebugger::checkError();
 }
 

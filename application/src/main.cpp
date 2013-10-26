@@ -4,7 +4,9 @@
 #include <cstdlib>
 #include "VBO.hpp"
 #include "VAO.hpp"
-#include "Button.hpp"
+#include "Button2D.hpp"
+#include "program.hpp"
+//#include "ShaderProgram.hpp"
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;
@@ -32,27 +34,23 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	Button2D jouer(-1,-1,0.5,0.2);
+	Button2D jouer(-0.5,-0.8,0.5,0.2);
+
+	// Load des shaders méthode JN
+	/*glimac::ShaderProgram program;
+	program.addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
+	program.addShader(GL_FRAGMENT_SHADER, "shaders/Color2d.fs.glsl");
+	std::string debug;
+	program.compileAndLinkShaders(debug);
+	std::cout << debug << std::endl;
+	program.useProgram();*/
 	
-	// Initialisation VBO
-	glimac::LowLevelVBO vbo(jouer.getVertices(), 8 * sizeof(GLfloat), GL_STATIC_DRAW, GL_ARRAY_BUFFER);
-
-	// Initialisation VAO
-	glimac::VAO vao;
-	// Binder le vao
-	vao.bind();
-
-	glEnableVertexAttribArray(0);
-	// Binder le vbo
-	vbo.bind();
+	// Load des shaders méthode Laurent Noel
+	glimac::Program program;
+	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
+	program.use();
 	
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (const GLvoid*) (0 * sizeof(GLfloat)));
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// Debinder le vao
-	glBindVertexArray(0);
-
+	
 	bool done = false;
 	while(!done) {
 		Uint32 tStart = SDL_GetTicks();
@@ -60,9 +58,7 @@ int main() {
 		// Rendering code goes here
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		vao.bind();
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-		glBindVertexArray(0);
+		jouer.draw();
 		// Application code goes here
 
 		SDL_Event e;

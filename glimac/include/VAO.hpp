@@ -19,6 +19,7 @@ public:
   void bind() const;
   void unbind() const;
 
+  GLuint getId() const;
   /*
    *These functions take care of VAO binding
    *unbinding

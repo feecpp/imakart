@@ -29,6 +29,10 @@ void VAO::unbind() const
   glBindVertexArray(0);
 }
 
+GLuint VAO::getId() const{
+	return vaoId;
+}
+
 void VAO::enableVertexAttribArray(GLuint index)
 {
   bind();
