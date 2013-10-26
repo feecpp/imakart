@@ -5,11 +5,8 @@
 #include "VBO.hpp"
 #include "VAO.hpp"
 #include "Button2D.hpp"
-<<<<<<< HEAD
 #include "program.hpp"
 //#include "ShaderProgram.hpp"
-=======
->>>>>>> 2c7adfefc05d84bf0a7359b7ecba3c0424d9aafc
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;
