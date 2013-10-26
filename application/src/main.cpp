@@ -6,6 +6,8 @@
 #include "VAO.hpp"
 #include "Button2D.hpp"
 #include "program.hpp"
+#include "Checkpoint.hpp"
+#include "Map.hpp"
 //#include "ShaderProgram.hpp"
 #include "Application.hpp"
 
@@ -56,6 +58,25 @@ int main() {
   glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
 	program.use();
+  
+  /* //Code pour tester la classe Map
+  Map map;
+  map.loadData("./maps/carte1.map"); //a voir si le chemin fonctionne aussi chez vous. Sous windows je ne peux pas prendre l'architecture telle qu'elle est sur GitHub
+
+  std::cout <<std::endl << "--- LOADING RECAP ---"<< std::endl;
+  std::cout <<"Name: " << map.getName() << std::endl;
+  std::cout << "width: " << map.getWidth() << std::endl;
+  std::cout << "height: " << map.getHeight() << std::endl;
+  std::cout << "altitude: " << map.getAltitude() << std::endl;
+
+  std::vector<Checkpoint> checkpoints = map.getCheckpoints();
+  for(unsigned int i =0; i< checkpoints.size(); ++i){
+       std::cout << "checkpoint n"<< i << " : (origin) x=" << checkpoints[i].getOrigin().x<< " y=" << checkpoints[i].getOrigin().y << " z=" << checkpoints[i].getOrigin().z << std::endl;
+  }
+
+  std::cout <<"Start is at : (origin) x=" << map.getStart().getOrigin().x << " y=" << map.getStart().getOrigin().y << " z=" << map.getStart().getOrigin().z << std::endl;
+  std::cout <<"If different, end is at : (origin) x=" << map.getEnd().getOrigin().x << " y=" << map.getEnd().getOrigin().y << " z=" << map.getEnd().getOrigin().z << std::endl;
+  std::cout << "Is it completed ? " << map.isCompleted() << std::endl;*/
 
 	
 	bool done = false;
