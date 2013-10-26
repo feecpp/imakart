@@ -7,6 +7,7 @@
 #include "Button2D.hpp"
 #include "program.hpp"
 //#include "ShaderProgram.hpp"
+#include "Application.hpp"
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;
@@ -16,6 +17,12 @@ static const Uint32 WINDOW_HEIGHT = 600;
 static const Uint32 WINDOW_BPP = 32;
 
 int main() {
+
+  Application app;
+  app.setupEverything();
+  app.startGame();
+  return EXIT_SUCCESS;
+
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
 		std::cerr << "Unable to initialize SDL" << std::endl;
 		return EXIT_FAILURE;
@@ -37,19 +44,19 @@ int main() {
 	Button2D jouer(-0.5,-0.8,0.5,0.2);
 
 	// Load des shaders méthode JN
-	/*glimac::ShaderProgram program;
+  /*glimac::ShaderProgram program;
 	program.addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
 	program.addShader(GL_FRAGMENT_SHADER, "shaders/Color2d.fs.glsl");
 	std::string debug;
 	program.compileAndLinkShaders(debug);
 	std::cout << debug << std::endl;
-	program.useProgram();*/
+  program.useProgram();*/
 	
 	// Load des shaders méthode Laurent Noel
-	glimac::Program program;
+  glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
 	program.use();
-	
+
 	
 	bool done = false;
 	while(!done) {

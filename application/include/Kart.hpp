@@ -3,7 +3,11 @@
 
 class Kart
 {
-  //TODO
+public:
+  void moveForward();
+  void moveBackward();
+  void moveRight();
+  void moveLeft();
 };
 
 #endif // KART_HPP
