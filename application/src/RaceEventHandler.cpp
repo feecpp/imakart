@@ -1,6 +1,6 @@
 #include "RaceEventHandler.hpp"
 
-RaceEventHandler::RaceEventHandler(Game* game)
+RaceEventHandler::RaceEventHandler(GameEngine* game)
   : game(game)
 {
 }

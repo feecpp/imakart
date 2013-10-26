@@ -1,28 +1,28 @@
-#include "Game.hpp"
+#include "GameEngine.hpp"
 
-Game::Game()
+GameEngine::GameEngine()
   : raceEventHandler(this){
   state = IN_MENU;
 }
 
-void Game::init()
+void GameEngine::init()
 {
   //Charger les données du jeu
 }
 
-void Game::update()
+void GameEngine::update()
 {
   //Quand il faudra gérer les IA...
 }
 
 
 
-void Game::quit()
+void GameEngine::quit()
 {
   //Quitter le jeu et désallouer les ressources
 }
 
-const EventHandler& Game::getHandler()
+const EventHandler& GameEngine::getHandler() const
 {
   //En fonction de l'état actuel du jeu, renvoyer le bon handler
   return raceEventHandler;

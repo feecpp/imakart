@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef GAMEENGINE_HPP
+#define GAMEENGINE_HPP
 
 #include "GameEnumerations.hpp"
 #include "RaceEventHandler.hpp"
@@ -9,10 +9,10 @@
  * @brief Classe principale d'Imakart
  * Gère le déroulement du jeu.
  */
-class Game
+class GameEngine
 {
 public:
-  Game();
+  GameEngine();
 
   void init();
   void update();
@@ -24,7 +24,7 @@ public:
   void setState(GameState newState)
     {state = newState;}
 
-  const EventHandler& getHandler();
+  const EventHandler& getHandler() const;
 
 private:
   GameState state;
@@ -33,4 +33,4 @@ private:
 
 };
 
-#endif // GAME_HPP
+#endif // GAMEENGINE_HPP

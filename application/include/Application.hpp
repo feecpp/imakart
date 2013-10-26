@@ -1,20 +1,23 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-#include "Game.hpp"
-#include "GameController.hpp"
+#include "GraphicEngine.hpp"
+
+class GameEngine;
 
 class Application
 {
-  void exec()
-  {
-    Game game;
-    GameController controller(game);
+public:
+  Application(GameEngine& gameEngine);
 
-    controller.setupEverything();
-    controller.startGame();
+  void setupEverything();
+  void startGame();
 
-  }
+  bool handleEvents();
+
+private:
+  GameEngine& gameEngine;
+  GraphicEngine graphicEngine;
 };
 
 #endif // APPLICATION_HPP

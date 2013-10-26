@@ -1,32 +1,31 @@
-#include "GameController.hpp"
+#include "Application.hpp"
 #include "SDL/SDL.h"
-#include "Game.hpp"
+#include "GameEngine.hpp"
 #include "EventHandler.hpp"
 
-GameController::GameController(Game& game)
-  : game(game) {}
+Application::Application(GameEngine& gameEngine)
+  : gameEngine(gameEngine) {}
 
-void GameController::setupEverything()
+void Application::setupEverything()
 {
-  game.init();
+  gameEngine.init();
+
 }
 
-void GameController::startGame()
+void Application::startGame()
 {
-  game.init();
-
   bool askedForQuit = false;
   do
   {
-    worldRepresentation.show();
-    game.update();
+    graphicEngine.renderFrame();
+    gameEngine.update();
     askedForQuit = handleEvents();
   } while (!askedForQuit);
 }
 
-bool GameController::handleEvents()
+bool Application::handleEvents()
 {
-  const EventHandler& handler = game.getHandler();
+  const EventHandler& handler = gameEngine.getHandler();
 
   SDL_Event e;
   while(SDL_PollEvent(&e)) {
