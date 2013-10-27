@@ -2,11 +2,11 @@
 #include <iostream>
 
 Kart::Kart():
-			position(0., 0., 0.), speed(0.f), glimac::Vertex2D(0.f,1.f){
+			position(0., 0., 0.), speed(0.f), direction((GLfloat)0.f,(GLfloat)1.f){
 				
 }
-Kart::Kart(Point3D pos_, float speed_, glimac::Vertex2D dir_):
-			position(pos_), speed(speed_) direction(dir_){
+Kart::Kart(glm::vec3 pos_, float speed_, glimac::Vertex2D dir_):
+			position(pos_), speed(speed_), direction(dir_.x, dir_.y){
 	
 }
 
