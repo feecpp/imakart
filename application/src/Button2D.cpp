@@ -21,6 +21,10 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 	setVAO();
 }
 
+Button2D::~Button2D(){
+	std::cout << "je free  le button" << std::endl;
+}
+
 const glimac::Vertex2DRGB* Button2D::getVertices() const{
 	return vertices;
 }
@@ -40,4 +44,8 @@ void Button2D::draw() const{
 	vao.bind();
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	vao.unbind();
+}
+
+void Button2D::updateState(){
+	//TO DO
 }
