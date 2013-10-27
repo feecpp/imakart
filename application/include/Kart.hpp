@@ -1,16 +1,17 @@
 #pragma once
 
 class Kart{
-	Point3D position;
-	float speed;
-	Vect3D direction;
+	private:
+		Point3D position;
+		float speed;
+		glimac::Vertex2D direction;
 	
-	
-	Kart();
-	Kart(Point3D pos_, float speed_, Vect3D dir_);
-	
-	moveForward();
-	moveBackWard();
-	turnLeft();
-	turnRight();
+	public:
+		Kart();
+		Kart(Point3D pos_, float speed_, glimac::Vertex2D dir_);
+		
+		void moveForward();
+		void moveBackward();
+		void turnLeft();
+		void turnRight();
 };
