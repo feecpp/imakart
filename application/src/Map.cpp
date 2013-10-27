@@ -1,5 +1,5 @@
 #include "Map.hpp"
-#include "Point3D.hpp"
+#include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -36,7 +36,7 @@ void Map::loadData(const char* path){
 
         //Set the checkpoints in the map
         fichier >> keyword;
-        Point3D point;
+        glm::vec3 point;
         int i=0;
         while(keyword=="Checkpoint"){
             fichier >> point.x;

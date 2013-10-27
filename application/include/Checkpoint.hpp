@@ -1,25 +1,27 @@
-#pragma once
+#ifndef CHECKPOINT_HPP
+#define CHECKPOINT_HPP
 
-#include "Point3D.hpp"
+#include <glm/glm.hpp>
 
 class Checkpoint {
     private :
-        Point3D boundaries[8];
+        glm::vec3 boundaries[8];
         bool checked;
-        Point3D origin;
+        glm::vec3 origin;
     public:
         // A checkpoint is a parallelepiped built from 8 points
         Checkpoint();
-        Checkpoint(const Point3D origin, const int width, const int height, const int depth);
+        Checkpoint(const glm::vec3 origin, const int width, const int height, const int depth);
 
         // Returns one of his points (determined by its index)
-        Point3D getPoint(const int index);
+        glm::vec3 getPoint(const int index);
 
         // Returns the origin
-        Point3D getOrigin();
+        glm::vec3 getOrigin();
 
         // Used to set the bool checked variable to true if the checkpoint is validated
         void validate();
 };
 
+#endif
 
