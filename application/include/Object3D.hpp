@@ -27,8 +27,8 @@ public:
    * l'interface Positionable car pour etre représenté en 3D il doit avoir une position
    * ainsi qu'une orientation.
    */
-  void setModelToRepresent(const Positionable* myModel)
-    {model = myModel;}
+  void setModelToRepresent(const Positionable& myModel)
+    {model = &myModel;}
 
 private:
   const Positionable* model;

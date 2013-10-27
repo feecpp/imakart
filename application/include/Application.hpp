@@ -2,21 +2,20 @@
 #define APPLICATION_HPP
 
 #include "GraphicEngine.hpp"
-
-class GameEngine;
+#include "GameEngine.hpp"
 
 class Application
 {
 public:
-  Application(GameEngine& gameEngine);
+  Application();
 
   void setupEverything();
   void startGame();
 
+private:
   bool handleEvents();
 
-private:
-  GameEngine& gameEngine;
+  GameEngine gameEngine;
   GraphicEngine graphicEngine;
 };
 

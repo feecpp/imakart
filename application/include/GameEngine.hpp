@@ -3,6 +3,7 @@
 
 #include "GameEnumerations.hpp"
 #include "RaceEventHandler.hpp"
+#include "MenuEventHandler.hpp"
 #include "Player.hpp"
 
 /**
@@ -16,7 +17,6 @@ public:
 
   void init();
   void update();
-  void quit();
 
   const GameState getState() const
     {return state;}
@@ -26,11 +26,14 @@ public:
 
   const EventHandler& getHandler() const;
 
+  Player& getPlayer()
+    {return player;}
+
 private:
   GameState state;
   RaceEventHandler raceEventHandler;
+  MenuEventHandler menuEventHandler;
   Player player;
-
 };
 
 #endif // GAMEENGINE_HPP
