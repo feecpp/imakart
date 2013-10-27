@@ -19,10 +19,10 @@ void RaceEventHandler::down() const
 
 void RaceEventHandler::left() const
 {
-  gameEngine->getPlayer().getKart().moveLeft();
+  gameEngine->getPlayer().getKart().turnLeft();
 }
 
 void RaceEventHandler::right() const
 {
-  gameEngine->getPlayer().getKart().moveRight();
+  gameEngine->getPlayer().getKart().turnRight();
 }
