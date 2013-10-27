@@ -1,9 +1,8 @@
 #include "Kart.hpp"
 #include <iostream>
-<<<<<<< HEAD
 
 Kart::Kart():
-			position(), speed(0.f), glimac::Vertex2D(0.f,0.f){
+			position(0., 0., 0.), speed(0.f), glimac::Vertex2D(0.f,1.f){
 				
 }
 Kart::Kart(Point3D pos_, float speed_, glimac::Vertex2D dir_):

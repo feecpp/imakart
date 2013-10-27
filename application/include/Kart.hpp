@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Point3D.hpp"
+#include "Vertex2DRGB.hpp"
+
 class Kart{
 	private:
 		Point3D position;
