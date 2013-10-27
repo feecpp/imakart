@@ -17,7 +17,7 @@ public:
 	void updateVertices(const float x_bottom, const float y_left, const float width, const float height);
 	
 	void draw() const;
-	void updateState(); // TO DO
+	void updateState(int stateButton);
 	
 private:
 	glimac::Vertex2DRGB vertices[4];

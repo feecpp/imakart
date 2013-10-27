@@ -13,6 +13,10 @@ Menu::Menu(const unsigned int nb_button_in_menu):
 void Menu::add_button(const ButtonLogic& button_to_add){
 	if(position_to_add < nb_button_in_menu) {
 		tab_button_menu[position_to_add] = button_to_add;
+		if(position_to_add == 0){
+			tab_button_menu[0].changeState();
+			position_button_selected = 0;
+		}
 		++position_to_add;
 	} else {
 		++nb_button_in_menu;
@@ -23,6 +27,25 @@ void Menu::add_button(const ButtonLogic& button_to_add){
 		tab_button_menu[position_to_add] = button_to_add;
 		++position_to_add;
 	}
+}
+
+void Menu::next_button(){
+	tab_button_menu[position_button_selected].changeState();
+	++position_button_selected;
+	if(position_button_selected >= nb_button_in_menu) {
+		position_button_selected = 0;
+	}
+	tab_button_menu[position_button_selected].changeState();
+}
+
+void Menu::previous_button(){
+	tab_button_menu[position_button_selected].changeState();
+	if(position_button_selected == 0) {
+		position_button_selected = nb_button_in_menu-1;
+	} else {
+		--position_button_selected;
+	}
+	tab_button_menu[position_button_selected].changeState();
 }
 
 void Menu::draw(){
@@ -36,6 +59,5 @@ void Menu::draw(){
 }
 
 Menu::~Menu(){
-	std::cout << "je free  le tableau" << std::endl;
 	free(tab_button_menu);
 }
