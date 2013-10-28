@@ -9,7 +9,6 @@ Shader::Shader(GLenum shaderType, const std::string& shaderSource)
   const char* text = shaderSource.c_str();
   const char** pText = &text;
   glShaderSource(shaderId, 1, pText, 0);
-  std::cout << text << std::endl;
 }
 
 bool Shader::compile(std::string& logInfo) const

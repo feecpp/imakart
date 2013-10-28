@@ -15,21 +15,20 @@ LowLevelVBO::LowLevelVBO(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum 
   bind();
   glBufferData(target, dataSizeInBytes, data, usage);
   unbind();
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 LowLevelVBO::~LowLevelVBO()
 {
-  std::cout << "Deleting LowLevelVBO " << vboId << std::endl;
   glDeleteBuffers(1, &vboId);
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void LowLevelVBO::setBufferData(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage){
   bind();
   glBufferData(target, dataSizeInBytes, data, usage);
   unbind();
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void LowLevelVBO::bind() const
