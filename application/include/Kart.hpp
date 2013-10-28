@@ -1,23 +1,27 @@
 #ifndef KART_HPP
 #define KART_HPP
 
-#include "Point3D.hpp"
-#include "Vertex2DRGB.hpp"
+#include <glm/glm.hpp>
+#include "Positionable.hpp"
 
-class Kart{
+class Kart : public Positionable
+{
 	private:
 		glm::vec3 position;
+    glm::vec3 direction;
 		float speed;
-		glimac::Vertex2D direction;
-	
+
 	public:
 		Kart();
-		Kart(glm::vec3 pos_, float speed_, glimac::Vertex2D dir_);
+    Kart(glm::vec3 position, glm::vec3 direction, float speed);
 		
 		void moveForward();
 		void moveBackward();
 		void turnLeft();
 		void turnRight();
+
+    virtual const glm::vec3& getPosition() const;
+    virtual const glm::vec3& getOrientation() const;
 };
 
 #endif
