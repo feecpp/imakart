@@ -3,6 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <vector>
+#include "GameEngine.hpp" 
 
 class Object3D;
 
@@ -36,7 +37,7 @@ class GraphicEngine
 public:
   //TODO
   bool init();
-  void renderFrame();
+  void renderFrame(GameEngine* gameEngine);
   void swapBuffers();
 
   void addObject3D(Object3D* newObject3D)

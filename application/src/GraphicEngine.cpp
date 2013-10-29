@@ -1,4 +1,5 @@
 #include "GraphicEngine.hpp"
+#include "program.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -27,14 +28,20 @@ bool GraphicEngine::init()
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
 
+    glimac::Program program;
+	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
+	program.use();
+	
   return true;
 }
 
 void GraphicEngine::swapBuffers()
   {SDL_GL_SwapBuffers();}
 
-void GraphicEngine::renderFrame()
+void GraphicEngine::renderFrame(GameEngine* gameEngine)
 {
   // Rendering code goes here
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  gameEngine->getMenu().draw();
 }

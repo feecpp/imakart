@@ -21,13 +21,13 @@ static const Uint32 WINDOW_HEIGHT = 600;
 static const Uint32 WINDOW_BPP = 32;
 
 int main() {
-/*
+
   // Pour le "vrai jeu"
   Application app;
   app.setupEverything();
   app.startGame();
   return EXIT_SUCCESS;
-*/
+
 
 	// Pour les tests
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
@@ -47,15 +47,10 @@ int main() {
 		std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
 		return EXIT_FAILURE;
 	}
-	
-	Menu main_menu(3);
-	ButtonLogic jouer("jouer", -0.3, 0.3, 0.6, 0.2);
-	main_menu.add_button(jouer);
-	ButtonLogic options("options", -0.3, 0.0, 0.6, 0.2);
-	main_menu.add_button(options);
-	ButtonLogic quitter("quitter", -0.3, -0.3, 0.6, 0.2);
-	main_menu.add_button(quitter);
-	
+	/*
+	Menu main_menu;
+	main_menu.create_main_menu();
+	*/
 	// Load des shaders méthode JN
   /*glimac::ShaderProgram program;
 	program.addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
@@ -96,36 +91,8 @@ int main() {
 		
 		// Rendering code goes here
 		glClear(GL_COLOR_BUFFER_BIT);
-		
-		main_menu.draw();
+	
 		// Application code goes here
-
-		SDL_Event e;
-		  while(SDL_PollEvent(&e)) {
-
-			if (e.type == SDL_QUIT)
-			  return true;
-			switch(e.type) {
-				case SDL_KEYDOWN :
-					switch(e.key.keysym.sym) {
-					  case SDLK_DOWN:
-						main_menu.next_button();
-					  break;
-					  case SDLK_UP:
-						main_menu.previous_button();
-					  break;
-					  case SDLK_LEFT:
-						  
-						break;
-					  case SDLK_RIGHT:
-						
-						break;
-					  default:
-					  break;
-
-					}
-			}
-		  }
 
 		// Mise à jour de la fenêtre (synchronisation implicite avec OpenGL)
 		SDL_GL_SwapBuffers();

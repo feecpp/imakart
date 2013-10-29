@@ -13,7 +13,6 @@ ButtonLogic::ButtonLogic(const char* name, const float x_bottom, const float y_l
 }
 
 ButtonLogic::~ButtonLogic(){
-	delete graphic_representation;
 }
 	
 Button2D* ButtonLogic::getGraphicRepresentation() const{

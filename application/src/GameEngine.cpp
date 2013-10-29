@@ -2,12 +2,13 @@
 
 GameEngine::GameEngine()
   : raceEventHandler(this), menuEventHandler(this){
-  state = IN_RACE;
+  state = IN_MENU;
 }
 
 void GameEngine::init()
 {
   //Charger les données du jeu
+  menu.create_main_menu();
 
 }
 
