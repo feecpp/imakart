@@ -1,9 +1,20 @@
 #include "GraphicEngine.hpp"
 #include "program.hpp"
-
+#include "TextFile.hpp"
 #include <GL/glew.h>
 #include <iostream>
+#include "Object3D.hpp"
 
+GraphicEngine::~GraphicEngine()
+{
+  //Le graphic engine delete tous ses objets 3D à sa mort
+  //Utiliser un iterator déclenche un bug hyper chelou (tente de détruire un deuxième
+  //pointeur vers la classe mère...)
+  for (size_t i = 0; i < objects3D.size(); ++i)
+  {
+    delete objects3D[i];
+  }
+}
 
 bool GraphicEngine::init()
 {
@@ -28,9 +39,16 @@ bool GraphicEngine::init()
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
 
-    glimac::Program program;
+  glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
 	program.use();
+
+
+  //SHADER STUFF JN(test du KartCube)
+  glimac::Program jnProgramTest = glimac::loadProgram("shaders/Simple3DVS.glsl", "shaders/SimpleFS.glsl");
+
+
+  jnProgramTest.use();
 	
   return true;
 }
@@ -43,5 +61,13 @@ void GraphicEngine::renderFrame(GameEngine* gameEngine)
   // Rendering code goes here
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
-  gameEngine->getMenu().draw();
+ // gameEngine->getMenu().draw();
+
+  std::vector<Object3D* >::iterator one3DObject;
+  for (one3DObject = objects3D.begin(); one3DObject != objects3D.end(); ++one3DObject)
+  {
+    (*one3DObject)->update();
+    (*one3DObject)->draw();
+  }
+
 }

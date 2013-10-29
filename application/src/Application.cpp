@@ -2,6 +2,7 @@
 #include "SDL/SDL.h"
 #include "EventHandler.hpp"
 #include "Kart.hpp"
+#include "KartCube.hpp"
 #include <iostream>
 
 Application::Application()
@@ -11,6 +12,9 @@ void Application::setupEverything()
 {
   graphicEngine.init();
   gameEngine.init();
+  KartCube* cube = new KartCube();
+  cube->setModelToRepresent(gameEngine.getPlayer().getKart());
+  graphicEngine.addObject3D(cube);
 }
 
 void Application::startGame()

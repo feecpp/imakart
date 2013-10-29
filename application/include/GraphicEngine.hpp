@@ -35,11 +35,18 @@ struct GraphicSettings
 class GraphicEngine
 {
 public:
+  ~GraphicEngine();
   //TODO
   bool init();
   void renderFrame(GameEngine* gameEngine);
   void swapBuffers();
 
+  /**
+   * @brief addObject3D Ajout un objet 3D dans la liste d'affichage
+   * du GraphicEngine. Le GraphicEngine devient propriétaire de cet objet
+   * et prend en charge sa destruction.
+   * @param newObject3D
+   */
   void addObject3D(Object3D* newObject3D)
     {objects3D.push_back(newObject3D);}
 
