@@ -1,5 +1,6 @@
 #include "GraphicEngine.hpp"
 #include "program.hpp"
+#include "Menu2D.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -28,6 +29,10 @@ bool GraphicEngine::init()
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
 
+  Menu2D* menu = new Menu2D();
+  menu->initialiseMainMenu();
+  addObject2D(menu);
+  
     glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
 	program.use();
@@ -38,10 +43,10 @@ bool GraphicEngine::init()
 void GraphicEngine::swapBuffers()
   {SDL_GL_SwapBuffers();}
 
-void GraphicEngine::renderFrame(GameEngine* gameEngine)
+void GraphicEngine::renderFrame()
 {
   // Rendering code goes here
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
-  gameEngine->getMenu().draw();
+  for(unsigned int i = 0 ; i < objects2D.size() ; ++i)
+	objects2D[i]->draw();
 }

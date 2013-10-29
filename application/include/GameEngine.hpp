@@ -5,7 +5,6 @@
 #include "RaceEventHandler.hpp"
 #include "MenuEventHandler.hpp"
 #include "Player.hpp"
-#include "Menu.hpp"
 
 /**
  * @brief Classe principale d'Imakart
@@ -29,16 +28,12 @@ public:
 
   Player& getPlayer()
     {return player;}
-    
-  Menu& getMenu()
-	{return menu;}
 
 private:
   GameState state;
   RaceEventHandler raceEventHandler;
   MenuEventHandler menuEventHandler;
   Player player;
-  Menu menu;
 };
 
 #endif // GAMEENGINE_HPP

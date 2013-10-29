@@ -6,6 +6,7 @@
 #include "GameEngine.hpp" 
 
 class Object3D;
+class Object2D;
 
 /**
  * @brief Les options graphiques bas niveau
@@ -37,11 +38,14 @@ class GraphicEngine
 public:
   //TODO
   bool init();
-  void renderFrame(GameEngine* gameEngine);
+  void renderFrame();
   void swapBuffers();
 
   void addObject3D(Object3D* newObject3D)
     {objects3D.push_back(newObject3D);}
+    
+  void addObject2D(Object2D* newObject2D)
+    {objects2D.push_back(newObject2D);}
 
 private:
   void drawWorld();
@@ -49,6 +53,7 @@ private:
 
   GraphicSettings settings;
   std::vector<Object3D* > objects3D;
+  std::vector<Object2D* > objects2D;
 
 };
 

@@ -11,7 +11,6 @@
 #include "Map.hpp"
 //#include "ShaderProgram.hpp"
 #include "Application.hpp"
-#include "Menu.hpp"
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;

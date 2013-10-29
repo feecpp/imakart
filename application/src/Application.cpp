@@ -18,7 +18,7 @@ void Application::startGame()
   bool askedForQuit = false;
   do
   {
-    graphicEngine.renderFrame(&gameEngine);
+    graphicEngine.renderFrame();
     gameEngine.update();
     askedForQuit = handleEvents();
 
