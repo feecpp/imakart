@@ -48,13 +48,8 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	Menu main_menu(3);
-	ButtonLogic jouer("jouer", -0.3, 0.3, 0.6, 0.2);
-	main_menu.add_button(jouer);
-	ButtonLogic options("options", -0.3, 0.0, 0.6, 0.2);
-	main_menu.add_button(options);
-	ButtonLogic quitter("quitter", -0.3, -0.3, 0.6, 0.2);
-	main_menu.add_button(quitter);
+	Menu main_menu;
+	main_menu.create_main_menu();
 	
 	// Load des shaders méthode JN
   /*glimac::ShaderProgram program;

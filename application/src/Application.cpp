@@ -9,9 +9,8 @@ Application::Application()
 
 void Application::setupEverything()
 {
-  gameEngine.init();
   graphicEngine.init();
-
+  gameEngine.init();
 }
 
 void Application::startGame()

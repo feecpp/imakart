@@ -1,6 +1,7 @@
 #ifndef MENU_HPP
 #define MENU_HPP
 
+#include <vector>
 #include "ButtonLogic.hpp" 
 
 class MenuEventHandler;
@@ -9,8 +10,10 @@ class Menu{
 public:
 	unsigned int nb_button_in_menu;
 	
-	Menu(const unsigned int nb_button_in_menu = 1);
+	Menu();
 	~Menu();
+	
+	void create_main_menu();
 	
 	void add_button(const ButtonLogic& button_to_add);
 	void next_button();
@@ -19,9 +22,7 @@ public:
 	void draw();
 	
 private:
-	MenuEventHandler* handle;
-	ButtonLogic* tab_button_menu;
-	unsigned int position_to_add;
+	std::vector<ButtonLogic> tab_button_menu;
 	unsigned int position_button_selected;
 };
 
