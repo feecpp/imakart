@@ -9,7 +9,7 @@ class MenuEventHandler;
 class Menu{
 public:
 	unsigned int nb_button_in_menu;
-	
+
 	Menu();
 	~Menu();
 	
@@ -22,8 +22,9 @@ public:
 	void draw();
 	
 private:
-	std::vector<ButtonLogic> tab_button_menu;
 	unsigned int position_button_selected;
+	std::vector<ButtonLogic> tab_button_menu;
+
 };
 
 #endif //MENU_HPP
