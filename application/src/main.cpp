@@ -48,11 +48,13 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	Menu main_menu(2);
-	ButtonLogic jouer2("jouer", -0.5, -0.8, 0.5, 0.2);
-	main_menu.add_button(jouer2);
-	ButtonLogic jouer("jouer", -0.2, 0.1, 0.5, 0.2);
+	Menu main_menu(3);
+	ButtonLogic jouer("jouer", -0.3, 0.3, 0.6, 0.2);
 	main_menu.add_button(jouer);
+	ButtonLogic options("options", -0.3, 0.0, 0.6, 0.2);
+	main_menu.add_button(options);
+	ButtonLogic quitter("quitter", -0.3, -0.3, 0.6, 0.2);
+	main_menu.add_button(quitter);
 	
 	// Load des shaders méthode JN
   /*glimac::ShaderProgram program;
@@ -99,15 +101,31 @@ int main() {
 		// Application code goes here
 
 		SDL_Event e;
-		while(SDL_PollEvent(&e)) {
+		  while(SDL_PollEvent(&e)) {
+
+			if (e.type == SDL_QUIT)
+			  return true;
 			switch(e.type) {
-				default:
-					break;
-				case SDL_QUIT:
-					done = true;
-					break;
+				case SDL_KEYDOWN :
+					switch(e.key.keysym.sym) {
+					  case SDLK_DOWN:
+						main_menu.next_button();
+					  break;
+					  case SDLK_UP:
+						main_menu.previous_button();
+					  break;
+					  case SDLK_LEFT:
+						  
+						break;
+					  case SDLK_RIGHT:
+						
+						break;
+					  default:
+					  break;
+
+					}
 			}
-		}
+		  }
 
 		// Mise à jour de la fenêtre (synchronisation implicite avec OpenGL)
 		SDL_GL_SwapBuffers();

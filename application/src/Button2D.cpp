@@ -2,27 +2,28 @@
 #include <iostream>
 
 Button2D::Button2D(){
-	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), glm::vec3(0.f,1.f,0.f));
-	vertices[1] = glimac::Vertex2DRGB(glm::vec2(0.5f, -0.5f), glm::vec3(0.f,1.f,1.f));
-	vertices[2] = glimac::Vertex2DRGB(glm::vec2(0.5f, 0.5f), glm::vec3(1.f,1.f,0.f));
-	vertices[3] = glimac::Vertex2DRGB(glm::vec2(-0.5f, 0.5f), glm::vec3(0.f,0.f,1.f));
+	glm::vec3 color(1.f,0.f,0.f);
+	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), color);
+	vertices[1] = glimac::Vertex2DRGB(glm::vec2(0.5f, -0.5f), color);
+	vertices[2] = glimac::Vertex2DRGB(glm::vec2(0.5f, 0.5f), color);
+	vertices[3] = glimac::Vertex2DRGB(glm::vec2(-0.5f, 0.5f), color);
 	
 	setVBO();
 	setVAO();
 }
 
 Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height){
-	vertices[0] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left), glm::vec3(0.f,1.f,0.f));
-	vertices[1] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left), glm::vec3(0.f,1.f,1.f));
-	vertices[2] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left + height), glm::vec3(1.f,1.f,0.f));
-	vertices[3] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left + height), glm::vec3(0.f,0.f,1.f));
+	glm::vec3 color(1.f,0.f,0.f);
+	vertices[0] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left), color);
+	vertices[1] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left), color);
+	vertices[2] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left + height), color);
+	vertices[3] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left + height), color);
 	
 	setVBO();
 	setVAO();
 }
 
 Button2D::~Button2D(){
-	std::cout << "je free  le button" << std::endl;
 }
 
 const glimac::Vertex2DRGB* Button2D::getVertices() const{
@@ -46,6 +47,15 @@ void Button2D::draw() const{
 	vao.unbind();
 }
 
-void Button2D::updateState(){
-	//TO DO
+void Button2D::updateState(int stateButton){
+	glm::vec3 color(1.f,0.f,0.f);
+	if(stateButton == 1)
+		color = glm::vec3(0.f,1.f,0.f);
+	
+	vertices[0].color = color;
+	vertices[1].color = color;
+	vertices[2].color = color;
+	vertices[3].color = color;
+	
+	setVBO();
 }

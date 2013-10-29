@@ -8,20 +8,19 @@ using namespace glimac;
 VAO::VAO()
 {
   glGenVertexArrays(1, &vaoId);
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 VAO::~VAO()
 {
-  std::cout << "Deleting vao " << vaoId << std::endl;
   glDeleteVertexArrays(1, &vaoId);
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void VAO::bind() const
 {
   glBindVertexArray(vaoId);
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void VAO::unbind() const
@@ -38,7 +37,7 @@ void VAO::enableVertexAttribArray(GLuint index)
   bind();
   glEnableVertexAttribArray(index);
   unbind();
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void VAO::disableVertexAttribArray(GLuint index)
@@ -46,7 +45,7 @@ void VAO::disableVertexAttribArray(GLuint index)
   bind();
   glDisableVertexAttribArray(index);
   unbind();
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
 
 void VAO::vertexAttribPointer(const VBO &vboToBind, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer) const
@@ -56,5 +55,5 @@ void VAO::vertexAttribPointer(const VBO &vboToBind, GLuint index, GLint size, GL
   glVertexAttribPointer(index, size, type, normalized, stride, pointer);
   vboToBind.unbind();
   unbind();
-  OpenGLDebugger::checkError();
+  //OpenGLDebugger::checkError();
 }
