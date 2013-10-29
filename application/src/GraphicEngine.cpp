@@ -41,14 +41,12 @@ bool GraphicEngine::init()
 
   glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
-	program.use();
+  program.use();
 
 
   //SHADER STUFF JN(test du KartCube)
-  glimac::Program jnProgramTest = glimac::loadProgram("shaders/Simple3DVS.glsl", "shaders/SimpleFS.glsl");
-
-
-  jnProgramTest.use();
+  //glimac::Program jnProgramTest = glimac::loadProgram("shaders/Simple3DVS.glsl", "shaders/SimpleFS.glsl");
+  //jnProgramTest.use();
 	
   return true;
 }
@@ -61,13 +59,15 @@ void GraphicEngine::renderFrame(GameEngine* gameEngine)
   // Rendering code goes here
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
- // gameEngine->getMenu().draw();
+  gameEngine->getMenu().draw();
 
+  //Dessin des objets 3D test
+  /*
   std::vector<Object3D* >::iterator one3DObject;
   for (one3DObject = objects3D.begin(); one3DObject != objects3D.end(); ++one3DObject)
   {
     (*one3DObject)->update();
     (*one3DObject)->draw();
   }
-
+  */
 }

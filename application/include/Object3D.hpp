@@ -1,6 +1,8 @@
 #ifndef OBJECT3D_HPP
 #define OBJECT3D_HPP
 
+#include "program.hpp"
+
 class Positionable;
 
 /**
