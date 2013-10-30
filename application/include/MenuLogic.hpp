@@ -15,11 +15,11 @@ public:
 	MenuLogic();
 	~MenuLogic();
 	
-	const InterfaceElement* getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton);
+	const InterfaceElement* getTabInterfaceElement(const unsigned int positionOfElement);
 	const bool isSelected() const
 		{return false;}
-
-	void initialiseMainMenu();
+		
+	static MenuLogic* initialiseMainMenu();
 	void addButton(ButtonLogic* buttonToAdd);
 	void nextButton();
 	void previousButton();

@@ -14,10 +14,13 @@ public:
 	Menu2D();
 	~Menu2D();
 	
-	void initialiseMainMenu();
+	Button2D* getTab2DMenu(const unsigned int positionToSelect)
+		{return tab2DMenu[positionToSelect];}
+	
+	static Menu2D* initialiseMainMenu();
 	void addButton(Button2D* buttonToAdd);
-    
-	void draw();
+    void update();
+	void draw() const;
 	
 private:
 	std::vector<Button2D* > tab2DMenu;

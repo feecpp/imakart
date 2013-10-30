@@ -44,20 +44,16 @@ void Button2D::setVAO(){
 	vao.vertexAttribPointer(vbo, 1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DRGB), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
-void Button2D::draw(){
-	if( model->isSelected() ){
-		updateState();
-	}
-
+void Button2D::draw() const{
 	vao.bind();
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	vao.unbind();
 }
 
-void Button2D::updateState(){
+void Button2D::update(){
 	glm::vec3 color(1.f,0.f,0.f);
-	if(vertices[0].color[0] == 1){
-		color = glm::vec3(0.f,1.f,0.f);
+	if(model->isSelected()){
+		color = glm::vec3 (0.f,1.f,0.f);
 	}
 	
 	vertices[0].color = color;

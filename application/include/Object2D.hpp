@@ -9,8 +9,11 @@ class InterfaceElement;
 class Object2D
 {
 public:
-  virtual void draw() = 0;
-
+  virtual ~Object2D() {}
+  
+  virtual void draw() const = 0;
+  virtual void update() = 0;
+  
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}
 

@@ -19,13 +19,16 @@ void Application::setupEverything()
   cube->setModelToRepresent(gameEngine.getPlayer().getKart());
   graphicEngine.addObject3D(cube);
 
-  Menu2D* menu = new Menu2D();
-  MenuLogic* menuLogic = new MenuLogic();
-  menu->initialiseMainMenu();
-  menuLogic->initialiseMainMenu();
+  Menu2D* menu2D = Menu2D::initialiseMainMenu();
+  MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
+ 
+  for(unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+	menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) ); 
+  }
+  
   gameEngine.setMenu(menuLogic);
-  menu->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  graphicEngine.addObject2D(menu2D);
 }
 
 void Application::startGame()

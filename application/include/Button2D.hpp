@@ -18,8 +18,8 @@ public:
 	const glimac::Vertex2DRGB* getVertices() const;
 	void updateVertices(const float x_bottom, const float y_left, const float width, const float height);
 
-	void draw();
-	void updateState();
+	void draw() const;
+	void update();
 	
 private:
 	glimac::Vertex2DRGB vertices[4];

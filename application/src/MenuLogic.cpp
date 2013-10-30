@@ -5,22 +5,27 @@ MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){
 }
 
-const InterfaceElement* MenuLogic::getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton){
-	if(positionOfButton < nbButtonInMenu)
-		return tabButtonLogicMenu[positionOfButton];
+const InterfaceElement* MenuLogic::getTabInterfaceElement(const unsigned int positionOfElement){
+	if(positionOfElement < nbButtonInMenu)
+		return tabButtonLogicMenu[positionOfElement];
 	else
 		return NULL;
 }
 
-void MenuLogic::initialiseMainMenu(){
+MenuLogic* MenuLogic::initialiseMainMenu(){
+	MenuLogic* mainMenu = new MenuLogic;
+	
 	ButtonLogic* jouer = new ButtonLogic("jouer");
 	ButtonLogic* options = new ButtonLogic("options");
 	ButtonLogic* credits = new ButtonLogic("credits");
 	ButtonLogic* quitter = new ButtonLogic("quitter");
-	addButton(jouer);
-	addButton(options);
-	addButton(credits);
-	addButton(quitter);
+	
+	mainMenu->addButton(jouer);
+	mainMenu->addButton(options);
+	mainMenu->addButton(credits);
+	mainMenu->addButton(quitter);
+	
+	return mainMenu;
 }
 
 void MenuLogic::addButton(ButtonLogic* buttonToAdd){
