@@ -26,6 +26,7 @@ private:
 	glimac::LowLevelVBO vbo;
 	glimac::VAO vao;
 	
+	bool done;
 	void setVBO(); //call in the constructor
 	void setVAO(); //call in the constructor
 };

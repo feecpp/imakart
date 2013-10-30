@@ -5,9 +5,9 @@ MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){
 }
 
-ButtonLogic MenuLogic::getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton){
+const InterfaceElement* MenuLogic::getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton){
 	if(positionOfButton < nbButtonInMenu)
-		return *(tabButtonLogicMenu[positionOfButton]);
+		return tabButtonLogicMenu[positionOfButton];
 	else
 		return NULL;
 }

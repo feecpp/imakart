@@ -14,7 +14,7 @@ public:
 	MenuLogic();
 	~MenuLogic();
 	
-	ButtonLogic getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton);
+	const InterfaceElement* getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton);
 	
 	void initialiseMainMenu();
 	void addButton(ButtonLogic* buttonToAdd);

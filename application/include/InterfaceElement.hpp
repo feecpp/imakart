@@ -11,6 +11,12 @@ class InterfaceElement
 {
 public:
   virtual const bool isSelected() const = 0;
+
+  const char* getName() const
+		{return name;}
+
+protected:
+  const char* name;
 };
 
 #endif // INTERFACEELEMENT_HPP

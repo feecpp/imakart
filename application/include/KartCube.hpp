@@ -32,7 +32,7 @@ private:
     {return GLsizei(14);}
 
   glimac::Vertex3D vertices[8];
-  const GLushort indices[14] = {0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1};
+ // const GLushort indices[14] = {0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1};
 
   glimac::LowLevelVBO vbo;
   glimac::VAO vao;
