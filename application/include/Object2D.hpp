@@ -9,6 +9,7 @@ class InterfaceElement;
 class Object2D
 {
 public:
+  virtual ~Object2D() {}
   virtual void draw() = 0;
 
   void setModelToRepresent(const InterfaceElement& myModel)
