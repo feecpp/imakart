@@ -5,19 +5,6 @@
 Menu2D::Menu2D():
 	nbButtonInMenu(0){}
 
-/*
-void Menu::create_main_menu(){
-	ButtonLogic jouer("jouer", -0.3, 0.3, 0.6, 0.2);
-	add_button(jouer);
-	ButtonLogic options("options", -0.3, 0.0, 0.6, 0.2);
-	add_button(options);
-	ButtonLogic credits("credits", -0.3, -0.3, 0.6, 0.2);
-	add_button(credits);
-	ButtonLogic quitter("quitter", -0.3, -0.6, 0.6, 0.2);
-	add_button(quitter);
-}
-*/
-
 void Menu2D::initialiseMainMenu(){
 	Button2D* jouer = new Button2D(-0.3, 0.3, 0.6, 0.2);
 	Button2D* options = new Button2D(-0.3, 0.0, 0.6, 0.2);
@@ -26,11 +13,11 @@ void Menu2D::initialiseMainMenu(){
 	
 	MenuLogic* mainMenuLogic = new MenuLogic();
 	mainMenuLogic->initialiseMainMenu();
-	
-	jouer->setModelToRepresent(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(0));
-	options->setModelToRepresent(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(1));
-	credits->setModelToRepresent(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(2));
-	quitter->setModelToRepresent(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(3));
+
+	jouer->setModelToRepresent( *(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(0)) );
+	options->setModelToRepresent( *(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(1)) );
+	credits->setModelToRepresent( *(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(2)) );
+	quitter->setModelToRepresent( *(mainMenuLogic->getButtonLogicFromTabButtonLogicMenu(3)) );
 
 	addButton(jouer);
 	addButton(options);

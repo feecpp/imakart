@@ -7,11 +7,11 @@
 class ButtonLogic : public InterfaceElement
 {
 public:
-	const char* name; // name of the button
+	//const char* name; // name of the button
 	
 	ButtonLogic(const char* name); // Create a logical button with no graphic representation
 	~ButtonLogic();
-	
+
 	void changeState();
 	const bool isSelected() const;
 

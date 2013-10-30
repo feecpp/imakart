@@ -14,7 +14,7 @@ public:
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}
 
-  const InterfaceElement* getModel()
+  const InterfaceElement* getModel() const
 	{return model;}
 	
 protected:

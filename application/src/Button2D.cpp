@@ -1,7 +1,9 @@
 #include "Button2D.hpp"
 #include <iostream>
 
-Button2D::Button2D(){
+Button2D::Button2D():
+	done(false)
+{
 	glm::vec3 color(1.f,0.f,0.f);
 	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), color);
 	vertices[1] = glimac::Vertex2DRGB(glm::vec2(0.5f, -0.5f), color);
@@ -12,7 +14,9 @@ Button2D::Button2D(){
 	setVAO();
 }
 
-Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height){
+Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height):
+	done(false)
+{
 	glm::vec3 color(1.f,0.f,0.f);
 
 	vertices[0] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left), color);
@@ -43,10 +47,10 @@ void Button2D::setVAO(){
 }
 
 void Button2D::draw(){
-	/*
-	if( model->isSelected() ){
+	if( model->isSelected() && !done){
 		updateState();
-	}*/
+	}
+
 	vao.bind();
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	vao.unbind();
@@ -54,8 +58,9 @@ void Button2D::draw(){
 
 void Button2D::updateState(){
 	glm::vec3 color(1.f,0.f,0.f);
-	if(vertices[0].color[0] == 1)
-		glm::vec3 color(0.f,1.f,0.f);
+	if(vertices[0].color[0] == 1){
+		color = glm::vec3(0.f,1.f,0.f);
+	}
 	
 	vertices[0].color = color;
 	vertices[1].color = color;
@@ -63,4 +68,5 @@ void Button2D::updateState(){
 	vertices[3].color = color;
 	
 	setVBO();
+	done = true;
 }

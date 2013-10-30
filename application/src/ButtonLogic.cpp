@@ -2,7 +2,9 @@
 #include <iostream>
 
 ButtonLogic::ButtonLogic(const char* name):
-	name(name), selected(false) {};
+	selected(false) {
+		this->name = name;
+	};
 
 ButtonLogic::~ButtonLogic(){
 }

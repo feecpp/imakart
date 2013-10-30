@@ -20,12 +20,12 @@ KartCube::KartCube()
   vbo.setBufferData((const GLvoid* ) glm::value_ptr(vertices[0].position), verticesSize(), GL_STATIC_DRAW);
 
   vao.enableVertexAttribArray(0);
-  vao.vertexAttribPointer(vbo, 0, 3, GL_FLOAT, GL_TRUE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, position));
+ // vao.vertexAttribPointer(vbo, 0, 3, GL_FLOAT, GL_TRUE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, position));
 }
 
 void KartCube::draw() const{
   vao.bind();
-  glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
+//  glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
 }
 
