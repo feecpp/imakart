@@ -2,6 +2,9 @@
 #include "SDL/SDL.h"
 #include "EventHandler.hpp"
 #include "Kart.hpp"
+#include "KartCube.hpp"
+#include "Menu2D.hpp"
+#include "MenuLogic.hpp"
 #include <iostream>
 
 Application::Application()
@@ -11,6 +14,18 @@ void Application::setupEverything()
 {
   graphicEngine.init();
   gameEngine.init();
+
+  KartCube* cube = new KartCube();
+  cube->setModelToRepresent(gameEngine.getPlayer().getKart());
+  graphicEngine.addObject3D(cube);
+
+  Menu2D* menu = new Menu2D();
+  MenuLogic* menuLogic = new MenuLogic();
+  menu->initialiseMainMenu();
+  menuLogic->initialiseMainMenu();
+  gameEngine.setMenu(menuLogic);
+  menu->setModelToRepresent(gameEngine.getMenuLogic());
+  graphicEngine.addObject2D(menu);
 }
 
 void Application::startGame()
@@ -18,7 +33,7 @@ void Application::startGame()
   bool askedForQuit = false;
   do
   {
-    graphicEngine.renderFrame(&gameEngine);
+    graphicEngine.renderFrame();
     gameEngine.update();
     askedForQuit = handleEvents();
 

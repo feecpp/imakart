@@ -1,4 +1,4 @@
-#include "shader.hpp"
+#include "Shader2.hpp"
 
 #include <fstream>
 #include <stdexcept>
@@ -7,10 +7,17 @@
 
 namespace glimac {
 
-bool Shader::compile() {
+bool Shader::compile(std::string& infoLog) {
 	glCompileShader(m_nGLId);
 	GLint status;
 	glGetShaderiv(m_nGLId, GL_COMPILE_STATUS, &status);
+  GLint length;
+  glGetShaderiv(m_nGLId, GL_INFO_LOG_LENGTH, &length);
+  char* log = new char[length];
+  glGetShaderInfoLog(m_nGLId, length, 0, log);
+  infoLog.append(log);
+
+  delete [] log;
 	return status == GL_TRUE;
 }
 

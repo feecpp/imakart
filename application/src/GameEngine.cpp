@@ -8,8 +8,6 @@ GameEngine::GameEngine()
 void GameEngine::init()
 {
   //Charger les données du jeu
-  menu.create_main_menu();
-
 }
 
 void GameEngine::update()

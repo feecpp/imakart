@@ -5,7 +5,7 @@
 #include "RaceEventHandler.hpp"
 #include "MenuEventHandler.hpp"
 #include "Player.hpp"
-#include "Menu.hpp"
+#include "MenuLogic.hpp"
 
 /**
  * @brief Classe principale d'Imakart
@@ -25,20 +25,22 @@ public:
   void setState(GameState newState)
     {state = newState;}
 
+  void setMenu(MenuLogic* menuToSet)
+    {menu = *menuToSet;}
   const EventHandler& getHandler() const;
 
   Player& getPlayer()
     {return player;}
-    
-  Menu& getMenu()
-	{return menu;}
+
+  MenuLogic& getMenuLogic()
+    {return menu;}
 
 private:
   GameState state;
   RaceEventHandler raceEventHandler;
   MenuEventHandler menuEventHandler;
   Player player;
-  Menu menu;
+  MenuLogic menu;
 };
 
 #endif // GAMEENGINE_HPP

@@ -2,6 +2,7 @@
 #define MENUEVENTHANDLER_HPP
 
 #include "EventHandler.hpp"
+#include "MenuLogic.hpp"
 
 class GameEngine;
 
@@ -15,8 +16,12 @@ public:
   virtual void left() const;
   virtual void right() const;
 
+  void setMenu(MenuLogic* menu)
+   	{this->menu = menu;}
+
 private:
   GameEngine* gameEngine;
+  MenuLogic* menu;
 };
 
 #endif // MENUEVENTHANDLER_HPP

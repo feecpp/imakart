@@ -6,7 +6,7 @@
 
 namespace glimac
 {
-
+/*
 class Shader
 {
 public:
@@ -26,7 +26,7 @@ private:
   GLuint shaderId;
 
 };
-
+*/
 }// namespace glimac
 
 #endif // SHADER_HPP

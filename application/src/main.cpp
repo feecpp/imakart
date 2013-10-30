@@ -6,12 +6,11 @@
 #include "VAO.hpp"
 #include "Button2D.hpp"
 #include "ButtonLogic.hpp"
-#include "program.hpp"
+#include "ShaderProgram.hpp"
 #include "Checkpoint.hpp"
 #include "Map.hpp"
 //#include "ShaderProgram.hpp"
 #include "Application.hpp"
-#include "Menu.hpp"
 
 static const Uint32 FPS = 30;
 static const Uint32 FRAME_DURATION = 1000.f / FPS;
@@ -61,8 +60,8 @@ int main() {
   program.useProgram();*/
 	
 	// Load des shaders méthode Laurent Noel
-  glimac::Program program;
-	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
+  glimac::ShaderProgram program;
+  program = glimac::ShaderProgram::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
 	program.use();
   
   /* //Code pour tester la classe Map

@@ -1,8 +1,9 @@
-#include <Shader.hpp>
+//#include <Shader.hpp>
 #include <iostream>
 
-using namespace glimac;
+//using namespace glimac;
 
+/*
 Shader::Shader(GLenum shaderType, const std::string& shaderSource)
 {
   shaderId = glCreateShader(shaderType);
@@ -33,3 +34,4 @@ Shader::~Shader()
 {
   glDeleteShader(shaderId);
 }
+*/

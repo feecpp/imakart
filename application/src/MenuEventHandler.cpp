@@ -9,13 +9,13 @@ MenuEventHandler::MenuEventHandler(GameEngine* gameEngine)
 
 void MenuEventHandler::up() const
 {
-  gameEngine->getMenu().previous_button();
+	gameEngine->getMenuLogic().previousButton();
 }
 
 
 void MenuEventHandler::down() const
 {
-  gameEngine->getMenu().next_button();
+	gameEngine->getMenuLogic().nextButton();
 }
 
 void MenuEventHandler::left() const

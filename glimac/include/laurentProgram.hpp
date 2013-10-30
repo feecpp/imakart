@@ -1,9 +1,9 @@
 #pragma once
 
+/*
 #include <GL/glew.h>
-#include "shader.hpp"
+#include "Shader.hpp"
 
-namespace glimac {
 
 class Program {
 public:
@@ -55,3 +55,4 @@ Program loadProgram(const char* vsFile, const char* fsFile);
 
 
 }
+*/

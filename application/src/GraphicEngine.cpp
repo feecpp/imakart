@@ -1,9 +1,30 @@
 #include "GraphicEngine.hpp"
 #include "program.hpp"
-
+#include "TextFile.hpp"
 #include <GL/glew.h>
 #include <iostream>
+#include "Object3D.hpp"
+#include "TextFile.hpp"
 
+GraphicEngine::~GraphicEngine()
+{
+  //Le graphic engine delete tous ses objets 3D à sa mort
+  //Utiliser un iterator déclenche un bug hyper chelou (tente de détruire un deuxième
+  //pointeur vers la classe mère...)
+  for (size_t i = 0; i < objects3D.size(); ++i)
+  {
+    delete objects3D[i];
+  }
+
+
+  for (size_t i = 0; i < objects2D.size(); ++i)
+  {
+    delete objects2D[i];
+  }
+
+  delete menuProgram;
+  delete raceProgram;
+}
 
 bool GraphicEngine::init()
 {
@@ -27,10 +48,9 @@ bool GraphicEngine::init()
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
-
-    glimac::Program program;
-	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
-	program.use();
+  
+  //Initialisation des shader programs
+  initShaderPrograms();
 	
   return true;
 }
@@ -38,10 +58,46 @@ bool GraphicEngine::init()
 void GraphicEngine::swapBuffers()
   {SDL_GL_SwapBuffers();}
 
-void GraphicEngine::renderFrame(GameEngine* gameEngine)
+void GraphicEngine::renderFrame()
 {
   // Rendering code goes here
+
+  //Dessin des objets 2D
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
-  gameEngine->getMenu().draw();
+  for(unsigned int i = 0 ; i < objects2D.size() ; ++i)
+	   objects2D[i]->draw();
+
+  //Dessin des objets 3D test
+  /*
+  std::vector<Object3D* >::iterator one3DObject;
+  for (one3DObject = objects3D.begin(); one3DObject != objects3D.end(); ++one3DObject)
+  {
+    (*one3DObject)->update();
+    (*one3DObject)->draw();
+  }
+  */
+}
+
+void GraphicEngine::initShaderPrograms()
+{
+
+  //Pour le dessin du menu
+  menuProgram = new glimac::ShaderProgram();
+  menuProgram->addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
+  menuProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Color2d.fs.glsl");
+  std::string logInfo;
+  if (!menuProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
+  menuProgram->use();
+
+  //Pour le dessin du monde 3D
+  raceProgram = new glimac::ShaderProgram();
+  raceProgram->addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
+  raceProgram->addShader(GL_FRAGMENT_SHADER, "shaders/SimpleFS.glsl");
+  if (!raceProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
 }

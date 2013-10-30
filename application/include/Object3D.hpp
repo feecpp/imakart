@@ -1,6 +1,7 @@
 #ifndef OBJECT3D_HPP
 #define OBJECT3D_HPP
 
+
 class Positionable;
 
 /**
@@ -11,6 +12,7 @@ class Positionable;
 class Object3D
 {
 public:
+  virtual ~Object3D() {}
   virtual void draw() const = 0;
 
   /**
@@ -30,7 +32,7 @@ public:
   void setModelToRepresent(const Positionable& myModel)
     {model = &myModel;}
 
-private:
+protected:
   const Positionable* model;
 
 };

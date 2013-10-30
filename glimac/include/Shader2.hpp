@@ -34,7 +34,7 @@ public:
 		glShaderSource(m_nGLId, 1, &src, 0);
 	}
 
-	bool compile();
+  bool compile(std::string& logInfo);
 
 	const std::string getInfoLog() const;
 
