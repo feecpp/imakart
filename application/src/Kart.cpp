@@ -15,28 +15,28 @@ Kart::Kart(glm::vec3 position, glm::vec3 direction, float speed)
 void Kart::moveForward(){
 	std::cout << "J'avance" << std::endl;
 	direction.y = 1.0;
-	position.y ++; 
+	position += direction; 
 }
 
 //The Kart goes back : its position changes
 void Kart::moveBackward(){
 	std::cout << "Je recule" << std::endl;
 	direction.y = -1.0;
-	position.y --;
+	position += direction;
 }
 
 // The Kart goes left : its direction changes
 void Kart::turnLeft(){
-	std::cout << "Je tourne à droite" << std::endl;
+	std::cout << "Je tourne à gauche" << std::endl;
 	direction.x = -1.0;
-	position.x --;
+	position += direction;
 }
 
 // The Kart goes left : its direction changes
 void Kart::turnRight(){
-	std::cout << "Je tourne à gauche" << std::endl;
+	std::cout << "Je tourne à droite" << std::endl;
 	direction.x = 1.0;
-	position.x ++;
+	position += direction;
 }
 
 const glm::vec3& Kart::getPosition() const
