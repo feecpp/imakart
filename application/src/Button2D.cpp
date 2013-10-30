@@ -1,8 +1,7 @@
 #include "Button2D.hpp"
 #include <iostream>
 
-Button2D::Button2D():
-	done(false)
+Button2D::Button2D()
 {
 	glm::vec3 color(1.f,0.f,0.f);
 	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), color);
@@ -14,8 +13,7 @@ Button2D::Button2D():
 	setVAO();
 }
 
-Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height):
-	done(false)
+Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height)
 {
 	glm::vec3 color(1.f,0.f,0.f);
 
@@ -47,7 +45,7 @@ void Button2D::setVAO(){
 }
 
 void Button2D::draw(){
-	if( model->isSelected() && !done){
+	if( model->isSelected() ){
 		updateState();
 	}
 
@@ -68,5 +66,4 @@ void Button2D::updateState(){
 	vertices[3].color = color;
 	
 	setVBO();
-	done = true;
 }

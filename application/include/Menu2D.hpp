@@ -2,7 +2,7 @@
 #define MENU2D_HPP
 
 #include <vector>
-#include "Button2D.hpp" 
+#include "Button2D.hpp"
 
 class MenuEventHandler;
 

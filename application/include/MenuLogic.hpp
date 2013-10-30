@@ -5,8 +5,9 @@
 #include "ButtonLogic.hpp" 
 
 class MenuEventHandler;
+class InterfaceElement;
 
-class MenuLogic
+class MenuLogic : public InterfaceElement
 {
 public:
 	unsigned int nbButtonInMenu;
@@ -15,7 +16,9 @@ public:
 	~MenuLogic();
 	
 	const InterfaceElement* getButtonLogicFromTabButtonLogicMenu(const unsigned int positionOfButton);
-	
+	const bool isSelected() const
+		{return false;}
+
 	void initialiseMainMenu();
 	void addButton(ButtonLogic* buttonToAdd);
 	void nextButton();

@@ -1,6 +1,5 @@
 #include "GraphicEngine.hpp"
 #include "program.hpp"
-#include "Menu2D.hpp"
 #include "TextFile.hpp"
 #include <GL/glew.h>
 #include <iostream>
@@ -14,6 +13,11 @@ GraphicEngine::~GraphicEngine()
   for (size_t i = 0; i < objects3D.size(); ++i)
   {
     delete objects3D[i];
+  }
+
+  for (size_t i = 0; i < objects2D.size(); ++i)
+  {
+    delete objects2D[i];
   }
 }
 
@@ -39,10 +43,6 @@ bool GraphicEngine::init()
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
-
-  Menu2D* menu = new Menu2D();
-  menu->initialiseMainMenu();
-  addObject2D(menu);
   
   glimac::Program program;
 	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
@@ -62,9 +62,11 @@ void GraphicEngine::swapBuffers()
 void GraphicEngine::renderFrame()
 {
   // Rendering code goes here
+
+  //Dessin des objets 2D
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i)
-	objects2D[i]->draw();
+	   objects2D[i]->draw();
 
   //Dessin des objets 3D test
   /*
