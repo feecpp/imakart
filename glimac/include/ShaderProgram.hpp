@@ -2,7 +2,7 @@
 #define SHADERPROGRAM_HPP
 
 #include <GL/glew.h>
-#include <Shader.hpp>
+#include <Shader2.hpp>
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
