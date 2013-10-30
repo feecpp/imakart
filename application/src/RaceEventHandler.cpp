@@ -1,28 +1,28 @@
 #include "RaceEventHandler.hpp"
 #include "GameEngine.hpp"
 
-RaceEventHandler::RaceEventHandler(GameEngine* gameEngine)
-  : gameEngine(gameEngine)
+RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine)
+  : gameEngine(gameEngine), graphicEngine(graphicEngine)
 {
 }
 
 void RaceEventHandler::up() const
 {
-  gameEngine->getPlayer().getKart().moveForward();
+  gameEngine.getPlayer().getKart().moveForward();
 }
 
 
 void RaceEventHandler::down() const
 {
-  gameEngine->getPlayer().getKart().moveBackward();
+  gameEngine.getPlayer().getKart().moveBackward();
 }
 
 void RaceEventHandler::left() const
 {
-  gameEngine->getPlayer().getKart().turnLeft();
+  gameEngine.getPlayer().getKart().turnLeft();
 }
 
 void RaceEventHandler::right() const
 {
-  gameEngine->getPlayer().getKart().turnRight();
+  gameEngine.getPlayer().getKart().turnRight();
 }

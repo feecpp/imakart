@@ -4,12 +4,13 @@
 #include "EventHandler.hpp"
 
 class GameEngine;
+class GraphicEngine;
 
 class RaceEventHandler : public EventHandler
 {
 
 public:
-  RaceEventHandler(GameEngine* gameEngine);
+  RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine);
 
   virtual void up() const;
   virtual void down() const;
@@ -17,7 +18,8 @@ public:
   virtual void right() const;
 
 private:
-  GameEngine* gameEngine;
+  GameEngine& gameEngine;
+  GraphicEngine& graphicEngine;
 
 };
 

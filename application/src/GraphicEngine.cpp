@@ -70,14 +70,13 @@ void GraphicEngine::renderFrame()
   }
 
   //Dessin des objets 3D test
-  /*
   std::vector<Object3D* >::iterator one3DObject;
   for (one3DObject = objects3D.begin(); one3DObject != objects3D.end(); ++one3DObject)
   {
     (*one3DObject)->update();
     (*one3DObject)->draw();
   }
-  */
+
 }
 
 void GraphicEngine::initShaderPrograms()

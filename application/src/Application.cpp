@@ -8,6 +8,7 @@
 #include <iostream>
 
 Application::Application()
+  : contextManager(gameEngine, graphicEngine)
    {}
 
 void Application::setupEverything()
@@ -46,7 +47,7 @@ void Application::startGame()
 
 bool Application::handleEvents()
 {
-  const EventHandler& handler = gameEngine.getHandler();
+  const EventHandler& handler = contextManager.getHandler();
 		 
   SDL_Event e;
   while(SDL_PollEvent(&e)) {

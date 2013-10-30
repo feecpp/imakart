@@ -9,7 +9,7 @@ class GameEngine;
 class MenuEventHandler : public EventHandler
 {
 public:
-  MenuEventHandler(GameEngine* gameEngine);
+  MenuEventHandler(GameEngine& gameEngine);
 
   virtual void up() const;
   virtual void down() const;
@@ -20,7 +20,7 @@ public:
    	{this->menu = menu;}
 
 private:
-  GameEngine* gameEngine;
+  GameEngine& gameEngine;
   MenuLogic* menu;
 };
 

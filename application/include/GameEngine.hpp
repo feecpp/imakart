@@ -27,7 +27,6 @@ public:
 
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
-  const EventHandler& getHandler() const;
 
   Player& getPlayer()
     {return player;}
@@ -37,8 +36,6 @@ public:
 
 private:
   GameState state;
-  RaceEventHandler raceEventHandler;
-  MenuEventHandler menuEventHandler;
   Player player;
   MenuLogic menu;
 };

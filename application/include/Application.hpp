@@ -3,6 +3,7 @@
 
 #include "GraphicEngine.hpp"
 #include "GameEngine.hpp"
+#include "ContextManager.hpp"
 
 class Application
 {
@@ -17,6 +18,7 @@ private:
 
   GameEngine gameEngine;
   GraphicEngine graphicEngine;
+  ContextManager contextManager;
 };
 
 #endif // APPLICATION_HPP

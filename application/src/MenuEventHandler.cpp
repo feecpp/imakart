@@ -2,20 +2,20 @@
 #include "GameEngine.hpp"
 #include <iostream>
 
-MenuEventHandler::MenuEventHandler(GameEngine* gameEngine)
+MenuEventHandler::MenuEventHandler(GameEngine& gameEngine)
   : gameEngine(gameEngine)
 {
 }
 
 void MenuEventHandler::up() const
 {
-	gameEngine->getMenuLogic().previousButton();
+  gameEngine.getMenuLogic().previousButton();
 }
 
 
 void MenuEventHandler::down() const
 {
-	gameEngine->getMenuLogic().nextButton();
+  gameEngine.getMenuLogic().nextButton();
 }
 
 void MenuEventHandler::left() const
