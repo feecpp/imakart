@@ -3,7 +3,10 @@
 
 #include <SDL/SDL.h>
 #include <vector>
-#include "GameEngine.hpp" 
+#include <string>
+#include "ShaderProgram.hpp"
+#include <map>
+
 
 class Object3D;
 class Object2D;
@@ -57,6 +60,10 @@ public:
 private:
   void drawWorld();
   void drawInterface();
+  void initShaderPrograms();
+
+  glimac::ShaderProgram* menuProgram;
+  glimac::ShaderProgram* raceProgram;
 
   GraphicSettings settings;
   std::vector<Object3D* > objects3D;

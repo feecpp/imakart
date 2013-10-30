@@ -1,6 +1,7 @@
 #include <ShaderProgram.hpp>
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
+#include <TextFile.hpp>
 
 using namespace glimac;
 
@@ -19,9 +20,23 @@ ShaderProgram::~ShaderProgram()
   glDeleteProgram(programId);
 }
 
-void ShaderProgram::addShader(GLenum shaderType, const std::string& shaderSource)
+void ShaderProgram::addShader(GLenum shaderType, const std::string& shaderFilePath)
 {
-  Shader* newShader = new Shader(shaderType, shaderSource);
+  std::string shaderSource;
+  //RAII
+  {
+    glimac::TextFile shaderFile(shaderFilePath);
+    if (!shaderFile.isValid())
+    {
+      std::cerr << "Erreur fatale : impossible de trouver les shaders" << std::endl;
+    }
+
+    shaderSource = shaderFile.getString();
+  }
+
+  Shader* newShader = new Shader(shaderType);
+
+  newShader->setSource(shaderSource.c_str());
   shadersList.push_back(newShader);
 }
 
@@ -32,7 +47,7 @@ bool ShaderProgram::compileAndLinkShaders(std::string &logInfo) const
   {
     if (!(*currentShader)->compile(logInfo))
       return false;
-    glAttachShader(programId, (*currentShader)->getId());
+    glAttachShader(programId, (*currentShader)->getGLId());
   }
 
   glLinkProgram(programId);
@@ -51,11 +66,11 @@ bool ShaderProgram::compileAndLinkShaders(std::string &logInfo) const
   }
   for (currentShader  = shadersList.begin(); currentShader
       != shadersList.end(); ++currentShader)
-    glDetachShader(programId, (*currentShader)->getId());
+    glDetachShader(programId, (*currentShader)->getGLId());
   return true;
 }
 
-void ShaderProgram::useProgram() const
+void ShaderProgram::use() const
 {
   glUseProgram(programId);
 }
@@ -73,4 +88,29 @@ void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat3 &matrix)
 void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat4& matrix)
 {
   glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+ShaderProgram ShaderProgram::loadProgram(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)
+{
+  std::string vertexShaderSource;
+  std::string fragmentShaderSource;
+  {
+    glimac::TextFile vertexShaderFile(vertexShaderFilePath);
+    glimac::TextFile fragmentShaderFile(fragmentShaderFilePath);
+
+    if (!vertexShaderFile.isValid() || !fragmentShaderFile.isValid())
+    {
+      std::cerr << "Erreur fatale : impossible de trouver les shaders" << std::endl;
+      exit(-1);
+    }
+
+    vertexShaderSource = vertexShaderFile.getString();
+    fragmentShaderSource = fragmentShaderFile.getString();
+  }
+
+  ShaderProgram program;
+  program.addShader(GL_VERTEX_SHADER, vertexShaderSource);
+  program.addShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+
+  return program;
 }

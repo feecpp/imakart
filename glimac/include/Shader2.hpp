@@ -1,32 +1,51 @@
-#ifndef SHADER_HPP
-#define SHADER_HPP
+#pragma once
 
 #include <GL/glew.h>
 #include <string>
 
-namespace glimac
-{
+#define GLIMAC_SHADER_SRC(str) #str
 
-class Shader
-{
+namespace glimac {
+
+class Shader {
 public:
-  Shader(GLenum shaderType, const std::string &shaderSource);
-  ~Shader();
+	Shader(GLenum type): m_nGLId(glCreateShader(type)) {
+	}
 
-  GLuint getId() const
-    {return shaderId;}
+	~Shader() {
+		glDeleteShader(m_nGLId);
+	}
 
-  bool compile(std::string& logInfo) const;
+	Shader(Shader&& rvalue): m_nGLId(rvalue.m_nGLId) {
+		rvalue.m_nGLId = 0;
+	}
+
+	Shader& operator =(Shader&& rvalue) {
+		m_nGLId = rvalue.m_nGLId;
+		rvalue.m_nGLId = 0;
+		return *this;
+	}
+
+	GLuint getGLId() const {
+		return m_nGLId;
+	}
+
+	void setSource(const char* src) {
+		glShaderSource(m_nGLId, 1, &src, 0);
+	}
+
+  bool compile(std::string& logInfo);
+
+	const std::string getInfoLog() const;
 
 private:
-  //A Shader cannot be copied
-  Shader(const Shader&);
-  Shader& operator=(const Shader& other);
+	Shader(const Shader&);
+	Shader& operator =(const Shader&);
 
-  GLuint shaderId;
-
+	GLuint m_nGLId;
 };
 
-}// namespace glimac
+// Load a shader (but does not compile it)
+Shader loadShader(GLenum type, const char* filename);
 
-#endif // SHADER_HPP
+}

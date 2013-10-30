@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "Object3D.hpp"
+#include "TextFile.hpp"
 
 GraphicEngine::~GraphicEngine()
 {
@@ -15,10 +16,14 @@ GraphicEngine::~GraphicEngine()
     delete objects3D[i];
   }
 
+
   for (size_t i = 0; i < objects2D.size(); ++i)
   {
     delete objects2D[i];
   }
+
+  delete menuProgram;
+  delete raceProgram;
 }
 
 bool GraphicEngine::init()
@@ -44,14 +49,8 @@ bool GraphicEngine::init()
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
   
-  glimac::Program program;
-	program = glimac::loadProgram("shaders/Color2d.vs.glsl", "shaders/Color2d.fs.glsl");
-  program.use();
-
-
-  //SHADER STUFF JN(test du KartCube)
-  //glimac::Program jnProgramTest = glimac::loadProgram("shaders/Simple3DVS.glsl", "shaders/SimpleFS.glsl");
-  //jnProgramTest.use();
+  //Initialisation des shader programs
+  initShaderPrograms();
 	
   return true;
 }
@@ -77,4 +76,28 @@ void GraphicEngine::renderFrame()
     (*one3DObject)->draw();
   }
   */
+}
+
+void GraphicEngine::initShaderPrograms()
+{
+
+  //Pour le dessin du menu
+  menuProgram = new glimac::ShaderProgram();
+  menuProgram->addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
+  menuProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Color2d.fs.glsl");
+  std::string logInfo;
+  if (!menuProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
+  menuProgram->use();
+
+  //Pour le dessin du monde 3D
+  raceProgram = new glimac::ShaderProgram();
+  raceProgram->addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
+  raceProgram->addShader(GL_FRAGMENT_SHADER, "shaders/SimpleFS.glsl");
+  if (!raceProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
 }
