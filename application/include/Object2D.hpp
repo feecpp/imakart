@@ -13,7 +13,7 @@ public:
   
   virtual void draw() const = 0;
   virtual void update() = 0;
-  
+
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}
 
