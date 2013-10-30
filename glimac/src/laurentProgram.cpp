@@ -1,4 +1,5 @@
-#include "program.hpp"
+/*
+#include "laurentProgram.hpp"
 #include <stdexcept>
 
 namespace glimac {
@@ -72,3 +73,4 @@ Program loadProgram(const char* vsFile, const char* fsFile) {
 }
 
 }
+*/

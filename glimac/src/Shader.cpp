@@ -1,35 +1,49 @@
-#include <Shader.hpp>
-#include <iostream>
+#include "Shader.hpp"
 
-using namespace glimac;
+#include <fstream>
+#include <stdexcept>
+#include <string>
+#include <sstream>
 
-Shader::Shader(GLenum shaderType, const std::string& shaderSource)
-{
-  shaderId = glCreateShader(shaderType);
-  const char* text = shaderSource.c_str();
-  const char** pText = &text;
-  glShaderSource(shaderId, 1, pText, 0);
+namespace glimac {
+
+bool Shader::compile(std::string& infoLog) {
+	glCompileShader(m_nGLId);
+	GLint status;
+	glGetShaderiv(m_nGLId, GL_COMPILE_STATUS, &status);
+  GLint length;
+  glGetShaderiv(m_nGLId, GL_INFO_LOG_LENGTH, &length);
+  char* log = new char[length];
+  glGetShaderInfoLog(m_nGLId, length, 0, log);
+  infoLog.append(log);
+
+  delete [] log;
+	return status == GL_TRUE;
 }
 
-bool Shader::compile(std::string& logInfo) const
-{
-  glCompileShader(shaderId);
-  GLint compileStatus = 1;
-  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compileStatus);
-  GLint logLength = 0;
-  glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
-  char log[logLength];
-  glGetShaderInfoLog(shaderId, logLength, 0, log);
-  logInfo.append(log);
-
-  if (compileStatus == GL_FALSE)
-    return false;
-
-
-  return true;
+const std::string Shader::getInfoLog() const {
+	GLint length;
+	glGetShaderiv(m_nGLId, GL_INFO_LOG_LENGTH, &length);
+	char* log = new char[length];
+	glGetShaderInfoLog(m_nGLId, length, 0, log);
+	std::string logString(log);
+	delete [] log;
+	return logString;
 }
 
-Shader::~Shader()
-{
-  glDeleteShader(shaderId);
+Shader loadShader(GLenum type, const char* filename) {
+	std::ifstream input(filename);
+    if(!input) {
+        throw std::runtime_error("Unable to load the file " + std::string(filename));
+    }
+    
+    std::stringstream buffer;
+    buffer << input.rdbuf();
+    
+    Shader shader(type);
+    shader.setSource(buffer.str().c_str());
+
+    return shader;
+}
+
 }
