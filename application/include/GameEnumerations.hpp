@@ -6,6 +6,7 @@
  */
 enum GameState
 {
+  NO_STATE,
   IN_MENU,
   IN_RACE,
   IN_RACE_MENU

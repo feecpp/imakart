@@ -40,10 +40,16 @@ class GraphicEngine
 {
 public:
   ~GraphicEngine();
-  //TODO
+
   bool init();
   void renderFrame();
   void swapBuffers();
+
+  /**
+   * @brief reset
+   * Nettoie la liste des objets 2D et 3D.
+   */
+  void reset();
 
   /**
    * @brief addObject3D Ajout un objet 3D dans la liste d'affichage
@@ -56,6 +62,15 @@ public:
     
   void addObject2D(Object2D* newObject2D)
     {objects2D.push_back(newObject2D);}
+
+  /*
+   * C'est un peu moisi comme méthode
+   * mais ça suffit pour l'instant. A améliorier
+   * quand le graphique engine aura plus de ShaderProgram
+   * à gérer
+   **/
+  void useMenuProgram() const;
+  void useRaceProgram() const;
 
 private:
   void drawWorld();

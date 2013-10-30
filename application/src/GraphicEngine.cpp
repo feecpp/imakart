@@ -9,18 +9,7 @@
 GraphicEngine::~GraphicEngine()
 {
   //Le graphic engine delete tous ses objets 3D à sa mort
-  //Utiliser un iterator déclenche un bug hyper chelou (tente de détruire un deuxième
-  //pointeur vers la classe mère...)
-  for (size_t i = 0; i < objects3D.size(); ++i)
-  {
-    delete objects3D[i];
-  }
-
-
-  for (size_t i = 0; i < objects2D.size(); ++i)
-  {
-    delete objects2D[i];
-  }
+  reset();
 
   delete menuProgram;
   delete raceProgram;
@@ -101,4 +90,29 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
+}
+
+void GraphicEngine::reset()
+{
+  //Utiliser un iterator déclenche un bug hyper chelou (tente de détruire un deuxième
+  //pointeur vers la classe mère...)
+  for (size_t i = 0; i < objects3D.size(); ++i)
+  {
+    delete objects3D[i];
+  }
+
+  for (size_t i = 0; i < objects2D.size(); ++i)
+  {
+    delete objects2D[i];
+  }
+}
+
+void GraphicEngine::useMenuProgram() const
+{
+  menuProgram->use();
+}
+
+void GraphicEngine::useRaceProgram() const
+{
+  raceProgram->use();
 }
