@@ -1,7 +1,7 @@
 #ifndef GRAPHICENGINE_HPP
 #define GRAPHICENGINE_HPP
 
-#include <SDL/SDL.h>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 #include "ShaderProgram.hpp"
@@ -15,7 +15,7 @@ class Object2D;
  * @brief Les options graphiques bas niveau
  * (pas forcément la meilleure manière de faire)
  */
-struct GraphicSettings
+/*struct GraphicSettings
 {
   GraphicSettings()
     : FPS(30), WINDOW_WIDTH(800), WINDOW_HEIGHT(600), WINDOW_BPP(32)
@@ -28,7 +28,7 @@ struct GraphicSettings
   Uint32 WINDOW_WIDTH;
   Uint32 WINDOW_HEIGHT;
   Uint32 WINDOW_BPP;
-};
+};*/
 
 /**
  * @brief The GraphicEngine class
@@ -41,9 +41,9 @@ class GraphicEngine
 public:
   ~GraphicEngine();
 
-  bool init();
+  sf::RenderWindow& init();
   void renderFrame();
-  void swapBuffers();
+  void swapBuffers(sf::RenderWindow& window);
 
   /**
    * @brief reset
@@ -80,7 +80,7 @@ private:
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;
 
-  GraphicSettings settings;
+  //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
 

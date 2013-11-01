@@ -10,11 +10,11 @@ class Application
 public:
   Application();
 
-  void setupEverything();
-  void startGame();
+  sf::RenderWindow& setupEverything();
+  void startGame(sf::RenderWindow& window);
 
 private:
-  bool handleEvents();
+  bool handleEvents(sf::RenderWindow& window);
 
   GameEngine gameEngine;
   GraphicEngine graphicEngine;

@@ -1,5 +1,5 @@
 #include "Application.hpp"
-#include "SDL/SDL.h"
+#include <SFML/Graphics.hpp>
 #include "EventHandler.hpp"
 #include "Kart.hpp"
 #include "KartCube.hpp"
@@ -11,64 +11,56 @@ Application::Application()
   : contextManager(gameEngine, graphicEngine)
    {}
 
-void Application::setupEverything()
+sf::RenderWindow& Application::setupEverything()
 {
-  graphicEngine.init();
+  sf::RenderWindow& window = graphicEngine.init();
   gameEngine.init();
 
   contextManager.updateContextIfNeeded();
+  return window;
 }
 
-void Application::startGame()
+void Application::startGame(sf::RenderWindow& window)
 {
   bool askedForQuit = false;
   do
   {
     graphicEngine.renderFrame();
     gameEngine.update();
-    askedForQuit = handleEvents();
+    askedForQuit = handleEvents(window);
     contextManager.updateContextIfNeeded();
 
-    graphicEngine.swapBuffers();
+    graphicEngine.swapBuffers(window);
   } while (!askedForQuit);
 }
 
-bool Application::handleEvents()
+bool Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();
-		 
-  SDL_Event e;
-  while(SDL_PollEvent(&e)) {
 
-    if (e.type == SDL_QUIT)
-      return true;
+  sf::Event e;
+  while (window.pollEvent(e))
+  {
+      switch(e.type){
+          case sf::Event::Closed :
+                  window.close();
+                  break;
+          case sf::Event::KeyPressed:
+              if (e.key.code == sf::Keyboard::Down){
+                  handler.down();
+              }
+              if (e.key.code == sf::Keyboard::Up){
+                  handler.up();
+              }
+              if (e.key.code == sf::Keyboard::Left){
+                  handler.left();
+              }
+              if (e.key.code == sf::Keyboard::Right){
+                  handler.right();
+              }
+              break;
+      }
 
-    switch(e.type) {
-
-      case SDL_KEYDOWN :
-
-        switch(e.key.keysym.sym) {
-
-          case SDLK_DOWN:
-            handler.down();
-          break;
-
-          case SDLK_UP:
-            handler.up();
-          break;
-
-          case SDLK_LEFT:
-              handler.left();
-          break;
-
-          case SDLK_RIGHT:
-            handler.right();
-          break;
-
-          default:
-          break;
-        }
-    }
   }
   return false;
 }
