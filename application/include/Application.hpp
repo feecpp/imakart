@@ -13,6 +13,11 @@ public:
   void setupEverything();
   void startGame();
 
+  //Fonction temporaire pour ne pas avoir
+  //besoin de passer par le menu tant qu'il n'est pas pret
+  //A appeler dans le main à la place de setupEverything() et startGame()
+  void testRace();
+
 private:
   bool handleEvents();
 

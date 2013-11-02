@@ -33,6 +33,15 @@ void Application::startGame()
   } while (!askedForQuit);
 }
 
+void Application::testRace()
+{
+  setupEverything();
+  gameEngine.setState(IN_RACE);
+
+  contextManager.updateContextIfNeeded();
+  startGame();
+}
+
 bool Application::handleEvents()
 {
   const EventHandler& handler = contextManager.getHandler();

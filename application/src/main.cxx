@@ -21,11 +21,12 @@ static const Uint32 WINDOW_BPP = 32;
 
 int main() {
 
+
   // Pour le "vrai jeu"
   Application app;
   app.setupEverything();
   app.startGame();
-  return EXIT_SUCCESS;
+ return EXIT_SUCCESS;
 
 
 	// Pour les tests

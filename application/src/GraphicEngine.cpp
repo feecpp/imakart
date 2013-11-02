@@ -105,6 +105,8 @@ void GraphicEngine::reset()
   {
     delete objects2D[i];
   }
+  objects3D.erase(objects3D.begin(), objects3D.end());
+  objects2D.erase(objects2D.begin(), objects2D.end());
 }
 
 void GraphicEngine::useMenuProgram() const
