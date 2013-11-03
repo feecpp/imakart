@@ -44,5 +44,5 @@ void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 #include <iostream>
 void KartCube::update()
 {
-  modelMatrix = glm::translate(modelMatrix, model->getPosition());
+  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition());
 }
