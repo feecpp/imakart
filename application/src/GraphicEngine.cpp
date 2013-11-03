@@ -17,12 +17,14 @@ GraphicEngine::~GraphicEngine()
 
 sf::RenderWindow& GraphicEngine::init()
 {
-  sf::RenderWindow window(sf::VideoMode(800, 600), "ImaKart");
+  (this->window).create(sf::VideoMode(800, 600), "ImaKart");
+
+  sf::RenderWindow& myWindow =window;
 
   GLenum glewCode = glewInit();
   if(GLEW_OK != glewCode) {
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
-    return false;
+    return window;
   }
 
   //OpenGL initial state
@@ -30,8 +32,8 @@ sf::RenderWindow& GraphicEngine::init()
   
   //Initialisation des shader programs
   initShaderPrograms();
-	
-  return window;
+
+  return myWindow;
 }
 
 void GraphicEngine::swapBuffers(sf::RenderWindow& window)

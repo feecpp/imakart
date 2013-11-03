@@ -84,6 +84,8 @@ private:
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
 
+  sf::RenderWindow window;
+
 };
 
 #endif // GRAPHICENGINE_HPP
