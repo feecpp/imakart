@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Positionable.hpp"
 #include <cstddef>
+#include <ShaderProgram.hpp>
 
 KartCube::KartCube()
 {
@@ -31,12 +32,16 @@ KartCube::KartCube()
   vao.vertexAttribPointer(vbo, 0, 3, GL_FLOAT, GL_TRUE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, position));
 }
 
-void KartCube::draw() const{
+void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
+{
+  GLint modelMatrixIndex = shaderProgram.getUniformIndex("MVP");
+  shaderProgram.setUniform(modelMatrixIndex, modelMatrix);
   vao.bind();
   glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
 }
 
+#include <iostream>
 void KartCube::update()
 {
   modelMatrix = glm::translate(modelMatrix, model->getPosition());

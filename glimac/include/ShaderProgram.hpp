@@ -42,9 +42,9 @@ public:
   bool compileAndLinkShaders(std::string& logInfo) const;
   void use() const;
 
-  GLint getUniformIndex(const std::string& uniformName);
-  void setUniform(GLint uniformIndex, const glm::mat3& matrix);
-  void setUniform(GLint uniformIndex, const glm::mat4& matrix);
+  GLint getUniformIndex(const std::string& uniformName) const;
+  void setUniform(GLint uniformIndex, const glm::mat3& matrix) const;
+  void setUniform(GLint uniformIndex, const glm::mat4& matrix) const;
 
   GLint getId() const
     {return programId;}

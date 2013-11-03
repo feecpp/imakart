@@ -6,22 +6,22 @@
 
 class Kart : public Positionable
 {
-	public:
-		Kart();
-    Kart(glm::vec3 position, glm::vec3 direction, float speed);
-		
-		void moveForward();
-		void moveBackward();
-		void turnLeft();
-		void turnRight();
+public:
+  Kart();
+  Kart(glm::vec3 position, glm::vec3 direction, float speed);
 
-    virtual const glm::vec3& getPosition() const;
-    virtual const glm::vec3& getOrientation() const;
+  void moveForward();
+  void moveBackward();
+  void turnLeft();
+  void turnRight();
 
-    private:
-		glm::vec3 position;
-    	glm::vec3 direction;
-		float speed;
+  virtual const glm::vec3& getPosition() const;
+  virtual const glm::vec3& getOrientation() const;
+
+private:
+  glm::vec3 position;
+  glm::vec3 direction;
+  float speed;
 
 };
 

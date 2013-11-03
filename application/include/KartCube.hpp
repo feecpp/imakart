@@ -16,7 +16,7 @@ public:
   /**
    * @see Object3D
    */
-  virtual void draw() const;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const;
 
 
   /**

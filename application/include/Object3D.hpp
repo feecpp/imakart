@@ -1,6 +1,7 @@
 #ifndef OBJECT3D_HPP
 #define OBJECT3D_HPP
 
+#include <ShaderProgram.hpp>
 
 class Positionable;
 
@@ -13,7 +14,7 @@ class Object3D
 {
 public:
   virtual ~Object3D() {}
-  virtual void draw() const = 0;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const = 0;
 
   /**
    * @brief update : l'objet 3D doit se mettre à jour

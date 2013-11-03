@@ -75,17 +75,17 @@ void ShaderProgram::use() const
   glUseProgram(programId);
 }
 
-GLint ShaderProgram::getUniformIndex(const std::string &uniformName)
+GLint ShaderProgram::getUniformIndex(const std::string &uniformName) const
 {
   return glGetUniformLocation(programId, uniformName.c_str());
 }
 
-void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat3 &matrix)
+void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat3 &matrix) const
 {
   glUniformMatrix3fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat4& matrix)
+void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat4& matrix) const
 {
   glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
 }
