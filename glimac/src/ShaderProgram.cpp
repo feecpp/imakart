@@ -8,6 +8,7 @@ using namespace glimac;
 ShaderProgram::ShaderProgram()
 {
   programId = glCreateProgram();
+  std::cout << "ShaderProgram id " << programId << "créé"  << std::endl;
 }
 
 ShaderProgram::~ShaderProgram()
@@ -18,6 +19,7 @@ ShaderProgram::~ShaderProgram()
     delete *currentShader;
 
   glDeleteProgram(programId);
+  std::cout << "ShaderProgram id " << programId << "détruit"  << std::endl;
 }
 
 void ShaderProgram::addShader(GLenum shaderType, const std::string& shaderFilePath)

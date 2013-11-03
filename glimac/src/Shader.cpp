@@ -1,11 +1,22 @@
 #include "Shader.hpp"
-
+#include <iostream>
 #include <fstream>
 #include <stdexcept>
 #include <string>
 #include <sstream>
 
 namespace glimac {
+
+Shader::Shader(GLenum type)
+  : m_nGLId(glCreateShader(type))
+{
+  std::cout << "Shader id" << m_nGLId << " créé" << std::endl;
+}
+
+Shader::~Shader() {
+  glDeleteShader(m_nGLId);
+  std::cout << "Shader id" << m_nGLId << " détruit" << std::endl;
+}
 
 bool Shader::compile(std::string& infoLog) {
 	glCompileShader(m_nGLId);

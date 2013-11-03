@@ -8,12 +8,14 @@ using namespace glimac;
 VAO::VAO()
 {
   glGenVertexArrays(1, &vaoId);
+  std::cout << "VAO id" << vaoId << " créé" << std::endl;
   //OpenGLDebugger::checkError();
 }
 
 VAO::~VAO()
 {
   glDeleteVertexArrays(1, &vaoId);
+  std::cout << "VAO id" << vaoId << " détruit" << std::endl;
   //OpenGLDebugger::checkError();
 }
 
