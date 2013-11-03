@@ -34,14 +34,13 @@ KartCube::KartCube()
 
 void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 {
-  GLint modelMatrixIndex = shaderProgram.getUniformIndex("MVP");
+  GLint modelMatrixIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelMatrixIndex, modelMatrix);
   vao.bind();
   glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
 }
 
-#include <iostream>
 void KartCube::update()
 {
   modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition());

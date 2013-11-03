@@ -1,10 +1,16 @@
 #include "GraphicEngine.hpp"
-#include "TextFile.hpp"
 #include <GL/glew.h>
 #include <iostream>
 #include "Object3D.hpp"
 #include "Object2D.hpp"
-#include "TextFile.hpp"
+#include <TextFile.hpp>
+#include "Camera.hpp"
+#include <cassert>
+
+GraphicEngine::GraphicEngine()
+  : currentCamera(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+{
+}
 
 GraphicEngine::~GraphicEngine()
 {
@@ -13,6 +19,7 @@ GraphicEngine::~GraphicEngine()
 
   delete menuProgram;
   delete raceProgram;
+  delete currentCamera;
 }
 
 bool GraphicEngine::init()
@@ -45,11 +52,29 @@ bool GraphicEngine::init()
 }
 
 void GraphicEngine::swapBuffers()
-  {SDL_GL_SwapBuffers();}
+{SDL_GL_SwapBuffers();}
+
+const GraphicSettings&GraphicEngine::getSettings() const
+{
+  return settings;
+}
 
 void GraphicEngine::renderFrame()
 {
-  // Rendering code goes here
+  assert(currentProgram != nullptr);
+  //assert(currentCamera != nullptr);
+
+  //En attendant une meilleure gestion de la caméra dans le menu,
+  //menu => camera == nullptr
+  if (currentCamera != nullptr)
+  {
+    //Mise à jour matrice ViewProjection
+    //Attention : le vertex shader doit contenir les bonnes uniforms
+    currentCamera->updateViewProjectionMatrix();
+    const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    currentProgram->setUniform(viewProjectionId, viewProjection);
+  }
 
   //Dessin des objets 2D
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -58,12 +83,13 @@ void GraphicEngine::renderFrame()
 	  objects2D[i]->draw();
   }
 
-  //Dessin des objets 3D test
+  //Dessin des objets 3D
   std::vector<Object3D* >::iterator one3DObject;
   for (one3DObject = objects3D.begin(); one3DObject != objects3D.end(); ++one3DObject)
   {
     (*one3DObject)->update();
-    (*one3DObject)->draw(*raceProgram);
+    //Attention : le vertex shader doit contenir les bonnes uniforms
+    (*one3DObject)->draw(*currentProgram);
   }
 
 }
@@ -80,7 +106,8 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
-  menuProgram->use();
+
+  useMenuProgram();
 
   //Pour le dessin du monde 3D
   raceProgram = new glimac::ShaderProgram();
@@ -109,12 +136,20 @@ void GraphicEngine::reset()
   objects2D.erase(objects2D.begin(), objects2D.end());
 }
 
-void GraphicEngine::useMenuProgram() const
+void GraphicEngine::setCamera(Camera* newCamera)
 {
-  menuProgram->use();
+  delete currentCamera;
+  currentCamera = newCamera;
 }
 
-void GraphicEngine::useRaceProgram() const
+void GraphicEngine::useMenuProgram()
+{
+  menuProgram->use();
+  currentProgram = menuProgram;
+}
+
+void GraphicEngine::useRaceProgram()
 {
   raceProgram->use();
+  currentProgram = raceProgram;
 }

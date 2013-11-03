@@ -52,6 +52,13 @@ void ContextManager::setupRaceContext() const
   graphicEngine.useRaceProgram();
   KartCube* cube = new KartCube();
   cube->setModelToRepresent(gameEngine.getPlayer().getKart());
+
+  const GraphicSettings& settings = graphicEngine.getSettings();
+  Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
+  camera->linkToPositionable(gameEngine.getPlayer().getKart());
+
+  //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
+  graphicEngine.setCamera(camera);
   graphicEngine.addObject3D(cube);
 }
 
