@@ -37,7 +37,13 @@ public:
    * Flèche droite
    */
   virtual void right() const = 0;
-
+  
+  /**
+   * @brief press enter
+   * Touche entrée
+   */
+  virtual void enter() const = 0;
+   
 };
 
 #endif // EVENTMANAGER_HPP

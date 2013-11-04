@@ -26,3 +26,8 @@ void RaceEventHandler::right() const
 {
   gameEngine.getPlayer().getKart().turnRight();
 }
+
+void RaceEventHandler::enter() const
+{
+	
+}

@@ -47,37 +47,85 @@ bool Application::handleEvents()
   const EventHandler& handler = contextManager.getHandler();
 		 
   SDL_Event e;
+  bool upup = true;
+  bool downup = true;
+  bool leftup = true;
+  bool rightup = true;
+
   while(SDL_PollEvent(&e)) {
 
-    if (e.type == SDL_QUIT)
-      return true;
-
     switch(e.type) {
+	
+	  case SDL_QUIT : 
+		return true;
+		break;
 
       case SDL_KEYDOWN :
 
         switch(e.key.keysym.sym) {
 
+		  case SDLK_RETURN:
+			handler.enter();
+		  break;
+		  
           case SDLK_DOWN:
+			downup = false;
             handler.down();
           break;
 
           case SDLK_UP:
+			upup = false;
             handler.up();
           break;
 
           case SDLK_LEFT:
-              handler.left();
+			leftup = false;
+            handler.left();
           break;
 
           case SDLK_RIGHT:
+			rightup = false;
             handler.right();
           break;
 
           default:
           break;
         }
+        
+        break;
+        
+      case SDL_KEYUP :
+       
+        switch(e.key.keysym.sym) {
+
+          case SDLK_DOWN:
+			downup = true;
+          break;
+
+          case SDLK_UP:
+			upup = true;
+          break;
+
+          case SDLK_LEFT:
+			leftup = true;
+          break;
+
+          case SDLK_RIGHT:
+			rightup = true;
+          break;
+
+          default:
+          break;
+        }      
+        
+        break;
     }
   }
+  
+  if (!upup) //handler.up();
+  if (!downup) //handler.down();// do smthing
+  if (!leftup) //handler.left(); // do smthing
+  if (!rightup){ }//handler.right(); // do smthing
+ 
   return false;
 }

@@ -55,5 +55,9 @@ void MenuLogic::previousButton(){
 	tabButtonLogicMenu[positionButtonSelected]->changeState();
 }
 
+void MenuLogic::submitButton(){
+	tabButtonLogicMenu[positionButtonSelected]->submit();
+}
+
 MenuLogic::~MenuLogic(){
 }

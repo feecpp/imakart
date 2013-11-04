@@ -16,6 +16,7 @@ public:
   virtual void down() const;
   virtual void left() const;
   virtual void right() const;
+  virtual void enter() const;
 
 private:
   GameEngine& gameEngine;
