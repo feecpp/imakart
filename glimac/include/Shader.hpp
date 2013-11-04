@@ -9,7 +9,7 @@ namespace glimac {
 
 class Shader {
 public:
-  Shader(GLenum type);
+  Shader(GLenum type, const std::string name);
 
   ~Shader();
 
@@ -40,9 +40,11 @@ private:
 	Shader& operator =(const Shader&);
 
 	GLuint m_nGLId;
+  const std::string name;//Pour faciliter le debug
 };
 
 // Load a shader (but does not compile it)
+//Attention; peut balancer une exception
 Shader loadShader(GLenum type, const char* filename);
 
 }

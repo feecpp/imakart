@@ -1,14 +1,20 @@
 #include <ShaderProgram.hpp>
-#include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <TextFile.hpp>
+#include <stdexcept>
+
+#if DEBUG
+  #include <iostream>
+#endif
 
 using namespace glimac;
 
 ShaderProgram::ShaderProgram()
 {
   programId = glCreateProgram();
+#if DEBUG
   std::cout << "ShaderProgram id " << programId << "créé"  << std::endl;
+#endif
 }
 
 ShaderProgram::~ShaderProgram()
@@ -19,7 +25,10 @@ ShaderProgram::~ShaderProgram()
     delete *currentShader;
 
   glDeleteProgram(programId);
+
+#if DEBUG
   std::cout << "ShaderProgram id " << programId << "détruit"  << std::endl;
+#endif
 }
 
 void ShaderProgram::addShader(GLenum shaderType, const std::string& shaderFilePath)
@@ -30,13 +39,13 @@ void ShaderProgram::addShader(GLenum shaderType, const std::string& shaderFilePa
     glimac::TextFile shaderFile(shaderFilePath);
     if (!shaderFile.isValid())
     {
-      std::cerr << "Erreur fatale : impossible de trouver les shaders" << std::endl;
+      throw std::runtime_error("Impossible de trouver : " + shaderFilePath);
     }
 
     shaderSource = shaderFile.getString();
   }
 
-  Shader* newShader = new Shader(shaderType);
+  Shader* newShader = new Shader(shaderType, shaderFilePath);
 
   newShader->setSource(shaderSource.c_str());
   shadersList.push_back(newShader);
@@ -102,8 +111,7 @@ ShaderProgram ShaderProgram::loadProgram(const std::string& vertexShaderFilePath
 
     if (!vertexShaderFile.isValid() || !fragmentShaderFile.isValid())
     {
-      std::cerr << "Erreur fatale : impossible de trouver les shaders" << std::endl;
-      exit(-1);
+      throw std::runtime_error("Impossible de trouver : " + vertexShaderFilePath + "; " + fragmentShaderFilePath);
     }
 
     vertexShaderSource = vertexShaderFile.getString();

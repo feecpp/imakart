@@ -20,8 +20,6 @@ static const Uint32 WINDOW_HEIGHT = 600;
 static const Uint32 WINDOW_BPP = 32;
 
 int main() {
-
-
   // Pour le "vrai jeu"
   Application app;
   app.setupEverything();
