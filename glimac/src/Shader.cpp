@@ -24,11 +24,14 @@ bool Shader::compile(std::string& infoLog) {
 	glGetShaderiv(m_nGLId, GL_COMPILE_STATUS, &status);
   GLint length;
   glGetShaderiv(m_nGLId, GL_INFO_LOG_LENGTH, &length);
-  char* log = new char[length];
-  glGetShaderInfoLog(m_nGLId, length, 0, log);
-  infoLog.append(log);
+  if (length > 1)
+  {
+    char* log = new char[length];
+    glGetShaderInfoLog(m_nGLId, length, 0, log);
+    infoLog.append(log);
 
-  delete [] log;
+    delete [] log;
+  }
 	return status == GL_TRUE;
 }
 
