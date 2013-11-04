@@ -13,6 +13,7 @@ public:
 	~ButtonLogic();
 
 	void changeState();
+	void submit(); //what the button do when you press enter
 	const bool isSelected() const;
 
 private:

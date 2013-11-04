@@ -13,6 +13,10 @@ void ButtonLogic::changeState(){
 	selected = !selected;
 }
 
+void ButtonLogic::submit(){
+	
+}
+
 const bool ButtonLogic::isSelected() const{
 	return selected;
 }

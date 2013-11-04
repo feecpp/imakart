@@ -28,3 +28,8 @@ void MenuEventHandler::right() const
 
 }
 
+void MenuEventHandler::enter() const
+{
+	gameEngine.getMenuLogic().submitButton();
+}
+
