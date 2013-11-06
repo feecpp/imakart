@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SFML/Graphics.hpp>
 #include <GL/glew.h>
 #include <iostream>
 #include <cstdlib>
@@ -12,39 +12,25 @@
 //#include "ShaderProgram.hpp"
 #include "Application.hpp"
 
-static const Uint32 FPS = 30;
-static const Uint32 FRAME_DURATION = 1000.f / FPS;
 
-static const Uint32 WINDOW_WIDTH = 800;
-static const Uint32 WINDOW_HEIGHT = 600;
-static const Uint32 WINDOW_BPP = 32;
 
 int main() {
+
   // Pour le "vrai jeu"
   Application app;
-  app.setupEverything();
-  app.startGame();
- return EXIT_SUCCESS;
+  sf::RenderWindow& window = app.setupEverything();
+  app.startGame(window);
+  return EXIT_SUCCESS;
 
 
 	// Pour les tests
-	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-		std::cerr << "Unable to initialize SDL" << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BPP, SDL_OPENGL)) {
-		std::cerr << "Unable to open the window and get an OpenGL context" << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	SDL_WM_SetCaption("OpenGL4Imacs", NULL);
+  /*  sf::RenderWindow window(sf::VideoMode(800, 600), "ImaKart");
 
 	GLenum glewCode = glewInit();
 	if(GLEW_OK != glewCode) {
 		std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
 		return EXIT_FAILURE;
-	}
+    }*/
 	/*
 	Menu main_menu;
 	main_menu.create_main_menu();
@@ -83,26 +69,19 @@ int main() {
   std::cout << "Is it completed ? " << map.isCompleted() << std::endl;*/
 
 	
-	bool done = false;
-	while(!done) {
-		Uint32 tStart = SDL_GetTicks();
-		
+    //bool done = false;
+    //while(!done) {
+
 		// Rendering code goes here
-		glClear(GL_COLOR_BUFFER_BIT);
+        //glClear(GL_COLOR_BUFFER_BIT);
 	
 		// Application code goes here
 
 		// Mise à jour de la fenêtre (synchronisation implicite avec OpenGL)
-		SDL_GL_SwapBuffers();
-
-		Uint32 tEnd = SDL_GetTicks();
-		Uint32 d = tEnd - tStart;
-		if(d < FRAME_DURATION) {
-			SDL_Delay(FRAME_DURATION - d);
-		}
-	}
+        //SDL_GL_SwapBuffers();
+    //}
 	// Destruction des ressources
-	SDL_Quit();
+    //window.close();
 
 	return EXIT_SUCCESS;
 }

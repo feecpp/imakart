@@ -19,27 +19,18 @@ GraphicEngine::~GraphicEngine()
 
   delete menuProgram;
   delete raceProgram;
-  delete currentCamera;
 }
 
-bool GraphicEngine::init()
+sf::RenderWindow& GraphicEngine::init()
 {
-  if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-    std::cerr << "Unable to initialize SDL" << std::endl;
-    return false;
-  }
+  (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
 
-  if(NULL == SDL_SetVideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT, settings.WINDOW_BPP, SDL_OPENGL)) {
-    std::cerr << "Unable to open the window and get an OpenGL context" << std::endl;
-    return false;
-  }
-
-  SDL_WM_SetCaption("Imakart", NULL);
+  sf::RenderWindow& myWindow =window;
 
   GLenum glewCode = glewInit();
   if(GLEW_OK != glewCode) {
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
-    return false;
+    return window;
   }
 
   //OpenGL initial state
@@ -47,12 +38,12 @@ bool GraphicEngine::init()
   
   //Initialisation des shader programs
   initShaderPrograms();
-	
-  return true;
+
+  return myWindow;
 }
 
 void GraphicEngine::swapBuffers()
-{SDL_GL_SwapBuffers();}
+  {window.display();}
 
 const GraphicSettings&GraphicEngine::getSettings() const
 {

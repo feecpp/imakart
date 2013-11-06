@@ -1,32 +1,28 @@
 #include "Application.hpp"
-#include "SDL/SDL.h"
+#include <SFML/Graphics.hpp>
 #include "EventHandler.hpp"
-#include "Kart.hpp"
-#include "KartCube.hpp"
-#include "Menu2D.hpp"
-#include "MenuLogic.hpp"
-#include <iostream>
 
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
    {}
 
-void Application::setupEverything()
+sf::RenderWindow& Application::setupEverything()
 {
-  graphicEngine.init();
+  sf::RenderWindow& window = graphicEngine.init();
   gameEngine.init();
 
   contextManager.updateContextIfNeeded();
+  return window;
 }
 
-void Application::startGame()
+void Application::startGame(sf::RenderWindow& window)
 {
   bool askedForQuit = false;
   do
   {
     graphicEngine.renderFrame();
     gameEngine.update();
-    askedForQuit = handleEvents();
+    askedForQuit = handleEvents(window);
     contextManager.updateContextIfNeeded();
 
     graphicEngine.swapBuffers();
@@ -35,97 +31,43 @@ void Application::startGame()
 
 void Application::testRace()
 {
-  setupEverything();
+  sf::RenderWindow& window = setupEverything();
   gameEngine.setState(IN_RACE);
 
   contextManager.updateContextIfNeeded();
-  startGame();
+  startGame(window);
 }
 
-bool Application::handleEvents()
+bool Application::handleEvents(sf::RenderWindow& window)
 {
-  const EventHandler& handler = contextManager.getHandler();
-		 
-  SDL_Event e;
-  bool upup = true;
-  bool downup = true;
-  bool leftup = true;
-  bool rightup = true;
+  const EventHandler& handler = contextManager.getHandler();	 
 
-  while(SDL_PollEvent(&e)) {
-
-    switch(e.type) {
-	
-	  case SDL_QUIT : 
-		return true;
-		break;
-
-      case SDL_KEYDOWN :
-
-        switch(e.key.keysym.sym) {
-
-		  case SDLK_RETURN:
-			handler.enter();
-		  break;
-		  
-          case SDLK_DOWN:
-			downup = false;
-            handler.down();
-          break;
-
-          case SDLK_UP:
-			upup = false;
-            handler.up();
-          break;
-
-          case SDLK_LEFT:
-			leftup = false;
-            handler.left();
-          break;
-
-          case SDLK_RIGHT:
-			rightup = false;
-            handler.right();
-          break;
-
-          default:
-          break;
-        }
-        
+  sf::Event e;
+  while (window.pollEvent(e))
+  {
+      switch(e.type)
+      {
+        case sf::Event::Closed :
+                window.close();
+                return true;
         break;
-        
-      case SDL_KEYUP :
-       
-        switch(e.key.keysym.sym) {
+        case sf::Event::KeyPressed:
+            if (e.key.code == sf::Keyboard::Down)
+                handler.down();
 
-          case SDLK_DOWN:
-			downup = true;
-          break;
+            else if (e.key.code == sf::Keyboard::Up)
+                handler.up();
 
-          case SDLK_UP:
-			upup = true;
-          break;
+            else if (e.key.code == sf::Keyboard::Left)
+                handler.left();
 
-          case SDLK_LEFT:
-			leftup = true;
-          break;
+            else if (e.key.code == sf::Keyboard::Right)
+                handler.right();
 
-          case SDLK_RIGHT:
-			rightup = true;
+            break;
+        default:
           break;
-
-          default:
-          break;
-        }      
-        
-        break;
-    }
+      }
   }
-  
-  if (!upup) //handler.up();
-  if (!downup) //handler.down();// do smthing
-  if (!leftup) //handler.left(); // do smthing
-  if (!rightup){ }//handler.right(); // do smthing
- 
   return false;
 }

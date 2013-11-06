@@ -1,7 +1,7 @@
 #ifndef GRAPHICENGINE_HPP
 #define GRAPHICENGINE_HPP
 
-#include <SDL/SDL.h>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
 #include "ShaderProgram.hpp"
@@ -24,11 +24,11 @@ struct GraphicSettings
     FRAME_DURATION = 1000.f / FPS;
   }
   
-  Uint32 FPS;
-  Uint32 FRAME_DURATION;
-  Uint32 WINDOW_WIDTH;
-  Uint32 WINDOW_HEIGHT;
-  Uint32 WINDOW_BPP;
+  unsigned int FPS;
+  unsigned int FRAME_DURATION;
+  unsigned int WINDOW_WIDTH;
+  unsigned int WINDOW_HEIGHT;
+  unsigned int WINDOW_BPP;
 };
 
 /**
@@ -43,7 +43,7 @@ public:
   GraphicEngine();
   ~GraphicEngine();
 
-  bool init();
+  sf::RenderWindow& init();
   void renderFrame();
   void swapBuffers();
 
@@ -90,6 +90,8 @@ private:
   void drawInterface();
   void initShaderPrograms();
 
+  GraphicSettings settings;
+
   Camera* currentCamera;
 
   //Avant de trouver une meilleure méthode...
@@ -97,9 +99,11 @@ private:
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;
 
-  GraphicSettings settings;
+  //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
+
+  sf::RenderWindow window;
 
 };
 

@@ -10,8 +10,8 @@ class Application
 public:
   Application();
 
-  void setupEverything();
-  void startGame();
+  sf::RenderWindow& setupEverything();
+  void startGame(sf::RenderWindow& window);
 
   //Fonction temporaire pour ne pas avoir
   //besoin de passer par le menu tant qu'il n'est pas pret
@@ -19,7 +19,7 @@ public:
   void testRace();
 
 private:
-  bool handleEvents();
+  bool handleEvents(sf::RenderWindow& window);
 
   GameEngine gameEngine;
   GraphicEngine graphicEngine;
