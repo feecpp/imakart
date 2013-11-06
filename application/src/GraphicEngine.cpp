@@ -19,6 +19,7 @@ GraphicEngine::~GraphicEngine()
 
   delete menuProgram;
   delete raceProgram;
+  delete currentCamera;
 }
 
 sf::RenderWindow& GraphicEngine::init()
