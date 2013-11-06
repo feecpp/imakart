@@ -7,7 +7,7 @@ GameEngine::GameEngine()
 
 void GameEngine::init()
 {
-  //Charger les données du jeu
+
 }
 
 void GameEngine::update()

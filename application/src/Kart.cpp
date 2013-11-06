@@ -1,7 +1,7 @@
 #include "Kart.hpp"
 
 Kart::Kart()
-  : position(0.f, 0.f, 0.f), direction(0.f, 0.f, 0.f), speed(0.f)
+  : position(0.f, 0.f, 0.f), direction(0.f, 0.f, -1.f), speed(0.f)
 {
 }
 
