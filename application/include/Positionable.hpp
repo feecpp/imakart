@@ -2,6 +2,7 @@
 #define POSITIONABLE_HPP
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 /**
  * @brief The Positionable interface
@@ -11,7 +12,7 @@ class Positionable
 {
 public:
   virtual const glm::vec3& getPosition() const = 0;
-  virtual const glm::vec3& getOrientation() const = 0;
+  virtual const glm::quat& getOrientation() const = 0;
 };
 
 #endif // POSITIONABLE_HPP

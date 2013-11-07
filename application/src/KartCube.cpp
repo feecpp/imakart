@@ -5,6 +5,7 @@
 #include "Positionable.hpp"
 #include <cstddef>
 #include <ShaderProgram.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 KartCube::KartCube()
 {
@@ -43,5 +44,5 @@ void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 
 void KartCube::update()
 {
-  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition());
+  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * glm::toMat4(model->getOrientation());
 }
