@@ -28,6 +28,7 @@ sf::RenderWindow& GraphicEngine::init()
 
   sf::RenderWindow& myWindow =window;
 
+  window.setFramerateLimit(60);
   GLenum glewCode = glewInit();
   if(GLEW_OK != glewCode) {
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;

@@ -8,34 +8,39 @@ RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphi
 
 void RaceEventHandler::pressUp() const
 {
-  gameEngine.getPlayer().getKart().moveForward();
+  gameEngine.getPlayer().getKart().setState(MOVE_FORWARD);
+
 }
 void RaceEventHandler::releaseUp() const
 {
+    gameEngine.getPlayer().getKart().setState(REST_STATE);
 }
 
 void RaceEventHandler::pressDown() const
 {
-  gameEngine.getPlayer().getKart().moveBackward();
+  gameEngine.getPlayer().getKart().setState(MOVE_BACKWARD);
 }
 void RaceEventHandler::releaseDown() const
 {
+  gameEngine.getPlayer().getKart().setState(REST_STATE);
 }
 
 void RaceEventHandler::pressLeft() const
 {
-  gameEngine.getPlayer().getKart().turnLeft();
+  gameEngine.getPlayer().getKart().setState(TURN_LEFT);
 }
 void RaceEventHandler::releaseLeft() const
 {
+  gameEngine.getPlayer().getKart().setState(REST_STATE);
 }
 
 void RaceEventHandler::pressRight() const
 {
-  gameEngine.getPlayer().getKart().turnRight();
+  gameEngine.getPlayer().getKart().setState(TURN_RIGHT);
 }
 void RaceEventHandler::releaseRight() const
 {
+  gameEngine.getPlayer().getKart().setState(REST_STATE);
 }
 
 void RaceEventHandler::pressEnter() const
