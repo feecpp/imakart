@@ -7,29 +7,44 @@ MenuEventHandler::MenuEventHandler(GameEngine& gameEngine)
 {
 }
 
-void MenuEventHandler::up() const
+void MenuEventHandler::pressUp() const
 {
   gameEngine.getMenuLogic().previousButton();
 }
+void MenuEventHandler::releaseUp() const
+{
+}
 
-
-void MenuEventHandler::down() const
+void MenuEventHandler::pressDown() const
 {
   gameEngine.getMenuLogic().nextButton();
 }
-
-void MenuEventHandler::left() const
+void MenuEventHandler::releaseDown() const
 {
-	
 }
 
-void MenuEventHandler::right() const
+void MenuEventHandler::pressLeft() const
+{	
+}
+void MenuEventHandler::releaseLeft() const
+{
+}
+
+void MenuEventHandler::pressRight() const
+{
+
+}
+void MenuEventHandler::releaseRight() const
 {
 
 }
 
-void MenuEventHandler::enter() const
+void MenuEventHandler::pressEnter() const
 {
 	gameEngine.getMenuLogic().submitButton();
+}
+void MenuEventHandler::releaseEnter() const
+{
+
 }
 

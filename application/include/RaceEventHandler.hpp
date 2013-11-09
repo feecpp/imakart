@@ -12,11 +12,16 @@ class RaceEventHandler : public EventHandler
 public:
   RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine);
 
-  virtual void up() const;
-  virtual void down() const;
-  virtual void left() const;
-  virtual void right() const;
-  virtual void enter() const;
+  virtual void pressUp() const;
+  virtual void pressDown() const;
+  virtual void pressLeft() const;
+  virtual void pressRight() const;
+  virtual void pressEnter() const;
+  virtual void releaseUp() const;
+  virtual void releaseDown() const;
+  virtual void releaseLeft() const;
+  virtual void releaseRight() const;
+  virtual void releaseEnter() const;
 
 private:
   GameEngine& gameEngine;

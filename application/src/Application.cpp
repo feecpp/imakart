@@ -53,17 +53,30 @@ bool Application::handleEvents(sf::RenderWindow& window)
         break;
         case sf::Event::KeyPressed:
             if (e.key.code == sf::Keyboard::Down)
-                handler.down();
+                handler.pressDown();
 
             else if (e.key.code == sf::Keyboard::Up)
-                handler.up();
+                handler.pressUp();
 
             else if (e.key.code == sf::Keyboard::Left)
-                handler.left();
+                handler.pressLeft();
 
             else if (e.key.code == sf::Keyboard::Right)
-                handler.right();
+                handler.pressRight();
 
+            break;
+        case sf::Event::KeyReleased:
+            if (e.key.code == sf::Keyboard::Down)
+                handler.releaseDown();
+
+            else if (e.key.code == sf::Keyboard::Up)
+                handler.releaseUp();
+
+            else if (e.key.code == sf::Keyboard::Left)
+                handler.releaseLeft();
+
+            else if (e.key.code == sf::Keyboard::Right)
+                handler.releaseRight();
             break;
         default:
           break;

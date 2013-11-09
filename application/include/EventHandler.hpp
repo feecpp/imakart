@@ -18,31 +18,36 @@ public:
    * @brief up
    * Flèche haut
    */
-  virtual void up() const = 0;
+  virtual void pressUp() const = 0;
+  virtual void releaseUp() const = 0;
 
   /**
    * @brief down
    * Flèche bas
    */
-  virtual void down() const = 0;
+  virtual void pressDown() const = 0;
+  virtual void releaseDown() const = 0;
 
   /**
    * @brief left
    * Flèche gauche
    */
-  virtual void left() const = 0;
+  virtual void pressLeft() const = 0;
+  virtual void releaseLeft() const = 0;
 
   /**
    * @brief right
    * Flèche droite
    */
-  virtual void right() const = 0;
+  virtual void pressRight() const = 0;
+  virtual void releaseRight() const = 0;
   
   /**
    * @brief press enter
    * Touche entrée
    */
-  virtual void enter() const = 0;
+  virtual void pressEnter() const = 0;
+  virtual void releaseEnter() const = 0;
    
 };
 
