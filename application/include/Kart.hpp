@@ -8,6 +8,7 @@ class Kart : public Positionable
 public:
   Kart();
   Kart(glm::vec3 position, glm::quat direction, float speed);
+  virtual ~Kart();
 
   //Met à jour le Kart en fonction des ordres qui lui ont été donnés
   void update();

@@ -2,19 +2,25 @@
 #define PLAYER_HPP
 
 #include "Camera.hpp"
-#include "Kart.hpp"
+
+class Kart;
 
 class Player
 {
 public:
-  Kart& getKart()
-    {return playerKart;}
+  explicit Player(Kart& kart);
 
-  const Camera& getCamera() const;
+  const Kart& getKart() const;
 
+  void moveForward();
+  void moveBackward();
+  void turnLeft();
+  void turnRight();
+  void stopMoving();
+  void stopTurning();
 
 private:
-  Kart playerKart;
+  Kart& myKart;
 };
 
 #endif // PLAYER_HPP

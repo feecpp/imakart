@@ -4,6 +4,7 @@
 #include "Menu2D.hpp"
 #include "KartCube.hpp"
 #include "Cube.hpp"
+#include "Kart.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -51,11 +52,11 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
   graphicEngine.useRaceProgram();
   KartCube* cube = new KartCube();
-  cube->setModelToRepresent(gameEngine.getPlayer().getKart());
+  cube->setModelToRepresent(gameEngine.getPlayerKart());
 
   const GraphicSettings& settings = graphicEngine.getSettings();
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
-  camera->linkToPositionable(gameEngine.getPlayer().getKart());
+  camera->linkToPositionable(gameEngine.getPlayerKart());
 
   //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
   graphicEngine.setCamera(camera);

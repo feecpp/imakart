@@ -13,6 +13,10 @@ Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
 {
 }
 
+Kart::~Kart()
+{
+}
+
 void Kart::update()
 {
   //Calcul de la nouvelle direction en fonction de l'angularSpeed

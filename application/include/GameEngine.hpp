@@ -6,6 +6,7 @@
 #include "MenuEventHandler.hpp"
 #include "Player.hpp"
 #include "MenuLogic.hpp"
+#include "Hangar.hpp"
 
 /**
  * @brief Classe principale d'Imakart
@@ -28,16 +29,17 @@ public:
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
 
-  Player& getPlayer()
-    {return player;}
+  Player& getPlayer() const;
+  Kart& getPlayerKart() const;
 
   MenuLogic& getMenuLogic()
     {return menu;}
 
 private:
   GameState state;
-  Player player;
   MenuLogic menu;
+  Hangar hangar;
+  Player* player;
 };
 
 #endif // GAMEENGINE_HPP
