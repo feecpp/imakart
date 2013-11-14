@@ -12,6 +12,12 @@ include_directories(third-party/glm)
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/shaders DESTINATION ./)
 
+#Windows : copie des DLL à côté de l'exe
+IF(WIN32)
+  file(GLOB dllfiles $ENV{SFML_ROOT}/bin/*.dll)
+  file(COPY ${dllfiles} DESTINATION ./application/)
+ENDIF(WIN32)
+
 add_definitions(-DGLEW_STATIC=1)
 add_definitions(-Wall)
 add_subdirectory(third-party/glew-1.10.0)
