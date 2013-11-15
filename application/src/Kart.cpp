@@ -42,7 +42,7 @@ void Kart::turnLeft(){
 }
 
 void Kart::turnRight(){
-  angularSpeed -= 10.f;
+  angularSpeed = -10.f;
 }
 
 void Kart::stopMoving()

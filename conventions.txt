@@ -1,0 +1,81 @@
+CONVENTION DE CODE
+==================
+
+Général
+========
+Tabulations => pas de tabulation mais 2 espaces
+Variables : maVariable
+Classe : MaClasse
+Attributs de classe : monAttribut (pareil que variable)
+Pointeurs: p_monPointeur
+
+instructions de contrôle
+=========================
+if (!test && test || test)
+{
+  //même si qu'une seule ligne
+}
+
+for (int i = 0; i < 0; ++i)
+{
+  //même si qu'une seule ligne
+}
+
+switch (...)
+{
+  case TEST:
+    //Le code démarre ici
+    break;
+
+  case TEST:
+    //Le code démarre ici
+    break;
+
+  default:
+    break;
+}
+
+do
+{
+} while (...);
+
+while (...)
+{
+}
+
+//Boucle infini
+for (;;)
+
+CLASSES
+========
+class MaClasse : public Papa, Maman
+{
+public:
+  //typedefs (y'en aura ptête pas)
+  //enums si y'a
+  //attributs publics
+
+  MaClasse();
+  explicit MaClasse(int/float/whatever trucmuche);
+  //Autres constructeurs
+  ~MaClasse();
+
+  //Regrouper les getters/setters
+  //Regrouper les méthodes qui "parlent" de la même chose
+
+private:
+  //attributs
+
+  //méthodes
+};
+
+Dans le cpp =>
+MaClasse::Maclasse(int a, int b...)
+  : monA(a), monB(b)...
+{
+}
+
+Méthodes virtuelles : réécrire le mot clef virtual dans les classes filles
+ASSERTIONS
+==============
+Utiliser les assertions pour les erreurs de programmeur
