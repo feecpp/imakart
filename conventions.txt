@@ -8,7 +8,7 @@ Variables : maVariable
 Classe : MaClasse
 Attributs de classe : monAttribut (pareil que variable)
 Pointeurs: p_monPointeur
-
+accentuation: pas d'accents ! ça a l'air de foutre la merde, en tout cas dans les CMakeLists.txt
 instructions de contrôle
 =========================
 if (!test && test || test)
