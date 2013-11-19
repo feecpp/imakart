@@ -26,8 +26,9 @@ set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
 #glm
 include_directories(third-party/glm)
 
-#--------FAT AND FURIOUS------------------
+#--------Imakart------------------
 add_definitions(-Wall)
+set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/shaders DESTINATION ./)
 
@@ -36,8 +37,6 @@ IF(WIN32)
   file(GLOB dllfiles $ENV{SFML_ROOT}/bin/*.dll)
   file(COPY ${dllfiles} DESTINATION ./application/)
 ENDIF(WIN32)
-
-
 
 include_directories(glimac/include)
 add_subdirectory(glimac)
