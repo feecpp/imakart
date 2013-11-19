@@ -16,6 +16,7 @@ add_subdirectory(third-party/glew-1.10.0)
 
 #assimp
 include_directories(third-party/assimp--3.0.1270/include)
+add_definitions(-DENABLE_BOOST_WORKAROUND=ON)
 SET(ENABLE_BOOST_WORKAROUND ON)
 SET(BUILD_STATIC_LIB ON)
 add_subdirectory(third-party/assimp--3.0.1270)
@@ -25,7 +26,7 @@ set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
 #glm
 include_directories(third-party/glm)
 
-#--------IMAKART------------------
+#--------FAT AND FURIOUS------------------
 add_definitions(-Wall)
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/shaders DESTINATION ./)
