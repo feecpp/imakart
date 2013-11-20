@@ -2,6 +2,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <SFML/System.hpp>
+#include <iostream>
 
 Kart::Kart()
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
@@ -30,8 +31,12 @@ void Kart::update()
   //Gestion du temps avec Clock de sfml
   sf::Clock Clock;
   sf::Time ElapsedTime = Clock.getElapsedTime();
+  float time_sec = ElapsedTime.asMilliseconds();//Renvoie le temps en seconde sous forme de float
   Clock.restart();
+
   position += direction * speed;//ajouter gestion temps
+  std::cout << "position * time : x: " << (position*time_sec).x << ", y: " << (position*time_sec).y << std::endl;
+  //position *= time_sec; // est égale à 0...
 }
 
 void Kart::moveForward(){
