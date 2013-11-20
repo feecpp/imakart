@@ -51,6 +51,7 @@ bool Application::handleEvents(sf::RenderWindow& window)
                 window.close();
                 return true;
         break;
+
         case sf::Event::KeyPressed:
             if (e.key.code == sf::Keyboard::Down)
                 handler.pressDown();
@@ -64,7 +65,11 @@ bool Application::handleEvents(sf::RenderWindow& window)
             else if (e.key.code == sf::Keyboard::Right)
                 handler.pressRight();
 
+            else if (e.key.code == sf::Keyboard::Return)
+                handler.pressEnter();
+
             break;
+
         case sf::Event::KeyReleased:
             if (e.key.code == sf::Keyboard::Down)
                 handler.releaseDown();
@@ -77,7 +82,12 @@ bool Application::handleEvents(sf::RenderWindow& window)
 
             else if (e.key.code == sf::Keyboard::Right)
                 handler.releaseRight();
+
+            else if (e.key.code == sf::Keyboard::Return)
+                handler.releaseEnter();
+
             break;
+
         default:
           break;
       }

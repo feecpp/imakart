@@ -1,4 +1,5 @@
 #include "MenuLogic.hpp"
+#include "ButtonActionEnum.hpp"
 #include <iostream>
 
 MenuLogic::MenuLogic():
@@ -19,7 +20,12 @@ MenuLogic* MenuLogic::initialiseMainMenu(){
 	ButtonLogic* options = new ButtonLogic("options");
 	ButtonLogic* credits = new ButtonLogic("credits");
 	ButtonLogic* quitter = new ButtonLogic("quitter");
-	
+
+	jouer->setAction(PLAY);
+	options->setAction(OPTIONS);
+	credits->setAction(CREDITS);
+	quitter->setAction(EXIT);
+
 	mainMenu->addButton(jouer);
 	mainMenu->addButton(options);
 	mainMenu->addButton(credits);
@@ -55,9 +61,13 @@ void MenuLogic::previousButton(){
 	tabButtonLogicMenu[positionButtonSelected]->changeState();
 }
 
-void MenuLogic::submitButton(){
-	tabButtonLogicMenu[positionButtonSelected]->submit();
+ButtonAction MenuLogic::submitButton(){
+	return tabButtonLogicMenu[positionButtonSelected]->getButtonAction();
 }
 
 MenuLogic::~MenuLogic(){
+	for (size_t i = 0; i < tabButtonLogicMenu.size(); ++i)
+	{
+	  delete tabButtonLogicMenu[i];
+	}
 }

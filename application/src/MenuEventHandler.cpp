@@ -1,5 +1,6 @@
 #include "MenuEventHandler.hpp"
 #include "GameEngine.hpp"
+#include "ButtonActionEnum.hpp"
 #include <iostream>
 
 MenuEventHandler::MenuEventHandler(GameEngine& gameEngine)
@@ -41,7 +42,19 @@ void MenuEventHandler::releaseRight() const
 
 void MenuEventHandler::pressEnter() const
 {
-	gameEngine.getMenuLogic().submitButton();
+	ButtonAction action = gameEngine.getMenuLogic().submitButton();
+
+	switch(action){
+		case PLAY:
+			std::cout << "Play pressed" << std::endl;
+			gameEngine.setState(IN_RACE);
+			break;
+
+		default:
+			std::cout << "No implementation" << std::endl;
+			break;
+	}
+
 }
 void MenuEventHandler::releaseEnter() const
 {
