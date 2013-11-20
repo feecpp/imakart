@@ -6,6 +6,9 @@ GameEngine::GameEngine()
 {
   //En attendant une gestion plus propre
   player = new Player(hangar.getPlayerKart());
+  map = new Map();
+  //Je pense que c'est très con de le mettre là, faut que je réfléchisse
+  map->loadData("../../imakart/application/maps/carte1.map");
 }
 
 void GameEngine::init()

@@ -4,16 +4,10 @@
 #include <vector>
 #include <string>
 
-class Map {
-    private :
-        int width, height, altitude;
-        std::string name;
-        std::vector<Checkpoint> checkpoints;
-        Checkpoint start;
-        Checkpoint end;
-        bool completed;
+#include "Positionable.hpp"
 
-
+class Map : public Positionable
+{
     public:
         Map();
         void loadData(const char* path);
@@ -25,5 +19,16 @@ class Map {
         Checkpoint getStart();
         Checkpoint getEnd();
         bool isCompleted();
+        virtual const glm::vec3& getPosition() const;
+        virtual const glm::quat& getOrientation() const;
+    private :
+        int width, height, altitude;
+        std::string name;
+        std::vector<Checkpoint> checkpoints;
+        Checkpoint start;
+        Checkpoint end;
+        bool completed;
+        glm::vec3 position;
+        glm::quat orientation;
 };
 

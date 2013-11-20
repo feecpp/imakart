@@ -7,6 +7,7 @@
 #include "Player.hpp"
 #include "MenuLogic.hpp"
 #include "Hangar.hpp"
+#include "Map.hpp"
 
 /**
  * @brief Classe principale d'Imakart
@@ -40,6 +41,7 @@ private:
   MenuLogic menu;
   Hangar hangar;
   Player* player;
+  Map* map;
 };
 
 #endif // GAMEENGINE_HPP

@@ -90,3 +90,9 @@ bool Map::isCompleted(){
    return this->completed;
 }
 
+const glm::vec3& Map::getPosition() const
+  {return position;}
+
+const glm::quat& Map::getOrientation() const
+{return orientation;}
+
