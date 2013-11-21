@@ -4,7 +4,8 @@
 
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
-   {}
+{
+}
 
 sf::RenderWindow& Application::setupEverything()
 {
