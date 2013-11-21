@@ -15,13 +15,13 @@ add_definitions(-DGLEW_STATIC=1)
 add_subdirectory(third-party/glew-1.10.0)
 
 #assimp
-include_directories(third-party/assimp--3.0.1270/include)
-add_definitions(-DENABLE_BOOST_WORKAROUND=ON)
-SET(ENABLE_BOOST_WORKAROUND ON)
-SET(BUILD_STATIC_LIB ON)
-add_subdirectory(third-party/assimp--3.0.1270)
+#include_directories(third-party/assimp--3.0.1270/include)
+#add_definitions(-DENABLE_BOOST_WORKAROUND=ON)
+#SET(ENABLE_BOOST_WORKAROUND ON)
+#SET(BUILD_STATIC_LIB ON)
+#add_subdirectory(third-party/assimp--3.0.1270)
 #desactive les warnings degueulasses
-set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
+#set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
 
 #glm
 include_directories(third-party/glm)
@@ -41,7 +41,7 @@ ENDIF(WIN32)
 include_directories(glimac/include)
 add_subdirectory(glimac)
 
-set(ALL_LIBRARIES assimp glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
+set(ALL_LIBRARIES glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
 
 add_subdirectory(application)
 
