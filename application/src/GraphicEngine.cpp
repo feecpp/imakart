@@ -26,7 +26,7 @@ sf::RenderWindow& GraphicEngine::init()
 {
   (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
 
-  sf::RenderWindow& myWindow =window;
+  sf::RenderWindow& myWindow = window;
 
   window.setFramerateLimit(settings.FPS);
   GLenum glewCode = glewInit();
@@ -40,6 +40,12 @@ sf::RenderWindow& GraphicEngine::init()
   
   //Initialisation des shader programs
   initShaderPrograms();
+
+  //Initialisation de la font
+  if (!font.loadFromFile("fonts/arialPixel.ttf"))
+  {
+    std::cerr << "Unable to initialize FONT " << std::endl;
+  }
 
   return myWindow;
 }

@@ -40,7 +40,7 @@ void MenuEventHandler::releaseRight() const
 
 }
 
-void MenuEventHandler::pressEnter() const
+bool MenuEventHandler::pressEnter() const
 {
 	ButtonAction action = gameEngine.getMenuLogic().submitButton();
 
@@ -50,10 +50,22 @@ void MenuEventHandler::pressEnter() const
 			gameEngine.setState(IN_RACE);
 			break;
 
+		case OPTIONS:
+			break;
+
+		case CREDITS:
+			break;
+
+		case EXIT:
+			return true;
+			break;
+
 		default:
 			std::cout << "No implementation" << std::endl;
 			break;
 	}
+
+	return false;
 
 }
 void MenuEventHandler::releaseEnter() const

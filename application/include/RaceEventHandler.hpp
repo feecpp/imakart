@@ -16,7 +16,7 @@ public:
   virtual void pressDown() const;
   virtual void pressLeft() const;
   virtual void pressRight() const;
-  virtual void pressEnter() const;
+  virtual bool pressEnter() const;
   virtual void releaseUp() const;
   virtual void releaseDown() const;
   virtual void releaseLeft() const;

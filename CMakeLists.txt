@@ -31,6 +31,8 @@ add_definitions(-Wall)
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/shaders DESTINATION ./)
+file(COPY application/fonts DESTINATION ./application)
+file(COPY application/fonts DESTINATION ./)
 
 #Windows : copie des DLL a cote de l'exe
 IF(WIN32)

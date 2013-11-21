@@ -46,7 +46,7 @@ public:
    * @brief press enter
    * Touche entrée
    */
-  virtual void pressEnter() const = 0;
+  virtual bool pressEnter() const = 0;
   virtual void releaseEnter() const = 0;
    
 };
