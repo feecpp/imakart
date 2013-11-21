@@ -10,6 +10,7 @@
 class InterfaceElement
 {
 public:
+  virtual ~InterfaceElement() {}
   virtual const bool isSelected() const = 0;
 
   const char* getName() const
