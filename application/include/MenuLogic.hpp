@@ -23,7 +23,7 @@ public:
 	void addButton(ButtonLogic* buttonToAdd);
 	void nextButton();
 	void previousButton();
-	void submitButton();
+	ButtonAction submitButton();
 	
 private:
 	unsigned int positionButtonSelected;

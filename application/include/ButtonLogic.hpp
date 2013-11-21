@@ -3,6 +3,7 @@
 
 #include "Button2D.hpp"
 #include "InterfaceElement.hpp"
+#include "ButtonActionEnum.hpp"
 
 class ButtonLogic : public InterfaceElement
 {
@@ -13,11 +14,13 @@ public:
 	~ButtonLogic();
 
 	void changeState();
-	void submit(); //what the button do when you press enter
+	void setAction(ButtonAction theAction);
+	ButtonAction getButtonAction(); //what the button do when you press enter
 	const bool isSelected() const;
 
 private:
 	bool selected; // -1 unselect / 1 select 
+	ButtonAction actionToDo;
 };
 
 #endif // BUTTONLOGIC_HPP

@@ -40,4 +40,9 @@ void Menu2D::draw() const{
 }
 
 Menu2D::~Menu2D(){
+	for (size_t i = 0; i < tab2DMenu.size(); ++i)
+	{
+	  delete tab2DMenu[i];
+	}
+	tab2DMenu.clear();
 }

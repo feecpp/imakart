@@ -27,6 +27,7 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 }
 
 Button2D::~Button2D(){
+
 }
 
 const glimac::Vertex2DRGB* Button2D::getVertices() const{
