@@ -32,6 +32,7 @@ public:
 
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
+  Map& getMap() const;
 
   MenuLogic& getMenuLogic()
     {return menu;}

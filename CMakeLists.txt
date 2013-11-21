@@ -41,7 +41,7 @@ ENDIF(WIN32)
 include_directories(glimac/include)
 add_subdirectory(glimac)
 
-set(ALL_LIBRARIES assimp glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
+set(ALL_LIBRARIES glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
 
 add_subdirectory(application)
 
