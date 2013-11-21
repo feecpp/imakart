@@ -37,6 +37,8 @@ void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 {
   GLint modelMatrixIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelMatrixIndex, modelMatrix);
+  GLint colorIndex = shaderProgram.getUniformIndex("color");
+  shaderProgram.setUniform(colorIndex, color);
   vao.bind();
   glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
@@ -44,5 +46,6 @@ void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 
 void KartCube::update()
 {
+  color = glm::vec4(1.f);
   modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * glm::toMat4(model->getOrientation());
 }

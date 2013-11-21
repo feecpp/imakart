@@ -9,14 +9,14 @@
 
 Map3D::Map3D()
 {
-  vertices[0].position = glm::vec3(-1.f, -0.5f, 0.5f);
-  vertices[1].position = glm::vec3(1.f, -0.5f, 0.5f);
-  vertices[2].position = glm::vec3(-1.f, -0.3f, 0.5f);
-  vertices[3].position = glm::vec3(1.f, -0.3f, 0.5f);
-  vertices[4].position = glm::vec3(-1.f, -0.5f, -0.5f);
-  vertices[5].position = glm::vec3(1.f, -0.5f, -0.5f);
-  vertices[6].position = glm::vec3(-1.f, -0.3f, -0.5f);
-  vertices[7].position = glm::vec3(1.f, -0.3f, -0.5f);
+  vertices[0].position = glm::vec3(-4.f, -0.7f, 3.f);
+  vertices[1].position = glm::vec3(4.f, -0.7f, 3.f);
+  vertices[2].position = glm::vec3(-4.f, -0.5f, 3.f);
+  vertices[3].position = glm::vec3(4.f, -0.5f, 3.f);
+  vertices[4].position = glm::vec3(-4.f, -0.7f, -3.f);
+  vertices[5].position = glm::vec3(4.f, -0.7f, -3.f);
+  vertices[6].position = glm::vec3(-4.f, -0.5f, -3.f);
+  vertices[7].position = glm::vec3(4.f, -0.5f, -3.f);
 
   indices[0] = 0; indices[1] = 1;
   indices[2] = 2; indices[3] = 3;
@@ -37,6 +37,8 @@ void Map3D::draw(const glimac::ShaderProgram& shaderProgram) const
 {
   GLint modelMatrixIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelMatrixIndex, modelMatrix);
+  GLint colorIndex = shaderProgram.getUniformIndex("color");
+  shaderProgram.setUniform(colorIndex, color);
   vao.bind();
   glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
@@ -44,6 +46,7 @@ void Map3D::draw(const glimac::ShaderProgram& shaderProgram) const
 
 void Map3D::update()
 {
+  color = glm::vec4(0.8f);
   modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * glm::toMat4(model->getOrientation());
 }
 
