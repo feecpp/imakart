@@ -101,6 +101,11 @@ void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat4& matrix) cons
   glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void ShaderProgram::setUniform(GLint uniformIndex, const glm::vec4& vector) const
+{
+    glUniform4f(uniformIndex, vector[0], vector[1], vector[2], vector[3]);
+}
+
 ShaderProgram ShaderProgram::loadProgram(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)
 {
   std::string vertexShaderSource;

@@ -38,6 +38,7 @@ private:
   glimac::VAO vao;
 
   glm::mat4 modelMatrix;
+  glm::vec4 color;
 };
 
 #endif // MAP3D_H
