@@ -31,12 +31,12 @@ void Kart::update()
   //Gestion du temps avec Clock de sfml
   sf::Clock Clock;
   sf::Time ElapsedTime = Clock.getElapsedTime();
-  float time_sec = ElapsedTime.asMilliseconds();//Renvoie le temps en seconde sous forme de float
+  float time_sec = ElapsedTime.asSeconds();//Renvoie le temps en seconde sous forme de float
   Clock.restart();
 
-  position += direction * speed;//ajouter gestion temps
-  std::cout << "position * time : x: " << (position*time_sec).x << ", y: " << (position*time_sec).y << std::endl;
-  //position *= time_sec; // est égale à 0...
+  // position += direction * speed;//sans la gestion temps
+  position += direction * (speed*(time_sec*100000));
+
 }
 
 void Kart::moveForward(){
