@@ -6,6 +6,7 @@
 #include "Cube.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
+#include "Mesh.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -52,20 +53,25 @@ void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
   graphicEngine.useRaceProgram();
-  KartCube* cube = new KartCube();
-  cube->setModelToRepresent(gameEngine.getPlayerKart());
+  //KartCube* cube = new KartCube();
+  //cube->setModelToRepresent(gameEngine.getPlayerKart());
 
   const GraphicSettings& settings = graphicEngine.getSettings();
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
-  Map3D* map = new Map3D();
-  map->setModelToRepresent(gameEngine.getMap());
+ // Map3D* map = new Map3D();
+  //map->setModelToRepresent(gameEngine.getMap());
+
+  Mesh* testMesh = new Mesh();
+  testMesh->loadFromFile("data/al.obj");
 
   //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
-  graphicEngine.addObject3D(cube);
-  graphicEngine.addObject3D(map);
+  //Le GraphicEngine devient également propriétaire des objets 3D qu'il contient
+  //graphicEngine.addObject3D(cube);
+  //graphicEngine.addObject3D(map);
+  graphicEngine.addObject3D(testMesh);
 }
 
 const EventHandler& ContextManager::getHandler() const

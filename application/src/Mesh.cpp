@@ -4,6 +4,8 @@
 #include <assimp/postprocess.h>     // Post processing flags
 #include <string>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <stdexcept>
 
 Mesh::Mesh()
 {
@@ -17,8 +19,10 @@ Mesh::~Mesh()
 
 void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
 {
+  GLint modelIndex = shaderProgram.getUniformIndex("model");
+  shaderProgram.setUniform(modelIndex, glm::scale(glm::mat4(1.f), glm::vec3(0.5f)));
   meshVAO.bind();
-  glDrawArrays(GL_TRIANGLES, 0, numVertices);
+  glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
   meshVAO.unbind();
 }
 
@@ -32,34 +36,45 @@ void Mesh::loadFromFile(const std::string& filePath)
   Assimp::Importer importer;
 
   const aiScene* scene = importer.ReadFile( filePath,
-         aiProcess_CalcTangentSpace       |
-         aiProcess_Triangulate            |
-         aiProcess_JoinIdenticalVertices  |
+         aiProcess_PreTransformVertices     |
+         aiProcess_Triangulate              |
+         aiProcess_JoinIdenticalVertices    |
          aiProcess_SortByPType);
 
-  if (!scene) //TODO
+  if (!scene)
   {
-    //throw error ?
+    std::cerr << "Impossible de trouver le fichier de modele 3D : " << filePath << "." << std::endl;
+    throw std::runtime_error("Fichier 3D introuvable");
   }
 
   aiNode* rootNode = scene->mRootNode;
-  std::cout << "Nombre de meshs: " << rootNode->mNumMeshes << std::endl;
-  std::cout << "Nombre de nodes: " << rootNode->mNumChildren << std::endl;
-  std::vector<aiVector3D> vertices;
-  for (unsigned int i = 0; i < rootNode->mNumChildren; ++i)
-  {
-    aiNode* node = rootNode->mChildren[i];
-    aiMesh* mesh = scene->mMeshes[node->mMeshes[0]];
-    std::cout << "Num vertices: " << mesh->mNumVertices << std::endl;
-    for (unsigned int j = 0; j < mesh->mNumVertices; ++j)
-    {
-      vertices.push_back(mesh->mVertices[j]);
-    }
 
+
+  //Normalement l'option de PostProcessing devrait faire qu'on a qu'un seul mesh...(à vérifier)
+  assert(rootNode->mNumMeshes == 1);
+  aiMesh* mesh = scene->mMeshes[0];
+
+   //On charge la position des vertices (charger tous les attributs plus tard)
+  std::vector<aiVector3D> vertices;
+  vertices.reserve(mesh->mNumVertices);
+
+  for (unsigned int j = 0; j < mesh->mNumVertices; ++j)
+  {
+    vertices.push_back(mesh->mVertices[j]);
   }
+  //On charge les indices pour dessiner
+  for (unsigned int j = 0; j < mesh->mNumFaces; ++j)
+  {
+    const aiFace& face = mesh->mFaces[j];
+    assert(face.mNumIndices == 3);
+    indices.push_back(face.mIndices[0]);
+    indices.push_back(face.mIndices[1]);
+    indices.push_back(face.mIndices[2]);
+  }
+
   numVertices = vertices.size();
+
   meshVBO.setBufferData((const GLvoid*) &vertices[0], numVertices * sizeof(aiVector3D), GL_STATIC_DRAW);
   meshVAO.vertexAttribPointer(meshVBO, 0, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*) 0);
   meshVAO.enableVertexAttribArray(0);
-
 }
