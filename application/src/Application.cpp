@@ -1,6 +1,7 @@
 #include "Application.hpp"
 #include <SFML/Graphics.hpp>
 #include "EventHandler.hpp"
+#include "Mesh.hpp"
 
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
@@ -36,6 +37,8 @@ void Application::testRace()
   gameEngine.setState(IN_RACE);
 
   contextManager.updateContextIfNeeded();
+  Mesh testMesh;
+  testMesh.loadFromFile("data/al.obj");
   startGame(window);
 }
 
