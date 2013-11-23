@@ -82,9 +82,8 @@ void GraphicEngine::renderFrame()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i){
 	  objects2D[i]->update();
-   // GLint locationUTexture = menuProgram->getUniformIndex("uTexture");
-    //menuProgram->setUniform(locationUTexture, 0);  
-	  objects2D[i]->draw();
+     
+	  objects2D[i]->draw(*currentProgram);
   }
 
   //Dessin des objets 3D

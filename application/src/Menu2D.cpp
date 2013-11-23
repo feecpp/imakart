@@ -33,9 +33,9 @@ void Menu2D::update(){
 	}
 }
 
-void Menu2D::draw() const{
+void Menu2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	for(unsigned int i = 0; i < nbButtonInMenu; ++i){
-		tab2DMenu[i]->draw();
+		tab2DMenu[i]->draw(shaderProgram);
 	}
 }
 

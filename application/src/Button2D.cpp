@@ -42,8 +42,10 @@ void Button2D::setVAO(){
 	vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
-void Button2D::draw() const{
+void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	vao.bind();
+	GLint locationUTexture = shaderProgram.getUniformIndex("uTexture");
+    shaderProgram.setUniform(locationUTexture, 0); 
 	glBindTexture(GL_TEXTURE_2D, idTexture);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glBindTexture(GL_TEXTURE_2D, 0);

@@ -2,6 +2,7 @@
 #define OBJECT2D_HPP
 
 #include <GL/glew.h>
+#include <ShaderProgram.hpp>
 
 class InterfaceElement;
 
@@ -13,7 +14,7 @@ class Object2D
 public:
   virtual ~Object2D() {}
   
-  virtual void draw() const = 0;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const = 0;
   virtual void update() = 0;
 
   void setModelToRepresent(const InterfaceElement& myModel)

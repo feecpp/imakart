@@ -18,7 +18,7 @@ public:
 	const glimac::Vertex2DUV* getVertices() const;
 	void updateVertices(const float x_bottom, const float y_left, const float width, const float height);
 
-	void draw() const;
+	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	void update();
 	
 private:
