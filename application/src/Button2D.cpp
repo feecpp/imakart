@@ -3,21 +3,21 @@
 
 Button2D::Button2D()
 {
-	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,0));
-	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,0));
-	vertices[2] = glimac::Vertex2DUV(glm::vec2(0.5f, 0.5f), glm::vec2(1,1));
-	vertices[3] = glimac::Vertex2DUV(glm::vec2(-0.5f, 0.5f), glm::vec2(0,1));
-	
+	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,1));
+	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,1));
+	vertices[2] = glimac::Vertex2DUV(glm::vec2(0.5f, 0.5f), glm::vec2(1,0));
+	vertices[3] = glimac::Vertex2DUV(glm::vec2(-0.5f, 0.5f), glm::vec2(0,0));
+
 	setVBO();
 	setVAO();
 }
 
 Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height)
 {
-	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,0));
-	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,0));
-	vertices[2] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left + height), glm::vec2(1,1));
-	vertices[3] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left + height), glm::vec2(0,1));
+	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,1));
+	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,1));
+	vertices[2] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left + height), glm::vec2(1,0));
+	vertices[3] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left + height), glm::vec2(0,0));
 
 	setVBO();
 	setVAO();
@@ -45,8 +45,10 @@ void Button2D::setVAO(){
 void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	vao.bind();
 	GLint locationUTexture = shaderProgram.getUniformIndex("uTexture");
-    shaderProgram.setUniform(locationUTexture, 0); 
-	glBindTexture(GL_TEXTURE_2D, idTexture);
+	GLint locationUMat = shaderProgram.getUniformIndex("uModelMatrix");
+    shaderProgram.setUniform(locationUTexture, 0);
+    shaderProgram.setUniform(locationUMat, glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,1))); 
+	glBindTexture(GL_TEXTURE_2D, idTexture[activTexture%2]);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	vao.unbind();
@@ -54,5 +56,10 @@ void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 
 void Button2D::update(){
 	//Changer la texture associée 
+	activTexture = idTexture[1];
+	if(model->isSelected())
+	{
+		activTexture = idTexture[0];
+	}
 	setVBO();
 }

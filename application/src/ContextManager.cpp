@@ -6,6 +6,7 @@
 #include "Cube.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
+#include <iostream>
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -41,8 +42,9 @@ void ContextManager::setupMenuContext() const
 
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    menu2D->getTab2DMenu(i)->setTexture(graphicEngine.getTextureFromTabTexture(0));
+    menu2D->getTab2DMenu(i)->setTexture(graphicEngine.getTextureFromTabTexture(2*i), graphicEngine.getTextureFromTabTexture((2*i) + 1));
   }
+  std::cout << menu2D->getTab2DMenu(0)->getActivTexture() << std::endl;
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());

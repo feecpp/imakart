@@ -5,7 +5,9 @@ layout(location = 1) in vec2 aTexturePosition;
 
 out vec2 vTexturePosition;
 
+uniform mat3 uModelMatrix;
+
 void main() {
    vTexturePosition = aTexturePosition;
-   gl_Position = vec4(aVertexPosition, 0, 1);
+   gl_Position =  vec4( (uModelMatrix * (vec3(aVertexPosition, 1))).xy, 0, 1);
 };

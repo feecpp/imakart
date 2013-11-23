@@ -82,7 +82,7 @@ void GraphicEngine::renderFrame()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i){
 	  objects2D[i]->update();
-     
+
 	  objects2D[i]->draw(*currentProgram);
   }
 
@@ -131,9 +131,9 @@ GLuint LoadTexture(std::string filename)
   {
     glGenTextures(1,&idTexture);
     glBindTexture(GL_TEXTURE_2D, idTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 211, 62, 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixelsPtr());
     glBindTexture(GL_TEXTURE_2D, 0);
   }
 
@@ -143,7 +143,14 @@ GLuint LoadTexture(std::string filename)
 void GraphicEngine::initTextures()
 {
   //Pour le menu
-  tabTextures.push_back(LoadTexture("textures/jouer.png"));    
+  tabTextures.push_back(LoadTexture("textures/jouer.png"));   
+  tabTextures.push_back(LoadTexture("textures/jouerSelect.png"));   
+  tabTextures.push_back(LoadTexture("textures/options.png"));   
+  tabTextures.push_back(LoadTexture("textures/optionsSelect.png"));   
+  tabTextures.push_back(LoadTexture("textures/credits.png"));   
+  tabTextures.push_back(LoadTexture("textures/creditsSelect.png"));   
+  tabTextures.push_back(LoadTexture("textures/quitter.png"));   
+  tabTextures.push_back(LoadTexture("textures/quitterSelect.png"));   
 }
 
 void GraphicEngine::reset()

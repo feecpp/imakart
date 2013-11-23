@@ -20,15 +20,19 @@ public:
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}
 
-  void setTexture(const GLuint& myIdTexture)
-  	{idTexture = myIdTexture;}
+  void setTexture(const GLuint& myIdTexture, const GLuint& myIdTextureSelect)
+  	{idTexture[1] = myIdTexture; idTexture[0] = myIdTextureSelect; activTexture = myIdTexture;}
 
   const InterfaceElement* getModel() const
 	{return model;}
+
+  GLuint getActivTexture() const
+  { return activTexture;}
 	
 protected:
   const InterfaceElement* model;
-  GLuint idTexture;
+  GLuint idTexture[2];
+  GLuint activTexture;
 
 };
 
