@@ -1,0 +1,11 @@
+#version 330 core
+
+layout(location = 0) in vec2 aVertexPosition;
+layout(location = 1) in vec2 aTexturePosition;
+
+out vec2 vTexturePosition;
+
+void main() {
+   vTexturePosition = aTexturePosition;
+   gl_Position = vec4(aVertexPosition, 0, 1);
+};

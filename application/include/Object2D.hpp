@@ -1,6 +1,8 @@
 #ifndef OBJECT2D_HPP
 #define OBJECT2D_HPP
 
+#include <GL/glew.h>
+
 class InterfaceElement;
 
 /**
@@ -17,11 +19,15 @@ public:
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}
 
+  void setTexture(const GLuint& myIdTexture)
+  	{idTexture = myIdTexture;}
+
   const InterfaceElement* getModel() const
 	{return model;}
 	
 protected:
   const InterfaceElement* model;
+  GLuint idTexture;
 
 };
 

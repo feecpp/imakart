@@ -6,6 +6,7 @@
 #include <TextFile.hpp>
 #include "Camera.hpp"
 #include <cassert>
+#include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
   : currentCamera(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
@@ -37,6 +38,9 @@ sf::RenderWindow& GraphicEngine::init()
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
+
+  //Initialisation des textures
+  initTextures();
   
   //Initialisation des shader programs
   initShaderPrograms();
@@ -74,11 +78,12 @@ void GraphicEngine::renderFrame()
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
-
-  //Dessin des objets 2D
+    
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i){
 	  objects2D[i]->update();
+   // GLint locationUTexture = menuProgram->getUniformIndex("uTexture");
+    //menuProgram->setUniform(locationUTexture, 0);  
 	  objects2D[i]->draw();
   }
 
@@ -98,8 +103,8 @@ void GraphicEngine::initShaderPrograms()
 
   //Pour le dessin du menu
   menuProgram = new glimac::ShaderProgram();
-  menuProgram->addShader(GL_VERTEX_SHADER, "shaders/Color2d.vs.glsl");
-  menuProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Color2d.fs.glsl");
+  menuProgram->addShader(GL_VERTEX_SHADER, "shaders/tex2D.vs.glsl");
+  menuProgram->addShader(GL_FRAGMENT_SHADER, "shaders/tex2D.fs.glsl");
   std::string logInfo;
   if (!menuProgram->compileAndLinkShaders(logInfo))
   {
@@ -116,6 +121,30 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
+}
+
+GLuint LoadTexture(std::string filename)
+{
+  GLuint idTexture;
+
+  sf::Image image;
+  if(image.loadFromFile(filename))
+  {
+    glGenTextures(1,&idTexture);
+    glBindTexture(GL_TEXTURE_2D, idTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 211, 62, 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixelsPtr());
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
+
+  return idTexture;
+}
+
+void GraphicEngine::initTextures()
+{
+  //Pour le menu
+  tabTextures.push_back(LoadTexture("textures/jouer.png"));    
 }
 
 void GraphicEngine::reset()

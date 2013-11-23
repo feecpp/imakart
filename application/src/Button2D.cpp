@@ -3,11 +3,10 @@
 
 Button2D::Button2D()
 {
-	glm::vec3 color(1.f,0.f,0.f);
-	vertices[0] = glimac::Vertex2DRGB(glm::vec2(-0.5f, -0.5f), color);
-	vertices[1] = glimac::Vertex2DRGB(glm::vec2(0.5f, -0.5f), color);
-	vertices[2] = glimac::Vertex2DRGB(glm::vec2(0.5f, 0.5f), color);
-	vertices[3] = glimac::Vertex2DRGB(glm::vec2(-0.5f, 0.5f), color);
+	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,0));
+	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,0));
+	vertices[2] = glimac::Vertex2DUV(glm::vec2(0.5f, 0.5f), glm::vec2(1,1));
+	vertices[3] = glimac::Vertex2DUV(glm::vec2(-0.5f, 0.5f), glm::vec2(0,1));
 	
 	setVBO();
 	setVAO();
@@ -15,12 +14,10 @@ Button2D::Button2D()
 
 Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height)
 {
-	glm::vec3 color(1.f,0.f,0.f);
-
-	vertices[0] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left), color);
-	vertices[1] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left), color);
-	vertices[2] = glimac::Vertex2DRGB(glm::vec2(x_bottom + width, y_left + height), color);
-	vertices[3] = glimac::Vertex2DRGB(glm::vec2(x_bottom, y_left + height), color);
+	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,0));
+	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,0));
+	vertices[2] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left + height), glm::vec2(1,1));
+	vertices[3] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left + height), glm::vec2(0,1));
 
 	setVBO();
 	setVAO();
@@ -30,7 +27,7 @@ Button2D::~Button2D(){
 
 }
 
-const glimac::Vertex2DRGB* Button2D::getVertices() const{
+const glimac::Vertex2DUV* Button2D::getVertices() const{
 	return vertices;
 }
 
@@ -41,26 +38,19 @@ void Button2D::setVBO(){
 void Button2D::setVAO(){
 	vao.enableVertexAttribArray(0);
 	vao.enableVertexAttribArray(1);
-	vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DRGB), (const GLvoid*) (0 * sizeof(GLfloat)) );
-	vao.vertexAttribPointer(vbo, 1, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DRGB), (const GLvoid*) (2 * sizeof(GLfloat)) );
+	vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
+	vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
 void Button2D::draw() const{
 	vao.bind();
+	glBindTexture(GL_TEXTURE_2D, idTexture);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	vao.unbind();
 }
 
 void Button2D::update(){
-	glm::vec3 color(1.f,0.f,0.f);
-	if(model->isSelected()){
-		color = glm::vec3 (0.f,1.f,0.f);
-	}
-	
-	vertices[0].color = color;
-	vertices[1].color = color;
-	vertices[2].color = color;
-	vertices[3].color = color;
-	
+	//Changer la texture associée 
 	setVBO();
 }

@@ -85,10 +85,14 @@ public:
   void useMenuProgram();
   void useRaceProgram();
 
+  GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
+    { return tabTextures[positionToSelect]; }
+
 private:
   void drawWorld();
   void drawInterface();
   void initShaderPrograms();
+  void initTextures();
 
   GraphicSettings settings;
 
@@ -105,6 +109,7 @@ private:
 
   sf::RenderWindow window;
   sf::Font font;
+  std::vector<GLuint> tabTextures;
 
 };
 

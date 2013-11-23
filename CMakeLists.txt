@@ -33,6 +33,8 @@ file(COPY application/shaders DESTINATION ./application)
 file(COPY application/shaders DESTINATION ./)
 file(COPY application/fonts DESTINATION ./application)
 file(COPY application/fonts DESTINATION ./)
+file(COPY application/textures DESTINATION ./application)
+file(COPY application/textures DESTINATION ./)
 
 #Windows : copie des DLL a cote de l'exe
 IF(WIN32)
