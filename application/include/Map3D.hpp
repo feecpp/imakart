@@ -1,5 +1,5 @@
-#ifndef KARTCUBE_HPP
-#define KARTCUBE_HPP
+#ifndef MAP3D_H
+#define MAP3D_H
 
 #include "Object3D.hpp"
 #include "Vertex3D.hpp"
@@ -8,10 +8,10 @@
 #include "VBO.hpp"
 #include "VAO.hpp"
 
-class KartCube : public Object3D
+class Map3D : public Object3D
 {
 public:
-  KartCube();
+  Map3D();
 
   /**
    * @see Object3D
@@ -41,4 +41,4 @@ private:
   glm::vec4 color;
 };
 
-#endif // KARTCUBE_HPP
+#endif // MAP3D_H

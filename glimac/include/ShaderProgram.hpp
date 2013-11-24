@@ -70,6 +70,7 @@ public:
    */
   void setUniform(GLint uniformIndex, const glm::mat3& matrix) const;
   void setUniform(GLint uniformIndex, const glm::mat4& matrix) const;
+  void setUniform(GLint uniformIndex, const glm::vec4& vector) const;
 
   GLint getId() const
     {return programId;}

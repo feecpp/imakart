@@ -2,7 +2,7 @@
 #include "Kart.hpp"
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr)
+    : state (IN_MENU), player(nullptr), map(nullptr)
 {
   //En attendant une gestion plus propre
   player = new Player(hangar.getPlayerKart());
@@ -32,5 +32,12 @@ Player& GameEngine::getPlayer() const
 Kart& GameEngine::getPlayerKart() const
 {
   return hangar.getPlayerKart();
+}
+
+Map& GameEngine::getMap() const
+{
+  //Pas mal de taff encore sur la gestion propre de la création du Player, des Karts...
+  assert(map != nullptr);
+  return *map;
 }
 

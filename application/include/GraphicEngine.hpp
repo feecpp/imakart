@@ -104,6 +104,7 @@ private:
   std::vector<Object2D* > objects2D;
 
   sf::RenderWindow window;
+  sf::Font font;
 
 };
 

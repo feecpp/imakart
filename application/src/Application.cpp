@@ -67,7 +67,7 @@ bool Application::handleEvents(sf::RenderWindow& window)
                 handler.pressRight();
 
             else if (e.key.code == sf::Keyboard::Return)
-                handler.pressEnter();
+                return(handler.pressEnter());
 
             break;
 
