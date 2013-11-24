@@ -36,6 +36,24 @@ struct Vertex2DRGB
 
 };
 
+struct Vertex2DUV
+{
+  glm::vec2 position;
+  glm::vec2 texCoord;
+
+  Vertex2DUV():
+  position(glm::vec2(0)), texCoord(glm::vec2(0)){
+  }
+  
+  Vertex2DUV(const glm::vec2 position, const glm::vec2 texCoord):
+    position(position), texCoord(texCoord) {
+  }
+  
+  Vertex2DUV(const float x, const float y, const float u, const float v):
+    position(glm::vec2(x,y)), texCoord(glm::vec2(u,v)) {
+  }
+};
+
 } // namespace glimac
 
 #endif // VERTEX2DRGB_HPP

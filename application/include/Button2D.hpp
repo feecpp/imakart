@@ -15,14 +15,14 @@ public:
 	Button2D(const float x_bottom, const float y_left, const float width, const float height); 
 	~Button2D();
 	
-	const glimac::Vertex2DRGB* getVertices() const;
+	const glimac::Vertex2DUV* getVertices() const;
 	void updateVertices(const float x_bottom, const float y_left, const float width, const float height);
 
-	void draw() const;
+	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	void update();
 	
 private:
-	glimac::Vertex2DRGB vertices[4];
+	glimac::Vertex2DUV vertices[4];
 	glimac::LowLevelVBO vbo;
 	glimac::VAO vao;
 	

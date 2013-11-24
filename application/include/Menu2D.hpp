@@ -20,7 +20,7 @@ public:
 	static Menu2D* initialiseMainMenu();
 	void addButton(Button2D* buttonToAdd);
     void update();
-	void draw() const;
+	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	
 private:
 	std::vector<Button2D* > tab2DMenu;
