@@ -21,18 +21,23 @@ Kart::~Kart()
 
 void Kart::update()
 {
-  //Calcul de la nouvelle direction en fonction de l'angularSpeed
-  directionAngle += angularSpeed; //ajouter gestion temps
-  orientation = glm::angleAxis(directionAngle, glm::vec3(0.f, 1.f, 0.f));
-  const glm::vec3 initialDirection = glm::vec3(0.f, 0.f, -1.f);
-  glm::vec3 direction = glm::normalize(glm::toMat3(orientation) * initialDirection);
-
-  //Calcul de la nouvelle position en fonction de la speed et de la direction
   //Gestion du temps avec Clock de sfml
   sf::Clock Clock;
   sf::Time ElapsedTime = Clock.getElapsedTime();
   float time_sec = ElapsedTime.asSeconds();//Renvoie le temps en seconde sous forme de float
   Clock.restart();
+
+  //Calcul de la nouvelle direction en fonction de l'angularSpeed
+  if (speed != 0.f)
+  {
+    directionAngle += angularSpeed *(time_sec*100000); //ajouter gestion temps
+  }
+  orientation = glm::angleAxis(directionAngle, glm::vec3(0.f, 1.f, 0.f));
+
+  const glm::vec3 initialDirection = glm::vec3(0.f, 0.f, -1.f);
+  glm::vec3 direction = glm::normalize(glm::toMat3(orientation) * initialDirection);
+
+  //Calcul de la nouvelle position en fonction de la speed et de la direction
 
   // position += direction * speed;//sans la gestion temps
   position += direction * (speed*(time_sec*100000));
