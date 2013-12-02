@@ -18,16 +18,16 @@ sf::RenderWindow& Application::setupEverything()
 
 void Application::startGame(sf::RenderWindow& window)
 {
-  bool askedForQuit = false;
+
   do
   {
     graphicEngine.renderFrame();
     gameEngine.update();
-    askedForQuit = handleEvents(window);
+    handleEvents(window);
     contextManager.updateContextIfNeeded();
 
     graphicEngine.swapBuffers();
-  } while (!askedForQuit);
+  } while (!gameEngine.getExitFlag());
 }
 
 void Application::testRace()
@@ -39,7 +39,7 @@ void Application::testRace()
   startGame(window);
 }
 
-bool Application::handleEvents(sf::RenderWindow& window)
+void Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();	 
 
@@ -50,7 +50,7 @@ bool Application::handleEvents(sf::RenderWindow& window)
       {
         case sf::Event::Closed :
                 window.close();
-                return true;
+                gameEngine.activateExitFlag();
         break;
 
         case sf::Event::KeyPressed:
@@ -93,5 +93,4 @@ bool Application::handleEvents(sf::RenderWindow& window)
           break;
       }
   }
-  return false;
 }

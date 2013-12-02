@@ -4,7 +4,8 @@
 #include "Object3D.hpp"
 #include <VBO.hpp>
 #include <VAO.hpp>
-
+#include <vector>
+#include <glm/glm.hpp>
 
 /**
  * @brief The Mesh class represente un objet 3D modelise et non anime.
@@ -14,6 +15,13 @@
 class Mesh : public Object3D
 {
 public:
+  struct Material
+  {
+    glm::vec4 ambientColor;
+    glm::vec4 diffuseColor;
+    glm::vec4 specularColor;
+  };
+
   Mesh();
   virtual ~Mesh();
 
@@ -30,10 +38,17 @@ public:
   void loadFromFile(const std::string& filePath);
 
 private:
-  glimac::LowLevelVBO meshVBO;
-  glimac::VAO meshVAO;
-  size_t numVertices;
-  std::vector<unsigned int> indices;
+  /* Implémentation basique :
+   * pour un VBO à l'indice 'i' correspond un VAO et un material à l'indice 'i'.
+   * A voir plus tard si faut pas faire un truc plus proche, pour l'instant je me suis
+   * concentré sur le résultat...
+   */
+  std::vector<glimac::LowLevelVBO> meshVBOs;
+  std::vector<glimac::VAO> meshVAOs;
+  std::vector<Material> materials;
+
+  std::vector<std::vector<unsigned int>> indices;
+  glm::mat4 modelMatrix;
 
 };
 

@@ -7,6 +7,7 @@
 #include "Kart.hpp"
 #include "Map3D.hpp"
 #include "Mesh.hpp"
+#include <iostream>
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -64,8 +65,15 @@ void ContextManager::setupRaceContext() const
   //map->setModelToRepresent(gameEngine.getMap());
 
   Mesh* testMesh = new Mesh();
-  testMesh->loadFromFile("data/al.obj");
-
+  try
+  {
+    testMesh->loadFromFile("data/minionCouleur.obj");
+  }catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  testMesh->setModelToRepresent(gameEngine.getPlayerKart());
   //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
   //Le GraphicEngine devient également propriétaire des objets 3D qu'il contient

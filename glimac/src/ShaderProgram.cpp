@@ -2,6 +2,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <TextFile.hpp>
 #include <stdexcept>
+#include <OpenGLDebugger.hpp>
 
 #if DEBUG
   #include <iostream>
@@ -94,11 +95,25 @@ GLint ShaderProgram::getUniformIndex(const std::string &uniformName) const
 void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat3 &matrix) const
 {
   glUniformMatrix3fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
 }
 
 void ShaderProgram::setUniform(GLint uniformIndex, const glm::mat4& matrix) const
 {
   glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(matrix));
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
+}
+
+void ShaderProgram::setUniform(GLint uniformIndex, const glm::vec4& vector) const
+{
+  glUniform4f(uniformIndex, vector.x, vector.y, vector.z, vector.w);
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
 }
 
 ShaderProgram ShaderProgram::loadProgram(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)

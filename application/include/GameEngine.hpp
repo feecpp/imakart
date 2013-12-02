@@ -30,6 +30,14 @@ public:
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
 
+  /**
+   * @brief setExitFlag indique que le jeu va quitter
+   * (la fonction getExitFlag() renvoie true)
+   */
+  void activateExitFlag();
+  void deactivateExitFlag();
+  bool getExitFlag() const;
+
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
   Map& getMap() const;
@@ -43,6 +51,7 @@ private:
   Hangar hangar;
   Player* player;
   Map* map;
+  bool exitFlag;
 };
 
 #endif // GAMEENGINE_HPP
