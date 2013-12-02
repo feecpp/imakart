@@ -27,10 +27,15 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
   GLint modelIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelIndex, modelMatrix);
   GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
+  GLint ambientIndex = shaderProgram.getUniformIndex("material.ambient");
+  GLint specularIndex = shaderProgram.getUniformIndex("material.specular");
 
   for (unsigned int i = 0; i < meshVAOs.size(); ++i)
   {
     shaderProgram.setUniform(diffuseIndex, materials[i].diffuseColor);
+    shaderProgram.setUniform(ambientIndex, materials[i].ambientColor);
+    shaderProgram.setUniform(specularIndex, materials[i].specularColor);
+
     meshVAOs[i].bind();
     glDrawElements(GL_TRIANGLES, indices[i].size(), GL_UNSIGNED_INT, &(indices[i][0]));
     meshVAOs[i].unbind();
@@ -40,8 +45,8 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
 void Mesh::update()
 {
   modelMatrix = glm::scale(glm::mat4(1.f), glm::vec3(0.5f));
-  modelMatrix = modelMatrix * glm::toMat4(model->getOrientation());
-  modelMatrix = glm::translate(modelMatrix, model->getPosition());
+  modelMatrix = glm::toMat4(model->getOrientation()) * modelMatrix;
+  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * modelMatrix;
 }
 
 void Mesh::loadFromFile(const std::string& filePath)
@@ -53,6 +58,7 @@ void Mesh::loadFromFile(const std::string& filePath)
          aiProcess_Triangulate              |
          aiProcess_JoinIdenticalVertices    |
          aiProcess_GenNormals               |
+         aiProcess_OptimizeGraph            |
          aiProcess_SortByPType              );
 
   if (!scene)
