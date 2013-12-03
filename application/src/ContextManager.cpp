@@ -6,7 +6,9 @@
 #include "Cube.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
+#include "Mesh.hpp"
 #include <iostream>
+#include <stdexcept>
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -55,8 +57,8 @@ void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
   graphicEngine.useRaceProgram();
-  KartCube* cube = new KartCube();
-  cube->setModelToRepresent(gameEngine.getPlayerKart());
+  //KartCube* cube = new KartCube();
+  //cube->setModelToRepresent(gameEngine.getPlayerKart());
 
   const GraphicSettings& settings = graphicEngine.getSettings();
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
@@ -65,9 +67,19 @@ void ContextManager::setupRaceContext() const
   Map3D* map = new Map3D();
   map->setModelToRepresent(gameEngine.getMap());
 
+  Mesh* minionMesh = new Mesh();
+  try
+  {
+    minionMesh->loadFromFile("data/minionCouleur.obj");
+  }catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
   //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
-  graphicEngine.addObject3D(cube);
+  graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
 }
 

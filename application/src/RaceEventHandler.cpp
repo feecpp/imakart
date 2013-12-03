@@ -43,9 +43,9 @@ void RaceEventHandler::releaseRight() const
   gameEngine.getPlayer().stopTurning();
 }
 
-bool RaceEventHandler::pressEnter() const
+void RaceEventHandler::pressEnter() const
 {	
-  return false;
+
 }
 void RaceEventHandler::releaseEnter() const
 {

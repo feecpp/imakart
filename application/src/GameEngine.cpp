@@ -2,7 +2,7 @@
 #include "Kart.hpp"
 
 GameEngine::GameEngine()
-    : state (IN_MENU), player(nullptr), map(nullptr)
+  : state (IN_MENU), player(nullptr), map(nullptr), exitFlag(false)
 {
   //En attendant une gestion plus propre
   player = new Player(hangar.getPlayerKart());
@@ -19,6 +19,21 @@ void GameEngine::init()
 void GameEngine::update()
 {
   hangar.getPlayerKart().update();
+}
+
+void GameEngine::activateExitFlag()
+{
+  exitFlag = true;
+}
+
+void GameEngine::deactivateExitFlag()
+{
+  exitFlag = false;
+}
+
+bool GameEngine::getExitFlag() const
+{
+  return exitFlag;
 }
 
 

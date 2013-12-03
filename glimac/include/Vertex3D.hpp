@@ -22,7 +22,7 @@ struct Vertex3D
   {}
 
   Vertex3D(float x, float y, float z)
-    : position(glm::vec3(x, y, z))
+    : position(glm::vec3(x, y, z)), textureCoordinates(0.f), normal(0.f)
   {}
 
   Vertex3D() {}

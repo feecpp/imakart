@@ -40,7 +40,7 @@ void MenuEventHandler::releaseRight() const
 
 }
 
-bool MenuEventHandler::pressEnter() const
+void MenuEventHandler::pressEnter() const
 {
 	ButtonAction action = gameEngine.getMenuLogic().submitButton();
 
@@ -57,15 +57,13 @@ bool MenuEventHandler::pressEnter() const
 			break;
 
 		case EXIT:
-			return true;
+      gameEngine.activateExitFlag();
 			break;
 
 		default:
 			std::cout << "No implementation" << std::endl;
 			break;
 	}
-
-	return false;
 
 }
 void MenuEventHandler::releaseEnter() const

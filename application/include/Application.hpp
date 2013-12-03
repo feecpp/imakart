@@ -19,7 +19,7 @@ public:
   void testRace();
 
 private:
-  bool handleEvents(sf::RenderWindow& window);
+  void handleEvents(sf::RenderWindow& window);
 
   GameEngine gameEngine;
   GraphicEngine graphicEngine;
