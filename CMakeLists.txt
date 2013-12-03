@@ -3,8 +3,7 @@ PROJECT(Imakart)
 find_package(OpenGL REQUIRED)
 find_package(SFML 2.1 COMPONENTS graphics window system REQUIRED)
 
-
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=gnu++0x ${CMAKE_CXX_FLAGS}")
 
 include_directories(${OPENGL_INCLUDE_DIR} ${SFML_INCLUDE_DIR})
 
@@ -19,6 +18,7 @@ include_directories(third-party/assimp--3.0.1270/include)
 add_definitions(-DENABLE_BOOST_WORKAROUND=ON)
 SET(ENABLE_BOOST_WORKAROUND ON)
 SET(BUILD_STATIC_LIB ON)
+SET(BUILD_ASSIMP_TOOLS OFF)
 add_subdirectory(third-party/assimp--3.0.1270)
 #desactive les warnings degueulasses
 set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
