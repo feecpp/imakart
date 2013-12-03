@@ -75,17 +75,17 @@ void Mesh::loadFromFile(const std::string& filePath)
 
   for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
   {
-    aiMesh* mesh = scene->mMeshes[i];
-    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    aiColor4D ambient;
-    aiColor4D diffuse;
-    aiColor4D specular;
+    const aiMesh* const mesh = scene->mMeshes[i];
+    const aiMaterial* const material = scene->mMaterials[mesh->mMaterialIndex];
+    aiColor3D ambient;
+    aiColor3D diffuse;
+    aiColor3D specular;
     material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
     material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
     material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
-    materials[i].ambientColor = glm::vec4(ambient.r, ambient.g, ambient.b, ambient.a);
-    materials[i].diffuseColor = glm::vec4(diffuse.r, diffuse.g, diffuse.b, diffuse.a);
-    materials[i].specularColor = glm::vec4(specular.r, specular.g, specular.b, specular.a);
+    materials[i].ambientColor = glm::vec4(ambient.r, ambient.g, ambient.b, 1.f);
+    materials[i].diffuseColor = glm::vec4(diffuse.r, diffuse.g, diffuse.b, 1.f);
+    materials[i].specularColor = glm::vec4(specular.r, specular.g, specular.b, 1.f);
 
     std::vector<glimac::Vertex3D> vertices;
     vertices.reserve(mesh->mNumVertices);
