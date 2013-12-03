@@ -14,12 +14,18 @@
 Mesh::Mesh()
   : modelMatrix(1.f)
 {
-
+  for (glimac::LowLevelVBO*& vbo : meshVBOs)
+    vbo = nullptr;
+  for (glimac::VAO*& vao : meshVAOs)
+    vao = nullptr;
 }
 
 Mesh::~Mesh()
 {
-
+  for (glimac::LowLevelVBO*& vbo : meshVBOs)
+    delete vbo;
+  for (glimac::VAO*& vao : meshVAOs)
+    delete vao;
 }
 
 void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
@@ -36,9 +42,9 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
     shaderProgram.setUniform(ambientIndex, materials[i].ambientColor);
     shaderProgram.setUniform(specularIndex, materials[i].specularColor);
 
-    meshVAOs[i].bind();
+    meshVAOs[i]->bind();
     glDrawElements(GL_TRIANGLES, indices[i].size(), GL_UNSIGNED_INT, &(indices[i][0]));
-    meshVAOs[i].unbind();
+    meshVAOs[i]->unbind();
   }
 }
 
@@ -68,6 +74,7 @@ void Mesh::loadFromFile(const std::string& filePath)
     throw std::runtime_error(errorMessage.str());
   }
 
+
   meshVBOs.resize(scene->mNumMeshes);
   meshVAOs.resize(scene->mNumMeshes);
   materials.resize(scene->mNumMeshes);
@@ -86,6 +93,9 @@ void Mesh::loadFromFile(const std::string& filePath)
     materials[i].ambientColor = glm::vec4(ambient.r, ambient.g, ambient.b, 1.f);
     materials[i].diffuseColor = glm::vec4(diffuse.r, diffuse.g, diffuse.b, 1.f);
     materials[i].specularColor = glm::vec4(specular.r, specular.g, specular.b, 1.f);
+
+    meshVBOs[i] = new glimac::LowLevelVBO();
+    meshVAOs[i] = new glimac::VAO();
 
     std::vector<glimac::Vertex3D> vertices;
     vertices.reserve(mesh->mNumVertices);
@@ -108,15 +118,15 @@ void Mesh::loadFromFile(const std::string& filePath)
       }
     }
 
-    meshVBOs[i].setBufferData((const GLvoid*) &vertices[0], vertices.size() * sizeof(glimac::Vertex3D), GL_STATIC_DRAW);
+    meshVBOs[i]->setBufferData((const GLvoid*) &vertices[0], vertices.size() * sizeof(glimac::Vertex3D), GL_STATIC_DRAW);
 
-    meshVAOs[i].vertexAttribPointer(meshVBOs[i], 0, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, position));
-    meshVAOs[i].vertexAttribPointer(meshVBOs[i], 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, textureCoordinates));
-    meshVAOs[i].vertexAttribPointer(meshVBOs[i], 2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, normal));
+    meshVAOs[i]->vertexAttribPointer(*meshVBOs[i], 0, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, position));
+    meshVAOs[i]->vertexAttribPointer(*meshVBOs[i], 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, textureCoordinates));
+    meshVAOs[i]->vertexAttribPointer(*meshVBOs[i], 2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid*) offsetof(glimac::Vertex3D, normal));
 
-    meshVAOs[i].enableVertexAttribArray(0);
-    meshVAOs[i].enableVertexAttribArray(1);
-    meshVAOs[i].enableVertexAttribArray(2);
+    meshVAOs[i]->enableVertexAttribArray(0);
+    meshVAOs[i]->enableVertexAttribArray(1);
+    meshVAOs[i]->enableVertexAttribArray(2);
 
   }
 }

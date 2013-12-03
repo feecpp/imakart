@@ -8,6 +8,7 @@
 #include "Map3D.hpp"
 #include "Mesh.hpp"
 #include <iostream>
+#include <stdexcept>
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
