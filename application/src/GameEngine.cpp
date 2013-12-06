@@ -13,12 +13,14 @@ GameEngine::GameEngine()
 
 void GameEngine::init()
 {
-
+  clock.restart();
 }
 
 void GameEngine::update()
 {
-  hangar.getPlayerKart().update();
+  float elapsedTime = clock.restart().asSeconds();
+  //Mettre à jour les objets de la simulation ici (en fonction du temps)
+  hangar.getPlayerKart().update(elapsedTime);
 }
 
 void GameEngine::activateExitFlag()

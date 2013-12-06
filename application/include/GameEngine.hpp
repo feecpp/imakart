@@ -8,10 +8,12 @@
 #include "MenuLogic.hpp"
 #include "Hangar.hpp"
 #include "Map.hpp"
+#include <SFML/System.hpp>
 
 /**
  * @brief Classe principale d'Imakart
- * Gère le déroulement du jeu.
+ * Gère le déroulement du jeu. C'est le GameEngine
+ * qui gère le temps dans la simulation.
  */
 class GameEngine
 {
@@ -51,6 +53,7 @@ private:
   Hangar hangar;
   Player* player;
   Map* map;
+  sf::Clock clock;
   bool exitFlag;
 };
 
