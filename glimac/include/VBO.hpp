@@ -12,6 +12,7 @@ namespace glimac
 class VBO
 {
 public:
+  virtual ~VBO() {}
   virtual void bind() const = 0;
   virtual void unbind() const = 0;
 
@@ -33,7 +34,7 @@ class LowLevelVBO : public VBO
 public:
   LowLevelVBO(GLenum target = GL_ARRAY_BUFFER); //default constructor
   LowLevelVBO(const GLvoid* data, GLsizeiptr dataSizeInBytes, GLenum usage, GLenum target = GL_ARRAY_BUFFER);
-  ~LowLevelVBO();
+  virtual ~LowLevelVBO();
 
   virtual void bind() const;
   virtual void unbind() const;

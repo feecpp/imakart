@@ -8,10 +8,12 @@
 #include "MenuLogic.hpp"
 #include "Hangar.hpp"
 #include "Map.hpp"
+#include <SFML/System.hpp>
 
 /**
  * @brief Classe principale d'Imakart
- * Gère le déroulement du jeu.
+ * Gère le déroulement du jeu. C'est le GameEngine
+ * qui gère le temps dans la simulation.
  */
 class GameEngine
 {
@@ -30,6 +32,14 @@ public:
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
 
+  /**
+   * @brief setExitFlag indique que le jeu va quitter
+   * (la fonction getExitFlag() renvoie true)
+   */
+  void activateExitFlag();
+  void deactivateExitFlag();
+  bool getExitFlag() const;
+
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
   Map& getMap() const;
@@ -43,6 +53,8 @@ private:
   Hangar hangar;
   Player* player;
   Map* map;
+  sf::Clock clock;
+  bool exitFlag;
 };
 
 #endif // GAMEENGINE_HPP

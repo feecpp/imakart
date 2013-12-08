@@ -38,6 +38,7 @@ sf::RenderWindow& GraphicEngine::init()
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
+  glClearColor(1.f, 1.f, 1.f, 1.f);
 
   //Initialisation des textures
   initTextures();
@@ -78,7 +79,8 @@ void GraphicEngine::renderFrame()
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
-    
+
+  //Dessin des objets 2D
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i){
 	  objects2D[i]->update();

@@ -2,7 +2,7 @@
 #include "Kart.hpp"
 
 GameEngine::GameEngine()
-    : state (IN_MENU), player(nullptr), map(nullptr)
+  : state (IN_MENU), player(nullptr), map(nullptr), exitFlag(false)
 {
   //En attendant une gestion plus propre
   player = new Player(hangar.getPlayerKart());
@@ -13,12 +13,29 @@ GameEngine::GameEngine()
 
 void GameEngine::init()
 {
-
+  clock.restart();
 }
 
 void GameEngine::update()
 {
-  hangar.getPlayerKart().update();
+  float elapsedTime = clock.restart().asSeconds();
+  //Mettre à jour les objets de la simulation ici (en fonction du temps)
+  hangar.getPlayerKart().update(elapsedTime);
+}
+
+void GameEngine::activateExitFlag()
+{
+  exitFlag = true;
+}
+
+void GameEngine::deactivateExitFlag()
+{
+  exitFlag = false;
+}
+
+bool GameEngine::getExitFlag() const
+{
+  return exitFlag;
 }
 
 

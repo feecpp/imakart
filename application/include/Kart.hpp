@@ -3,6 +3,11 @@
 
 #include "Positionable.hpp"
 
+/**
+ * @brief The Kart class
+ * Gere le deplacement du Kart d'un point de vue physique.
+ * Les unites sont le uniteOGL/seconde et le degre/seconde.
+ */
 class Kart : public Positionable
 {
 public:
@@ -11,7 +16,7 @@ public:
   virtual ~Kart();
 
   //Met à jour le Kart en fonction des ordres qui lui ont été donnés
-  void update();
+  void update(float elapsedTimeInSecond);
 
   //Donne les ordres au Kart
   void moveForward();
@@ -28,9 +33,10 @@ private:
   glm::vec3 position;
   glm::quat orientation;
   float directionAngle;
+  ///La vitesse en uniteOpenGL/seconde
   float speed;
+  ///La vitesse angulaire en degres/seconde
   float angularSpeed;
-  float lastTimeIMoved;
 };
 
 #endif

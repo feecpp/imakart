@@ -19,18 +19,12 @@ Kart::~Kart()
 {
 }
 
-void Kart::update()
+void Kart::update(float elapsedTimeInSecond)
 {
-  //Gestion du temps avec Clock de sfml
-  sf::Clock Clock;
-  sf::Time ElapsedTime = Clock.getElapsedTime();
-  float time_sec = ElapsedTime.asSeconds();//Renvoie le temps en seconde sous forme de float
-  Clock.restart();
-
   //Calcul de la nouvelle direction en fonction de l'angularSpeed
   if (speed != 0.f)
   {
-    directionAngle += angularSpeed *(time_sec*100000); //ajouter gestion temps
+    directionAngle += angularSpeed * (elapsedTimeInSecond); //en degres/secondes
   }
   orientation = glm::angleAxis(directionAngle, glm::vec3(0.f, 1.f, 0.f));
 
@@ -40,24 +34,30 @@ void Kart::update()
   //Calcul de la nouvelle position en fonction de la speed et de la direction
 
   // position += direction * speed;//sans la gestion temps
-  position += direction * (speed*(time_sec*100000));
+  position += direction * (speed*elapsedTimeInSecond);//en uniteOGL/seconde
 
 }
 
-void Kart::moveForward(){
-  speed = 0.1f;
+void Kart::moveForward()
+{
+  //uniteOpenGL / seconde
+  speed = 3.f;
 }
 
-void Kart::moveBackward(){
-  speed = -0.1f;
+void Kart::moveBackward()
+{
+  //uniteOpenGL / seconde
+  speed = -3.f;
 }
 
-void Kart::turnLeft(){
-  angularSpeed = 10.f;
+void Kart::turnLeft()
+{
+  angularSpeed = 90.f;
 }
 
-void Kart::turnRight(){
-  angularSpeed = -10.f;
+void Kart::turnRight()
+{
+  angularSpeed = -90.f;
 }
 
 void Kart::stopMoving()
