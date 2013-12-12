@@ -69,7 +69,7 @@ void ContextManager::setupRaceContext() const
   Mesh* minionMesh = new Mesh();
   try
   {
-    minionMesh->loadFromFile("data/minionCouleur.obj");
+    minionMesh->loadFromFile("data/minion.dae");
   }catch(std::runtime_error er)
   {
     std::cerr << er.what() << std::endl;
