@@ -15,6 +15,15 @@
 class Kart : public Positionable
 {
 public:
+
+  //Indique si le Kart est actuellement en phase d'acceleration ou de deceleration
+  enum AccelerationState
+  {
+    ACCELERATE,
+    DECELERATE,
+    DO_NOT_MOVE
+  };
+
   //Structure qui empacte les caractéristiques du Kart
   struct Specifications
   {
@@ -55,6 +64,7 @@ private:
   ///La vitesse angulaire actuelle en degres/seconde
   float currentAngularSpeed;
   float currentAcceleration;
+  AccelerationState accelerationState;
   Specifications specifications;
 };
 
