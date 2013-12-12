@@ -29,11 +29,15 @@ public:
   struct Specifications
   {
     Specifications()
-      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(-1.5f) {}
+      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f) {}
 
+    ///Doit etre positive
     float acceleration;
+    ///Doit etre positive
     float maxSpeed;
+    ///Doit etre positive
     float angularSpeed;
+    ///Doit etre positif
     float breakingCoefficient;
   };
 

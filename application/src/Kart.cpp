@@ -47,7 +47,9 @@ void Kart::update(float elapsedTimeInSecond)
 
   /* Si on est en phase de deceleration et qu'on bouge pas c'est qu'on
    * a fini la phase de deceleration et qu'on est a l'arret, il faut donc
-   * empecher le kart de repartir dans l'autre sens !
+   * empecher le kart de repartir dans l'autre sens ! Si la vitesse passe d'un coup d'un signe a l'autre
+   * (positif / negatif et vice versa) en phase de deceleration c'est aussi qu'on doit s'arreter c'est juste qu'on a decelere
+   * trop vite et qu'on a passe le zero...
    */
   float supposedNewSpeed = travelledDistance / elapsedTimeInSecond;
   if ( (abs(speed - 0.f) <= 0.000001f || supposedNewSpeed / speed < 0.f) && accelerationState == DECELERATE)
@@ -98,7 +100,8 @@ void Kart::turnRight()
 
 void Kart::stopMoving()
 {
-  //speed = 0.f;
+  if (accelerationState == DECELERATE)
+    return;
   currentAcceleration = -currentAcceleration;
   accelerationState = DECELERATE;
 }
@@ -111,8 +114,17 @@ void Kart::stopTurning()
 //Le freinage est juste une deceleration plus puissante pour l'instant
 void Kart::brake()
 {
-  accelerationState = DECELERATE;
-  currentAcceleration = specifications.breakingCoefficient * currentAcceleration;
+  //Si on est deja en train de decelerer il faut juste augmenter l'acceleration courante
+  if (accelerationState == DECELERATE)
+  {
+    currentAcceleration = specifications.breakingCoefficient * currentAcceleration;
+  }
+  //Sinon il faut carrement prendre son oppose
+  else
+  {
+    accelerationState = DECELERATE;
+    currentAcceleration = - specifications.breakingCoefficient * currentAcceleration;
+  }
 }
 
 const glm::vec3& Kart::getPosition() const
