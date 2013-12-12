@@ -19,7 +19,7 @@ class Camera;
 struct GraphicSettings
 {
   GraphicSettings()
-    : FPS(30), WINDOW_WIDTH(800), WINDOW_HEIGHT(600), WINDOW_BPP(32)
+    : FPS(30), WINDOW_WIDTH(1024), WINDOW_HEIGHT(768), WINDOW_BPP(32)
   {
     FRAME_DURATION = 1000.f / FPS;
   }

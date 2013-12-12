@@ -39,7 +39,7 @@ void Camera::updateViewProjectionMatrix()
 {
   //Décommenter cette ligne et commenter celle d'après pour avoir une caméra qui suit le KartCube
   //viewProjection = glm::lookAt(getPosition(), getWhereILook(), glm::vec3(0.f, 1.f, 0.f));
-  viewProjection = glm::lookAt(glm::vec3(0.f, 2.f, 1.f), glm::vec3(0.f,0.f,0.f), glm::vec3(0.f, 1.f, 0.f));
+  viewProjection = glm::lookAt(glm::vec3(0.f, 2.5f, 2.5f), glm::vec3(0.f,0.f,0.f), glm::vec3(0.f, 1.f, 0.f));
   viewProjection =  glm::perspective(90.f, windowWidth / (float) windowHeight, 0.1f, 1000.f) * viewProjection;
 }
 
