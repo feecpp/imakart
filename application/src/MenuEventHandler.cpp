@@ -71,3 +71,6 @@ void MenuEventHandler::releaseEnter() const
 
 }
 
+void MenuEventHandler::pressSpace() const {}
+void MenuEventHandler::releaseSpace() const {}
+

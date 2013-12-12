@@ -55,37 +55,43 @@ void Application::handleEvents(sf::RenderWindow& window)
 
         case sf::Event::KeyPressed:
             if (e.key.code == sf::Keyboard::Down)
-                handler.pressDown();
+              handler.pressDown();
 
             else if (e.key.code == sf::Keyboard::Up)
-                handler.pressUp();
+              handler.pressUp();
 
             else if (e.key.code == sf::Keyboard::Left)
-                handler.pressLeft();
+              handler.pressLeft();
 
             else if (e.key.code == sf::Keyboard::Right)
-                handler.pressRight();
+              handler.pressRight();
 
             else if (e.key.code == sf::Keyboard::Return)
-                return(handler.pressEnter());
+              handler.pressEnter();
+
+            else if (e.key.code == sf::Keyboard::Space)
+              handler.pressSpace();
 
             break;
 
         case sf::Event::KeyReleased:
             if (e.key.code == sf::Keyboard::Down)
-                handler.releaseDown();
+              handler.releaseDown();
 
             else if (e.key.code == sf::Keyboard::Up)
-                handler.releaseUp();
+              handler.releaseUp();
 
             else if (e.key.code == sf::Keyboard::Left)
-                handler.releaseLeft();
+              handler.releaseLeft();
 
             else if (e.key.code == sf::Keyboard::Right)
-                handler.releaseRight();
+              handler.releaseRight();
 
             else if (e.key.code == sf::Keyboard::Return)
-                handler.releaseEnter();
+              handler.releaseEnter();
+
+            else if (e.key.code == sf::Keyboard::Space)
+              handler.releaseSpace();
 
             break;
 

@@ -21,6 +21,7 @@ public:
   {
     ACCELERATE,
     DECELERATE,
+    MAX_SPEED_REACHED,
     DO_NOT_MOVE
   };
 
@@ -28,13 +29,12 @@ public:
   struct Specifications
   {
     Specifications()
-      : acceleration(2.f), maxSpeed(20.f), angularSpeed(90.f) {}
-    Specifications(float acceleration, float maxSpeed)
-      : acceleration(acceleration), maxSpeed(maxSpeed), angularSpeed(90.f) {}
+      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(-1.5f) {}
 
     float acceleration;
     float maxSpeed;
     float angularSpeed;
+    float breakingCoefficient;
   };
 
   Kart();
@@ -51,6 +51,7 @@ public:
   void turnRight();
   void stopMoving();
   void stopTurning();
+  void brake();
 
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
@@ -66,6 +67,7 @@ private:
   float currentAcceleration;
   AccelerationState accelerationState;
   Specifications specifications;
+
 };
 
 #endif

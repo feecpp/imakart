@@ -12,12 +12,13 @@ public:
 
   const Kart& getKart() const;
 
-  void moveForward();
-  void moveBackward();
-  void turnLeft();
-  void turnRight();
-  void stopMoving();
-  void stopTurning();
+  void moveForward() const;
+  void moveBackward() const;
+  void turnLeft() const;
+  void turnRight() const;
+  void stopMoving() const;
+  void stopTurning() const;
+  void brake() const;
 
 private:
   Kart& myKart;

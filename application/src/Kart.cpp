@@ -34,22 +34,40 @@ void Kart::update(float elapsedTimeInSecond)
   glm::vec3 direction = glm::normalize(glm::toMat3(orientation) * initialDirection);
 
   //Tentative d'implémentation d'une base de physique : http://www.onversity.net/cgi-bin/progactu/actu_aff.cgi?Eudo=bgteob&P=00000551
-  float travelledDistance = speed * elapsedTimeInSecond + currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+  float travelledDistance = 0.f;
+
+  if (accelerationState == MAX_SPEED_REACHED)
+  {
+    travelledDistance = speed * elapsedTimeInSecond;
+  }
+  else
+  {
+   travelledDistance = speed * elapsedTimeInSecond + currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+  }
 
   /* Si on est en phase de deceleration et qu'on bouge pas c'est qu'on
    * a fini la phase de deceleration et qu'on est a l'arret, il faut donc
    * empecher le kart de repartir dans l'autre sens !
    */
-  if ( abs(speed - 0.f) <= 0.000001f && accelerationState == DECELERATE)
+  float supposedNewSpeed = travelledDistance / elapsedTimeInSecond;
+  if ( (abs(speed - 0.f) <= 0.000001f || supposedNewSpeed / speed < 0.f) && accelerationState == DECELERATE)
   {
     currentAcceleration = 0.f;
     travelledDistance = 0.f;
     speed = 0.f;
+    accelerationState = DO_NOT_MOVE;
   }
   else
   {
     //Update speed for next calculation ! (speed = initialSpeed)
-    speed = travelledDistance / elapsedTimeInSecond;
+    speed = supposedNewSpeed;
+    if (abs(speed) >= specifications.maxSpeed && accelerationState != MAX_SPEED_REACHED)
+    {
+      accelerationState = MAX_SPEED_REACHED;
+      if (speed > 0.f)
+        speed = specifications.maxSpeed;
+      else speed = - specifications.maxSpeed;
+    }
   }
   position += direction * travelledDistance;//en uniteOGL/seconde
 }
@@ -88,6 +106,13 @@ void Kart::stopMoving()
 void Kart::stopTurning()
 {
   currentAngularSpeed = 0.f;
+}
+
+//Le freinage est juste une deceleration plus puissante pour l'instant
+void Kart::brake()
+{
+  accelerationState = DECELERATE;
+  currentAcceleration = specifications.breakingCoefficient * currentAcceleration;
 }
 
 const glm::vec3& Kart::getPosition() const
