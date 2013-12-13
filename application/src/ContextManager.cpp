@@ -46,7 +46,6 @@ void ContextManager::setupMenuContext() const
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
     menu2D->getTab2DMenu(i)->setTexture(graphicEngine.getTextureFromTabTexture(2*i), graphicEngine.getTextureFromTabTexture((2*i) + 1));
   }
-  std::cout << menu2D->getTab2DMenu(0)->getActivTexture() << std::endl;
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
@@ -70,7 +69,7 @@ void ContextManager::setupRaceContext() const
   Mesh* minionMesh = new Mesh();
   try
   {
-    minionMesh->loadFromFile("data/minionCouleur.obj");
+    minionMesh->loadFromFile("data/minion.dae");
   }catch(std::runtime_error er)
   {
     std::cerr << er.what() << std::endl;

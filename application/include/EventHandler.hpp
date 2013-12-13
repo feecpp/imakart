@@ -48,6 +48,13 @@ public:
    */
   virtual void pressEnter() const = 0;
   virtual void releaseEnter() const = 0;
+
+  /**
+   * @brief pressSpace
+   * Barre espace
+   */
+  virtual void pressSpace() const = 0;
+  virtual void releaseSpace() const = 0;
    
 };
 

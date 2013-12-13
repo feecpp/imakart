@@ -47,6 +47,16 @@ void RaceEventHandler::pressEnter() const
 {	
 
 }
+
 void RaceEventHandler::releaseEnter() const
+{
+}
+
+void RaceEventHandler::pressSpace() const
+{
+  gameEngine.getPlayer().brake();
+}
+
+void RaceEventHandler::releaseSpace() const
 {
 }

@@ -11,34 +11,39 @@ const Kart& Player::getKart() const
   return myKart;
 }
 
-void Player::moveForward()
+void Player::moveForward() const
 {
   myKart.moveForward();
 }
 
-void Player::moveBackward()
+void Player::moveBackward() const
 {
   myKart.moveBackward();
 }
 
-void Player::turnLeft()
+void Player::turnLeft() const
 {
   myKart.turnLeft();
 }
 
-void Player::turnRight()
+void Player::turnRight() const
 {
   myKart.turnRight();
 }
 
-void Player::stopMoving()
+void Player::stopMoving() const
 {
   myKart.stopMoving();
 }
 
-void Player::stopTurning()
+void Player::stopTurning() const
 {
   myKart.stopTurning();
+}
+
+void Player::brake() const
+{
+  myKart.brake();
 }
 
 

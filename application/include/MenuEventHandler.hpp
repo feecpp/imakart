@@ -16,11 +16,13 @@ public:
   virtual void pressLeft() const;
   virtual void pressRight() const;
   virtual void pressEnter() const;
+  virtual void pressSpace() const;
   virtual void releaseUp() const;
   virtual void releaseDown() const;
   virtual void releaseLeft() const;
   virtual void releaseRight() const;
   virtual void releaseEnter() const;
+  virtual void releaseSpace() const;
 
   void setMenu(MenuLogic* menu)
    	{this->menu = menu;}
