@@ -1,0 +1,9 @@
+Format de fichier Kart :
+------------------------
+Nom du fichier  : Licorne.kart
+Contenu :
+********
+Nom Licorne
+Acceleration 6
+VitesseMax 20
+Poids

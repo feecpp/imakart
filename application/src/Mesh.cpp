@@ -75,27 +75,31 @@ void Mesh::loadFromFile(const std::string& filePath)
   }
 
 
-  meshVBOs.resize(scene->mNumMeshes);
-  meshVAOs.resize(scene->mNumMeshes);
+  meshVBOs.reserve(scene->mNumMeshes);
+  meshVAOs.reserve(scene->mNumMeshes);
   materials.resize(scene->mNumMeshes);
   indices.resize(scene->mNumMeshes);
 
+  //On les réutilise à chaque fois pour optim
+  aiColor3D ambient;
+  aiColor3D diffuse;
+  aiColor3D specular;
   for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
   {
     const aiMesh* const mesh = scene->mMeshes[i];
     const aiMaterial* const material = scene->mMaterials[mesh->mMaterialIndex];
-    aiColor3D ambient;
-    aiColor3D diffuse;
-    aiColor3D specular;
     material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
     material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
     material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
-    materials[i].ambientColor = glm::vec4(ambient.r, ambient.g, ambient.b, 1.f);
-    materials[i].diffuseColor = glm::vec4(diffuse.r, diffuse.g, diffuse.b, 1.f);
-    materials[i].specularColor = glm::vec4(specular.r, specular.g, specular.b, 1.f);
+    materials[i].ambientColor.r = ambient.r; materials[i].ambientColor.g = ambient.g;
+    materials[i].ambientColor.b = ambient.b; materials[i].ambientColor.a = 1.f;
+    materials[i].diffuseColor.r = diffuse.r; materials[i].diffuseColor.g = diffuse.g;
+    materials[i].diffuseColor.b = diffuse.b; materials[i].diffuseColor.a = 1.f;
+    materials[i].specularColor.r = specular.r; materials[i].specularColor.g = specular.g;
+    materials[i].specularColor.b = specular.b; materials[i].specularColor.a =  1.f;
 
-    meshVBOs[i] = new glimac::LowLevelVBO();
-    meshVAOs[i] = new glimac::VAO();
+    meshVBOs.push_back(new glimac::LowLevelVBO());
+    meshVAOs.push_back(new glimac::VAO());
 
     std::vector<glimac::Vertex3D> vertices;
     vertices.reserve(mesh->mNumVertices);

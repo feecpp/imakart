@@ -1,0 +1,15 @@
+Format d'une map
+----------------
+Convention 3D : l'unité est donnée par les sphères qui représentent les objets à ramasser
+sur le terrain.
+
+La route est dessinée à part dans un .blend.
+Chaque objet 3D du décor est modélisé à part dans un .blend. 
+
+La carte est ensuite "assemblée" dans un .blend spécifique qui met en place :
+ * La route
+ * les objets du décor
+ * Checkpoints (cubes invisibles ou non) qui sont repérés par un nom spécifique : 
+    'CheckPointX' où X est le numéro du CheckPoint.
+ * Spline pour le chemin des ennemis
+ * Bouding box pour les objets statiques du décor 

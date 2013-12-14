@@ -21,6 +21,7 @@ public:
 
 private:
   Kart* playerKart;
+  void findKartFiles();
 
 };
 
