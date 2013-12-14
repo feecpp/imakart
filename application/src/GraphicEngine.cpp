@@ -15,7 +15,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã  sa mort
+  //Le graphic engine delete tous ses objets 3D Ã  sa mort
   reset();
 
   delete menuProgram;
@@ -72,7 +72,7 @@ void GraphicEngine::renderFrame()
   //menu => camera == nullptr
   if (currentCamera != nullptr)
   {
-    //Mise Ã  jour matrice ViewProjection
+    //Mise Ã  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
