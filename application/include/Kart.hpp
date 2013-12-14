@@ -2,6 +2,7 @@
 #define KART_HPP
 
 #include "Positionable.hpp"
+#include <string>
 
 /**
  * @brief The Kart class
@@ -42,6 +43,7 @@ public:
   };
 
   Kart();
+  Kart(std::string);
   Kart(glm::vec3 position, glm::quat direction, float speed);
   virtual ~Kart();
 

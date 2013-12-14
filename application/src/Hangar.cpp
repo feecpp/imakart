@@ -1,7 +1,6 @@
 #include "Hangar.hpp"
 #include "Kart.hpp"
 #include <iostream>
-#include <string>
 
 #include <dirent.h>
 #ifndef WIN32
@@ -12,7 +11,11 @@ Hangar::Hangar()
 {
   playerKart = new Kart();
 
-  findKartFiles();
+  kartNames = findKartFiles();
+
+  for(unsigned int i=0; i<kartNames.size(); ++i){
+      playerKarts.push_back(new Kart(kartNames[i]));
+  }
 }
 
 Hangar::~Hangar()
@@ -25,7 +28,8 @@ Kart& Hangar::getPlayerKart() const
   return *playerKart;
 }
 
-void Hangar::findKartFiles(){
+std::vector<std::string> Hangar::findKartFiles(){
+    std::vector<std::string> fileNames;
 
     //Ouverture du répertoire karts
     DIR* kartsDir = NULL;
@@ -37,19 +41,23 @@ void Hangar::findKartFiles(){
     //tous les fichiers du répertoire sont parcourus
     struct dirent* file = NULL;
     int k=0;
+    std::cout << "" << std::endl;
     while ((file = readdir(kartsDir)) != NULL){
       if(k >=2){ //Pour ne pas prendre en compte "." et ".."
 
-        char* name = file->d_name; //nom + extension
-        char* extension = strtok(name, "."); //nom
-        extension = strtok(NULL, "."); //extension
+        std::string tmp = std::string(file->d_name); //nom + extension
+        std::size_t found = tmp.find(".");
+        std::string extension = tmp.substr (found+1,found+1);
+        std::string name = tmp.substr (0,found);
 
-        if(strcmp(extension,"kart") == 0){
+        if(extension == "kart"){
             std::cout << " file with '.kart' extension found : " << name << "." << extension << std::endl;
+            fileNames.push_back(name);
         }
       }
       k++;
     }
 
     closedir(kartsDir);
+    return fileNames;
 }
