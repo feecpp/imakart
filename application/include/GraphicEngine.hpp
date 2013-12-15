@@ -34,7 +34,7 @@ struct GraphicSettings
 
 /**
  * @brief The GraphicEngine class
- * Contient une liste d'objet 3D �  afficher.
+ * Contient une liste d'objet 3D à afficher.
  * Contient également une liste d'objets 2D
  * qui constituent l'interface.
  */
@@ -58,9 +58,9 @@ public:
 
   /**
    * @brief addObject3D Ajout un objet 3D dans la liste d'affichage
-   * du GraphicEngine. Le GraphicEngine devient propriétaire de cet objet
-   * et prend en charge sa destruction. Actuellement définir une caméra défini
-   * l'éventuelle ancienne caméra détenue par le GraphicEngine.
+   * du GraphicEngine. Le GraphicEngine devient propriÃ©taire de cet objet
+   * et prend en charge sa destruction. Actuellement dÃ©finir une camÃ©ra dÃ©fini
+   * l'Ã©ventuelle ancienne camÃ©ra dÃ©tenue par le GraphicEngine.
    * @param newObject3D
    */
   void addObject3D(Object3D* newObject3D)
@@ -71,7 +71,7 @@ public:
 
   /**
    * @brief setCamera défini une nouvelle caméra
-   * pour afficher la scène. Le GraphicEngine devient le propriétaire
+   * pour afficher la scène. Le GraphicEngine devient le propriÃ©taire
    * de newCamera et prendra en charge sa destruction.
    * @param newCamera
    */
@@ -81,7 +81,7 @@ public:
    * C'est un peu moisi comme méthode
    * mais ça suffit pour l'instant. A améliorier
    * quand le graphique engine aura plus de ShaderProgram
-   * �  gérer
+   * à gérer
    **/
   void useMenuProgram();
   void useRaceProgram();
@@ -101,7 +101,7 @@ private:
 
   Light* currentLight;
 
-  //Avant de trouver une meilleure méthode...
+  //Avant de trouver une meilleure mÃ©thode...
   glimac::ShaderProgram* currentProgram;
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;

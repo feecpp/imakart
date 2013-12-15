@@ -17,7 +17,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã  sa mort
+  //Le graphic engine delete tous ses objets 3D Ã   sa mort
   reset();
 
   delete menuProgram;
@@ -71,7 +71,7 @@ void GraphicEngine::renderFrame()
   //menu => camera == nullptr
   if (currentCamera != nullptr)
   {
-    //Mise Ã  jour matrice ViewProjection
+    //Mise Ãƒ  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
@@ -79,7 +79,7 @@ void GraphicEngine::renderFrame()
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
-  //Gestion de la lumière
+  //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
@@ -88,7 +88,7 @@ void GraphicEngine::renderFrame()
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel à une fonction dans ShaderProgram
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
