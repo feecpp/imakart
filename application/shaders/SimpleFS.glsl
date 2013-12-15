@@ -8,8 +8,8 @@ in vec4 FragColor;
 //vec3 N --> normal de l'objet
 
 /////// EN RAPPORT AVEC LA SOURCE DE LUMIERE ////////
-//uniform vec3 LightDir
-//uniform vec3 LightIntensity
+//uniform vec3 uLightDir
+//uniform vec3 uLi --> LightIntensity
 
 
 out vec4 oFragColor;
@@ -17,12 +17,11 @@ out vec4 oFragColor;
 /*
 //Calcul de la luminosite
 vec3 blinnPhong() {
-  vec3 wi = normalize(LightDir);
-  vec3 Li = normalize(LightIntensity);
+  vec3 wi = normalize(uLightDir);
   vec3 w0 //Vecteur qui pointe vers la camera --> or la camera bouge
   vec3 halfVector = (w0+wi)/2;
 
-  vec3 res = Li( Kd*dot(wi,N) +  Ks*pow(dot(halfVector,N),shininess));
+  vec3 res = uLi( Kd*dot(wi,N) +  Ks*pow(dot(halfVector,N),shininess));
 
   return res;
 }*/

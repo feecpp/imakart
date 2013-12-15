@@ -5,11 +5,12 @@
 #include "Object2D.hpp"
 #include <TextFile.hpp>
 #include "Camera.hpp"
+#include "Light.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
 {
 }
 
@@ -68,6 +69,12 @@ void GraphicEngine::renderFrame()
   assert(currentProgram != nullptr);
   //assert(currentCamera != nullptr);
 
+  //Gestion de la lumière
+  if (currentLight != nullptr)
+  {
+
+  }
+
   //En attendant une meilleure gestion de la camÃ©ra dans le menu,
   //menu => camera == nullptr
   if (currentCamera != nullptr)
@@ -122,6 +129,12 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
+
+  //uniform correspondant aux lumières
+  GLint lightDirId = raceProgram->getUniformIndex(uLightDir);
+  GLint lightIntensityId = raceProgram->getUniformIndex(uLi);
+  raceProgram->setUniform(lightDirId, currentLight->direction);
+  raceProgram->setUniform(lightIntensityId, currentLight->intensity);
 }
 
 GLuint LoadTexture(std::string filename)

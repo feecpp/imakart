@@ -11,6 +11,7 @@
 class Object3D;
 class Object2D;
 class Camera;
+class Light;
 
 /**
  * @brief Les options graphiques bas niveau
@@ -33,7 +34,7 @@ struct GraphicSettings
 
 /**
  * @brief The GraphicEngine class
- * Contient une liste d'objet 3D à afficher.
+ * Contient une liste d'objet 3D �  afficher.
  * Contient également une liste d'objets 2D
  * qui constituent l'interface.
  */
@@ -80,7 +81,7 @@ public:
    * C'est un peu moisi comme méthode
    * mais ça suffit pour l'instant. A améliorier
    * quand le graphique engine aura plus de ShaderProgram
-   * à gérer
+   * �  gérer
    **/
   void useMenuProgram();
   void useRaceProgram();
@@ -97,6 +98,8 @@ private:
   GraphicSettings settings;
 
   Camera* currentCamera;
+
+  Light* currentLight;
 
   //Avant de trouver une meilleure méthode...
   glimac::ShaderProgram* currentProgram;
