@@ -52,7 +52,6 @@ std::vector<std::string> Hangar::findKartFiles(){
         std::string name = tmp.substr (0,found);
 
         if(extension == "kart"){
-            std::cout << " file with '.kart' extension found : " << name << "." << extension << std::endl;
             fileNames.push_back(name);
         }
       }

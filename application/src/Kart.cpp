@@ -17,7 +17,6 @@ Kart::Kart(std::string kartName)
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE)
 {
-  std::cout << "kart created : " << kartName << std::endl;
   const std::string path = "karts/"+kartName+".kart";
 
   //Je crée un KartFile à partir du fichier.kart et récupère un std::map

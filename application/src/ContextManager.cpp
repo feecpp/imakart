@@ -69,7 +69,7 @@ void ContextManager::setupRaceContext() const
   Mesh* minionMesh = new Mesh();
   try
   {
-    minionMesh->loadFromFile("data/fusee.dae");
+    minionMesh->loadFromFile("data/"+ gameEngine.getPlayerKart().getName() + ".dae");
   }catch(std::runtime_error er)
   {
     std::cerr << er.what() << std::endl;
