@@ -2,6 +2,7 @@
 #define KART_HPP
 
 #include "Positionable.hpp"
+#include <string>
 
 /**
  * @brief The Kart class
@@ -29,7 +30,7 @@ public:
   struct Specifications
   {
     Specifications()
-      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f) {}
+      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
 
     ///Doit etre positive
     float acceleration;
@@ -39,9 +40,12 @@ public:
     float angularSpeed;
     ///Doit etre positif
     float breakingCoefficient;
+    ///Doit être positif
+    unsigned int weight;
   };
 
   Kart();
+  Kart(std::string);
   Kart(glm::vec3 position, glm::quat direction, float speed);
   virtual ~Kart();
 
@@ -60,6 +64,9 @@ public:
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
 
+  std::string getName() const
+    {return name;}
+
 private:
   glm::vec3 position;
   glm::quat orientation;
@@ -71,6 +78,7 @@ private:
   float currentAcceleration;
   AccelerationState accelerationState;
   Specifications specifications;
+  std::string name;
 
 };
 

@@ -1,6 +1,10 @@
 #ifndef HANGAR_HPP
 #define HANGAR_HPP
 
+#include <vector>
+#include <string>
+#include <map>
+
 class Kart;
 
 /**
@@ -21,8 +25,9 @@ public:
 
 private:
   Kart* playerKart;
-  void findKartFiles();
-
+  std::vector<std::string> findKartFiles();
+  std::vector<std::string> kartNames;
+  std::map<std::string, Kart*> kartsHangar;
 };
 
 #endif // HANGAR_HPP

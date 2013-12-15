@@ -2,15 +2,33 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <SFML/System.hpp>
+#include <KartFile.hpp>
 #include <iostream>
 
 /////// Site qui a l'air pratique pour la physique : http://www.formules-physique.com/categorie/687 //////////////
 
 Kart::Kart()
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), name("standard")
 {
 }
+
+Kart::Kart(std::string kartName)
+    : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE)
+{
+  const std::string path = "karts/"+kartName+".kart";
+
+  //Je crée un KartFile à partir du fichier.kart et récupère un std::map
+  KartFile kartFile(path);
+  std::map<std::string, std::string> map = kartFile.getData();
+
+  //Mise a jour des specs à partir de la std::map
+  name = map["Name"];
+  specifications.acceleration = (float)(atoi(map["Acceleration"].c_str()));
+  specifications.maxSpeed = (float)(atoi(map["MaxSpeed"].c_str()));
+  specifications.weight = atoi(map["Weight"].c_str());
+ }
 
 Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
   : position(position), orientation(orientation), speed(speed)

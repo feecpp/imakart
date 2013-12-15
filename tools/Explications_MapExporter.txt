@@ -1,0 +1,16 @@
+LEVEL DESIGN AVEC BLENDER
+--------------------------
+ * Les Checkpoints sont des EMPTY Circle (Add=>Empty=>Circle).
+ /!\ Ne pas régler la taille du checkpoint par un scale, mais modifier sa Size !!
+ Elle est accessible dans le menu Empty (la petite hélice après le trombone à droite)
+ 
+ * Les BoundingBox (collisions) sont des EMPTY Cube (Add=>Empty=>Cube)
+ /!\ Ici c'est bien la Scale qu'il faut utiliser pour gérer la taille du Cube, ça permet
+ d'avoir des formes non symètriques sur tous les axes
+ 
+ * Les zones de ralentissement sont des Lattices. Ici aussi la taille se gère par le 
+   scale. (TODO)
+   
+Améliorations à étudier : faire un exporteur qui exporte en même temps le collada
+et le .txt
+   
