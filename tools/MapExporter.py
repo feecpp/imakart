@@ -101,7 +101,7 @@ class ExportImakart(Operator, ExportHelper):
     # to the class instance from the operator settings before calling.
 
     def execute(self, context):
-        return write_imakart_map(context, self.filepath, self.use_setting)
+        return write_imakart_map(context, self.filepath, None)
 
 
 # Only needed if you want to add into a dynamic menu
