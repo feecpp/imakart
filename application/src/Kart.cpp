@@ -9,7 +9,7 @@
 
 Kart::Kart()
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), name("standard")
 {
 }
 

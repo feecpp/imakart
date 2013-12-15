@@ -16,7 +16,11 @@ Hangar::Hangar()
   }
 
   //Par défaut, après il faudra récupérer choix du menu
-  playerKart = kartsHangar["fusee"];
+  if(kartsHangar["fusee"] != nullptr){
+    playerKart = kartsHangar["fusee"];
+  }else{
+    playerKart = new Kart();
+  }
 }
 
 Hangar::~Hangar()
