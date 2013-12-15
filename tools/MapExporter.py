@@ -123,4 +123,4 @@ if __name__ == "__main__":
     register()
 
     # test call
-    bpy.ops.export_imakart.game_logic('INVOKE_DEFAULT')
+    #bpy.ops.export_imakart.game_logic('INVOKE_DEFAULT')
