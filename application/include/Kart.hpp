@@ -26,6 +26,14 @@ public:
     DO_NOT_MOVE
   };
 
+  //Indique si le kart est en marche arrière ou nom 
+  enum MoveState
+  {
+    FORWARD,
+    BACKWARD,
+    NONE
+  };
+
   //Structure qui empacte les caractéristiques du Kart
   struct Specifications
   {
@@ -77,6 +85,7 @@ private:
   float currentAngularSpeed;
   float currentAcceleration;
   AccelerationState accelerationState;
+  MoveState moveState;
   Specifications specifications;
   std::string name;
 

@@ -9,13 +9,13 @@
 
 Kart::Kart()
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), name("standard")
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), name("standard")
 {
 }
 
 Kart::Kart(std::string kartName)
     : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE)
 {
   const std::string path = "karts/"+kartName+".kart";
 
@@ -76,6 +76,7 @@ void Kart::update(float elapsedTimeInSecond)
     travelledDistance = 0.f;
     speed = 0.f;
     accelerationState = DO_NOT_MOVE;
+    moveState = NONE;
   }
   else
   {
@@ -97,6 +98,7 @@ void Kart::moveForward()
   //uniteOpenGL / seconde
   currentAcceleration = specifications.acceleration;
   accelerationState = ACCELERATE;
+  moveState = FORWARD;
 }
 
 void Kart::moveBackward()
@@ -104,16 +106,25 @@ void Kart::moveBackward()
   //uniteOpenGL / seconde
   currentAcceleration = - specifications.acceleration;
   accelerationState = ACCELERATE;
+  moveState = BACKWARD;
 }
 
 void Kart::turnLeft()
 {
-  currentAngularSpeed = specifications.angularSpeed;
+  if(moveState == FORWARD){
+    currentAngularSpeed = specifications.angularSpeed;
+  }else{
+    currentAngularSpeed = -specifications.angularSpeed;
+  }
 }
 
 void Kart::turnRight()
 {
-  currentAngularSpeed = -specifications.angularSpeed;
+  if(moveState == FORWARD){
+    currentAngularSpeed = -specifications.angularSpeed;
+  }else{
+    currentAngularSpeed = specifications.angularSpeed;
+  }
 }
 
 void Kart::stopMoving()
