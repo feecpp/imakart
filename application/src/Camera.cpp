@@ -22,7 +22,7 @@ const glm::vec3 Camera::getPosition() const
 
 const glm::vec3 Camera::getWhereILook() const
 {
-  //TODO : faire regarder la caméra le nez un peu relevé par rapport �  l'objet
+  //TODO : faire regarder la camÃ©ra le nez un peu relevÃ© par rapport Ã  l'objet
   //qu'elle suit
   if (objectToFollow != nullptr)
     return objectToFollow->getPosition();
@@ -45,7 +45,7 @@ const glm::mat4&Camera::getViewProjectionMatrix() const
 
 void Camera::updateViewProjectionMatrix()
 {
-  //Décommenter cette ligne et commenter celle d'après pour avoir une caméra qui suit le KartCube
+  //DÃ©commenter cette ligne et commenter celle d'aprÃ¨s pour avoir une camÃ©ra qui suit le KartCube
   //viewProjection = glm::lookAt(getPosition(), getWhereILook(), glm::vec3(0.f, 1.f, 0.f));
   viewMatrix = glm::lookAt(glm::vec3(0.f, 2.5f, 2.5f), glm::vec3(0.f,0.f,0.f), glm::vec3(0.f, 1.f, 0.f));
   projectionMatrix =  glm::perspective(90.f, windowWidth / (float) windowHeight, 0.1f, 1000.f);
