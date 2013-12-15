@@ -69,12 +69,6 @@ void GraphicEngine::renderFrame()
   assert(currentProgram != nullptr);
   //assert(currentCamera != nullptr);
 
-  //Gestion de la lumière
-  if (currentLight != nullptr)
-  {
-
-  }
-
   //En attendant une meilleure gestion de la camÃ©ra dans le menu,
   //menu => camera == nullptr
   if (currentCamera != nullptr)
@@ -85,6 +79,19 @@ void GraphicEngine::renderFrame()
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
     currentProgram->setUniform(viewProjectionId, viewProjection);
+  }
+
+  //Gestion de la lumière
+  if (currentLight != nullptr)
+  {
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    currentLight->updateLight(viewMatrix);
+    const glm::vec3& direction = currentLight->getLighDirection();
+    const glm::vec3& intensity = currentLight->getLightIntensity();
+    GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
+    GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
+    currentProgram->setUniform(lightDirId, direction);
+    currentProgram->setUniform(lightIntensityId, intensity);
   }
 
   //Dessin des objets 2D
@@ -130,11 +137,6 @@ void GraphicEngine::initShaderPrograms()
     std::cerr << logInfo << std::endl;
   }
 
-  //uniform correspondant aux lumières
-  GLint lightDirId = raceProgram->getUniformIndex(uLightDir);
-  GLint lightIntensityId = raceProgram->getUniformIndex(uLi);
-  raceProgram->setUniform(lightDirId, currentLight->direction);
-  raceProgram->setUniform(lightIntensityId, currentLight->intensity);
 }
 
 GLuint LoadTexture(std::string filename)
