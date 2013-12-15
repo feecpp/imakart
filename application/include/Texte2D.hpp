@@ -18,6 +18,10 @@ private:
   std::vector<glimac::Vertex2DUV> vertices;
   glimac::LowLevelVBO vbo;
   glimac::VAO vao;
+  glimac::Texture* texture;
+
+  void setVBO(glimac::Vertex2DUV vertices[]); //called in the constructor
+  void setVAO(); //called in the constructor
 };
 
 #endif // Texte2D_HPP

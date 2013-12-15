@@ -24,8 +24,29 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
     vertices.push_back(down_right);
     vertices.push_back(up_right);
     vertices.push_back(down_left);
-
   }
+
+  glimac::Vertex2DUV verticesForVBO[vertices.size()];
+  for(unsigned int i=0; i< vertices.size(); ++i){
+    verticesForVBO[i] = vertices[i];
+  }
+
+  texture = new glimac::Texture(GL_TEXTURE_2D);
+  texture->loadTexture2D("textures/font.png");
+
+  setVBO(verticesForVBO);
+  setVAO();
+}
+
+void Texte2D::setVBO(glimac::Vertex2DUV vertices[]){
+  vbo.setBufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+}
+
+void Texte2D::setVAO(){
+  vao.enableVertexAttribArray(0);
+  vao.enableVertexAttribArray(1);
+  vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
+  vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
 Texte2D::~Texte2D(){
