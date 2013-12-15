@@ -64,6 +64,9 @@ public:
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
 
+  std::string getName() const
+    {return name;}
+
 private:
   glm::vec3 position;
   glm::quat orientation;

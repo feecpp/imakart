@@ -16,7 +16,11 @@ Hangar::Hangar()
   }
 
   //Par défaut, après il faudra récupérer choix du menu
-  playerKart = kartsHangar["fusee"];
+  if(kartsHangar["fusee"] != nullptr){
+    playerKart = kartsHangar["fusee"];
+  }else{
+    playerKart = new Kart();
+  }
 }
 
 Hangar::~Hangar()
@@ -52,7 +56,6 @@ std::vector<std::string> Hangar::findKartFiles(){
         std::string name = tmp.substr (0,found);
 
         if(extension == "kart"){
-            std::cout << " file with '.kart' extension found : " << name << "." << extension << std::endl;
             fileNames.push_back(name);
         }
       }

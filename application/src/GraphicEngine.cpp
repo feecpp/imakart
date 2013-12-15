@@ -5,17 +5,18 @@
 #include "Object2D.hpp"
 #include <TextFile.hpp>
 #include "Camera.hpp"
+#include "Light.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
 {
 }
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã  sa mort
+  //Le graphic engine delete tous ses objets 3D Ã  sa mort
   reset();
 
   delete menuProgram;
@@ -69,12 +70,25 @@ void GraphicEngine::renderFrame()
   //menu => camera == nullptr
   if (currentCamera != nullptr)
   {
-    //Mise Ã  jour matrice ViewProjection
+    //Mise Ã  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
     currentProgram->setUniform(viewProjectionId, viewProjection);
+  }
+
+  //Gestion de la lumière
+  if (currentLight != nullptr)
+  {
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    currentLight->updateLight(viewMatrix);
+    const glm::vec3& direction = currentLight->getLighDirection();
+    const glm::vec3& intensity = currentLight->getLightIntensity();
+    GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
+    GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
+    currentProgram->setUniform(lightDirId, direction);
+    currentProgram->setUniform(lightIntensityId, intensity);
   }
 
   //Dessin des objets 2D
@@ -119,6 +133,7 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
+
 }
 
 void GraphicEngine::reset()
