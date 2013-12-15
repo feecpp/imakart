@@ -1,5 +1,23 @@
 LEVEL DESIGN AVEC BLENDER
 --------------------------
+INSTALLER LE PLUGIN
+*******************
+Se rendre dans votre dossier d'installation de Blender 2.69/scripts/addons.
+Ici deux options :
+ 1) Créer un lien symbolique vers votre imakart/tools/MapExporter.py : c'est le mieux parce que vous aurez pas à le
+    recopier à chaque mise à jour depuis git. On fait comme ça : ln -s cheminversimakart/tools/MapExporter.py MapExporter.py (en considérant 
+    que vous êtes déjà dans le répertoire addon dans la console)
+ 2) Copier le fichier dans addon, mais vous devrez le refaire à chaque fois qu'il est mis à jour sur git
+
+Lancer Blender. 
+File->User Preferences...->Addon : Dans la catégorie Import-Export vous devez trouver "Import-Export : Imakart Exporter". Activez le en 
+cliquant sur la checkbox. Si vous ne le trouvez pas vous avez raté les premières étapes.
+
+Pour faire l'export : File->Export->Imakart Exporter. Voilà vous avez un joli txt qui contient tout ce qui faut.
+C'est encore assez basique et artisanal mais si j'ai le temps j'essaierai d'améliorer.
+
+COMMENT CA MARCHE :
+*******************
  * Les Checkpoints sont des EMPTY Circle (Add=>Empty=>Circle).
  /!\ Ne pas régler la taille du checkpoint par un scale, mais modifier sa Size !!
  Elle est accessible dans le menu Empty (la petite hélice après le trombone à droite)
@@ -7,9 +25,16 @@ LEVEL DESIGN AVEC BLENDER
  * Les BoundingBox (collisions) sont des EMPTY Cube (Add=>Empty=>Cube)
  /!\ Ici c'est bien la Scale qu'il faut utiliser pour gérer la taille du Cube, ça permet
  d'avoir des formes non symètriques sur tous les axes
+
+ * Les emplacements d'item sont des EMPTY Sphere (Add=>Empty=>Sphere). Pour l'instant leur
+   taille n'est pas stockée puisqu'on a dit que les items représentaient l'unité du jeu...
  
- * Les zones de ralentissement sont des Lattices. Ici aussi la taille se gère par le 
-   scale. (TODO)
+ * Les zones de ralentissement sont des Lattices (Add=>Lattice). Ici aussi la taille se gère par le 
+   scale. Un lattice s'affiche par défaut sous forme d'un Cube mais en modifiant son paramètre W à un dans
+   l'object editor ça fait un plan. Pour l'instant j'ai pas encore géré le fait de spécifier un coefficient
+   de friction. Y'a un moyen simple c'est de passer par les custom properties. Vous pouvez le faire en ajoutant
+   une custom property s'appelant "friction_coefficient". Elle ne sera pas encore exportée mais le jour où ce sera le
+   cas vous serez prêt !
    
 Améliorations à étudier : faire un exporteur qui exporte en même temps le collada
 et le .txt

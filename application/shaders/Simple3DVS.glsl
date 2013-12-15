@@ -15,8 +15,16 @@ uniform mat4 viewProjection = mat4(1);
 uniform Material material;
 
 out vec4 FragColor;
+out vec3 vNormal_vs;
+out vec3 vPosition;
+out vec3 Kd;
+out vec3 Ks;
 
 void main() {
   gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);
   FragColor = material.ambient + material.diffuse + material.specular;
+  vNormal_vs = iNormals;
+  vPosition = iVertexPosition;
+  Kd = vec3(material.diffuse);
+  Ks = vec3(material.ambient);
 }

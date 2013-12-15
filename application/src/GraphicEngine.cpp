@@ -1,6 +1,7 @@
 #include "GraphicEngine.hpp"
 #include <GL/glew.h>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 #include "Object3D.hpp"
 #include "Object2D.hpp"
 #include <TextFile.hpp>
@@ -87,7 +88,7 @@ void GraphicEngine::renderFrame()
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    currentProgram->setUniform(lightDirId, direction);
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel à une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
