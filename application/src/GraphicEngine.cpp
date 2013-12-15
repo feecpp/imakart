@@ -39,9 +39,6 @@ sf::RenderWindow& GraphicEngine::init()
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
   glClearColor(1.f, 1.f, 1.f, 1.f);
-
-  //Initialisation des textures
-  initTextures();
   
   //Initialisation des shader programs
   initShaderPrograms();
@@ -122,37 +119,6 @@ void GraphicEngine::initShaderPrograms()
   {
     std::cerr << logInfo << std::endl;
   }
-}
-
-GLuint LoadTexture(std::string filename)
-{
-  GLuint idTexture;
-
-  sf::Image image;
-  if(image.loadFromFile(filename))
-  {
-    glGenTextures(1,&idTexture);
-    glBindTexture(GL_TEXTURE_2D, idTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, 0);
-  }
-
-  return idTexture;
-}
-
-void GraphicEngine::initTextures()
-{
-  //Pour le menu
-  tabTextures.push_back(LoadTexture("textures/jouer.png"));   
-  tabTextures.push_back(LoadTexture("textures/jouerSelect.png"));   
-  tabTextures.push_back(LoadTexture("textures/options.png"));   
-  tabTextures.push_back(LoadTexture("textures/optionsSelect.png"));   
-  tabTextures.push_back(LoadTexture("textures/credits.png"));   
-  tabTextures.push_back(LoadTexture("textures/creditsSelect.png"));   
-  tabTextures.push_back(LoadTexture("textures/quitter.png"));   
-  tabTextures.push_back(LoadTexture("textures/quitterSelect.png"));   
 }
 
 void GraphicEngine::reset()
