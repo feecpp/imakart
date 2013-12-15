@@ -9,13 +9,14 @@
 
 Hangar::Hangar()
 {
-  playerKart = new Kart();
-
   kartNames = findKartFiles();
 
   for(unsigned int i=0; i<kartNames.size(); ++i){
-      playerKarts.push_back(new Kart(kartNames[i]));
+      kartsHangar.insert(std::pair<std::string,Kart*>(kartNames[i], new Kart(kartNames[i])));
   }
+
+  //Par défaut, après il faudra récupérer choix du menu
+  playerKart = kartsHangar["fusee"];
 }
 
 Hangar::~Hangar()

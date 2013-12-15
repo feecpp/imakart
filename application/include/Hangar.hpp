@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 class Kart;
 
@@ -26,7 +27,7 @@ private:
   Kart* playerKart;
   std::vector<std::string> findKartFiles();
   std::vector<std::string> kartNames;
-  std::vector<Kart*> playerKarts;
+  std::map<std::string, Kart*> kartsHangar;
 };
 
 #endif // HANGAR_HPP

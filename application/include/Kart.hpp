@@ -30,7 +30,7 @@ public:
   struct Specifications
   {
     Specifications()
-      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f) {}
+      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
 
     ///Doit etre positive
     float acceleration;
@@ -40,6 +40,8 @@ public:
     float angularSpeed;
     ///Doit etre positif
     float breakingCoefficient;
+    ///Doit être positif
+    unsigned int weight;
   };
 
   Kart();
@@ -73,6 +75,7 @@ private:
   float currentAcceleration;
   AccelerationState accelerationState;
   Specifications specifications;
+  std::string name;
 
 };
 

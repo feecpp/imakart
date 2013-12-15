@@ -20,11 +20,16 @@ Kart::Kart(std::string kartName)
   std::cout << "kart created : " << kartName << std::endl;
   const std::string path = "karts/"+kartName+".kart";
 
-  //Je crée le KartFile à partir du fichier.kart
-  //Un KartFile contiendra une std::map contenant les mots clés et valeurs caractérisants le kart.
+  //Je crée un KartFile à partir du fichier.kart et récupère un std::map
   KartFile kartFile(path);
-  std::cout << "Test d'affichage du contenu de  " << path << " : \n" << kartFile.getString() << std::endl;
-}
+  std::map<std::string, std::string> map = kartFile.getData();
+
+  //Mise a jour des specs à partir de la std::map
+  name = map["Name"];
+  specifications.acceleration = (float)(atoi(map["Acceleration"].c_str()));
+  specifications.maxSpeed = (float)(atoi(map["MaxSpeed"].c_str()));
+  specifications.weight = atoi(map["Weight"].c_str());
+ }
 
 Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
   : position(position), orientation(orientation), speed(speed)
