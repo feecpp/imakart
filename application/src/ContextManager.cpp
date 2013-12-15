@@ -44,7 +44,6 @@ void ContextManager::setupMenuContext() const
 
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    menu2D->getTab2DMenu(i)->setTexture(graphicEngine.getTextureFromTabTexture(2*i), graphicEngine.getTextureFromTabTexture((2*i) + 1));
   }
 
   gameEngine.setMenu(menuLogic);
