@@ -1,7 +1,18 @@
+bl_info = {
+    "name": "Imakart Exporter",
+    "category": "Import-Export",
+    "author":       "Jean-Noël Chiganne",
+    "blender":      (2,6,9),
+    "version":      (0,0,1),
+    "location":     "File > Import-Export",
+    "description":  "Export Imakart map logic",
+    "category":     "Import-Export"
+}
+
 import bpy
 
 def isLogicObject(object):
-    return object.type == 'EMPTY'
+    return object.type == 'EMPTY' or object.type == 'LATTICE'
 
 def isCheckpoint(object):
     if not isLogicObject(object):
@@ -13,6 +24,16 @@ def isBoundingBox(object):
         return False
     return object.empty_draw_type == 'CUBE' 
 
+def isItem(object):
+    if not isLogicObject(object):
+        return False
+    return object.empty_draw_type == 'SPHERE' 
+
+def isFrictionArea(object):
+    if not isLogicObject(object):
+        return False
+    return object.type == 'LATTICE' 
+
 def write_imakart_map(context, filepath, use_some_setting):
     print("Export Imakart map objects...")
     f = open(filepath, 'w', encoding='utf-8')
@@ -20,21 +41,34 @@ def write_imakart_map(context, filepath, use_some_setting):
     #On récupère les objets logiques de la map
     logic_objects = list(filter(isLogicObject, bpy.data.objects))
     
-    #On les trie : checkpoints et bouding boxes !
+    #On les trie : checkpoints, bouding boxes, items, surface de friction !
     checkpoints = list(filter(isCheckpoint, logic_objects))
     bounding_boxes = list(filter(isBoundingBox, logic_objects))
+    items = list(filter(isItem, logic_objects))
+    friction_areas = list(filter(isFrictionArea, logic_objects))
     
     #On écrit les checkpoints...
     for checkpoint in checkpoints:
         f.write("Checkpoint %s\n" % checkpoint.name)
-        f.write("Location %s %s %s\n" % (checkpoint.location.x, checkpoint.location.y, checkpoint.location.z))
-        f.write("Size %s\n" % checkpoint.empty_draw_size)
+        f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.y, checkpoint.location.z))
+        f.write("radius %f\n" % checkpoint.empty_draw_size)
         
-    #Puis les Bounding boxes !
+    #Puis les Bounding boxes 
     for bbox in bounding_boxes:
         f.write("BoundingBox %s\n" % bbox.name)
-        f.write("Location %s %s %s\n" % (bbox.location.x, bbox.location.y, bbox.location.z))
-        f.write("Size %s %s %s\n" % (bbox.scale.x, bbox.scale.y, bbox.scale.z))
+        f.write("location %f %f %f\n" % (bbox.location.x, bbox.location.y, bbox.location.z))
+        f.write("size %f %f %f\n" % (bbox.scale.x, bbox.scale.y, bbox.scale.z))
+        
+     #Puis les items 
+    for item in items:
+        f.write("Item %s\n" % item.name)
+        f.write("location %f %f %f\n" % (item.location.x, item.location.y, item.location.z))
+        
+    #Et enfin les zones de friction
+    for area in friction_areas:
+        f.write("FrictionArea %s\n" % area.name)
+        f.write("location %f %f %f\n" % (area.location.x, area.location.y, area.location.z))
+        f.write("size %f %f %f\n" % (area.scale.x, area.scale.y, area.scale.z))
         
     f.close()
     
@@ -47,6 +81,7 @@ def write_imakart_map(context, filepath, use_some_setting):
 from bpy_extras.io_utils import ExportHelper
 from bpy.props import StringProperty, BoolProperty, EnumProperty, IntProperty
 from bpy.types import Operator
+from bpy.types import INFO_MT_file_export
 
 
 class ExportImakart(Operator, ExportHelper):
@@ -64,27 +99,9 @@ class ExportImakart(Operator, ExportHelper):
 
     # List of operator properties, the attributes will be assigned
     # to the class instance from the operator settings before calling.
-    use_setting = BoolProperty(
-            name="Example Boolean",
-            description="Example Tooltip",
-            default=False,
-            )
-
-    type = EnumProperty(
-            name="Example Enum",
-            description="Choose between two items",
-            items=(('OPT_A', "First Option", "Description one"),
-                   ('OPT_B', "Second Option", "Description two")),
-            default='OPT_A',
-            )
-    test = IntProperty(
-            name="Ma prop",
-            description="Blabla",
-            default=42,
-            )    
 
     def execute(self, context):
-        return write_imakart_map(context, self.filepath, self.use_setting)
+        return write_imakart_map(context, self.filepath, None)
 
 
 # Only needed if you want to add into a dynamic menu
@@ -106,4 +123,4 @@ if __name__ == "__main__":
     register()
 
     # test call
-    bpy.ops.export_imakart.game_logic('INVOKE_DEFAULT')
+    #bpy.ops.export_imakart.game_logic('INVOKE_DEFAULT')
