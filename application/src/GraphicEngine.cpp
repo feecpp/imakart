@@ -145,6 +145,14 @@ void GraphicEngine::initShaderPrograms()
     std::cerr << logInfo << std::endl;
   }
 
+  texte2DProgram = new glimac::ShaderProgram();
+  texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/Texte2D.vs.glsl");
+  texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Texte2D.fs.glsl");
+  if (!texte2DProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
+
 }
 
 void GraphicEngine::reset()
@@ -180,4 +188,10 @@ void GraphicEngine::useRaceProgram()
 {
   raceProgram->use();
   currentProgram = raceProgram;
+}
+
+void GraphicEngine::useTexteProgram()
+{
+  texte2DProgram->use();
+  currentProgram = texte2DProgram;
 }

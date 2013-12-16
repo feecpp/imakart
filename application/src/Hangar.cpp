@@ -45,10 +45,8 @@ std::vector<std::string> Hangar::findKartFiles(){
 
     //tous les fichiers du répertoire sont parcourus
     struct dirent* file = NULL;
-    int k=0;
     std::cout << "" << std::endl;
     while ((file = readdir(kartsDir)) != NULL){
-      if(k >=2){ //Pour ne pas prendre en compte "." et ".."
 
         std::string tmp = std::string(file->d_name); //nom + extension
         std::size_t found = tmp.find(".");
@@ -58,8 +56,6 @@ std::vector<std::string> Hangar::findKartFiles(){
         if(extension == "kart"){
             fileNames.push_back(name);
         }
-      }
-      k++;
     }
 
     closedir(kartsDir);
