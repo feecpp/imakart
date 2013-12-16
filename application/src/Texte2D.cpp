@@ -36,7 +36,7 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
   }
 
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/font.png");
+  texture->loadTexture2D("textures/font2.png");
 
   setVBO(verticesForVBO);
   setVAO();

@@ -6,6 +6,7 @@
 #include <string>
 #include "ShaderProgram.hpp"
 #include <map>
+#include <Texte2D.hpp>
 
 
 class Object3D;
@@ -113,6 +114,7 @@ private:
   //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
+  Texte2D* chrono;
 
   sf::RenderWindow window;
   sf::Font font;

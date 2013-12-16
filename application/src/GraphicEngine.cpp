@@ -118,7 +118,12 @@ void GraphicEngine::renderFrame()
   {
     skybox->render(*currentProgram);
   }
-
+  if (currentProgram == raceProgram){
+    chrono = new Texte2D("Ceci est un test", 10, 10, 50);
+    useTexteProgram();
+    chrono->draw(*currentProgram);
+    useRaceProgram();
+  }
 }
 
 void GraphicEngine::initShaderPrograms()
@@ -145,6 +150,7 @@ void GraphicEngine::initShaderPrograms()
     std::cerr << logInfo << std::endl;
   }
 
+  //Pour le dessin du texte 2D
   texte2DProgram = new glimac::ShaderProgram();
   texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/Texte2D.vs.glsl");
   texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Texte2D.fs.glsl");
