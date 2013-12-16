@@ -11,6 +11,7 @@ struct Material
 };
 
 uniform mat4 model = mat4(1);
+uniform mat4 uView;
 uniform mat4 viewProjection = mat4(1);
 uniform Material material;
 
@@ -21,10 +22,12 @@ out vec3 Kd;
 out vec3 Ks;
 
 void main() {
+  vec4 vertexPosition = vec4(iVertexPosition, 1);
+
   gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);
   FragColor = material.ambient + material.diffuse + material.specular;
   vNormal_vs = iNormals;
-  vPosition = iVertexPosition;
+  vPosition = vec3(uView * vertexPosition);
   Kd = vec3(material.diffuse);
   Ks = vec3(material.ambient);
 }

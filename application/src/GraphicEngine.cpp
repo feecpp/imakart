@@ -74,8 +74,11 @@ void GraphicEngine::renderFrame()
     //Mise Ã  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    currentProgram->setUniform(viewId, viewMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
