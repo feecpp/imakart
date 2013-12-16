@@ -49,8 +49,11 @@ sf::RenderWindow& GraphicEngine::init()
   initShaderPrograms();
 
   skybox = new Skybox(currentCamera);
-  skybox->init("textures","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg");
-  std::cout << "Valeur gluint : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
+  if(skybox->init("textures/skybox","posx.jpg","negx.jpg","posy.jpg","negy.jpg","posz.jpg","negz.jpg")){
+    std::cout << "Valeur gluint de la skybox : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
+  }else{
+    std::cerr << "Impossible d'initialiser la skybox" << std::endl;
+  }
 
   //Initialisation de la font
   if (!font.loadFromFile("fonts/arialPixel.ttf"))
