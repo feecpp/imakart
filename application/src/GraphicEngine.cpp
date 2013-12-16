@@ -118,7 +118,11 @@ void GraphicEngine::renderFrame()
   {
     skybox->render(*currentProgram);
   }
-
+  if (currentProgram == raceProgram){
+    useTexteProgram();
+    chrono->draw(*currentProgram);
+    useRaceProgram();
+  }
 }
 
 void GraphicEngine::initShaderPrograms()
@@ -141,6 +145,15 @@ void GraphicEngine::initShaderPrograms()
   raceProgram->addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
   raceProgram->addShader(GL_FRAGMENT_SHADER, "shaders/SimpleFS.glsl");
   if (!raceProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
+
+  //Pour le dessin du texte 2D
+  texte2DProgram = new glimac::ShaderProgram();
+  texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/texte2D.vs.glsl");
+  texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/texte2D.fs.glsl");
+  if (!texte2DProgram->compileAndLinkShaders(logInfo))
   {
     std::cerr << logInfo << std::endl;
   }
@@ -180,4 +193,10 @@ void GraphicEngine::useRaceProgram()
 {
   raceProgram->use();
   currentProgram = raceProgram;
+}
+
+void GraphicEngine::useTexteProgram()
+{
+  texte2DProgram->use();
+  currentProgram = texte2DProgram;
 }

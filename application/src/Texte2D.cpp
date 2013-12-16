@@ -1,6 +1,10 @@
 #include "Texte2D.hpp"
 #include <iostream>
 
+Texte2D::Texte2D(){
+  //Inutile, juste pr redéfinir les méthodes virtuelles de object2D
+}
+
 Texte2D::Texte2D(std::string text, int x, int y, int size)
 {
   unsigned int length = text.size();
@@ -8,6 +12,7 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
   for ( unsigned int i=0 ; i<length ; ++i ){
 
     char character = text[i];
+
     float uv_x = (character%16)/16.0f;
     float uv_y = (character/16)/16.0f;
 
@@ -26,20 +31,38 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
     vertices.push_back(down_left);
   }
 
-  glimac::Vertex2DUV verticesForVBO[vertices.size()];
-  for(unsigned int i=0; i< vertices.size(); ++i){
-    verticesForVBO[i] = vertices[i];
-  }
 
   texture = new glimac::Texture(GL_TEXTURE_2D);
   texture->loadTexture2D("textures/font.png");
 
-  setVBO(verticesForVBO);
+  setVBO();
   setVAO();
 }
 
-void Texte2D::setVBO(glimac::Vertex2DUV vertices[]){
-  vbo.setBufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const{
+  vao.bind();
+  GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
+  shaderProgram.setUniform(Text2DUniform, 0);
+  texture->bind();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDisable(GL_BLEND);
+  texture->unbind();
+  vao.unbind();
+}
+
+void Texte2D::setVBO(){
+
+  glimac::Vertex2DUV verticesForVBO[vertices.size()];
+  for(unsigned int i=0; i< vertices.size(); ++i){
+    verticesForVBO[i] = vertices[i];
+    std::cout << "i " << i<< std::endl;
+  }
+  std::cout << "avant " << sizeof(verticesForVBO) << std::endl;
+
+   std::cout << "apres " << sizeof(verticesForVBO) << std::endl;
+  vbo.setBufferData(verticesForVBO, sizeof(verticesForVBO), GL_STATIC_DRAW);
 }
 
 void Texte2D::setVAO(){
@@ -48,6 +71,11 @@ void Texte2D::setVAO(){
   vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
   vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
+
+void Texte2D::update(){
+  //Inutile, juste pr redéfinir les méthodes virtuelles de object2D
+}
+
 
 Texte2D::~Texte2D(){
 
