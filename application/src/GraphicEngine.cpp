@@ -18,7 +18,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã   sa mort
+  //Le graphic engine delete tous ses objets 3D Ã   sa mort
   reset();
 
   delete menuProgram;
@@ -81,22 +81,25 @@ void GraphicEngine::renderFrame()
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    const glm::vec3& position = currentCamera->getPosition();
     GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    GLint positionId = currentProgram->getUniformIndex("uPositionCam");
     currentProgram->setUniform(viewId, viewMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
+    currentProgram->setUniform(positionId, position);
   }
 
   //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
-    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    currentLight->updateLight(viewMatrix);
+    //const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    //currentLight->updateLight(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
