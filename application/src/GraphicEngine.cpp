@@ -152,8 +152,8 @@ void GraphicEngine::initShaderPrograms()
 
   //Pour le dessin du texte 2D
   texte2DProgram = new glimac::ShaderProgram();
-  texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/Texte2D.vs.glsl");
-  texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Texte2D.fs.glsl");
+  texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/texte2D.vs.glsl");
+  texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/texte2D.fs.glsl");
   if (!texte2DProgram->compileAndLinkShaders(logInfo))
   {
     std::cerr << logInfo << std::endl;
