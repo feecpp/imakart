@@ -2,8 +2,14 @@
 #define CUBEMAPTEXTURE_HPP
 
 #include <SFML/Graphics.hpp>
-#include <GL/gl.h>
+
+#include <GL/glew.h>
+#include <GL/glext.h>
 #include <string>
+
+#ifndef GL_CLAMP_TO_EDGE
+#define GL_CLAMP_TO_EDGE 0x812F
+#endif
 
 namespace glimac{
 
