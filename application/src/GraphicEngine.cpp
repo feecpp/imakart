@@ -12,7 +12,7 @@
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr), texte2DProgram(nullptr), skyboxProgram(nullptr)
 {
 }
 
@@ -23,6 +23,8 @@ GraphicEngine::~GraphicEngine()
 
   delete menuProgram;
   delete raceProgram;
+  delete texte2DProgram;
+  delete skyboxProgram;
   delete currentCamera;
 }
 
@@ -116,8 +118,14 @@ void GraphicEngine::renderFrame()
 
   if (skybox != nullptr && currentProgram == raceProgram)
   {
+    useSkyboxProgram();
+    const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    currentProgram->setUniform(viewProjectionId, viewProjection);
     skybox->render(*currentProgram);
+    useRaceProgram();
   }
+
   if (currentProgram == raceProgram){
     useTexteProgram();
     chrono->draw(*currentProgram);
@@ -158,6 +166,14 @@ void GraphicEngine::initShaderPrograms()
     std::cerr << logInfo << std::endl;
   }
 
+  //Pour la skybox 
+  skyboxProgram = new glimac::ShaderProgram();
+  skyboxProgram->addShader(GL_VERTEX_SHADER, "shaders/Skybox.vs.glsl");
+  skyboxProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Skybox.fs.glsl");
+  if (!skyboxProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
 }
 
 void GraphicEngine::reset()
@@ -199,4 +215,10 @@ void GraphicEngine::useTexteProgram()
 {
   texte2DProgram->use();
   currentProgram = texte2DProgram;
+}
+
+void GraphicEngine::useSkyboxProgram()
+{
+  skyboxProgram->use();
+  currentProgram = skyboxProgram;
 }
