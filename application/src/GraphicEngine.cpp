@@ -7,17 +7,18 @@
 #include <TextFile.hpp>
 #include "Camera.hpp"
 #include "Light.hpp"
+#include "Skybox.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentLight(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
 {
 }
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã  sa mort
+  //Le graphic engine delete tous ses objets 3D Ã   sa mort
   reset();
 
   delete menuProgram;
@@ -45,6 +46,10 @@ sf::RenderWindow& GraphicEngine::init()
   //Initialisation des shader programs
   initShaderPrograms();
 
+  skybox = new Skybox(currentCamera);
+  skybox->init("textures","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg");
+  std::cout << "Valeur gluint : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
+
   //Initialisation de la font
   if (!font.loadFromFile("fonts/arialPixel.ttf"))
   {
@@ -71,7 +76,7 @@ void GraphicEngine::renderFrame()
   //menu => camera == nullptr
   if (currentCamera != nullptr)
   {
-    //Mise Ã  jour matrice ViewProjection
+    //Mise Ãƒ  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
@@ -82,7 +87,7 @@ void GraphicEngine::renderFrame()
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
-  //Gestion de la lumière
+  //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
@@ -91,7 +96,7 @@ void GraphicEngine::renderFrame()
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel à une fonction dans ShaderProgram
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
@@ -110,6 +115,11 @@ void GraphicEngine::renderFrame()
     (*one3DObject)->update();
     //Attention : le vertex shader doit contenir les bonnes uniforms
     (*one3DObject)->draw(*currentProgram);
+  }
+
+  if (skybox != nullptr && currentProgram == raceProgram)
+  {
+    skybox->render(*currentProgram);
   }
 
 }
