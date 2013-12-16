@@ -80,7 +80,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCamera(camera);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
-  graphicEngine.chrono = new Texte2D("Ceci est un test", 10, 500, 50);
+  graphicEngine.chrono = new Texte2D("Ceci est un test", 10, 570, 20);
 }
 
 const EventHandler& ContextManager::getHandler() const
