@@ -86,6 +86,7 @@ public:
    **/
   void useMenuProgram();
   void useRaceProgram();
+  void useTexteProgram();
 
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
@@ -107,6 +108,7 @@ private:
   glimac::ShaderProgram* currentProgram;
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;
+  glimac::ShaderProgram* texte2DProgram;
 
   //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
