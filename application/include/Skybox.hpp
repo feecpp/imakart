@@ -2,8 +2,13 @@
 #define SKYBOX_HPP
 
 #include <string>
+#include "Vertex3D.hpp"
+#include <ShaderProgram.hpp>
 #include "CubeMapTexture.hpp"
 #include "Camera.hpp"
+#include "VBO.hpp"
+#include "VAO.hpp"
+
 
 class Skybox{
 public:
@@ -11,19 +16,38 @@ public:
 
 	~Skybox();
     
-    bool init(const std::string& Directory,
-              const std::string& PosXFilename,
-              const std::string& NegXFilename,
-              const std::string& PosYFilename,
-              const std::string& NegYFilename,
-              const std::string& PosZFilename,
-              const std::string& NegZFilename);
+  bool init(const std::string& Directory,
+            const std::string& PosXFilename,
+            const std::string& NegXFilename,
+            const std::string& PosYFilename,
+            const std::string& NegYFilename,
+            const std::string& PosZFilename,
+            const std::string& NegZFilename);
     
-    void render();
+  void render(const glimac::ShaderProgram& shaderProgram) const;
+
+  void createVertex();
+
+  void setVBO();
+
+  void setVAO();
+
+  glimac::CubemapTexture* getCubeMapTexture() const{
+    return m_pCubemapTex;
+  }
 
 private:
+  const GLsizeiptr verticesSize() const
+    {return 36 * sizeof(glimac::Vertex3D);}
+
 	const Camera* m_pCamera;
-    glimac::CubemapTexture* m_pCubemapTex;
+  glimac::CubemapTexture* m_pCubemapTex;
+
+  glimac::Vertex3D vertices[24]; // triangle Fan
+
+  glimac::LowLevelVBO vbo;
+  glimac::VAO vao;
+  
 };
 
 #endif

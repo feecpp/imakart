@@ -7,11 +7,12 @@
 #include <TextFile.hpp>
 #include "Camera.hpp"
 #include "Light.hpp"
+#include "Skybox.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentLight(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
 {
 }
 
@@ -44,6 +45,10 @@ sf::RenderWindow& GraphicEngine::init()
   
   //Initialisation des shader programs
   initShaderPrograms();
+
+  skybox = new Skybox(currentCamera);
+  skybox->init("textures","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg");
+  std::cout << "Valeur gluint : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
 
   //Initialisation de la font
   if (!font.loadFromFile("fonts/arialPixel.ttf"))
@@ -107,6 +112,11 @@ void GraphicEngine::renderFrame()
     (*one3DObject)->update();
     //Attention : le vertex shader doit contenir les bonnes uniforms
     (*one3DObject)->draw(*currentProgram);
+  }
+
+  if (skybox != nullptr && currentProgram == raceProgram)
+  {
+    skybox->render(*currentProgram);
   }
 
 }

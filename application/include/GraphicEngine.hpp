@@ -12,6 +12,7 @@ class Object3D;
 class Object2D;
 class Camera;
 class Light;
+class Skybox;
 
 /**
  * @brief Les options graphiques bas niveau
@@ -100,6 +101,7 @@ private:
   Camera* currentCamera;
 
   Light* currentLight;
+  Skybox* skybox;
 
   //Avant de trouver une meilleure mÃ©thode...
   glimac::ShaderProgram* currentProgram;

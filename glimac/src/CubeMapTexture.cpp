@@ -2,15 +2,6 @@
 
 using namespace glimac;
 
-
-static const GLenum types[6] = {  GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-                                  GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                                  GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
-
-
 CubemapTexture::CubemapTexture(const std::string& Directory,
                                const std::string& PosXFilename,
                                const std::string& NegXFilename,

@@ -7,6 +7,14 @@
 
 namespace glimac{
 
+
+static const GLenum types[6] = {  GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+                                  GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                                  GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+                                  GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
+                                  
 class CubemapTexture
 {
 public:
@@ -24,6 +32,10 @@ public:
     bool Load();
 
     void Bind(GLenum TextureUnit);
+
+    GLuint getTextureObj() const{
+        return m_textureObj;
+    }
 
 private:
 

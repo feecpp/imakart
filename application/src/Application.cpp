@@ -30,15 +30,6 @@ void Application::startGame(sf::RenderWindow& window)
   } while (!gameEngine.getExitFlag());
 }
 
-void Application::testRace()
-{
-  sf::RenderWindow& window = setupEverything();
-  gameEngine.setState(IN_RACE);
-
-  contextManager.updateContextIfNeeded();
-  startGame(window);
-}
-
 void Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();	 

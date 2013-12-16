@@ -40,7 +40,8 @@ void Map3D::draw(const glimac::ShaderProgram& shaderProgram) const
   GLint colorIndex = shaderProgram.getUniformIndex("color");
   shaderProgram.setUniform(colorIndex, color);
   vao.bind();
-  glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
+  //J'ai commenté pour voir le sol de la skybox
+  //glDrawElements(GL_TRIANGLE_STRIP, indicesSize(), GL_UNSIGNED_SHORT, (const GLvoid*) indices);
   vao.unbind();
 }
 

@@ -8,13 +8,13 @@
 /////// Site qui a l'air pratique pour la physique : http://www.formules-physique.com/categorie/687 //////////////
 
 Kart::Kart()
-    : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+    : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), name("standard")
 {
 }
 
 Kart::Kart(std::string kartName)
-    : position(0.f, 0.f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+    : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE)
 {
   const std::string path = "karts/"+kartName+".kart";
