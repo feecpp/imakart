@@ -33,7 +33,7 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
 
 
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/font.png");
+  texture->loadTexture2D("textures/fontInversed.png");
 
   setVBO();
   setVAO();
@@ -57,11 +57,7 @@ void Texte2D::setVBO(){
   glimac::Vertex2DUV verticesForVBO[vertices.size()];
   for(unsigned int i=0; i< vertices.size(); ++i){
     verticesForVBO[i] = vertices[i];
-    std::cout << "i " << i<< std::endl;
   }
-  std::cout << "avant " << sizeof(verticesForVBO) << std::endl;
-
-   std::cout << "apres " << sizeof(verticesForVBO) << std::endl;
   vbo.setBufferData(verticesForVBO, sizeof(verticesForVBO), GL_STATIC_DRAW);
 }
 
