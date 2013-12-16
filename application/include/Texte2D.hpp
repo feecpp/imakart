@@ -25,7 +25,7 @@ private:
   glimac::VAO vao;
   glimac::Texture* texture;
 
-  void setVBO(glimac::Vertex2DUV vertices[]); //called in the constructor
+  void setVBO(glimac::Vertex2DUV*); //called in the constructor
   void setVAO(); //called in the constructor
 };
 

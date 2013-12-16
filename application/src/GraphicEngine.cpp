@@ -119,7 +119,6 @@ void GraphicEngine::renderFrame()
     skybox->render(*currentProgram);
   }
   if (currentProgram == raceProgram){
-    chrono = new Texte2D("Ceci est un test", 10, 10, 50);
     useTexteProgram();
     chrono->draw(*currentProgram);
     useRaceProgram();

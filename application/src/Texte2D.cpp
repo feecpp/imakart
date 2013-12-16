@@ -12,6 +12,7 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
   for ( unsigned int i=0 ; i<length ; ++i ){
 
     char character = text[i];
+
     float uv_x = (character%16)/16.0f;
     float uv_y = (character/16)/16.0f;
 
@@ -36,7 +37,7 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
   }
 
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/font2.png");
+  texture->loadTexture2D("textures/font3.png");
 
   setVBO(verticesForVBO);
   setVAO();
@@ -45,17 +46,18 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
 void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const{
   vao.bind();
   GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
-  //GLint locationUMat = shaderProgram.getUniformIndex("uModelMatrix");
-    shaderProgram.setUniform(Text2DUniform, 0);
-    //shaderProgram.setUniform(locationUMat, glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,1)));
+  shaderProgram.setUniform(Text2DUniform, 0);
   texture->bind();
-  glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDisable(GL_BLEND);
   texture->unbind();
   vao.unbind();
 }
 
-void Texte2D::setVBO(glimac::Vertex2DUV vertices[]){
-  vbo.setBufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+void Texte2D::setVBO(glimac::Vertex2DUV* verticesForVBO){
+  vbo.setBufferData(verticesForVBO, 96, GL_STATIC_DRAW);
 }
 
 void Texte2D::setVAO(){

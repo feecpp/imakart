@@ -92,6 +92,8 @@ public:
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
+  Texte2D* chrono;
+
 private:
   void drawWorld();
   void drawInterface();
@@ -114,7 +116,6 @@ private:
   //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
-  Texte2D* chrono;
 
   sf::RenderWindow window;
   sf::Font font;
