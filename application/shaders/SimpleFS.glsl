@@ -11,6 +11,7 @@ in float shine; //--> controlle la taille de la "tache" de brillance (en fonctio
 
 /////// EN RAPPORT AVEC LA SOURCE DE LUMIERE ////////
 uniform vec3 uLightDir;
+uniform vec3 uLightPos;
 uniform vec3 uLi; //--> LightIntensity
 
 
@@ -27,6 +28,18 @@ vec4 blinnPhong() {
   vec4 res = vec4(light,1.0);
 
   return res;
+}
+
+vec4 blinnPhongPonctuelle(){
+    vec3 wi = normalize(uLightPos-vPosition);//Vecteur qui pointe vers la lumière
+    vec3 w0 = normalize(-vPosition);//Vecteur qui pointe vers la camera
+    vec3 halfVector = (w0+wi)*0.5f;
+    float d = length(wi);
+
+    vec3 light = uLi*( Kd*dot(wi,vNormal_vs) +  Ks*pow(dot(halfVector,vNormal_vs),shine))/(d*d);
+    vec4 res = vec4(light,1.0);
+
+    return res;
 }
 
 void main(void)
