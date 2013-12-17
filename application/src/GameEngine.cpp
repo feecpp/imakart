@@ -63,7 +63,6 @@ Kart& GameEngine::getPlayerKart() const
 
 Map& GameEngine::getMap() const
 {
-  //Pas mal de taff encore sur la gestion propre de la création du Player, des Karts...
   assert(map != nullptr);
   return *map;
 }

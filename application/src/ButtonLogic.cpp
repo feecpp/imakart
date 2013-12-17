@@ -1,7 +1,7 @@
 #include "ButtonLogic.hpp"
 #include <iostream>
 
-ButtonLogic::ButtonLogic(const char* name):
+ButtonLogic::ButtonLogic(const std::string name):
 	selected(false){
 		this->name = name;
 	};

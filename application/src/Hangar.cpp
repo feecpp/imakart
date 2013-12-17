@@ -1,5 +1,4 @@
 #include "Hangar.hpp"
-#include "Kart.hpp"
 #include <iostream>
 
 #include <dirent.h>
@@ -10,17 +9,11 @@
 Hangar::Hangar()
 {
   kartNames = findKartFiles();
-
   for(unsigned int i=0; i<kartNames.size(); ++i){
       kartsHangar.insert(std::pair<std::string,Kart*>(kartNames[i], new Kart(kartNames[i])));
   }
 
-  //Par défaut, après il faudra récupérer choix du menu
-  if(kartsHangar["unicorn"] != nullptr){
-    playerKart = kartsHangar["unicorn"];
-  }else{
-    playerKart = new Kart();
-  }
+  playerKart = new Kart();
 }
 
 Hangar::~Hangar()
@@ -31,6 +24,14 @@ Hangar::~Hangar()
 Kart& Hangar::getPlayerKart() const
 {
   return *playerKart;
+}
+
+void Hangar::setPlayerKart(std::string newKartForPlayer){
+  if(kartsHangar[newKartForPlayer] != nullptr){
+    playerKart = kartsHangar[newKartForPlayer];
+  }else{
+    playerKart = kartsHangar["unicorn"]; //par défaut
+  }
 }
 
 std::vector<std::string> Hangar::findKartFiles(){

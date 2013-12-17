@@ -41,6 +41,8 @@ public:
 
 private:
   void setupMenuContext() const;
+  void setupMenuKartContext() const;
+  void setupMenuMapContext() const;
   void setupRaceContext() const;
 
   GameEngine& gameEngine;

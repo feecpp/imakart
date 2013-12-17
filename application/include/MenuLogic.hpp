@@ -1,6 +1,7 @@
 #ifndef MENULOGIC_HPP
 #define MENULOGIC_HPP
 
+#include <string>
 #include <vector>
 #include "ButtonLogic.hpp" 
 
@@ -20,10 +21,16 @@ public:
 		{return false;}
 		
 	static MenuLogic* initialiseMainMenu();
+	static MenuLogic* initialiseKartMenu(std::vector <std::string> kartsName);
+	static MenuLogic* initialiseMapMenu();
+
 	void addButton(ButtonLogic* buttonToAdd);
 	void nextButton();
 	void previousButton();
 	ButtonAction submitButton();
+
+	ButtonLogic* getButtonLogicSelected()
+		{return tabButtonLogicMenu[positionButtonSelected];}
 	
 private:
 	unsigned int positionButtonSelected;

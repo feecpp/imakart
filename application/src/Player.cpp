@@ -12,6 +12,16 @@ const Kart& Player::getKart() const
   return myKart;
 }
 
+Kart& Player::getKart()
+{
+  return myKart;
+}
+
+void Player::setKart(Kart& myNewKart)
+{
+  myKart = myNewKart;
+}
+
 void Player::moveForward() const
 {
   	myKart.moveForward();

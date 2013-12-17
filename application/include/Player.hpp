@@ -11,6 +11,9 @@ public:
   explicit Player(Kart& kart);
 
   const Kart& getKart() const;
+  Kart& getKart();
+
+  void setKart(Kart& myNewKart);
 
   void moveForward() const;
   void moveBackward() const;

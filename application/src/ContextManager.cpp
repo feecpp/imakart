@@ -29,6 +29,12 @@ void ContextManager::updateContextIfNeeded()
   if (currentGameSate == IN_MENU)
     setupMenuContext();
 
+  else if (currentGameSate == IN_MENU_KART)
+    setupMenuKartContext();
+
+  else if (currentGameSate == IN_MENU_MAP)
+    setupMenuMapContext();
+
   else if (currentGameSate == IN_RACE)
     setupRaceContext();
 
@@ -43,6 +49,40 @@ void ContextManager::setupMenuContext() const
   graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
+
+  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+  }
+
+  gameEngine.setMenu(menuLogic);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  graphicEngine.addObject2D(menu2D);
+}
+
+void ContextManager::setupMenuKartContext() const
+{
+  graphicEngine.reset();
+  graphicEngine.useMenuProgram();
+
+
+  Menu2D* menu2D = Menu2D::initialiseKartMenu(gameEngine.getHangar().getKartsName());
+  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(gameEngine.getHangar().getKartsName());
+
+  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+  }
+
+  gameEngine.setMenu(menuLogic);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  graphicEngine.addObject2D(menu2D);
+}
+
+void ContextManager::setupMenuMapContext() const
+{
+  graphicEngine.reset();
+  graphicEngine.useMenuProgram();
+  Menu2D* menu2D = Menu2D::initialiseMapMenu();
+  MenuLogic* menuLogic = MenuLogic::initialiseMapMenu();
 
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
@@ -91,7 +131,7 @@ void ContextManager::setupRaceContext() const
 
 const EventHandler& ContextManager::getHandler() const
 {
-  if (gameEngine.getState() == IN_MENU)
+  if (gameEngine.getState() == IN_MENU || gameEngine.getState() == IN_MENU_MAP || gameEngine.getState() == IN_MENU_KART)
     return menuEventHandler;
   else if (gameEngine.getState() == IN_RACE)
     return raceEventHandler;

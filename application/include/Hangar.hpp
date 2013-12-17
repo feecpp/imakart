@@ -5,8 +5,7 @@
 #include <string>
 #include <map>
 
-class Kart;
-
+#include "Kart.hpp"
 /**
  * @brief The Hangar class représente un hangar qui gère les Kart.
  * Concrètement c'est lui qui va créer des Karts et gérer leur allocation mémoire.
@@ -22,6 +21,11 @@ public:
   ~Hangar();
 
   Kart& getPlayerKart() const;
+  void setPlayerKart(std::string newKartForPlayer);
+
+  std::vector<std::string> getKartsName() const{
+  	return kartNames;
+  }
 
 private:
   Kart* playerKart;
