@@ -26,6 +26,7 @@ GraphicEngine::~GraphicEngine()
   delete texte2DProgram;
   delete skyboxProgram;
   delete currentCamera;
+  delete currentLight;
 }
 
 sf::RenderWindow& GraphicEngine::init()
@@ -85,21 +86,21 @@ void GraphicEngine::renderFrame()
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(currentCamera->getViewMatrix()));
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
-    const glm::vec3& position = currentCamera->getPosition();
     GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
-    GLint positionId = currentProgram->getUniformIndex("uPositionCam");
+    GLint normalId = currentProgram->getUniformIndex("uNormal");
     currentProgram->setUniform(viewId, viewMatrix);
+    currentProgram->setUniform(normalId, normalMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
-    currentProgram->setUniform(positionId, position);
   }
 
   //Gestion de la lumière
   if (currentLight != nullptr)
   {
-    //const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    //currentLight->updateLight(viewMatrix);
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+   // currentLight->updateLightDirection(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
@@ -206,6 +207,11 @@ void GraphicEngine::setCamera(Camera* newCamera)
 {
   delete currentCamera;
   currentCamera = newCamera;
+}
+
+void GraphicEngine::setLight(Light* newLight){
+    delete currentLight;
+    currentLight = newLight;
 }
 
 void GraphicEngine::useMenuProgram()

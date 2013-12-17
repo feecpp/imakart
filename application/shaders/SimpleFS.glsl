@@ -31,6 +31,6 @@ vec4 blinnPhong() {
 
 void main(void)
 {
-  oFragColor = FragColor;
-  //oFragColor = blinnPhong();
+  //oFragColor = FragColor;
+  oFragColor = blinnPhong();
 }

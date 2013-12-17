@@ -10,6 +10,7 @@
 #include <sstream>
 #include "Positionable.hpp"
 #include <glm/gtx/quaternion.hpp>
+#include <iostream>
 
 Mesh::Mesh()
   : modelMatrix(1.f)
@@ -30,6 +31,7 @@ Mesh::~Mesh()
 
 void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
 {
+
   GLint modelIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelIndex, modelMatrix);
   GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
