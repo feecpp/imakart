@@ -50,7 +50,7 @@ sf::RenderWindow& GraphicEngine::init()
   initShaderPrograms();
 
   skybox = new Skybox(currentCamera);
-  if(skybox->init("textures/skybox","posx.jpg","negx.jpg","posy.jpg","negy.jpg","posz.jpg","negz.jpg")){
+  if(skybox->init("textures/new_skybox","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga")){
     std::cout << "Valeur gluint de la skybox : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
   }else{
     std::cerr << "Impossible d'initialiser la skybox" << std::endl;
