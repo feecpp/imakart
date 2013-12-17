@@ -17,7 +17,7 @@ class Skybox;
 
 /**
  * @brief Les options graphiques bas niveau
- * (pas forcément la meilleure manière de faire)
+ * (pas forcÃ©ment la meilleure maniÃ¨re de faire)
  */
 struct GraphicSettings
 {
@@ -36,8 +36,8 @@ struct GraphicSettings
 
 /**
  * @brief The GraphicEngine class
- * Contient une liste d'objet 3D �  afficher.
- * Contient également une liste d'objets 2D
+ * Contient une liste d'objet 3D Ã  afficher.
+ * Contient Ã©galement une liste d'objets 2D
  * qui constituent l'interface.
  */
 class GraphicEngine
@@ -60,9 +60,9 @@ public:
 
   /**
    * @brief addObject3D Ajout un objet 3D dans la liste d'affichage
-   * du GraphicEngine. Le GraphicEngine devient propriÃ©taire de cet objet
-   * et prend en charge sa destruction. Actuellement dÃ©finir une camÃ©ra dÃ©fini
-   * l'Ã©ventuelle ancienne camÃ©ra dÃ©tenue par le GraphicEngine.
+   * du GraphicEngine. Le GraphicEngine devient propriÃƒÂ©taire de cet objet
+   * et prend en charge sa destruction. Actuellement dÃƒÂ©finir une camÃƒÂ©ra dÃƒÂ©fini
+   * l'ÃƒÂ©ventuelle ancienne camÃƒÂ©ra dÃƒÂ©tenue par le GraphicEngine.
    * @param newObject3D
    */
   void addObject3D(Object3D* newObject3D)
@@ -72,24 +72,24 @@ public:
     {objects2D.push_back(newObject2D);}
 
   /**
-   * @brief setCamera défini une nouvelle caméra
-   * pour afficher la scène. Le GraphicEngine devient le propriÃ©taire
+   * @brief setCamera dÃ©fini une nouvelle camÃ©ra
+   * pour afficher la scÃ¨ne. Le GraphicEngine devient le propriÃƒÂ©taire
    * de newCamera et prendra en charge sa destruction.
    * @param newCamera
    */
   void setCamera(Camera* newCamera);
 
   /*
-   *setLight d�fini une nouvelle source de lumi�re
+   *setLight défini une nouvelle source de lumière
    */
   void setLight(Light* newLight);
 
 
   /*
-   * C'est un peu moisi comme méthode
-   * mais ça suffit pour l'instant. A améliorier
+   * C'est un peu moisi comme mÃ©thode
+   * mais Ã§a suffit pour l'instant. A amÃ©liorier
    * quand le graphique engine aura plus de ShaderProgram
-   * �  gérer
+   * Ã  gÃ©rer
    **/
   void useMenuProgram();
   void useRaceProgram();
@@ -114,7 +114,7 @@ private:
   Light* currentLight;
   Skybox* skybox;
 
-  //Avant de trouver une meilleure mÃ©thode...
+  //Avant de trouver une meilleure mÃƒÂ©thode...
   glimac::ShaderProgram* currentProgram;
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;

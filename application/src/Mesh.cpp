@@ -84,7 +84,7 @@ void Mesh::loadFromFile(const std::string& filePath)
   materials.resize(scene->mNumMeshes);
   indices.resize(scene->mNumMeshes);
 
-  //On les réutilise �  chaque fois pour optim
+  //On les rÃ©utilise Ã  chaque fois pour optim
   aiColor3D ambient;
   aiColor3D diffuse;
   aiColor3D specular;

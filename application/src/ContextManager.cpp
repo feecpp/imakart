@@ -22,7 +22,7 @@ void ContextManager::updateContextIfNeeded()
 {
   GameState currentGameSate = gameEngine.getState();
 
-  //Rien �  faire dans ce cas
+  //Rien Ã  faire dans ce cas
   if (lastGameState == currentGameSate)
     return;
 
@@ -79,7 +79,7 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
-  //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
+  //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
