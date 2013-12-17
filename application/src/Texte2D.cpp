@@ -5,17 +5,20 @@
 Texte2D::Texte2D(){
   texture = new glimac::Texture(GL_TEXTURE_2D);
   texture->loadTexture2D("textures/fontInversed.png");
+  timer = 0.f;
+  model = nullptr;
 }
 
 void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
 {
   std::ostringstream os;
-  std::cout << "timer :" << timer << std::endl;
   os << timer;
   std::string time = os.str();
   std::string text = "time: "+time;
+  std::cout << "text :" << text << std::endl;
   unsigned int length = text.size();
 
+  vertices.clear();
   for ( unsigned int i=0 ; i<length ; ++i ){
 
     char character = text[i];
@@ -76,11 +79,16 @@ void Texte2D::setVAO(){
 }
 
 void Texte2D::update(){
-  timer = model.getTime();
+  if(model != nullptr)
+    timer = model->getTime();
 }
 
-void Texte2D::setModelToRepresent(Chrono chrono){
-  model = chrono;
+Chrono* Texte2D::getModel(){
+  return model;
+}
+
+void Texte2D::setModelToRepresent(Chrono& chrono){
+  model = &chrono;
 }
 
 Texte2D::~Texte2D(){

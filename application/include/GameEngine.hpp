@@ -43,7 +43,7 @@ public:
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
   Map& getMap() const;
-  Chrono getChrono() const;
+  Chrono& getChrono() const;
 
   MenuLogic& getMenuLogic()
     {return menu;}
@@ -55,7 +55,7 @@ private:
   Player* player;
   Map* map;
   sf::Clock clock;
-  Chrono chrono;
+  Chrono* chrono;
   bool exitFlag;
 };
 
