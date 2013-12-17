@@ -9,7 +9,7 @@
 #include "Hangar.hpp"
 #include "Map.hpp"
 #include <SFML/System.hpp>
-
+#include "Chrono.hpp"
 /**
  * @brief Classe principale d'Imakart
  * Gère le déroulement du jeu. C'est le GameEngine
@@ -43,6 +43,7 @@ public:
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
   Map& getMap() const;
+  Chrono getChrono() const;
 
   MenuLogic& getMenuLogic()
     {return menu;}
@@ -54,7 +55,7 @@ private:
   Player* player;
   Map* map;
   sf::Clock clock;
-  float timerChrono;
+  Chrono chrono;
   bool exitFlag;
 };
 
