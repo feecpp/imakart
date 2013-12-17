@@ -1,12 +1,19 @@
 #include "Texte2D.hpp"
 #include <iostream>
+#include <sstream>
 
 Texte2D::Texte2D(){
-  //Inutile, juste pr redéfinir les méthodes virtuelles de object2D
+  texture = new glimac::Texture(GL_TEXTURE_2D);
+  texture->loadTexture2D("textures/fontInversed.png");
 }
 
-Texte2D::Texte2D(std::string text, int x, int y, int size)
+void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
 {
+  std::ostringstream os;
+  std::cout << "timer :" << timer << std::endl;
+  os << timer;
+  std::string time = os.str();
+  std::string text = "time: "+time;
   unsigned int length = text.size();
 
   for ( unsigned int i=0 ; i<length ; ++i ){
@@ -32,14 +39,10 @@ Texte2D::Texte2D(std::string text, int x, int y, int size)
   }
 
 
-  texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
-
   setVBO();
   setVAO();
-}
 
-void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const{
+  //Dessin du texte
   vao.bind();
   GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
   shaderProgram.setUniform(Text2DUniform, 0);
@@ -50,6 +53,10 @@ void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const{
   glDisable(GL_BLEND);
   texture->unbind();
   vao.unbind();
+}
+
+void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const{
+  // Inutile juste pour redéfinir les fonctions de Object2D
 }
 
 void Texte2D::setVBO(){
@@ -69,9 +76,12 @@ void Texte2D::setVAO(){
 }
 
 void Texte2D::update(){
-  //Inutile, juste pr redéfinir les méthodes virtuelles de object2D
+  timer = model.getTime();
 }
 
+void Texte2D::setModelToRepresent(Chrono chrono){
+  model = chrono;
+}
 
 Texte2D::~Texte2D(){
 

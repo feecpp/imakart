@@ -24,9 +24,11 @@ void GameEngine::update()
   hangar.getPlayerKart().update(elapsedTime);
 
   if(state != IN_RACE){
-    timerChrono = 0;
+    chrono.update(0.f);
+  }else{
+    chrono.update(elapsedTime);
   }
-  timerChrono += elapsedTime;
+
 
 }
 
@@ -65,3 +67,7 @@ Map& GameEngine::getMap() const
   return *map;
 }
 
+Chrono GameEngine::getChrono() const
+{
+  return chrono;
+}

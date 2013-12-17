@@ -8,16 +8,17 @@
 #include "VAO.hpp"
 #include "Texture.hpp"
 #include "Vertex2DRGB.hpp"
-
+#include "Chrono.hpp"
 class Texte2D
 {
 public:
   Texte2D();
-  void printTexte2D(std::string text, int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
+  void printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
   ~Texte2D();
 
   void draw(const glimac::ShaderProgram& shaderProgram) const;
-  void update(float time);
+  void update();
+  void setModelToRepresent(Chrono chrono);
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;
@@ -27,6 +28,7 @@ private:
   float timer;
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
+  Chrono model;
 };
 
 #endif // Texte2D_HPP
