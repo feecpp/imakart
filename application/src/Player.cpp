@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "Kart.hpp"
+#include <iostream>
 
 Player::Player(Kart& kart)
   :myKart(kart)
@@ -13,12 +14,12 @@ const Kart& Player::getKart() const
 
 void Player::moveForward() const
 {
-  myKart.moveForward();
+  	myKart.moveForward();
 }
 
 void Player::moveBackward() const
 {
-  myKart.moveBackward();
+  	myKart.moveBackward();
 }
 
 void Player::turnLeft() const
@@ -31,9 +32,14 @@ void Player::turnRight() const
   myKart.turnRight();
 }
 
-void Player::stopMoving() const
+void Player::stopMoveForward() const
 {
-  myKart.stopMoving();
+  myKart.stopMoveForward();
+}
+
+void Player::stopMoveBackward() const
+{
+  myKart.stopMoveBackward();
 }
 
 void Player::stopTurning() const
@@ -44,6 +50,11 @@ void Player::stopTurning() const
 void Player::brake() const
 {
   myKart.brake();
+}
+
+void Player::drift() const
+{
+  myKart.drift();
 }
 
 
