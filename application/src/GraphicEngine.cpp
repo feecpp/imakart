@@ -99,8 +99,6 @@ void GraphicEngine::renderFrame()
   //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
-      std::cout << "direction : x-->" << currentLight->getLighDirection().x << " y-->" << currentLight->getLighDirection().y << " z-->" << currentLight->getLighDirection().z << std::endl;
-
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
     currentLight->updateLightDirection(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
