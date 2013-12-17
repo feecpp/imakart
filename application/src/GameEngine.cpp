@@ -20,7 +20,7 @@ void GameEngine::update()
 {
   float elapsedTime = clock.restart().asSeconds();
   //Mettre à jour les objets de la simulation ici (en fonction du temps)
-
+  //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
 
   if(state != IN_RACE)
   {
@@ -28,6 +28,7 @@ void GameEngine::update()
   }
   else
   {
+    //Le player n'existe pas si pas IN_RACE
     getPlayerKart().update(elapsedTime);
     chrono->update(elapsedTime);
   }
@@ -50,7 +51,6 @@ bool GameEngine::getExitFlag() const
 
 void GameEngine::setupPlayer(const std::string& playerKartName)
 {
-  //En attendant une gestion plus propre
   player = new Player(hangar.createKartInstanceByName(playerKartName));
 }
 

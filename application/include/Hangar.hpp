@@ -20,8 +20,6 @@ public:
   Hangar();
   ~Hangar();
 
-  //Kart& getPlayerKart() const;
-  //void setPlayerKart(std::string newKartForPlayer);
   Kart& createKartInstanceByName(const std::string& kartName);
 
   std::vector<std::string> getKartsName() const

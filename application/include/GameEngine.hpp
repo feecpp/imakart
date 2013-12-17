@@ -40,6 +40,7 @@ public:
   void deactivateExitFlag();
   bool getExitFlag() const;
 
+  //Le player n'existe pas (=nullptr) tant que cette fonction n'est pas appelee
   void setupPlayer(const std::string& playerKartName);
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
