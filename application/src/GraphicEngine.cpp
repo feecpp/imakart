@@ -18,7 +18,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D Ã   sa mort
+  //Le graphic engine delete tous ses objets 3D Ã   sa mort
   reset();
 
   delete menuProgram;
@@ -26,6 +26,7 @@ GraphicEngine::~GraphicEngine()
   delete texte2DProgram;
   delete skyboxProgram;
   delete currentCamera;
+  delete currentLight;
 }
 
 sf::RenderWindow& GraphicEngine::init()
@@ -84,8 +85,14 @@ void GraphicEngine::renderFrame()
     //Mise Ãƒ  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(currentCamera->getViewMatrix()));
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    GLint normalId = currentProgram->getUniformIndex("uNormal");
+    currentProgram->setUniform(viewId, viewMatrix);
+    currentProgram->setUniform(normalId, normalMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
@@ -93,12 +100,12 @@ void GraphicEngine::renderFrame()
   if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    currentLight->updateLight(viewMatrix);
+   // currentLight->updateLightDirection(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
@@ -200,6 +207,11 @@ void GraphicEngine::setCamera(Camera* newCamera)
 {
   delete currentCamera;
   currentCamera = newCamera;
+}
+
+void GraphicEngine::setLight(Light* newLight){
+    delete currentLight;
+    currentLight = newLight;
 }
 
 void GraphicEngine::useMenuProgram()

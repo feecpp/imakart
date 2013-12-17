@@ -36,7 +36,7 @@ struct GraphicSettings
 
 /**
  * @brief The GraphicEngine class
- * Contient une liste d'objet 3D à afficher.
+ * Contient une liste d'objet 3D �  afficher.
  * Contient également une liste d'objets 2D
  * qui constituent l'interface.
  */
@@ -80,10 +80,16 @@ public:
   void setCamera(Camera* newCamera);
 
   /*
+   *setLight d�fini une nouvelle source de lumi�re
+   */
+  void setLight(Light* newLight);
+
+
+  /*
    * C'est un peu moisi comme méthode
    * mais ça suffit pour l'instant. A améliorier
    * quand le graphique engine aura plus de ShaderProgram
-   * à gérer
+   * �  gérer
    **/
   void useMenuProgram();
   void useRaceProgram();
