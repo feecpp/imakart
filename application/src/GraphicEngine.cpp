@@ -138,7 +138,8 @@ void GraphicEngine::renderFrame()
 
   if (currentProgram == raceProgram){
     useTexteProgram();
-    chrono->update();
+    if(chrono->getModel() != nullptr)
+      chrono->update();
     chrono->printTexte2D(10, 570, 20, *currentProgram);
     useRaceProgram();
   }
