@@ -18,6 +18,6 @@ const glm::vec3 Light::getLightIntensity() const {
 }
 
 void Light::updateLightDirection(const glm::mat4 viewMatrix) {
-    direction = glm::vec3(viewMatrix * glm::vec4(direction, 1));
-    position = glm::vec3(viewMatrix * glm::vec4(position,1));
+    direction = glm::vec3(viewMatrix * glm::vec4(3,3,3, 1));
+    position = glm::vec3(viewMatrix * glm::vec4(1,1,1,1));
 }
