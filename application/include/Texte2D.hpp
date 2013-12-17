@@ -18,7 +18,8 @@ public:
 
   void draw(const glimac::ShaderProgram& shaderProgram) const;
   void update();
-  void setModelToRepresent(Chrono chrono);
+  void setModelToRepresent(Chrono& chrono);
+  Chrono* getModel();
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;
@@ -28,7 +29,7 @@ private:
   float timer;
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
-  Chrono model;
+  Chrono* model;
 };
 
 #endif // Texte2D_HPP
