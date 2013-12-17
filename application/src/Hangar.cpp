@@ -8,30 +8,45 @@
 
 Hangar::Hangar()
 {
+  instancedKarts.resize(0);
   kartNames = findKartFiles();
   for(unsigned int i=0; i<kartNames.size(); ++i){
-      kartsHangar.insert(std::pair<std::string,Kart*>(kartNames[i], new Kart(kartNames[i])));
+      kartTemplates.insert(std::pair<std::string,Kart*>(kartNames[i], new Kart(kartNames[i])));
   }
-
-  playerKart = new Kart();
 }
 
 Hangar::~Hangar()
 {
-  delete playerKart;
-}
-
-Kart& Hangar::getPlayerKart() const
-{
-  return *playerKart;
-}
-
-void Hangar::setPlayerKart(std::string newKartForPlayer){
-  if(kartsHangar[newKartForPlayer] != nullptr){
-    playerKart = kartsHangar[newKartForPlayer];
-  }else{
-    playerKart = kartsHangar["unicorn"]; //par défaut
+  //Le hangar est responsable de la gestion memoire des Karts,
+  //a sa mort il fait donc le menage !
+  for (unsigned int i = 0; i < instancedKarts.size(); ++i)
+  {
+    delete instancedKarts[i];
   }
+  auto it = kartTemplates.begin();
+  for(; it != kartTemplates.end(); ++it)
+  {
+    delete it->second;
+  }
+  instancedKarts.erase(instancedKarts.begin(), instancedKarts.end());
+  kartTemplates.erase(kartTemplates.begin(), kartTemplates.end());
+}
+
+Kart& Hangar::createKartInstanceByName(const std::string& kartName)
+{
+  //Cette nouvelle instance est stockee dans
+  //instancedKarts pour pouvoir etre liberee a la destruction du Hangar
+  Kart* newInstance = nullptr;
+  if(kartTemplates[kartName] != nullptr)
+  {
+    //Creation du nouveau Kart par copie du modele charge depuis le fichier kart
+    newInstance = new Kart(*kartTemplates[kartName]);
+  }else
+  {
+    newInstance = kartTemplates["unicorn"]; //par défaut
+  }
+  instancedKarts.push_back(newInstance);
+  return *newInstance;
 }
 
 std::vector<std::string> Hangar::findKartFiles(){

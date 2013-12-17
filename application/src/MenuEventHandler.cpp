@@ -62,8 +62,7 @@ void MenuEventHandler::pressEnter() const
 			break;
 
 		case SELECT:			
-			gameEngine.getHangar().setPlayerKart(button->name);
-			gameEngine.getPlayer().setKart(gameEngine.getPlayerKart());
+      gameEngine.setupPlayer(button->name);
 
 			std::cout << "Kart player game engine : " << gameEngine.getPlayer().getKart().getName() << std::endl;
 			std::cout << "Kart player hangar : " << gameEngine.getPlayerKart().getName() << std::endl;

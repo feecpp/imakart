@@ -35,6 +35,12 @@ Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
 {
 }
 
+Kart::Kart(const Kart& kartToCopy)
+  : Kart()
+{
+  specifications = kartToCopy.specifications;
+}
+
 Kart::~Kart()
 {
 }
