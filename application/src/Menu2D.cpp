@@ -24,13 +24,12 @@ Menu2D* Menu2D::initialiseMainMenu(){
 
 Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 	Menu2D* kartMenu = new Menu2D;
-
 	for(unsigned int i = 0; i < kartsName.size(); ++i){
 		std::string textures = "textures/karts/";
 		textures = textures + kartsName[i];
 		std::string texturesS = textures + "Selected.jpg";
 		textures = textures + ".jpg";
-		Button2D* kart = new Button2D(-1 + i * 0.4, -1, 0.4, 0.4, textures, texturesS);
+		Button2D* kart = new Button2D(- 0.95 + i * 1, -0.5, 0.9, 0.9, textures, texturesS);
 		kartMenu->addButton(kart);
 	}
 

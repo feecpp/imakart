@@ -61,11 +61,10 @@ void MenuEventHandler::pressEnter() const
      		gameEngine.activateExitFlag();
 			break;
 
-		case SELECT:			
-      gameEngine.setupPlayer(button->name);
+		case SELECT:
+      		gameEngine.setupPlayer(button->name);
 
 			std::cout << "Kart player game engine : " << gameEngine.getPlayer().getKart().getName() << std::endl;
-			std::cout << "Kart player hangar : " << gameEngine.getPlayerKart().getName() << std::endl;
 
 			gameEngine.setState(IN_RACE);
 			break;
