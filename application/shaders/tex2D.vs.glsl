@@ -10,4 +10,4 @@ uniform mat3 uModelMatrix;
 void main() {
    vTexturePosition = aTexturePosition;
    gl_Position =  vec4( (uModelMatrix * (vec3(aVertexPosition, 1))).xy, 0, 1);
-};
+}

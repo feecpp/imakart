@@ -6,6 +6,7 @@
 #include <string>
 #include "ShaderProgram.hpp"
 #include <map>
+#include <Texte2D.hpp>
 
 
 class Object3D;
@@ -86,9 +87,13 @@ public:
    **/
   void useMenuProgram();
   void useRaceProgram();
+  void useTexteProgram();
+  void useSkyboxProgram();
 
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
+
+  Texte2D* chrono;
 
 private:
   void drawWorld();
@@ -107,6 +112,8 @@ private:
   glimac::ShaderProgram* currentProgram;
   glimac::ShaderProgram* menuProgram;
   glimac::ShaderProgram* raceProgram;
+  glimac::ShaderProgram* texte2DProgram;
+  glimac::ShaderProgram* skyboxProgram;
 
   //GraphicSettings settings;
   std::vector<Object3D* > objects3D;

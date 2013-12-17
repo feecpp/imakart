@@ -43,7 +43,7 @@ private:
 	const Camera* m_pCamera;
   glimac::CubemapTexture* m_pCubemapTex;
 
-  glimac::Vertex3D vertices[24]; // triangle Fan
+  glimac::Vertex3DSimple vertices[24]; // triangle Fan
 
   glimac::LowLevelVBO vbo;
   glimac::VAO vao;

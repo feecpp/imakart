@@ -6,40 +6,40 @@ Skybox::Skybox(const Camera* pCamera)
 	: m_pCamera(pCamera), m_pCubemapTex(nullptr)
 	{
     //BACK
-    vertices[0] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[1] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[2] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[3] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[0] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, -0.5f));
+    vertices[1] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, -0.5f));
+    vertices[2] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, -0.5f));
+    vertices[3] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, -0.5f));
 
     //TOP
-    vertices[4] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[5] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[6] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[7] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[4] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, -0.5f));
+    vertices[5] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, -0.5f));
+    vertices[6] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, 0.5f));
+    vertices[7] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, 0.5f));
 
     //RIGHT
-    vertices[8] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[9] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[10] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[11] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[8] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, -0.5f));
+    vertices[9] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, -0.5f));
+    vertices[10] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, 0.5f));
+    vertices[11] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, 0.5f));
 
     //BOTTOM
-    vertices[12] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[13] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[14] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[15] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[12] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, -0.5f));
+    vertices[13] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, 0.5f));
+    vertices[14] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, 0.5f));
+    vertices[15] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, -0.5f));
 
     //LEFT
-    vertices[16] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[17] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, -0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[18] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[19] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[16] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, -0.5f));
+    vertices[17] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, -0.5f));
+    vertices[18] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, 0.5f));
+    vertices[19] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, 0.5f));
 
     //FRONT
-    vertices[20] = glimac::Vertex3D(glm::vec3(0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[21] = glimac::Vertex3D(glm::vec3(0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[22] = glimac::Vertex3D(glm::vec3(-0.5f, 0.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
-    vertices[23] = glimac::Vertex3D(glm::vec3(-0.5f, 1.f, 0.5f), glm::vec2(1,0), glm::vec3(1));
+    vertices[20] = glimac::Vertex3DSimple(glm::vec3(0.5f, 0.9f, 0.5f));
+    vertices[21] = glimac::Vertex3DSimple(glm::vec3(0.5f, -0.1f, 0.5f));
+    vertices[22] = glimac::Vertex3DSimple(glm::vec3(-0.5f, -0.1f, 0.5f));
+    vertices[23] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, 0.5f));
   }  
 
 
@@ -78,30 +78,23 @@ void Skybox::setVBO(){
 
 void Skybox::setVAO(){
   vao.enableVertexAttribArray(0);
-  vao.enableVertexAttribArray(1);
-  vao.enableVertexAttribArray(2);
-  vao.vertexAttribPointer(vbo, 0, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, position));
-  vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, textureCoordinates));
-  vao.vertexAttribPointer(vbo, 2, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3D), (const GLvoid* ) offsetof(glimac::Vertex3D, normal));
+  vao.vertexAttribPointer(vbo, 0, 3, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex3DSimple), (const GLvoid* ) offsetof(glimac::Vertex3DSimple, position));
 }
 
 void Skybox::render(const glimac::ShaderProgram& shaderProgram) const
 {   
-    GLint OldCullFaceMode;
-    glGetIntegerv(GL_CULL_FACE_MODE, &OldCullFaceMode);
-    GLint OldDepthFuncMode;
-    glGetIntegerv(GL_DEPTH_FUNC, &OldDepthFuncMode);
-    
-    glCullFace(GL_FRONT);
-    glDepthFunc(GL_LEQUAL);
-    
-    //Ajouter code de dessin ici 
-    glm::mat4 modelMatrix = glm::mat4(glm::vec4(20,0,0,0),glm::vec4(0,20,0,0),glm::vec4(0,0,20,0), glm::vec4(0,0,0,1));
+
+    glDepthMask (GL_FALSE);
+
+    glm::mat4 modelMatrix = glm::mat4(glm::vec4(10,0,0,0),glm::vec4(0,10,0,0),glm::vec4(0,0,10,0), glm::vec4(0,0,0,1));
     GLint modelIndex = shaderProgram.getUniformIndex("model");
     GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
+    GLint textureIndex = shaderProgram.getUniformIndex("cube_texture");
 
     shaderProgram.setUniform(modelIndex, modelMatrix);
     m_pCubemapTex->Bind(GL_TEXTURE0);
+    shaderProgram.setUniform(textureIndex, 0);
+    
     vao.bind();
     for(unsigned int i = 0; i < 24; i = i+4){
       if(i == 12){
@@ -113,6 +106,5 @@ void Skybox::render(const glimac::ShaderProgram& shaderProgram) const
     }
     vao.unbind();
 
-    glCullFace(OldCullFaceMode);        
-    glDepthFunc(OldDepthFuncMode);
+    glDepthMask (GL_TRUE);
 }

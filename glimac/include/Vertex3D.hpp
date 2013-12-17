@@ -28,6 +28,22 @@ struct Vertex3D
   Vertex3D() {}
 };
 
+struct Vertex3DSimple
+{
+  glm::vec3 position;
+
+  Vertex3DSimple(glm::vec3 position)
+    : position(position)
+  {}
+
+  Vertex3DSimple(float x, float y, float z)
+    : position(glm::vec3(x, y, z))
+  {}
+
+  Vertex3DSimple() {}
+};
+
+
 } //namespace glimac
 
 #endif // VERTEX3D_HPP

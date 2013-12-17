@@ -12,7 +12,7 @@
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr)
+  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr), texte2DProgram(nullptr), skyboxProgram(nullptr)
 {
 }
 
@@ -23,6 +23,8 @@ GraphicEngine::~GraphicEngine()
 
   delete menuProgram;
   delete raceProgram;
+  delete texte2DProgram;
+  delete skyboxProgram;
   delete currentCamera;
 }
 
@@ -47,8 +49,11 @@ sf::RenderWindow& GraphicEngine::init()
   initShaderPrograms();
 
   skybox = new Skybox(currentCamera);
-  skybox->init("textures","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg","sp3back.jpg");
-  std::cout << "Valeur gluint : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
+  if(skybox->init("textures/skybox","posx.jpg","negx.jpg","posy.jpg","negy.jpg","posz.jpg","negz.jpg")){
+    std::cout << "Valeur gluint de la skybox : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
+  }else{
+    std::cerr << "Impossible d'initialiser la skybox" << std::endl;
+  }
 
   //Initialisation de la font
   if (!font.loadFromFile("fonts/arialPixel.ttf"))
@@ -122,9 +127,19 @@ void GraphicEngine::renderFrame()
 
   if (skybox != nullptr && currentProgram == raceProgram)
   {
+    useSkyboxProgram();
+    const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    currentProgram->setUniform(viewProjectionId, viewProjection);
     skybox->render(*currentProgram);
+    useRaceProgram();
   }
 
+  if (currentProgram == raceProgram){
+    useTexteProgram();
+    chrono->draw(*currentProgram);
+    useRaceProgram();
+  }
 }
 
 void GraphicEngine::initShaderPrograms()
@@ -151,6 +166,23 @@ void GraphicEngine::initShaderPrograms()
     std::cerr << logInfo << std::endl;
   }
 
+  //Pour le dessin du texte 2D
+  texte2DProgram = new glimac::ShaderProgram();
+  texte2DProgram->addShader(GL_VERTEX_SHADER, "shaders/texte2D.vs.glsl");
+  texte2DProgram->addShader(GL_FRAGMENT_SHADER, "shaders/texte2D.fs.glsl");
+  if (!texte2DProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
+
+  //Pour la skybox 
+  skyboxProgram = new glimac::ShaderProgram();
+  skyboxProgram->addShader(GL_VERTEX_SHADER, "shaders/Skybox.vs.glsl");
+  skyboxProgram->addShader(GL_FRAGMENT_SHADER, "shaders/Skybox.fs.glsl");
+  if (!skyboxProgram->compileAndLinkShaders(logInfo))
+  {
+    std::cerr << logInfo << std::endl;
+  }
 }
 
 void GraphicEngine::reset()
@@ -186,4 +218,16 @@ void GraphicEngine::useRaceProgram()
 {
   raceProgram->use();
   currentProgram = raceProgram;
+}
+
+void GraphicEngine::useTexteProgram()
+{
+  texte2DProgram->use();
+  currentProgram = texte2DProgram;
+}
+
+void GraphicEngine::useSkyboxProgram()
+{
+  skyboxProgram->use();
+  currentProgram = skyboxProgram;
 }

@@ -2,6 +2,7 @@
 #include "GameEngine.hpp"
 #include "GraphicEngine.hpp"
 #include "Menu2D.hpp"
+#include "Texte2D.hpp"
 #include "KartCube.hpp"
 #include "Cube.hpp"
 #include "Kart.hpp"
@@ -79,6 +80,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCamera(camera);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
+  graphicEngine.chrono = new Texte2D("Time :", 10, 570, 20);
 }
 
 const EventHandler& ContextManager::getHandler() const
