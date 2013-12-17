@@ -9,13 +9,13 @@
 
 Kart::Kart()
     : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(FORWARD), name("standard")
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN), name("standard")
 {
 }
 
 Kart::Kart(std::string kartName)
     : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(FORWARD)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN)
 {
   const std::string path = "karts/"+kartName+".kart";
 
@@ -60,7 +60,7 @@ void Kart::update(float elapsedTimeInSecond)
   }
   else
   {
-   travelledDistance = speed * elapsedTimeInSecond + currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+    travelledDistance = speed * elapsedTimeInSecond + currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
   }
 
   /* Si on est en phase de deceleration et qu'on bouge pas c'est qu'on
@@ -76,6 +76,8 @@ void Kart::update(float elapsedTimeInSecond)
     travelledDistance = 0.f;
     speed = 0.f;
     accelerationState = DO_NOT_MOVE;
+    moveState = NONE;
+    turnState = NOTURN;
   }
   else
   {
@@ -92,47 +94,59 @@ void Kart::update(float elapsedTimeInSecond)
   position += direction * travelledDistance;//en uniteOGL/seconde
 }
 
-void Kart::moveForward()
+void Kart::moveForward() //enclenche la marche avant
 {
   //uniteOpenGL / seconde
-  if(moveState == BACKWARD){
-    currentAngularSpeed = -currentAngularSpeed;
+  if(moveState == BACKWARD){ //Si on est en marche arriere et qu'on accelerait alors il faut faire un arret brutale et accelerer
+    brake();
+  }else{
+    currentAcceleration = specifications.acceleration;
+    accelerationState = ACCELERATE;
+    moveState = FORWARD;
   }
-  currentAcceleration = specifications.acceleration;
-  accelerationState = ACCELERATE;
-  moveState = FORWARD;
 }
 
-void Kart::moveBackward()
+void Kart::moveBackward() //enclenche la marche arriere
 {
   //uniteOpenGL / seconde
-  if(moveState == FORWARD){
-    currentAngularSpeed = -currentAngularSpeed;
+  if(moveState == FORWARD){ //Si on est en marche avant et qu'on accelerait alors il faut freiner
+    brake();
+  }else{
+    currentAcceleration = - specifications.acceleration;
+    accelerationState = ACCELERATE;
+    moveState = BACKWARD;
   }
-  currentAcceleration = - specifications.acceleration;
-  accelerationState = ACCELERATE;
-  moveState = BACKWARD;
 }
 
 void Kart::turnLeft()
 {
+  turnState = LEFT;
   if(moveState == BACKWARD){
     currentAngularSpeed = -specifications.angularSpeed;
-  }else{
+  }else if(moveState == FORWARD){
     currentAngularSpeed = specifications.angularSpeed;
   }
 }
 
 void Kart::turnRight()
 {
+  turnState = RIGHT;
   if(moveState == BACKWARD){
     currentAngularSpeed = specifications.angularSpeed;
-  }else{
+  }else if(moveState == FORWARD){
     currentAngularSpeed = -specifications.angularSpeed;
   }
 }
 
-void Kart::stopMoving()
+void Kart::stopMoveForward()
+{
+  if (accelerationState == DECELERATE)
+    return;
+  currentAcceleration = -currentAcceleration;
+  accelerationState = DECELERATE;
+}
+
+void Kart::stopMoveBackward()
 {
   if (accelerationState == DECELERATE)
     return;
@@ -161,9 +175,13 @@ void Kart::brake()
   }
 }
 
+void Kart::drift() //Pas encore géré
+{
+  brake();
+}
+
 const glm::vec3& Kart::getPosition() const
   {return position;}
 
 const glm::quat& Kart::getOrientation() const
-{return orientation;}
-
+  {return orientation;}

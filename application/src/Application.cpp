@@ -1,6 +1,7 @@
 #include "Application.hpp"
 #include <SFML/Graphics.hpp>
 #include "EventHandler.hpp"
+#include <iostream>
 
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
@@ -34,6 +35,8 @@ void Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();	 
 
+  bool inRace = gameEngine.getState() == IN_RACE;
+
   sf::Event e;
   while (window.pollEvent(e))
   {
@@ -45,22 +48,22 @@ void Application::handleEvents(sf::RenderWindow& window)
         break;
 
         case sf::Event::KeyPressed:
-            if (e.key.code == sf::Keyboard::Down)
+            if (e.key.code == sf::Keyboard::Down && !inRace)
               handler.pressDown();
 
-            else if (e.key.code == sf::Keyboard::Up)
+            else if (e.key.code == sf::Keyboard::Up && !inRace)
               handler.pressUp();
 
-            else if (e.key.code == sf::Keyboard::Left)
+            else if (e.key.code == sf::Keyboard::Left && !inRace)
               handler.pressLeft();
 
-            else if (e.key.code == sf::Keyboard::Right)
+            else if (e.key.code == sf::Keyboard::Right && !inRace)
               handler.pressRight();
 
             else if (e.key.code == sf::Keyboard::Return)
               handler.pressEnter();
 
-            else if (e.key.code == sf::Keyboard::Space)
+            else if (e.key.code == sf::Keyboard::Space && !inRace)
               handler.pressSpace();
 
             break;
@@ -90,4 +93,21 @@ void Application::handleEvents(sf::RenderWindow& window)
           break;
       }
   }
+
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && inRace){
+    handler.pressUp();
+  }
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && inRace){
+    handler.pressDown();
+  }
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && inRace){
+    handler.pressLeft();
+  }
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && inRace){
+    handler.pressRight();
+  }
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && inRace){
+    handler.pressSpace();
+  }
+
 }

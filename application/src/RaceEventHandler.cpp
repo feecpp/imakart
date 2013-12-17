@@ -13,7 +13,7 @@ void RaceEventHandler::pressUp() const
 }
 void RaceEventHandler::releaseUp() const
 {
-  gameEngine.getPlayer().stopMoving();
+  gameEngine.getPlayer().stopMoveForward();
 }
 
 void RaceEventHandler::pressDown() const
@@ -22,7 +22,7 @@ void RaceEventHandler::pressDown() const
 }
 void RaceEventHandler::releaseDown() const
 {
-  gameEngine.getPlayer().stopMoving();
+  gameEngine.getPlayer().stopMoveBackward();
 }
 
 void RaceEventHandler::pressLeft() const
@@ -54,7 +54,7 @@ void RaceEventHandler::releaseEnter() const
 
 void RaceEventHandler::pressSpace() const
 {
-  gameEngine.getPlayer().brake();
+  gameEngine.getPlayer().drift();
 }
 
 void RaceEventHandler::releaseSpace() const

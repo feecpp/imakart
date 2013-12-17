@@ -86,7 +86,7 @@ void Skybox::render(const glimac::ShaderProgram& shaderProgram) const
 
     glDepthMask (GL_FALSE);
 
-    glm::mat4 modelMatrix = glm::mat4(glm::vec4(10,0,0,0),glm::vec4(0,10,0,0),glm::vec4(0,0,10,0), glm::vec4(0,0,0,1));
+    glm::mat4 modelMatrix = glm::mat4(glm::vec4(30,0,0,0),glm::vec4(0,30,0,0),glm::vec4(0,0,30,0), glm::vec4(0,0,0,1));
     GLint modelIndex = shaderProgram.getUniformIndex("model");
     GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
     GLint textureIndex = shaderProgram.getUniformIndex("cube_texture");
