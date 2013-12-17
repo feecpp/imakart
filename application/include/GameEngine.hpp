@@ -40,6 +40,7 @@ public:
   void deactivateExitFlag();
   bool getExitFlag() const;
 
+  void setupPlayer(const std::string& playerKartName);
   Player& getPlayer() const;
   Kart& getPlayerKart() const;
   Map& getMap() const;

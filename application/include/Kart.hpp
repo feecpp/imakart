@@ -63,6 +63,7 @@ public:
   Kart();
   Kart(std::string);
   Kart(glm::vec3 position, glm::quat direction, float speed);
+  explicit Kart(const Kart& kartToCopy);
   virtual ~Kart();
 
   //Met à jour le Kart en fonction des ordres qui lui ont été donnés

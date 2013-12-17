@@ -20,10 +20,12 @@ public:
   Hangar();
   ~Hangar();
 
-  Kart& getPlayerKart() const;
-  void setPlayerKart(std::string newKartForPlayer);
+  //Kart& getPlayerKart() const;
+  //void setPlayerKart(std::string newKartForPlayer);
+  Kart& createKartInstanceByName(const std::string& kartName);
 
-  std::vector<std::string> getKartsName() const{
+  std::vector<std::string> getKartsName() const
+  {
   	return kartNames;
   }
 
@@ -31,7 +33,10 @@ private:
   Kart* playerKart;
   std::vector<std::string> findKartFiles();
   std::vector<std::string> kartNames;
-  std::map<std::string, Kart*> kartsHangar;
+  //En fait on pourrait juste stocker des Kart::Specifications
+  std::map<std::string, Kart*> kartTemplates;
+  //Les karts qui vont conretements rouler dans une course
+  std::vector<Kart* > instancedKarts;
 };
 
 #endif // HANGAR_HPP

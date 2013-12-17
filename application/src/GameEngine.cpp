@@ -5,8 +5,6 @@
 GameEngine::GameEngine()
   : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false)
 {
-  //En attendant une gestion plus propre
-  player = new Player(hangar.getPlayerKart());
   map = new Map();
   //Je pense que c'est très con de le mettre là, faut que je réfléchisse
   map->loadData("../../imakart/application/maps/carte1.map");
@@ -22,15 +20,17 @@ void GameEngine::update()
 {
   float elapsedTime = clock.restart().asSeconds();
   //Mettre à jour les objets de la simulation ici (en fonction du temps)
-  hangar.getPlayerKart().update(elapsedTime);
 
-  if(state != IN_RACE){
+
+  if(state != IN_RACE)
+  {
     chrono->update(0.f);
-  }else{
+  }
+  else
+  {
+    getPlayerKart().update(elapsedTime);
     chrono->update(elapsedTime);
   }
-
-
 }
 
 void GameEngine::activateExitFlag()
@@ -48,6 +48,12 @@ bool GameEngine::getExitFlag() const
   return exitFlag;
 }
 
+void GameEngine::setupPlayer(const std::string& playerKartName)
+{
+  //En attendant une gestion plus propre
+  player = new Player(hangar.createKartInstanceByName(playerKartName));
+}
+
 
 Player& GameEngine::getPlayer() const
 {
@@ -58,7 +64,8 @@ Player& GameEngine::getPlayer() const
 
 Kart& GameEngine::getPlayerKart() const
 {
-  return hangar.getPlayerKart();
+  assert(player != nullptr);
+  return player->getKart();
 }
 
 Map& GameEngine::getMap() const
