@@ -54,6 +54,7 @@ private:
   Player* player;
   Map* map;
   sf::Clock clock;
+  float timerChrono;
   bool exitFlag;
 };
 

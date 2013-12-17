@@ -84,7 +84,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
-  graphicEngine.chrono = new Texte2D("Time :", 10, 570, 20);
+  graphicEngine.chrono = new Texte2D();
 }
 
 const EventHandler& ContextManager::getHandler() const

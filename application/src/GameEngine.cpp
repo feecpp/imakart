@@ -1,5 +1,6 @@
 #include "GameEngine.hpp"
 #include "Kart.hpp"
+#include <iostream>
 
 GameEngine::GameEngine()
   : state (IN_MENU), player(nullptr), map(nullptr), exitFlag(false)
@@ -21,6 +22,12 @@ void GameEngine::update()
   float elapsedTime = clock.restart().asSeconds();
   //Mettre à jour les objets de la simulation ici (en fonction du temps)
   hangar.getPlayerKart().update(elapsedTime);
+
+  if(state != IN_RACE){
+    timerChrono = 0;
+  }
+  timerChrono += elapsedTime;
+
 }
 
 void GameEngine::activateExitFlag()

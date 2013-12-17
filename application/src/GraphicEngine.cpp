@@ -141,9 +141,10 @@ void GraphicEngine::renderFrame()
 
   if (currentProgram == raceProgram){
     useTexteProgram();
-    chrono->draw(*currentProgram);
+    chrono->printTexte2D("Time :", 10, 570, 20, *currentProgram);
     useRaceProgram();
   }
+
 }
 
 void GraphicEngine::initShaderPrograms()
