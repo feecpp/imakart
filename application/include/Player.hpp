@@ -16,9 +16,11 @@ public:
   void moveBackward() const;
   void turnLeft() const;
   void turnRight() const;
-  void stopMoving() const;
+  void stopMoveForward() const;
+  void stopMoveBackward() const;
   void stopTurning() const;
   void brake() const;
+  void drift() const;
 
 private:
   Kart& myKart;

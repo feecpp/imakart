@@ -20,6 +20,7 @@ public:
     glm::vec4 ambientColor;
     glm::vec4 diffuseColor;
     glm::vec4 specularColor;
+    float shininess;
   };
 
   Mesh();
@@ -32,18 +33,18 @@ public:
    * @brief loadFromFile charge un fichier 3D dans le Mesh et l'envoie directement
    * a la carte graphique.
    * Accepte tous les formats geres par assimp.
-   * @param filePath chemin d'accès au fichier (relatif à l'emplacement
+   * @param filePath chemin d'accès au fichier (relatif �  l'emplacement
    * de l'executable)
    */
   void loadFromFile(const std::string& filePath);
 
 private:
   /* Implémentation basique :
-   * pour un VBO à l'indice 'i' correspond un VAO et un material à l'indice 'i'.
+   * pour un VBO �  l'indice 'i' correspond un VAO et un material �  l'indice 'i'.
    * A voir plus tard si faut pas faire un truc plus proche, pour l'instant je me suis
    * concentré sur le résultat...
    * Utilisation des pointeurs parce que l'allocation des VBO/VAO est chiante
-   * à gérer.
+   * �  gérer.
    */
   std::vector<glimac::LowLevelVBO* > meshVBOs;
   std::vector<glimac::VAO *> meshVAOs;

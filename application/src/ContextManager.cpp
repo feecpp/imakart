@@ -5,6 +5,7 @@
 #include "Texte2D.hpp"
 #include "KartCube.hpp"
 #include "Cube.hpp"
+#include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
 #include "Mesh.hpp"
@@ -21,7 +22,7 @@ void ContextManager::updateContextIfNeeded()
 {
   GameState currentGameSate = gameEngine.getState();
 
-  //Rien à faire dans ce cas
+  //Rien Ã  faire dans ce cas
   if (lastGameState == currentGameSate)
     return;
 
@@ -63,6 +64,8 @@ void ContextManager::setupRaceContext() const
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
+  Light* light = new Light();
+
   Map3D* map = new Map3D();
   map->setModelToRepresent(gameEngine.getMap());
 
@@ -76,8 +79,9 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
-  //L'engine devient le propriétaire de la caméra et prend en charge sa destruction
+  //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
+  graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
   graphicEngine.chrono = new Texte2D();

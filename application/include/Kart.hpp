@@ -22,6 +22,7 @@ public:
   {
     ACCELERATE,
     DECELERATE,
+    BRAKE,
     MAX_SPEED_REACHED,
     DO_NOT_MOVE
   };
@@ -32,6 +33,13 @@ public:
     FORWARD,
     BACKWARD,
     NONE
+  };
+
+  enum TurnState
+  {
+    LEFT,
+    RIGHT,
+    NOTURN
   };
 
   //Structure qui empacte les caractéristiques du Kart
@@ -65,15 +73,21 @@ public:
   void moveBackward();
   void turnLeft();
   void turnRight();
-  void stopMoving();
+  void stopMoveForward();
+  void stopMoveBackward();
   void stopTurning();
   void brake();
+  void drift();
 
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
 
   std::string getName() const
     {return name;}
+
+  MoveState getMoveState() const{
+    return moveState;
+  }
 
 private:
   glm::vec3 position;
@@ -86,6 +100,7 @@ private:
   float currentAcceleration;
   AccelerationState accelerationState;
   MoveState moveState;
+  TurnState turnState;
   Specifications specifications;
   std::string name;
 

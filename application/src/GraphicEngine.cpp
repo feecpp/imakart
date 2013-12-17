@@ -18,7 +18,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-  //Le graphic engine delete tous ses objets 3D à  sa mort
+  //Le graphic engine delete tous ses objets 3D Ã   sa mort
   reset();
 
   delete menuProgram;
@@ -26,6 +26,7 @@ GraphicEngine::~GraphicEngine()
   delete texte2DProgram;
   delete skyboxProgram;
   delete currentCamera;
+  delete currentLight;
 }
 
 sf::RenderWindow& GraphicEngine::init()
@@ -77,28 +78,34 @@ void GraphicEngine::renderFrame()
   assert(currentProgram != nullptr);
   //assert(currentCamera != nullptr);
 
-  //En attendant une meilleure gestion de la caméra dans le menu,
+  //En attendant une meilleure gestion de la camÃ©ra dans le menu,
   //menu => camera == nullptr
   if (currentCamera != nullptr)
   {
-    //Mise Ã  jour matrice ViewProjection
+    //Mise Ãƒ  jour matrice ViewProjection
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(currentCamera->getViewMatrix()));
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
+    GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
+    GLint normalId = currentProgram->getUniformIndex("uNormal");
+    currentProgram->setUniform(viewId, viewMatrix);
+    currentProgram->setUniform(normalId, normalMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
-  //Gestion de la lumière
+  //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    currentLight->updateLight(viewMatrix);
+   // currentLight->updateLightDirection(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel à une fonction dans ShaderProgram
+    glUniform3fv(lightDirId,1, glm::value_ptr(direction)); // A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
@@ -182,8 +189,8 @@ void GraphicEngine::initShaderPrograms()
 
 void GraphicEngine::reset()
 {
-  //Utiliser un iterator déclenche un bug hyper chelou (tente de détruire un deuxième
-  //pointeur vers la classe mère...)
+  //Utiliser un iterator dÃ©clenche un bug hyper chelou (tente de dÃ©truire un deuxiÃ¨me
+  //pointeur vers la classe mÃ¨re...)
   for (size_t i = 0; i < objects3D.size(); ++i)
   {
     delete objects3D[i];
@@ -201,6 +208,11 @@ void GraphicEngine::setCamera(Camera* newCamera)
 {
   delete currentCamera;
   currentCamera = newCamera;
+}
+
+void GraphicEngine::setLight(Light* newLight){
+    delete currentLight;
+    currentLight = newLight;
 }
 
 void GraphicEngine::useMenuProgram()
