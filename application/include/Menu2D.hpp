@@ -1,6 +1,7 @@
 #ifndef MENU2D_HPP
 #define MENU2D_HPP
 
+#include <string>
 #include <vector>
 #include "Button2D.hpp"
 
@@ -18,6 +19,9 @@ public:
 		{return tab2DMenu[positionToSelect];}
 	
 	static Menu2D* initialiseMainMenu();
+	static Menu2D* initialiseKartMenu(std::vector <std::string> kartsName);
+	static Menu2D* initialiseMapMenu();
+
 	void addButton(Button2D* buttonToAdd);
     void update();
 	void draw(const glimac::ShaderProgram& shaderProgram) const;

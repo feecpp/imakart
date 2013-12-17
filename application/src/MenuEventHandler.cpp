@@ -43,11 +43,12 @@ void MenuEventHandler::releaseRight() const
 void MenuEventHandler::pressEnter() const
 {
 	ButtonAction action = gameEngine.getMenuLogic().submitButton();
+	ButtonLogic* button = gameEngine.getMenuLogic().getButtonLogicSelected();
 
 	switch(action){
 		case PLAY:
 			std::cout << "Play pressed" << std::endl;
-			gameEngine.setState(IN_RACE);
+			gameEngine.setState(IN_MENU_KART);
 			break;
 
 		case OPTIONS:
@@ -57,7 +58,17 @@ void MenuEventHandler::pressEnter() const
 			break;
 
 		case EXIT:
-      gameEngine.activateExitFlag();
+     		gameEngine.activateExitFlag();
+			break;
+
+		case SELECT:			
+			gameEngine.getHangar().setPlayerKart(button->name);
+			gameEngine.getPlayer().setKart(gameEngine.getPlayerKart());
+
+			std::cout << "Kart player game engine : " << gameEngine.getPlayer().getKart().getName() << std::endl;
+			std::cout << "Kart player hangar : " << gameEngine.getPlayerKart().getName() << std::endl;
+
+			gameEngine.setState(IN_RACE);
 			break;
 
 		default:

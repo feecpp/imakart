@@ -4,13 +4,14 @@
 #include "Button2D.hpp"
 #include "InterfaceElement.hpp"
 #include "ButtonActionEnum.hpp"
+#include <string>
 
 class ButtonLogic : public InterfaceElement
 {
 public:
-	//const char* name; // name of the button
+	std::string name; // name of the button
 	
-	ButtonLogic(const char* name); // Create a logical button with no graphic representation
+	ButtonLogic(const std::string name); // Create a logical button with no graphic representation
 	~ButtonLogic();
 
 	void changeState();

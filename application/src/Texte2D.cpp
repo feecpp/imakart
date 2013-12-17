@@ -15,7 +15,7 @@ void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& 
   os << timer;
   std::string time = os.str();
   std::string text = "time: "+time;
-  std::cout << "text :" << text << std::endl;
+  //std::cout << "text :" << text << std::endl;
   unsigned int length = text.size();
 
   vertices.clear();

@@ -34,6 +34,23 @@ MenuLogic* MenuLogic::initialiseMainMenu(){
 	return mainMenu;
 }
 
+MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
+	MenuLogic* kartMenu = new MenuLogic;
+
+	for(unsigned int i = 0; i < kartsName.size(); ++i){
+		ButtonLogic* kart = new ButtonLogic(kartsName[i]);
+		kart->setAction(SELECT);
+		kartMenu->addButton(kart);
+	}
+
+	return kartMenu;
+}
+
+MenuLogic* MenuLogic::initialiseMapMenu(){
+	MenuLogic* mapMenu = new MenuLogic;
+	return mapMenu;
+}
+
 void MenuLogic::addButton(ButtonLogic* buttonToAdd){
 	tabButtonLogicMenu.push_back(buttonToAdd);
 	if(nbButtonInMenu == 0){

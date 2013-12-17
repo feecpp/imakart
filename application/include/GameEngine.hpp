@@ -45,6 +45,12 @@ public:
   Map& getMap() const;
   Chrono& getChrono() const;
 
+  const Hangar& getHangar() const
+    {return hangar;}
+
+  Hangar& getHangar()
+    {return hangar;}
+
   MenuLogic& getMenuLogic()
     {return menu;}
 

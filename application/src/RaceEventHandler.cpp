@@ -1,5 +1,6 @@
 #include "RaceEventHandler.hpp"
 #include "GameEngine.hpp"
+#include <iostream>
 
 RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine)

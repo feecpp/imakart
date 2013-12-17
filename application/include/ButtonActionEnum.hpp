@@ -6,7 +6,8 @@ enum ButtonAction
   PLAY,
   OPTIONS,
   CREDITS,
-  EXIT
+  EXIT,
+  SELECT
 };
 
 #endif
