@@ -124,6 +124,14 @@ void ShaderProgram::setUniform(GLint uniformIndex, const glm::vec3& vector) cons
 #endif
 }
 
+void ShaderProgram::setUniform(GLint uniformIndex, int a, const glm::vec3& vector) const
+{
+    glUniform3fv(uniformIndex, a, glm::value_ptr(vector));
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
+}
+
 void ShaderProgram::setUniform(GLint uniformIndex, float scalar) const
 {
   glUniform1f(uniformIndex,scalar);

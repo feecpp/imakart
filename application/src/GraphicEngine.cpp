@@ -100,17 +100,17 @@ void GraphicEngine::renderFrame()
   //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
-    //const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    //currentLight->updateLight(viewMatrix);
-    currentLight->updateLightDirection();
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    currentLight->updateLight(viewMatrix);
+    //currentLight->updateLightDirection();
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& position = currentLight->getLightPosition();
     const glm::vec3& intensity = currentLight->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightPosId = currentProgram->getUniformIndex("uLightPos");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
-    glUniform3fv(lightDirId,1,glm::value_ptr(direction));
-    glUniform3fv(lightPosId,1, glm::value_ptr(position));// A MODIFIER --> faire appel Ã  une fonction dans ShaderProgram
+    currentProgram->setUniform(lightDirId,1,direction);
+    currentProgram->setUniform(lightPosId,1, position);
     currentProgram->setUniform(lightIntensityId, intensity);
   }
 
