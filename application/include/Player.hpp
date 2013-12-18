@@ -13,8 +13,6 @@ public:
   const Kart& getKart() const;
   Kart& getKart();
 
-  void setKart(Kart& myNewKart);
-
   void moveForward() const;
   void moveBackward() const;
   void turnLeft() const;

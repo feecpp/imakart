@@ -28,7 +28,6 @@ public:
   }
 
 private:
-  Kart* playerKart;
   std::vector<std::string> findKartFiles();
   std::vector<std::string> kartNames;
   //En fait on pourrait juste stocker des Kart::Specifications
