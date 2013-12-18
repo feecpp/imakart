@@ -1,12 +1,17 @@
 #include "Light.hpp"
 
 Light::Light()
-  :direction(10.f,30.f,5.f),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
+  :direction(3.f,30.f,3.f),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
 {
 }
 
 Light::Light(glm::vec3 direction)
     :direction(direction),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
+{
+}
+
+Light::Light(glm::vec3 position, glm::vec3 intensity)
+    :direction(0.f,0.f,0.f),position(position),intensity(intensity)
 {
 }
 
@@ -27,6 +32,6 @@ void Light::updateLightDirection(){
 }
 
 void Light::updateLight(const glm::mat4 viewMatrix) {
-    direction = glm::vec3(viewMatrix * glm::vec4(10,30,5, 1));
+    direction = glm::vec3(viewMatrix * glm::vec4(3,30,3, 1));
     position = glm::vec3(viewMatrix * glm::vec4(1,1,1,1));
 }
