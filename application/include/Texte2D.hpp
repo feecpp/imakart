@@ -15,17 +15,22 @@ class Texte2D : public ObjectTexte
 {
 public:
   Texte2D();
-  void printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
+  Texte2D(std::string mText);
   ~Texte2D();
 
   void draw(const glimac::ShaderProgram& shaderProgram);
+  void setPosition(int x, int y, int size);
+
   void update();
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;
+
   glimac::LowLevelVBO vbo;
   glimac::VAO vao;
-  float timer;
+
+  std::string myText;
+
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
 };

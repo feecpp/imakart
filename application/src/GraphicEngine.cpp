@@ -33,7 +33,7 @@ GraphicEngine::~GraphicEngine()
 sf::RenderWindow& GraphicEngine::init()
 {
   (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
-
+  std::cout << "taille de la fenetre : " << settings.WINDOW_WIDTH << " : " <<  settings.WINDOW_HEIGHT << std::endl;
   sf::RenderWindow& myWindow = window;
 
   window.setFramerateLimit(settings.FPS);
@@ -45,7 +45,7 @@ sf::RenderWindow& GraphicEngine::init()
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
-  glClearColor(1.f, 1.f, 1.f, 1.f);
+  glClearColor(0.7f, 0.7f, 0.7f, 1.7f);
   
   //Initialisation des shader programs
   initShaderPrograms();
@@ -141,7 +141,7 @@ void GraphicEngine::renderFrame()
   }
 
   //Dessin des objets Texte
-  if (currentProgram == raceProgram){
+    glimac::ShaderProgram* lastProgram = currentProgram;
     useTexteProgram();
     std::vector<ObjectTexte* >::iterator oneObjectTexte;
     for (oneObjectTexte = objectsTexte.begin(); oneObjectTexte != objectsTexte.end(); ++oneObjectTexte)
@@ -150,8 +150,14 @@ void GraphicEngine::renderFrame()
       //Attention : le vertex shader doit contenir les bonnes uniforms
       (*oneObjectTexte)->draw(*currentProgram);
     }
-    useRaceProgram();
-  }
+    
+
+    if (lastProgram == raceProgram){
+        useRaceProgram();
+    }
+    else if(lastProgram == menuProgram){
+        useMenuProgram();
+    }
 
 }
 
@@ -211,8 +217,11 @@ void GraphicEngine::reset()
   {
     delete objects2D[i];
   }
+
+  objectsTexte.erase(objectsTexte.begin(), objectsTexte.end()); //J'enleve juste les valeurs, le delete du text se fait dans les boutons 
   objects3D.erase(objects3D.begin(), objects3D.end());
   objects2D.erase(objects2D.begin(), objects2D.end());
+
 }
 
 void GraphicEngine::setCamera(Camera* newCamera)

@@ -9,10 +9,10 @@ Menu2D* Menu2D::initialiseMainMenu(){
 	
 	Menu2D* mainMenu = new Menu2D;
 	
-	Button2D* jouer = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/jouer.png", "textures/jouerSelect.png");
-	Button2D* options = new Button2D(-0.3, 0.0, 0.6, 0.2, "textures/options.png", "textures/optionsSelect.png");
-	Button2D* credits = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/credits.png", "textures/creditsSelect.png");
-	Button2D* quitter = new Button2D(-0.3, -0.6, 0.6, 0.2, "textures/quitter.png", "textures/quitterSelect.png");
+	Button2D* jouer = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/jouer.png", "textures/jouerSelect.png", "jouer");
+	Button2D* options = new Button2D(-0.3, 0.0, 0.6, 0.2, "textures/options.png", "textures/optionsSelect.png", "options");
+	Button2D* credits = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/credits.png", "textures/creditsSelect.png", "credits");
+	Button2D* quitter = new Button2D(-0.3, -0.6, 0.6, 0.2, "textures/quitter.png", "textures/quitterSelect.png", "quitter");
 
 	mainMenu->addButton(jouer);
 	mainMenu->addButton(options);
@@ -29,7 +29,7 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		textures = textures + kartsName[i];
 		std::string texturesS = textures + "Selected.jpg";
 		textures = textures + ".jpg";
-		Button2D* kart = new Button2D(- 0.95 + i * 1, -0.5, 0.9, 0.9, textures, texturesS);
+		Button2D* kart = new Button2D(- 0.95 + i * 1, -0.5, 0.9, 0.9, textures, texturesS, kartsName[i]);
 		kartMenu->addButton(kart);
 	}
 

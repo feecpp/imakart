@@ -70,6 +70,7 @@ void ContextManager::setupMenuKartContext() const
 
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+    graphicEngine.addObjectTexte(menu2D->getTab2DMenu(i)->getObjTexte2D());
   }
 
   gameEngine.setMenu(menuLogic);
