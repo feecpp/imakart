@@ -6,7 +6,6 @@
 #include <string>
 #include "ShaderProgram.hpp"
 #include <map>
-#include <Texte2D.hpp>
 
 
 class Object3D;
@@ -14,6 +13,7 @@ class Object2D;
 class Camera;
 class Light;
 class Skybox;
+class ObjectTexte;
 
 /**
  * @brief Les options graphiques bas niveau
@@ -71,6 +71,9 @@ public:
   void addObject2D(Object2D* newObject2D)
     {objects2D.push_back(newObject2D);}
 
+  void addObjectTexte(ObjectTexte* newObjectTexte)
+    {objectsTexte.push_back(newObjectTexte);}
+
   /**
    * @brief setCamera dÃ©fini une nouvelle camÃ©ra
    * pour afficher la scÃ¨ne. Le GraphicEngine devient le propriÃƒÂ©taire
@@ -99,8 +102,6 @@ public:
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
-  Texte2D* chrono;
-
 private:
   void drawWorld();
   void drawInterface();
@@ -124,6 +125,7 @@ private:
   //GraphicSettings settings;
   std::vector<Object3D* > objects3D;
   std::vector<Object2D* > objects2D;
+  std::vector<ObjectTexte* > objectsTexte;
 
   sf::RenderWindow window;
   sf::Font font;

@@ -2,7 +2,7 @@
 #include "GameEngine.hpp"
 #include "GraphicEngine.hpp"
 #include "Menu2D.hpp"
-#include "Texte2D.hpp"
+#include "ChronoTexte.hpp"
 #include "KartCube.hpp"
 #include "Cube.hpp"
 #include "Light.hpp"
@@ -125,8 +125,9 @@ void ContextManager::setupRaceContext() const
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(map);
 
-  graphicEngine.chrono = new Texte2D();
-  graphicEngine.chrono->setModelToRepresent(gameEngine.getChrono());
+  ChronoTexte* chrono = new ChronoTexte();
+  chrono->setModelToRepresent(gameEngine.getChrono());
+  graphicEngine.addObjectTexte(chrono);
 }
 
 const EventHandler& ContextManager::getHandler() const

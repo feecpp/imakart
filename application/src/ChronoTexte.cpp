@@ -1,15 +1,15 @@
-#include "Texte2D.hpp"
+#include "ChronoTexte.hpp"
 #include <iostream>
 #include <sstream>
 
-Texte2D::Texte2D(){
+ChronoTexte::ChronoTexte(){
   texture = new glimac::Texture(GL_TEXTURE_2D);
   texture->loadTexture2D("textures/fontInversed.png");
   timer = 0.f;
   model = nullptr;
 }
 
-void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
+void ChronoTexte::printChronoTexte(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
 {
   std::ostringstream os;
   os << timer;
@@ -58,11 +58,11 @@ void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& 
   vao.unbind();
 }
 
-void Texte2D::draw(const glimac::ShaderProgram& shaderProgram){
-  printTexte2D(10, 570, 20, shaderProgram);
+void ChronoTexte::draw(const glimac::ShaderProgram& shaderProgram){
+  printChronoTexte(10, 570, 20, shaderProgram);
 }
 
-void Texte2D::setVBO(){
+void ChronoTexte::setVBO(){
 
   glimac::Vertex2DUV verticesForVBO[vertices.size()];
   for(unsigned int i=0; i< vertices.size(); ++i){
@@ -71,18 +71,18 @@ void Texte2D::setVBO(){
   vbo.setBufferData(verticesForVBO, sizeof(verticesForVBO), GL_STATIC_DRAW);
 }
 
-void Texte2D::setVAO(){
+void ChronoTexte::setVAO(){
   vao.enableVertexAttribArray(0);
   vao.enableVertexAttribArray(1);
   vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
   vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
-void Texte2D::update(){
+void ChronoTexte::update(){
   if(model != nullptr)
     timer = model->getTime();
 }
 
-Texte2D::~Texte2D(){
+ChronoTexte::~ChronoTexte(){
 
 }

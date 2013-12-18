@@ -1,5 +1,5 @@
-#ifndef Texte2D_HPP
-#define Texte2D_HPP
+#ifndef CHRONOTEXTE_HPP
+#define CHRONOTEXTE_HPP
 
 #include <vector>
 #include <string>
@@ -11,12 +11,12 @@
 #include "ObjectTexte.hpp"
 #include "InterfaceElement.hpp"
 
-class Texte2D : public ObjectTexte
+class ChronoTexte : public ObjectTexte
 {
 public:
-  Texte2D();
-  void printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
-  ~Texte2D();
+  ChronoTexte();
+  void printChronoTexte(int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
+  ~ChronoTexte();
 
   void draw(const glimac::ShaderProgram& shaderProgram);
   void update();
@@ -30,4 +30,4 @@ private:
   void setVAO(); //called in the constructor
 };
 
-#endif // Texte2D_HPP
+#endif // CHRONOTEXTE_HPP

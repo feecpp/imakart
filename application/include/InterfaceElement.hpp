@@ -16,6 +16,9 @@ public:
   const char* getName() const
 		{return name;}
 
+  virtual float getTime() const
+    {return 0;}
+
 protected:
   const char* name;
 };

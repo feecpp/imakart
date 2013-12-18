@@ -8,7 +8,7 @@ GameEngine::GameEngine()
   map = new Map();
   //Je pense que c'est très con de le mettre là, faut que je réfléchisse
   map->loadData("../../imakart/application/maps/carte1.map");
-  chrono = new Chrono();
+  chrono = new ChronoLogic();
 }
 
 void GameEngine::init()
@@ -74,7 +74,7 @@ Map& GameEngine::getMap() const
   return *map;
 }
 
-Chrono& GameEngine::getChrono() const
+ChronoLogic& GameEngine::getChrono() const
 {
   return *chrono;
 }

@@ -4,6 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Object3D.hpp"
 #include "Object2D.hpp"
+#include "ObjectTexte.hpp"
 #include <TextFile.hpp>
 #include "Camera.hpp"
 #include "Light.hpp"
@@ -139,11 +140,16 @@ void GraphicEngine::renderFrame()
     useRaceProgram();
   }
 
+  //Dessin des objets Texte
   if (currentProgram == raceProgram){
     useTexteProgram();
-    if(chrono->getModel() != nullptr)
-      chrono->update();
-    chrono->printTexte2D(10, 570, 20, *currentProgram);
+    std::vector<ObjectTexte* >::iterator oneObjectTexte;
+    for (oneObjectTexte = objectsTexte.begin(); oneObjectTexte != objectsTexte.end(); ++oneObjectTexte)
+    {
+      (*oneObjectTexte)->update();
+      //Attention : le vertex shader doit contenir les bonnes uniforms
+      (*oneObjectTexte)->draw(*currentProgram);
+    }
     useRaceProgram();
   }
 
