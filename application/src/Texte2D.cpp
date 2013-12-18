@@ -2,20 +2,27 @@
 #include <iostream>
 #include <sstream>
 
-Texte2D::Texte2D(){
+Texte2D::Texte2D():
+  myText("")
+{
   texture = new glimac::Texture(GL_TEXTURE_2D);
   texture->loadTexture2D("textures/fontInversed.png");
-  timer = 0.f;
   model = nullptr;
 }
 
-void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
+Texte2D::Texte2D(std::string mText):
+  myText(mText)
+{
+  texture = new glimac::Texture(GL_TEXTURE_2D);
+  texture->loadTexture2D("textures/fontInversed.png");
+  model = nullptr;
+}
+
+void Texte2D::setPosition(int x, int y, int size) //En pixel ...
 {
   std::ostringstream os;
-  os << timer;
-  std::string time = os.str();
-  std::string text = "time: "+time;
-  //std::cout << "text :" << text << std::endl;
+  os << myText;
+  std::string text = os.str();
   unsigned int length = text.size();
 
   vertices.clear();
@@ -25,7 +32,6 @@ void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& 
 
     float uv_x = (character%16)/16.0f;
     float uv_y = (character/16)/16.0f;
-
     glimac::Vertex2DUV up_left = glimac::Vertex2DUV(glm::vec2(x+i*size, y+size), glm::vec2(uv_x, 1.0f - uv_y));
     glimac::Vertex2DUV up_right = glimac::Vertex2DUV(glm::vec2(x+i*size+size, y+size), glm::vec2( uv_x+1.0f/16.0f, 1.0f - uv_y ));
     glimac::Vertex2DUV down_right = glimac::Vertex2DUV(glm::vec2(x+i*size+size, y), glm::vec2( uv_x+1.0f/16.0f, 1.0f - (uv_y + 1.0f/16.0f) ));
@@ -45,7 +51,11 @@ void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& 
   setVBO();
   setVAO();
 
-  //Dessin du texte
+
+}
+
+void Texte2D::draw(const glimac::ShaderProgram& shaderProgram){
+    //Dessin du texte
   vao.bind();
   GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
   shaderProgram.setUniform(Text2DUniform, 0);
@@ -56,10 +66,6 @@ void Texte2D::printTexte2D(int x, int y, int size, const glimac::ShaderProgram& 
   glDisable(GL_BLEND);
   texture->unbind();
   vao.unbind();
-}
-
-void Texte2D::draw(const glimac::ShaderProgram& shaderProgram){
-  printTexte2D(10, 570, 20, shaderProgram);
 }
 
 void Texte2D::setVBO(){
@@ -79,8 +85,6 @@ void Texte2D::setVAO(){
 }
 
 void Texte2D::update(){
-  if(model != nullptr)
-    timer = model->getTime();
 }
 
 Texte2D::~Texte2D(){

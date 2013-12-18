@@ -2,6 +2,7 @@
 #include <iostream>
 
 Button2D::Button2D()
+	:myText()
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,1));
@@ -12,7 +13,8 @@ Button2D::Button2D()
 	setVAO();
 }
 
-Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height, std::string pathTextureNoSelect, std::string pathTextureSelect)
+Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height, std::string pathTextureNoSelect, std::string pathTextureSelect, std::string nameOfButton)
+	:myText(nameOfButton)
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,1));
@@ -29,12 +31,15 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 
 	activTexture = tabTexture[0];
 
+	float n_x_bottom = x_bottom * 400.f + 400.f; //Pour mettre entre 0 et 800 (comme modifié apres dans le shader)
+	float n_y = (y_left - 0.1f) * 300.f + 300.f;
+	myText.setPosition(n_x_bottom, n_y, 20);
+
 	setVBO();
 	setVAO();
 }
 
 Button2D::~Button2D(){
-
 }
 
 const glimac::Vertex2DUV* Button2D::getVertices() const{
