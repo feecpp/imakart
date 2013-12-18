@@ -8,7 +8,8 @@ in vec3 Kd; //--> coef reflection diffuse du materiau de l'objet
 in vec3 Ks; //--> coef reflection glossy du materiau de l'objet
 in float shine; //--> controlle la taille de la "tache" de brillance (en fonction du materiau de l'objet)
 
-uniform mat4 model;
+
+uniform mat4 model = mat4(1);
 /////// EN RAPPORT AVEC LA SOURCE DE LUMIERE ////////
 uniform vec3 uLightDir;
 uniform vec3 uLightPos;
@@ -20,7 +21,7 @@ out vec4 oFragColor;
 
 //Calcul de la luminosite
 vec4 blinnPhong() {
-  vec3 wi = normalize(vec3(model*vec4(uLightDir,1)));//Vecteur qui pointe vers la lumière
+  vec3 wi = normalize(uLightDir);//Vecteur qui pointe vers la lumière
   vec3 w0 = normalize(-vPosition);//Vecteur qui pointe vers la camera
   vec3 halfVector = (w0+wi)*0.5f;
 

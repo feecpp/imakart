@@ -25,6 +25,7 @@ out vec3 Kd;
 out vec3 Ks;
 out float shine;
 
+
 void main() {
   //Coordonnées homogènes
   vec4 vertexPosition = vec4(iVertexPosition, 1);
