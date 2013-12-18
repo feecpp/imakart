@@ -108,6 +108,13 @@ void ContextManager::setupRaceContext() const
   Light* light = new Light();
   light->linkToPositionable(gameEngine.getPlayerKart());
 
+  //Gérer plusieurs lumières ponctuelles
+  std::vector<Light> lights;
+  lights.resize(3);
+  Light lightpon1; lights[0] = lightpon1;
+  Light lightpon2; lights[1] = lightpon2;
+  Light lightpon3; lights[2] = lightpon3;
+
   Map3D* map = new Map3D();
   map->setModelToRepresent(gameEngine.getMap());
 
