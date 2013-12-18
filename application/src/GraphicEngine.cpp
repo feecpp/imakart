@@ -100,8 +100,8 @@ void GraphicEngine::renderFrame()
   //Gestion de la lumiÃ¨re
   if (currentLight != nullptr)
   {
-    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    currentLight->updateLightDirection(viewMatrix);
+    //const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    //currentLight->updateLightDirection(viewMatrix);
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& position = currentLight->getLightPosition();
     const glm::vec3& intensity = currentLight->getLightIntensity();
