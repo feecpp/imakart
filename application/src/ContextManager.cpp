@@ -106,6 +106,7 @@ void ContextManager::setupRaceContext() const
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
   Light* light = new Light();
+  light->linkToPositionable(gameEngine.getPlayerKart());
 
   Map3D* map = new Map3D();
   map->setModelToRepresent(gameEngine.getMap());

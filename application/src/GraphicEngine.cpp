@@ -101,7 +101,8 @@ void GraphicEngine::renderFrame()
   if (currentLight != nullptr)
   {
     //const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    //currentLight->updateLightDirection(viewMatrix);
+    //currentLight->updateLight(viewMatrix);
+    currentLight->updateLightDirection();
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& position = currentLight->getLightPosition();
     const glm::vec3& intensity = currentLight->getLightIntensity();

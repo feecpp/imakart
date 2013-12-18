@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+class Positionable;
+
 class Light {
 public:
     Light();
@@ -15,7 +17,11 @@ public:
     void updateLightDirection();
     void updateLight(const glm::mat4 viewMatrix);
 
+    void linkToPositionable(const Positionable& objectToFollow)
+      {this->objectToFollow = &objectToFollow;}
+
 private:
+  const Positionable* objectToFollow;
   glm::vec3 direction;
   glm::vec3 position;
   glm::vec3 intensity;
