@@ -95,7 +95,7 @@ public:
   }
 
 private:
-  const glm::vec3 BOUNDING_BOX_SIZE = glm::vec3(3.f);
+  glm::vec3 BOUNDING_BOX_SIZE;
 
   glm::vec3 position;
   BoundingBox boundingBox;
