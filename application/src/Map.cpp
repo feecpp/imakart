@@ -14,6 +14,10 @@ Map::Map() :
 {
 }
 
+Map::~Map()
+{
+}
+
 void Map::loadFromFile(const std::string& filePath)
 {
   std::ifstream mapStream(filePath);

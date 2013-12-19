@@ -11,6 +11,8 @@
 class Positionable
 {
 public:
+  virtual ~Positionable() {}
+
   virtual const glm::vec3& getPosition() const = 0;
   virtual const glm::quat& getOrientation() const = 0;
 };

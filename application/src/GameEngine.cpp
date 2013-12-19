@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false)
+  : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
 {
   chrono = new ChronoLogic();
 }
@@ -22,19 +22,26 @@ void GameEngine::init()
 
 void GameEngine::update()
 {
-  float elapsedTime = clock.restart().asSeconds();
+  float elapsedTime = clock.restart().asMilliseconds();
+  lag += elapsedTime;
+
   //Mettre à jour les objets de la simulation ici (en fonction du temps)
   //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
 
-  if(state != IN_RACE)
+  while (lag >= TURN_DURATION_IN_MILLIS)
   {
-    chrono->update(0.f);
-  }
-  else
-  {
-    //Le player n'existe pas si pas IN_RACE
-    getPlayerKart().update(elapsedTime);
-    chrono->update(elapsedTime);
+    if(state != IN_RACE)
+    {
+      chrono->update(0.f);
+    }
+    else
+    {
+      //Uniformiser la gestion du temps
+      getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
+      chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
+    }
+
+    lag -= TURN_DURATION_IN_MILLIS;
   }
 }
 

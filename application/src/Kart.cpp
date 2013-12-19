@@ -104,9 +104,12 @@ void Kart::update(float elapsedTimeInSecond)
 void Kart::moveForward() //enclenche la marche avant
 {
   //uniteOpenGL / seconde
-  if(moveState == BACKWARD){ //Si on est en marche arriere et qu'on accelerait alors il faut faire un arret brutale et accelerer
+  if(moveState == BACKWARD)
+  { //Si on est en marche arriere et qu'on accelerait alors il faut faire un arret brutale et accelerer
     brake();
-  }else{
+  }
+  else
+  {
     currentAcceleration = specifications.acceleration;
     accelerationState = ACCELERATE;
     moveState = FORWARD;
@@ -116,9 +119,12 @@ void Kart::moveForward() //enclenche la marche avant
 void Kart::moveBackward() //enclenche la marche arriere
 {
   //uniteOpenGL / seconde
-  if(moveState == FORWARD){ //Si on est en marche avant et qu'on accelerait alors il faut freiner
+  if(moveState == FORWARD)
+  { //Si on est en marche avant et qu'on accelerait alors il faut freiner
     brake();
-  }else{
+  }
+  else
+  {
     currentAcceleration = - specifications.acceleration;
     accelerationState = ACCELERATE;
     moveState = BACKWARD;
@@ -128,9 +134,12 @@ void Kart::moveBackward() //enclenche la marche arriere
 void Kart::turnLeft()
 {
   turnState = LEFT;
-  if(moveState == BACKWARD){
+  if(moveState == BACKWARD)
+  {
     currentAngularSpeed = -specifications.angularSpeed;
-  }else if(moveState == FORWARD){
+  }
+  else if(moveState == FORWARD)
+  {
     currentAngularSpeed = specifications.angularSpeed;
   }
 }
@@ -138,9 +147,12 @@ void Kart::turnLeft()
 void Kart::turnRight()
 {
   turnState = RIGHT;
-  if(moveState == BACKWARD){
+  if(moveState == BACKWARD)
+  {
     currentAngularSpeed = specifications.angularSpeed;
-  }else if(moveState == FORWARD){
+  }
+  else if(moveState == FORWARD)
+  {
     currentAngularSpeed = -specifications.angularSpeed;
   }
 }

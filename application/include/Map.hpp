@@ -31,6 +31,7 @@ public:
   static std::vector<std::string> findMapFiles();
 
   Map();
+  ~Map();
   void loadFromFile(const std::string& filePath);
 
   const std::string& getName() const

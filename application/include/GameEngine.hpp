@@ -58,6 +58,8 @@ public:
     {return menu;}
 
 private:
+  static const char TURN_DURATION_IN_MILLIS = 20;
+
   GameState state;
   MenuLogic menu;
   Hangar hangar;
@@ -66,6 +68,9 @@ private:
   sf::Clock clock;
   ChronoLogic* chrono;
   bool exitFlag;
+
+  ///Pour la gestion du temps
+  float lag;
 };
 
 #endif // GAMEENGINE_HPP
