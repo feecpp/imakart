@@ -66,7 +66,7 @@ std::vector<std::string> Hangar::findKartFiles(){
 
         std::string tmp = std::string(file->d_name); //nom + extension
         std::size_t found = tmp.find(".");
-        std::string extension = tmp.substr (found+1,found+1);
+        std::string extension = tmp.substr (found+1);
         std::string name = tmp.substr (0,found);
 
         if(extension == "kart"){

@@ -45,9 +45,6 @@ void ContextManager::updateContextIfNeeded()
 
 void ContextManager::setupMenuContext() const
 {
-  Map test;
-  test.loadFromFile("maps/Imakart_Map_test.txt");
-
   graphicEngine.reset();
   graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
@@ -110,9 +107,6 @@ void ContextManager::setupRaceContext() const
 
   Light* light = new Light();
 
-  Map3D* map = new Map3D();
-  map->setModelToRepresent(gameEngine.getMap());
-
   Mesh* minionMesh = new Mesh();
   try
   {
@@ -127,7 +121,6 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCamera(camera);
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
-  graphicEngine.addObject3D(map);
 
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
