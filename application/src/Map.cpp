@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <dirent.h>
 #ifndef WIN32
@@ -10,7 +12,7 @@
 #endif
 
 Map::Map() :
-  completed(false), position(0.f), orientation(glm::quat())
+  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f)))
 {
 }
 
@@ -132,18 +134,21 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
   //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par boundingbox...
   for (int i = 0; i < 2; ++i)
   {
+    glm::vec3 position, size;
     mapStream >> attribute;
     if (attribute == "location")
     {
-      mapStream >> bb.position.x;
-      mapStream >> bb.position.y;
-      mapStream >> bb.position.z;
+      mapStream >> position.x;
+      mapStream >> position.y;
+      mapStream >> position.z;
+      bb.setPosition(position);
     }
     else if (attribute == "size")
     {
-      mapStream >> bb.size.x;
-      mapStream >> bb.size.y;
-      mapStream >> bb.size.z;
+      mapStream >> size.x;
+      mapStream >> size.y;
+      mapStream >> size.z;
+      bb.setSize(size);
     }
   }
 

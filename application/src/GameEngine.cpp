@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
+  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
 {
   chrono = new ChronoLogic();
 }
@@ -11,7 +11,7 @@ GameEngine::GameEngine()
 GameEngine::~GameEngine()
 {
   delete player;
-  delete map;
+  delete currentMap;
   delete chrono;
 }
 
@@ -39,6 +39,8 @@ void GameEngine::update()
       //Uniformiser la gestion du temps
       getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
       chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
+      //Premiere gestion ultra basique de la physique des collisions
+      doPhysic();
     }
 
     lag -= TURN_DURATION_IN_MILLIS;
@@ -79,13 +81,34 @@ Kart& GameEngine::getPlayerKart() const
   return player->getKart();
 }
 
-Map& GameEngine::getMap() const
+void GameEngine::setCurrentMap(Map* newMap)
 {
-  assert(map != nullptr);
-  return *map;
+  delete currentMap;
+  currentMap = nullptr;
+  currentMap = newMap;
+}
+
+Map& GameEngine::getCurrentMap() const
+{
+  assert(currentMap != nullptr);
+  return *currentMap;
 }
 
 ChronoLogic& GameEngine::getChrono() const
 {
   return *chrono;
+}
+
+void GameEngine::doPhysic()
+{
+  assert(currentMap != nullptr);
+  auto boundingBoxes = currentMap->getBoudingBoxes();
+  for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
+  {
+    //Oui, c'est sale
+    if (getPlayerKart().getBoundingBox().collideWith(*it))
+    {
+      getPlayerKart().brake();
+    }
+  }
 }

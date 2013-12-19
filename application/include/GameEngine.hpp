@@ -44,8 +44,13 @@ public:
   //Le player n'existe pas (=nullptr) tant que cette fonction n'est pas appelee
   void setupPlayer(const std::string& playerKartName);
   Player& getPlayer() const;
+
   Kart& getPlayerKart() const;
-  Map& getMap() const;
+
+  ///Le GameEngine devient responsable de la memoire liee a ce pointeur
+  void setCurrentMap(Map* newMap);
+  Map& getCurrentMap() const;
+
   ChronoLogic& getChrono() const;
 
   const Hangar& getHangar() const
@@ -58,13 +63,14 @@ public:
     {return menu;}
 
 private:
+  void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
 
   GameState state;
   MenuLogic menu;
   Hangar hangar;
   Player* player;
-  Map* map;
+  Map* currentMap;
   sf::Clock clock;
   ChronoLogic* chrono;
   bool exitFlag;

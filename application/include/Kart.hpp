@@ -3,6 +3,7 @@
 
 #include "Positionable.hpp"
 #include <string>
+#include "BoundingBox.hpp"
 
 /**
  * @brief The Kart class
@@ -86,12 +87,18 @@ public:
   std::string getName() const
     {return name;}
 
+  const BoundingBox& getBoundingBox() const
+    {return boundingBox;}
+
   MoveState getMoveState() const{
     return moveState;
   }
 
 private:
+  const glm::vec3 BOUNDING_BOX_SIZE = glm::vec3(3.f);
+
   glm::vec3 position;
+  BoundingBox boundingBox;
   glm::quat orientation;
   float directionAngle;
   ///La vitesse actuelle en uniteOpenGL/seconde

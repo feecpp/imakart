@@ -24,6 +24,8 @@ public:
    */
   virtual void update();
 
+  void setSize(glm::vec3 newSize);
+
 private:
   const GLsizeiptr verticesSize() const
     {return 8 * sizeof(glimac::Vertex3D);}
@@ -39,6 +41,7 @@ private:
 
   glm::mat4 modelMatrix;
   glm::vec4 color;
+  glm::vec3 size;
 };
 
 #endif // KARTCUBE_HPP
