@@ -5,9 +5,6 @@
 GameEngine::GameEngine()
   : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false)
 {
-  map = new Map();
-  //Je pense que c'est très con de le mettre là, faut que je réfléchisse
-  map->loadData("../../imakart/application/maps/carte1.map");
   chrono = new ChronoLogic();
 }
 

@@ -45,6 +45,9 @@ void ContextManager::updateContextIfNeeded()
 
 void ContextManager::setupMenuContext() const
 {
+  Map test;
+  test.loadFromFile("maps/Imakart_Map_test.txt");
+
   graphicEngine.reset();
   graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
