@@ -28,6 +28,7 @@ GraphicEngine::~GraphicEngine()
   delete skyboxProgram;
   delete currentCamera;
   delete currentLight;
+  delete skybox;
 }
 
 sf::RenderWindow& GraphicEngine::init()

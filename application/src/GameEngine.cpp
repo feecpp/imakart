@@ -8,6 +8,13 @@ GameEngine::GameEngine()
   chrono = new ChronoLogic();
 }
 
+GameEngine::~GameEngine()
+{
+  delete player;
+  delete map;
+  delete chrono;
+}
+
 void GameEngine::init()
 {
   clock.restart();

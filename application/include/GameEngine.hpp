@@ -19,6 +19,7 @@ class GameEngine
 {
 public:
   GameEngine();
+  ~GameEngine();
 
   void init();
   void update();

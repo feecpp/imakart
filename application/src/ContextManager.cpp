@@ -11,6 +11,7 @@
 #include "Mesh.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "Camera.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),

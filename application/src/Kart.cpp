@@ -36,7 +36,8 @@ Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
 }
 
 Kart::Kart(const Kart& kartToCopy)
-  : position(kartToCopy.position), orientation(kartToCopy.orientation), speed(kartToCopy.speed), name(kartToCopy.name)
+  : position(kartToCopy.position), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
+    currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN), name(kartToCopy.name)
 {
   specifications = kartToCopy.specifications;
 }
