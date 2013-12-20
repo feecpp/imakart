@@ -215,6 +215,13 @@ void GraphicEngine::reset()
     delete objects2D[i];
   }
 
+  if(currentProgram == raceProgram){
+    for (size_t i = 0; i < objectsTexte.size(); ++i)
+    {
+      delete objectsTexte[i];
+    }
+  }
+
   objectsTexte.erase(objectsTexte.begin(), objectsTexte.end()); //J'enleve juste les valeurs, le delete du text se fait dans les boutons 
   objects3D.erase(objects3D.begin(), objects3D.end());
   objects2D.erase(objects2D.begin(), objects2D.end());

@@ -1,6 +1,4 @@
 #include "MenuLogic.hpp"
-#include "ButtonActionEnum.hpp"
-#include <iostream>
 
 MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){

@@ -6,6 +6,7 @@
 class Light {
 public:
     Light();
+    ~Light();
 
     const glm::vec3 getLighDirection() const;
     const glm::vec3 getLightPosition() const;

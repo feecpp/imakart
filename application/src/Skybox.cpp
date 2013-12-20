@@ -1,7 +1,6 @@
 #include "Skybox.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
 Skybox::Skybox()
 	: m_pCamera(nullptr), m_pCubemapTex(nullptr)
@@ -45,7 +44,10 @@ Skybox::Skybox()
 
 
 Skybox::~Skybox()
-{}
+{
+  m_pCamera = nullptr;
+  m_pCubemapTex = nullptr;
+}
 
 
 bool Skybox::init(const std::string& Directory,

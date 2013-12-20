@@ -3,7 +3,7 @@
 
 #include <string>
 #include "Vertex3D.hpp"
-#include <ShaderProgram.hpp>
+#include "ShaderProgram.hpp"
 #include "CubeMapTexture.hpp"
 #include "Camera.hpp"
 #include "VBO.hpp"
