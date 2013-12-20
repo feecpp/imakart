@@ -51,7 +51,7 @@ sf::RenderWindow& GraphicEngine::init()
   //Initialisation des shader programs
   initShaderPrograms();
 
-  skybox = new Skybox(currentCamera);
+  skybox = new Skybox();
   if(skybox->init("textures/new_skybox","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga")){
     std::cout << "Valeur gluint de la skybox : " << skybox->getCubeMapTexture()->getTextureObj() << std::endl;
   }else{
@@ -79,7 +79,7 @@ void GraphicEngine::renderFrame()
 {
   assert(currentProgram != nullptr);
   //assert(currentCamera != nullptr);
-
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //En attendant une meilleure gestion de la camÃ©ra dans le menu,
   //menu => camera == nullptr
   if (currentCamera != nullptr)
@@ -96,6 +96,13 @@ void GraphicEngine::renderFrame()
     currentProgram->setUniform(viewId, viewMatrix);
     currentProgram->setUniform(normalId, normalMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
+  }
+
+  if (skybox != nullptr && currentProgram == raceProgram)
+  {
+    useSkyboxProgram();
+    skybox->render(*currentProgram);
+    useRaceProgram();
   }
 
   //Gestion de la lumiÃ¨re
@@ -115,7 +122,6 @@ void GraphicEngine::renderFrame()
   }
 
   //Dessin des objets 2D
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(unsigned int i = 0 ; i < objects2D.size() ; ++i){
 	  objects2D[i]->update();
 
@@ -129,16 +135,6 @@ void GraphicEngine::renderFrame()
     (*one3DObject)->update();
     //Attention : le vertex shader doit contenir les bonnes uniforms
     (*one3DObject)->draw(*currentProgram);
-  }
-
-  if (skybox != nullptr && currentProgram == raceProgram)
-  {
-    useSkyboxProgram();
-    const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
-    GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
-    currentProgram->setUniform(viewProjectionId, viewProjection);
-    skybox->render(*currentProgram);
-    useRaceProgram();
   }
 
   //Dessin des objets Texte
@@ -217,6 +213,13 @@ void GraphicEngine::reset()
   for (size_t i = 0; i < objects2D.size(); ++i)
   {
     delete objects2D[i];
+  }
+
+  if(currentProgram == raceProgram){
+    for (size_t i = 0; i < objectsTexte.size(); ++i)
+    {
+      delete objectsTexte[i];
+    }
   }
 
   objectsTexte.erase(objectsTexte.begin(), objectsTexte.end()); //J'enleve juste les valeurs, le delete du text se fait dans les boutons 

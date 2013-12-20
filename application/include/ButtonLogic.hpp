@@ -1,7 +1,6 @@
 #ifndef BUTTONLOGIC_HPP
 #define BUTTONLOGIC_HPP
 
-#include "Button2D.hpp"
 #include "InterfaceElement.hpp"
 #include "ButtonActionEnum.hpp"
 #include <string>

@@ -14,7 +14,8 @@ out vec4 FragColor;
 out vec3 vPosition;
 
 void main() {
-  gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);
+  vec4 WVP_Pos = viewProjection * model * vec4(iVertexPosition, 1.0f);
+  gl_Position = WVP_Pos.xyww;
   FragColor = material.diffuse;
   vPosition = iVertexPosition;
 }

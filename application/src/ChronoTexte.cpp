@@ -84,5 +84,4 @@ void ChronoTexte::update(){
 }
 
 ChronoTexte::~ChronoTexte(){
-
 }

@@ -1,5 +1,4 @@
 #include "Button2D.hpp"
-#include <iostream>
 
 Button2D::Button2D()
 	:myText()

@@ -96,6 +96,7 @@ Map& GameEngine::getCurrentMap() const
 
 ChronoLogic& GameEngine::getChrono() const
 {
+  assert(chrono != nullptr);
   return *chrono;
 }
 

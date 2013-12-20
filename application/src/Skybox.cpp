@@ -1,9 +1,9 @@
 #include "Skybox.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
-Skybox::Skybox(const Camera* pCamera)
-	: m_pCamera(pCamera), m_pCubemapTex(nullptr)
+Skybox::Skybox()
+	: m_pCamera(nullptr), m_pCubemapTex(nullptr)
 	{
     //BACK
     vertices[0] = glimac::Vertex3DSimple(glm::vec3(-0.5f, 0.9f, -0.5f));
@@ -44,7 +44,10 @@ Skybox::Skybox(const Camera* pCamera)
 
 
 Skybox::~Skybox()
-{}
+{
+  m_pCamera = nullptr;
+  m_pCubemapTex = nullptr;
+}
 
 
 bool Skybox::init(const std::string& Directory,
@@ -84,27 +87,37 @@ void Skybox::setVAO(){
 void Skybox::render(const glimac::ShaderProgram& shaderProgram) const
 {   
 
-    glDepthMask (GL_FALSE);
+    assert(m_pCamera != nullptr);
 
-    glm::mat4 modelMatrix = glm::mat4(glm::vec4(100,0,0,0),glm::vec4(0,100,0,0),glm::vec4(0,0,100,0), glm::vec4(0,0,0,1));
+    GLint OldCullFaceMode;
+    glGetIntegerv(GL_CULL_FACE_MODE, &OldCullFaceMode);
+    GLint OldDepthFuncMode;
+    glGetIntegerv(GL_DEPTH_FUNC, &OldDepthFuncMode);
+
+    glCullFace(GL_FRONT);
+    glDepthFunc(GL_LEQUAL);
+
+    GLint viewProjectionId = shaderProgram.getUniformIndex("viewProjection");
     GLint modelIndex = shaderProgram.getUniformIndex("model");
-    GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
     GLint textureIndex = shaderProgram.getUniformIndex("cube_texture");
 
-    shaderProgram.setUniform(modelIndex, modelMatrix);
+    const glm::mat4& viewProjection = m_pCamera->getViewProjectionMatrix();
+
+    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.f), m_pCamera->getPosition());
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(5.f));
+
     m_pCubemapTex->Bind(GL_TEXTURE0);
+
+    shaderProgram.setUniform(modelIndex, modelMatrix);
+    shaderProgram.setUniform(viewProjectionId, viewProjection);
     shaderProgram.setUniform(textureIndex, 0);
     
     vao.bind();
     for(unsigned int i = 0; i < 24; i = i+4){
-      if(i == 12){
-        shaderProgram.setUniform(diffuseIndex, glm::vec4(0.6,0.6,0.6,1));
-      }else{
-        shaderProgram.setUniform(diffuseIndex, glm::vec4(0,0,1,1));
-      }
       glDrawArrays(GL_TRIANGLE_FAN, i, 4);
     }
     vao.unbind();
 
-    glDepthMask (GL_TRUE);
+    glCullFace(OldCullFaceMode); 
+    glDepthFunc(OldDepthFuncMode);
 }

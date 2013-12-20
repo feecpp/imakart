@@ -1,9 +1,10 @@
 #include "Light.hpp"
-
+#include <iostream>
 Light::Light()
   :direction(3.f,3.f,3.f),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
-{
-}
+{}
+
+Light::~Light(){}
 
 const glm::vec3 Light::getLighDirection() const {
   return direction;

@@ -102,6 +102,10 @@ public:
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
+  Skybox* getSkybox(){
+    return skybox;
+  }
+
 private:
   void drawWorld();
   void drawInterface();

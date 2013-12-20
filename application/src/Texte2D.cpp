@@ -18,6 +18,8 @@ Texte2D::Texte2D(std::string mText):
   model = nullptr;
 }
 
+Texte2D::~Texte2D(){}
+
 void Texte2D::setPosition(int x, int y, int size) //En pixel ...
 {
   std::ostringstream os;
@@ -85,8 +87,4 @@ void Texte2D::setVAO(){
 }
 
 void Texte2D::update(){
-}
-
-Texte2D::~Texte2D(){
-
 }
