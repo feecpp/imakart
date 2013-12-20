@@ -34,6 +34,7 @@ file(COPY application/data DESTINATION ./application)
 file(COPY application/fonts DESTINATION ./application)
 file(COPY application/textures DESTINATION ./application)
 file(COPY application/karts DESTINATION ./application)
+file(COPY application/maps DESTINATION ./application)
 
 #Windows : copie des DLL a cote de l'exe
 IF(WIN32)

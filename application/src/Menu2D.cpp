@@ -1,6 +1,4 @@
 #include "Menu2D.hpp"
-#include "MenuLogic.hpp"
-#include <iostream>
 
 Menu2D::Menu2D():
 	nbButtonInMenu(0){}

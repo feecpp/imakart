@@ -1,13 +1,10 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include "InterfaceElement.hpp"
 #include "Object2D.hpp"
 #include "Texte2D.hpp"
 #include "VBO.hpp"
 #include "VAO.hpp"
-#include "Vertex2DRGB.hpp"
-#include "Texture.hpp"
 
 #include <string>
 

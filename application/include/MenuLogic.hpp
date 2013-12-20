@@ -1,12 +1,9 @@
 #ifndef MENULOGIC_HPP
 #define MENULOGIC_HPP
 
-#include <string>
 #include <vector>
-#include "ButtonLogic.hpp" 
-
-class MenuEventHandler;
-class InterfaceElement;
+#include "ButtonActionEnum.hpp"
+#include "ButtonLogic.hpp"
 
 class MenuLogic : public InterfaceElement
 {

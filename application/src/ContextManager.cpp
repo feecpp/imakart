@@ -4,6 +4,7 @@
 #include "Menu2D.hpp"
 #include "ChronoTexte.hpp"
 #include "KartCube.hpp"
+#include "Skybox.hpp"
 #include "Cube.hpp"
 #include "Light.hpp"
 #include "Kart.hpp"
@@ -11,6 +12,7 @@
 #include "Mesh.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "Camera.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -98,8 +100,6 @@ void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
   graphicEngine.useRaceProgram();
-  //KartCube* cube = new KartCube();
-  //cube->setModelToRepresent(gameEngine.getPlayerKart());
 
   const GraphicSettings& settings = graphicEngine.getSettings();
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
@@ -115,9 +115,35 @@ void ContextManager::setupRaceContext() const
   Light lightpon2; lights[1] = lightpon2;
   Light lightpon3; lights[2] = lightpon3;
 
-  Map3D* map = new Map3D();
-  map->setModelToRepresent(gameEngine.getMap());
+  //-------------Chargement relatifs a la map
+  Map* map = new Map();
+  //Plus tard à remplacer par le choix dans le menu
+  try
+  {
+    map->loadFromFile("maps/Imakart_Map_test.txt");
+  }
+  catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  gameEngine.setCurrentMap(map);
 
+  /*
+  Mesh* mapMesh = new Mesh();
+  try
+  {
+    mapMesh->loadFromFile("data/Imakart_Map_test.dae");
+  }
+  catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  mapMesh->setModelToRepresent(*map);
+  */
+
+  //---------Chargements relatifs au Kart
   Mesh* minionMesh = new Mesh();
   try
   {
@@ -128,11 +154,22 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
+
   //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
-  graphicEngine.addObject3D(map);
+  //graphicEngine.addObject3D(mapMesh);
+  graphicEngine.getSkybox()->setCamera(camera);
+
+  //Vieux truc dégueu pour voir les bounding boxes sous forme de cube
+  for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
+  {
+    KartCube* visibleBB = new KartCube();
+    visibleBB->setSize(it->getSize());
+    visibleBB->setModelToRepresent(*it);
+    graphicEngine.addObject3D(visibleBB);
+  }
 
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());

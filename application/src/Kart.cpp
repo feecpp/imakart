@@ -8,13 +8,13 @@
 /////// Site qui a l'air pratique pour la physique : http://www.formules-physique.com/categorie/687 //////////////
 
 Kart::Kart()
-    : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+  : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.1f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN), name("standard")
 {
 }
 
 Kart::Kart(std::string kartName)
-    : position(0.f, 0.1f, 0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+    : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.1f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN)
 {
   const std::string path = "karts/"+kartName+".kart";
@@ -31,12 +31,13 @@ Kart::Kart(std::string kartName)
  }
 
 Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
-  : position(position), orientation(orientation), speed(speed)
+  : position(position), boundingBox(position, BOUNDING_BOX_SIZE), orientation(orientation), speed(speed)
 {
 }
 
 Kart::Kart(const Kart& kartToCopy)
-  : position(kartToCopy.position), orientation(kartToCopy.orientation), speed(kartToCopy.speed), name(kartToCopy.name)
+  : position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
+    currentAngularSpeed(0.f), currentAcceleration(0.f), accelerationState(DO_NOT_MOVE), moveState(NONE), turnState(NOTURN), name(kartToCopy.name)
 {
   specifications = kartToCopy.specifications;
 }
@@ -98,14 +99,18 @@ void Kart::update(float elapsedTimeInSecond)
     }
   }
   position += direction * travelledDistance;//en uniteOGL/seconde
+  boundingBox.setPosition(position);
 }
 
 void Kart::moveForward() //enclenche la marche avant
 {
   //uniteOpenGL / seconde
-  if(moveState == BACKWARD){ //Si on est en marche arriere et qu'on accelerait alors il faut faire un arret brutale et accelerer
+  if(moveState == BACKWARD)
+  { //Si on est en marche arriere et qu'on accelerait alors il faut faire un arret brutale et accelerer
     brake();
-  }else{
+  }
+  else
+  {
     currentAcceleration = specifications.acceleration;
     accelerationState = ACCELERATE;
     moveState = FORWARD;
@@ -115,9 +120,12 @@ void Kart::moveForward() //enclenche la marche avant
 void Kart::moveBackward() //enclenche la marche arriere
 {
   //uniteOpenGL / seconde
-  if(moveState == FORWARD){ //Si on est en marche avant et qu'on accelerait alors il faut freiner
+  if(moveState == FORWARD)
+  { //Si on est en marche avant et qu'on accelerait alors il faut freiner
     brake();
-  }else{
+  }
+  else
+  {
     currentAcceleration = - specifications.acceleration;
     accelerationState = ACCELERATE;
     moveState = BACKWARD;
@@ -127,9 +135,12 @@ void Kart::moveBackward() //enclenche la marche arriere
 void Kart::turnLeft()
 {
   turnState = LEFT;
-  if(moveState == BACKWARD){
+  if(moveState == BACKWARD)
+  {
     currentAngularSpeed = -specifications.angularSpeed;
-  }else if(moveState == FORWARD){
+  }
+  else if(moveState == FORWARD)
+  {
     currentAngularSpeed = specifications.angularSpeed;
   }
 }
@@ -137,9 +148,12 @@ void Kart::turnLeft()
 void Kart::turnRight()
 {
   turnState = RIGHT;
-  if(moveState == BACKWARD){
+  if(moveState == BACKWARD)
+  {
     currentAngularSpeed = specifications.angularSpeed;
-  }else if(moveState == FORWARD){
+  }
+  else if(moveState == FORWARD)
+  {
     currentAngularSpeed = -specifications.angularSpeed;
   }
 }

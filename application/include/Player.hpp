@@ -1,8 +1,6 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "Camera.hpp"
-
 class Kart;
 
 class Player

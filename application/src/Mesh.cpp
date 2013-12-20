@@ -57,7 +57,7 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram, const glm::mat4 view
 
 void Mesh::update()
 {
-  modelMatrix = glm::scale(glm::mat4(1.f), glm::vec3(0.5f));
+  modelMatrix = glm::mat4(1.f);
   modelMatrix = glm::toMat4(model->getOrientation()) * modelMatrix;
   modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * modelMatrix;
 }

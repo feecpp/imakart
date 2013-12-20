@@ -3,12 +3,16 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), map(nullptr), chrono(nullptr), exitFlag(false)
+  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
 {
-  map = new Map();
-  //Je pense que c'est très con de le mettre là, faut que je réfléchisse
-  map->loadData("../../imakart/application/maps/carte1.map");
   chrono = new ChronoLogic();
+}
+
+GameEngine::~GameEngine()
+{
+  delete player;
+  delete currentMap;
+  delete chrono;
 }
 
 void GameEngine::init()
@@ -18,19 +22,28 @@ void GameEngine::init()
 
 void GameEngine::update()
 {
-  float elapsedTime = clock.restart().asSeconds();
+  float elapsedTime = clock.restart().asMilliseconds();
+  lag += elapsedTime;
+
   //Mettre à jour les objets de la simulation ici (en fonction du temps)
   //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
 
-  if(state != IN_RACE)
+  while (lag >= TURN_DURATION_IN_MILLIS)
   {
-    chrono->update(0.f);
-  }
-  else
-  {
-    //Le player n'existe pas si pas IN_RACE
-    getPlayerKart().update(elapsedTime);
-    chrono->update(elapsedTime);
+    if(state != IN_RACE)
+    {
+      chrono->update(0.f);
+    }
+    else
+    {
+      //Uniformiser la gestion du temps
+      getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
+      chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
+      //Premiere gestion ultra basique de la physique des collisions
+      doPhysic();
+    }
+
+    lag -= TURN_DURATION_IN_MILLIS;
   }
 }
 
@@ -68,13 +81,35 @@ Kart& GameEngine::getPlayerKart() const
   return player->getKart();
 }
 
-Map& GameEngine::getMap() const
+void GameEngine::setCurrentMap(Map* newMap)
 {
-  assert(map != nullptr);
-  return *map;
+  delete currentMap;
+  currentMap = nullptr;
+  currentMap = newMap;
+}
+
+Map& GameEngine::getCurrentMap() const
+{
+  assert(currentMap != nullptr);
+  return *currentMap;
 }
 
 ChronoLogic& GameEngine::getChrono() const
 {
+  assert(chrono != nullptr);
   return *chrono;
+}
+
+void GameEngine::doPhysic()
+{
+  assert(currentMap != nullptr);
+  auto boundingBoxes = currentMap->getBoudingBoxes();
+  for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
+  {
+    //Oui, c'est sale
+    if (getPlayerKart().getBoundingBox().collideWith(*it))
+    {
+      getPlayerKart().brake();
+    }
+  }
 }

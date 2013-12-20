@@ -121,6 +121,15 @@ def unregister():
 
 if __name__ == "__main__":
     register()
-
+    class myPanel(bpy.types.Panel):     # panel to display new property
+        bl_space_type = "VIEW_3D"       # show up in: 3d-window
+        bl_region_type = "UI"           # show up in: properties panel
+        bl_label = "My Panel"           # name of the new panel
+     
+        def draw(self, context):
+            # display value of "foo", of the active object
+            self.layout.prop(bpy.context.active_object, '["fileName"]')
+ 
+    bpy.utils.register_class(myPanel)   # register panel
     # test call
     #bpy.ops.export_imakart.game_logic('INVOKE_DEFAULT')

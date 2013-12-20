@@ -26,25 +26,25 @@ public:
   Mesh();
   virtual ~Mesh();
 
-  virtual void draw(const glimac::ShaderProgram& shaderProgram) const;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram, const glm::mat4 viewMatrix) const;
   virtual void update();
 
   /**
    * @brief loadFromFile charge un fichier 3D dans le Mesh et l'envoie directement
    * a la carte graphique.
    * Accepte tous les formats geres par assimp.
-   * @param filePath chemin d'accès au fichier (relatif �  l'emplacement
+   * @param filePath chemin d'accÃ¨s au fichier (relatif Ã  l'emplacement
    * de l'executable)
    */
   void loadFromFile(const std::string& filePath);
 
 private:
-  /* Implémentation basique :
-   * pour un VBO �  l'indice 'i' correspond un VAO et un material �  l'indice 'i'.
+  /* ImplÃ©mentation basique :
+   * pour un VBO Ã  l'indice 'i' correspond un VAO et un material Ã  l'indice 'i'.
    * A voir plus tard si faut pas faire un truc plus proche, pour l'instant je me suis
-   * concentré sur le résultat...
+   * concentrÃ© sur le rÃ©sultat...
    * Utilisation des pointeurs parce que l'allocation des VBO/VAO est chiante
-   * �  gérer.
+   * Ã  gÃ©rer.
    */
   std::vector<glimac::LowLevelVBO* > meshVBOs;
   std::vector<glimac::VAO *> meshVAOs;

@@ -2,92 +2,87 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+
+#include <dirent.h>
+#ifndef WIN32
+  #include <sys/types.h>
+#endif
 
 Map::Map() :
-    width(0), height(0), altitude(0), completed(false) {
+  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f)))
+{
 }
 
-void Map::loadData(const char* path){
+Map::~Map()
+{
+}
 
-    std::ifstream fichier(path);  // File opened
-    if(fichier)
+void Map::loadFromFile(const std::string& filePath)
+{
+  std::ifstream mapStream(filePath);
+  if (!mapStream.good())
+  {
+    throw std::runtime_error("Impossible de charger le fichier de description de circuit " + filePath);
+  }
+
+  //Jouons avec string
+  name = filePath.substr(filePath.find_last_of('/') + 1, filePath.find_last_of('.') - filePath.find_last_of('/') - 1);
+
+  std::string currentWord;
+  while (mapStream >> currentWord)
+  {
+    if (currentWord == "Checkpoint")
     {
-        //Read the first line : name of the map
-        getline(fichier, this->name);
-
-        //Get the width
-        std::string keyword;
-        fichier >> keyword;
-        if(keyword=="width"){
-            fichier >> this->width;
-        }
-
-        //Get the height
-        fichier >> keyword;
-        if(keyword=="height"){
-            fichier >> this->height;
-        }
-
-        //Get the altitude
-        fichier >> keyword;
-        if(keyword=="altitude"){
-            fichier >> this->altitude;
-        }
-
-        //Set the checkpoints in the map
-        fichier >> keyword;
-        glm::vec3 point;
-        int i=0;
-        while(keyword=="Checkpoint"){
-            fichier >> point.x;
-            fichier >> point.y;
-            fichier >> point.z;
-            Checkpoint checkpoint(point, 4, 2, 1);
-            this->checkpoints.push_back(checkpoint);
-            fichier >> keyword;
-            i++;
-        }
-        this->start = this->checkpoints[0];
-        this->end = this->checkpoints[this->checkpoints.size()-1];
-
-        fichier.close();
+      loadCheckpoint(mapStream);
     }
-    else{
-        std::cerr << "Impossible d'ouvrir le fichier !" << std::endl;
+    else if (currentWord == "Item")
+    {
+      loadItem(mapStream);
+    }
+    else if (currentWord == "BoundingBox")
+    {
+      loadBoundingBox(mapStream);
+    }
+    else if (currentWord == "FrictionArea")
+    {
+      loadFrictionArea(mapStream);
+    }
+  }
+
+  mapStream.close();
+}
+
+std::vector<std::string> Map::findMapFiles()
+{
+    std::vector<std::string> fileNames;
+
+    //Ouverture du répertoire des maps
+    DIR* mapsDir = NULL;
+    mapsDir = opendir("maps");
+    if (mapsDir == NULL){
+        std::cout << "Erreur - impossible d'accéder au répertoire des Karts" << std::endl;
     }
 
-}
+    //tous les fichiers du répertoire sont parcourus
+    struct dirent* file = NULL;
+    std::cout << "" << std::endl;
+    while ((file = readdir(mapsDir)) != NULL){
 
-int Map::getWidth(){
-    return this->width;
-}
+        std::string tmp = std::string(file->d_name); //nom + extension
+        std::size_t found = tmp.find(".");
+        std::string extension = tmp.substr (found+1);
+        std::string name = tmp.substr (0,found);
 
-int Map::getHeight(){
-    return this->height;
-}
+        if(extension == "txt"){//L'extension va ptete changer
+            fileNames.push_back(name);
+        }
+    }
 
-int Map::getAltitude(){
-    return this->altitude;
-}
-
-std::string Map::getName(){
-    return this->name;
-}
-
-std::vector<Checkpoint> Map::getCheckpoints(){
-    return this->checkpoints;
-}
-
-Checkpoint Map::getStart(){
-    return this->start;
-}
-
-Checkpoint Map::getEnd(){
-    return this->end;
-}
-
-bool Map::isCompleted(){
-   return this->completed;
+    closedir(mapsDir);
+    return fileNames;
 }
 
 const glm::vec3& Map::getPosition() const
@@ -95,4 +90,120 @@ const glm::vec3& Map::getPosition() const
 
 const glm::quat& Map::getOrientation() const
 {return orientation;}
+
+void Map::loadCheckpoint(std::ifstream& mapStream)
+{
+  assert(mapStream);
+
+  Checkpoint checkpoint;
+
+  std::string attribute;
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+
+  //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par checkpoint...
+  for (int i = 0; i < 2; ++i)
+  {
+    mapStream >> attribute;
+    if (attribute == "location")
+    {
+      mapStream >> checkpoint.position.x;
+      mapStream >> checkpoint.position.y;
+      mapStream >> checkpoint.position.z;
+    }
+    else if (attribute == "radius")
+    {
+      mapStream >> checkpoint.radius;
+    }
+  }
+  checkpoints.push_back(checkpoint);
+}
+
+void Map::loadBoundingBox(std::ifstream& mapStream)
+{
+  assert(mapStream);
+
+  BoundingBox bb;
+  std::string attribute;
+
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+
+  //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par boundingbox...
+  for (int i = 0; i < 2; ++i)
+  {
+    glm::vec3 position, size;
+    mapStream >> attribute;
+    if (attribute == "location")
+    {
+      mapStream >> position.x;
+      mapStream >> position.y;
+      mapStream >> position.z;
+      bb.setPosition(position);
+    }
+    else if (attribute == "size")
+    {
+      mapStream >> size.x;
+      mapStream >> size.y;
+      mapStream >> size.z;
+      bb.setSize(size);
+    }
+  }
+
+  boundingBoxes.push_back(bb);
+}
+
+void Map::loadItem(std::ifstream& mapStream)
+{
+  assert(mapStream);
+
+  glm::vec3 itemPosition;
+
+  std::string attribute;
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+  mapStream >> attribute; //je sais que c'est forcement "location"
+
+  mapStream >> itemPosition.x;
+  mapStream >> itemPosition.y;
+  mapStream >> itemPosition.z;
+
+  itemsPositions.push_back(itemPosition);
+}
+
+void Map::loadFrictionArea(std::ifstream& mapStream)
+{
+  assert(mapStream);
+  //Commente tant que FrictionArea est pas défini
+
+  FrictionArea area;
+  std::string attribute;
+
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+
+  //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par frictionArea...
+  for (int i = 0; i < 2; ++i)
+  {
+    mapStream >> attribute;
+    if (attribute == "location")
+    {
+      mapStream >> area.position.x;
+      mapStream >> area.position.y;
+      mapStream >> area.position.z;
+    }
+    else if (attribute == "size")
+    {
+      mapStream >> area.size.x;
+      mapStream >> area.size.y;
+      mapStream >> area.size.z;
+    }
+  }
+
+  frictionAreas.push_back(area);
+}
 

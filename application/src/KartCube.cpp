@@ -8,6 +8,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 KartCube::KartCube()
+  : size(1.f)
 {
   vertices[0].position = glm::vec3(-0.5f, -0.5f, 0.5f);
   vertices[1].position = glm::vec3(0.5f, -0.5f, 0.5f);
@@ -46,6 +47,12 @@ void KartCube::draw(const glimac::ShaderProgram& shaderProgram) const
 
 void KartCube::update()
 {
-  color = glm::vec4(1.f);
-  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * glm::toMat4(model->getOrientation());
+  modelMatrix = glm::scale(glm::mat4(1.f), size);
+  modelMatrix = glm::toMat4(model->getOrientation()) * modelMatrix;
+  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * modelMatrix;
+}
+
+void KartCube::setSize(glm::vec3 newSize)
+{
+  size = newSize;
 }

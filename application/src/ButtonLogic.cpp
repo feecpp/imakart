@@ -1,5 +1,4 @@
 #include "ButtonLogic.hpp"
-#include <iostream>
 
 ButtonLogic::ButtonLogic(const std::string name):
 	selected(false){

@@ -5,8 +5,6 @@
 #include <vector>
 #include "Button2D.hpp"
 
-class MenuEventHandler;
-
 class Menu2D: public Object2D
 {
 public:
