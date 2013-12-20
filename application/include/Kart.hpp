@@ -5,6 +5,17 @@
 #include <string>
 #include "BoundingBox.hpp"
 
+class KartState;
+class ForwardAcceleration;
+class BackwardAcceleration;
+class ForwardDeceleration;
+class BackwardDeceleration;
+class ForwardMaxSpeedReached;
+class BackwardMaxSpeedReached;
+class Acceleration;
+class Deceleration;
+class NoMove;
+
 /**
  * @brief The Kart class
  * Gere le deplacement du Kart d'un point de vue physique.
@@ -17,31 +28,6 @@
 class Kart : public Positionable
 {
 public:
-
-  //Indique si le Kart est actuellement en phase d'acceleration ou de deceleration
-  enum AccelerationState
-  {
-    ACCELERATE,
-    DECELERATE,
-    BRAKE,
-    MAX_SPEED_REACHED,
-    DO_NOT_MOVE
-  };
-
-  //Indique si le kart est en marche arrière ou nom 
-  enum MoveState
-  {
-    FORWARD,
-    BACKWARD,
-    NONE
-  };
-
-  enum TurnState
-  {
-    LEFT,
-    RIGHT,
-    NOTURN
-  };
 
   //Structure qui empacte les caractéristiques du Kart
   struct Specifications
@@ -75,8 +61,7 @@ public:
   void moveBackward();
   void turnLeft();
   void turnRight();
-  void stopMoveForward();
-  void stopMoveBackward();
+  void stopMove();
   void stopTurning();
   void brake();
   void drift();
@@ -90,11 +75,23 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
-  MoveState getMoveState() const{
-    return moveState;
-  }
 
 private:
+  //Ouais,c'est un peu sale, mais j'ai pas trouve plus simple pour l'instant
+  //On pourrait foutre des getters/setters mais ca veut dire que Kart devien OpenBar
+  friend class KartState;
+  friend class ForwardAcceleration;
+  friend class BackwardAcceleration;
+  friend class ForwardDeceleration;
+  friend class BackwardDeceleration;
+  friend class ForwardMaxSpeedReached;
+  friend class BackwardMaxSpeedReached;
+  friend class Acceleration;
+  friend class Deceleration;
+  friend class NoMove;
+
+  void setState(KartState* newState);
+
   glm::vec3 BOUNDING_BOX_SIZE;
 
   glm::vec3 position;
@@ -106,11 +103,17 @@ private:
   ///La vitesse angulaire actuelle en degres/seconde
   float currentAngularSpeed;
   float currentAcceleration;
-  AccelerationState accelerationState;
-  MoveState moveState;
-  TurnState turnState;
   Specifications specifications;
   std::string name;
+
+  KartState* forwardAccelerationState;
+  KartState* forwardDecelerationState;
+  KartState* forwardMaxSpeedReached;
+  KartState* backwardAccelerationState;
+  KartState* backwardDecelerationState;
+  KartState* backwardMaxSpeedReached;
+  KartState* noMoveState;
+  KartState* currentState;
 
 };
 
