@@ -8,9 +8,7 @@
 
 /////// Site qui a l'air pratique pour la physique : http://www.formules-physique.com/categorie/687 //////////////
 
-Kart::Kart()
-  : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.1f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), name("standard")
+void Kart::initStates()
 {
   forwardAccelerationState = new ForwardAcceleration(*this);
   forwardDecelerationState = new ForwardDeceleration(*this);
@@ -19,11 +17,19 @@ Kart::Kart()
   backwardDecelerationState = new BackwardDeceleration(*this);
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
+  bounceState = new Bounce(*this);
   currentState = noMoveState;
 }
 
+Kart::Kart()
+  : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 2.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), name("standard")
+{
+  initStates();
+}
+
 Kart::Kart(std::string kartName)
-    : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.1f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+    : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 2.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f)
 {
   const std::string path = "karts/"+kartName+".kart";
@@ -38,42 +44,20 @@ Kart::Kart(std::string kartName)
   specifications.maxSpeed = (float)(atoi(map["MaxSpeed"].c_str()));
   specifications.weight = atoi(map["Weight"].c_str());
 
-  forwardAccelerationState = new ForwardAcceleration(*this);
-  forwardDecelerationState = new ForwardDeceleration(*this);
-  forwardMaxSpeedReached = new ForwardMaxSpeedReached(*this);
-  backwardAccelerationState = new BackwardAcceleration(*this);
-  backwardDecelerationState = new BackwardDeceleration(*this);
-  backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
-  noMoveState = new NoMove(*this);
-  currentState = noMoveState;
+  initStates();
  }
 
 Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
   : position(position), boundingBox(position, BOUNDING_BOX_SIZE), orientation(orientation), speed(speed)
 {
-  forwardAccelerationState = new ForwardAcceleration(*this);
-  forwardDecelerationState = new ForwardDeceleration(*this);
-  forwardMaxSpeedReached = new ForwardMaxSpeedReached(*this);
-  backwardAccelerationState = new BackwardAcceleration(*this);
-  backwardDecelerationState = new BackwardDeceleration(*this);
-  backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
-  noMoveState = new NoMove(*this);
-  currentState = noMoveState;
+  initStates();
 }
 
 Kart::Kart(const Kart& kartToCopy)
   : position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
     currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name)
 {
-  specifications = kartToCopy.specifications;
-  forwardAccelerationState = new ForwardAcceleration(*this);
-  forwardDecelerationState = new ForwardDeceleration(*this);
-  forwardMaxSpeedReached = new ForwardMaxSpeedReached(*this);
-  backwardAccelerationState = new BackwardAcceleration(*this);
-  backwardDecelerationState = new BackwardDeceleration(*this);
-  backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
-  noMoveState = new NoMove(*this);
-  currentState = noMoveState;
+  initStates();
 }
 
 Kart::~Kart()
@@ -85,12 +69,14 @@ Kart::~Kart()
   delete backwardDecelerationState;
   delete backwardMaxSpeedReached;
   delete noMoveState;
+  delete bounceState;
   currentState = nullptr;
 }
 
 void Kart::update(float elapsedTimeInSecond)
 {
   currentState->update(elapsedTimeInSecond);
+  boundingBox.setPosition(position);
 }
 
 void Kart::moveForward() //enclenche la marche avant
@@ -132,6 +118,11 @@ void Kart::brake()
 void Kart::drift() //Pas encore géré
 {
   currentState->drift();
+}
+
+void Kart::bounce()
+{
+  setState(bounceState);
 }
 
 const glm::vec3& Kart::getPosition() const

@@ -225,7 +225,6 @@ public:
     if (abs(kart.speed - 0.f) <= 0.000001f || supposedNewSpeed / kart.speed < 0.f)
     {
       kart.setState(kart.noMoveState);
-      kart.speed = 0.f;
     }
     else
     {
@@ -336,7 +335,12 @@ public:
   NoMove(Kart& kart)
     : KartState(kart) {}
 
-  virtual void start() {}
+  virtual void start()
+  {
+    kart.speed = 0.f;
+    kart.currentAcceleration = 0.f;
+  }
+
   virtual void update(float elapsedTimeInSecond) {}
 
   virtual void moveForward()
@@ -354,6 +358,65 @@ public:
   virtual void stopMove() {}
   virtual void brake() {}
   virtual void drift() {}
+};
+
+class Bounce : public KartState
+{
+public:
+  Bounce(Kart& kart)
+    : KartState(kart), distanceToTravel(3.f), currentDistance(0.f), bouncing(false) {}
+
+  virtual void start()
+  {
+    //Si on est deja en train de bouncer on reinitialise pas
+    if (bouncing)
+      return;
+
+    currentDistance = 0.f;
+    distanceToTravel = log(abs(kart.speed)) - 0.5f;//au hasard
+    kart.speed = -kart.speed;
+    if (kart.speed > 0.f)
+    {
+      kart.currentAcceleration = 6.f;
+    }
+    else
+    {
+      kart.currentAcceleration = -6.f;
+    }
+    bouncing = true;
+  }
+
+  virtual void update(float elapsedTimeInSecond)
+  {
+    if (abs(currentDistance) >= distanceToTravel)
+    {
+      kart.setState(kart.noMoveState);
+      //Se remet a zero
+      bouncing = false;
+      return;
+    }
+
+    glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
+    float travelledDistance = kart.speed * elapsedTimeInSecond + kart.currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+    kart.speed = travelledDistance / elapsedTimeInSecond;
+    kart.position += direction * travelledDistance;
+    currentDistance = currentDistance + travelledDistance;
+  }
+
+  virtual void moveBackward() {}
+  virtual void moveForward() {}
+  virtual void turnLeft() {}
+  virtual void turnRight() {}
+  virtual void stopMove() {}
+  virtual void brake() {}
+  virtual void drift() {}
+
+private:
+  ///La distance parcourue pendant un bounce
+  float distanceToTravel;
+  double currentDistance;
+  bool bouncing;
+
 };
 
 #endif // KARTSTATE_HPP

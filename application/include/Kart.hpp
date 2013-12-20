@@ -65,6 +65,7 @@ public:
   void stopTurning();
   void brake();
   void drift();
+  void bounce();
 
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
@@ -77,6 +78,7 @@ public:
 
 
 private:
+  void initStates();
   //Ouais,c'est un peu sale, mais j'ai pas trouve plus simple pour l'instant
   //On pourrait foutre des getters/setters mais ca veut dire que Kart devien OpenBar
   friend class KartState;
@@ -89,6 +91,7 @@ private:
   friend class Acceleration;
   friend class Deceleration;
   friend class NoMove;
+  friend class Bounce;
 
   void setState(KartState* newState);
 
@@ -113,6 +116,7 @@ private:
   KartState* backwardDecelerationState;
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
+  KartState* bounceState;
   KartState* currentState;
 
 };
