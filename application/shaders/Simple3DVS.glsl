@@ -34,7 +34,7 @@ void main() {
   //Calcul des valeurs de sortie
   FragColor = material.ambient + material.diffuse + material.specular;
   vNormal_vs = uNormal * vertexNormal;
-  vPosition = uView * model * vertexPosition;
+  vPosition =  uView * model * vertexPosition;
   Kd = material.diffuse;
   Ks = material.specular;
   shine = material.shininess;

@@ -31,7 +31,7 @@ vec4 blinnPhong() {
 }
 
 vec4 blinnPhongPonctuelle(){
-    vec4 wi = normalize(vec4(uLightDir,1.0)-vPosition);//Vecteur qui pointe vers la lumière
+    vec4 wi = normalize(vec4(uLightPos,1.0)-vPosition);//Vecteur qui pointe vers la lumière
     vec4 w0 = normalize(-vPosition);//Vecteur qui pointe vers la camera
     vec4 halfVector = (w0+wi)*0.5f;
     float d = length(wi);
@@ -44,5 +44,5 @@ vec4 blinnPhongPonctuelle(){
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = blinnPhong();
+  oFragColor = blinnPhongPonctuelle();
 }

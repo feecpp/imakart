@@ -2,7 +2,7 @@
 #include "Positionable.hpp"
 
 Light::Light()
-  :objectToFollow(nullptr),direction(3.f,30.f,3.f),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
+  :objectToFollow(nullptr),direction(3.f,30.f,3.f),position(1.f,1.f,1.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 
@@ -30,8 +30,8 @@ const glm::vec3 Light::getLightIntensity() const {
 
 void Light::updateLightDirection(){
     //La lumière suit le Kart, un peu comme le soleil nous "suit"
-    direction.x = objectToFollow->getPosition().x;
-    direction.z = objectToFollow->getPosition().z -15;
+    direction = objectToFollow->getPosition();
+
 }
 
 void Light::updateLight(const glm::mat4 viewMatrix) {
