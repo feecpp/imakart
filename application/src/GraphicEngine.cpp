@@ -87,13 +87,10 @@ void GraphicEngine::renderFrame()
     //Attention : le vertex shader doit contenir les bonnes uniforms
     currentCamera->updateViewProjectionMatrix();
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
-    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(currentCamera->getViewMatrix()));
     const glm::mat4& viewProjection = currentCamera->getViewProjectionMatrix();
     GLint viewId = currentProgram->getUniformIndex("uView");
     GLint viewProjectionId = currentProgram->getUniformIndex("viewProjection");
-    GLint normalId = currentProgram->getUniformIndex("uNormal");
     currentProgram->setUniform(viewId, viewMatrix);
-    currentProgram->setUniform(normalId, normalMatrix);
     currentProgram->setUniform(viewProjectionId, viewProjection);
   }
 
@@ -129,7 +126,7 @@ void GraphicEngine::renderFrame()
   {
     (*one3DObject)->update();
     //Attention : le vertex shader doit contenir les bonnes uniforms
-    (*one3DObject)->draw(*currentProgram);
+    (*one3DObject)->draw(*currentProgram, currentCamera->getViewMatrix());
   }
 
   if (skybox != nullptr && currentProgram == raceProgram)

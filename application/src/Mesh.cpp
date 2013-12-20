@@ -29,9 +29,12 @@ Mesh::~Mesh()
     delete vao;
 }
 
-void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
+void Mesh::draw(const glimac::ShaderProgram& shaderProgram, const glm::mat4 viewMatrix) const
 {
-
+  const glm::mat4 MV = viewMatrix * modelMatrix;
+  const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
+  GLint normalId = currentProgram->getUniformIndex("uNormal");
+  currentProgram->setUniform(normalId, normalMatrix);
   GLint modelIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelIndex, modelMatrix);
   GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
