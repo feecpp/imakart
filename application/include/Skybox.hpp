@@ -12,9 +12,13 @@
 
 class Skybox{
 public:
-	Skybox(const Camera* pCamera);
+	Skybox();
 
 	~Skybox();
+
+  void setCamera(const Camera* pCamera){
+    m_pCamera = pCamera;
+  }
     
   bool init(const std::string& Directory,
             const std::string& PosXFilename,

@@ -4,6 +4,7 @@
 #include "Menu2D.hpp"
 #include "ChronoTexte.hpp"
 #include "KartCube.hpp"
+#include "Skybox.hpp"
 #include "Cube.hpp"
 #include "Light.hpp"
 #include "Kart.hpp"
@@ -151,6 +152,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
   //graphicEngine.addObject3D(mapMesh);
+  graphicEngine.getSkybox()->setCamera(camera);
 
   //Vieux truc dégueu pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
