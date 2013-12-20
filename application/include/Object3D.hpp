@@ -2,6 +2,7 @@
 #define OBJECT3D_HPP
 
 #include <ShaderProgram.hpp>
+#include <glm/glm.hpp>
 
 class Positionable;
 
@@ -33,8 +34,12 @@ public:
   void setModelToRepresent(const Positionable& myModel)
     {model = &myModel;}
 
+  void setViewMatrix(const glm::mat4 view)
+    {viewMatrix = view;}
+
 protected:
   const Positionable* model;
+  glm::mat4 viewMatrix;
 
 };
 

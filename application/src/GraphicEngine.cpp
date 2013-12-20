@@ -133,7 +133,8 @@ void GraphicEngine::renderFrame()
   {
     (*one3DObject)->update();
     //Attention : le vertex shader doit contenir les bonnes uniforms
-    (*one3DObject)->draw(*currentProgram, currentCamera->getViewMatrix());
+    (*one3DObject)->setViewMatrix(currentCamera->getViewMatrix());
+    (*one3DObject)->draw(*currentProgram);
   }
 
   //Dessin des objets Texte

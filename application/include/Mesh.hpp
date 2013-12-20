@@ -26,7 +26,7 @@ public:
   Mesh();
   virtual ~Mesh();
 
-  virtual void draw(const glimac::ShaderProgram& shaderProgram, const glm::mat4 viewMatrix) const;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const;
   virtual void update();
 
   /**
