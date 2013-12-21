@@ -28,6 +28,7 @@ private:
   float timer;
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
+  std::string prepareText();
 };
 
 #endif // CHRONOTEXTE_HPP

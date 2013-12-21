@@ -7,7 +7,6 @@ class ChronoLogic : public InterfaceElement
 public:
   ChronoLogic();
   ~ChronoLogic();
-
   void update(float time);
   float getTime() const
   {return timer;}
@@ -15,6 +14,7 @@ public:
 
 private:
   float timer;
+  bool ready = false;
 };
 
 #endif // CHRONO_HPP

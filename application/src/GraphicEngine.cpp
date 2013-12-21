@@ -102,7 +102,7 @@ void GraphicEngine::renderFrame()
     useRaceProgram();
   }
 
-  //Gestion de la lumiÃ¨re
+  //Gestion de la lumière
   if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
