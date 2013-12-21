@@ -37,14 +37,9 @@ void Player::turnRight() const
   myKart.turnRight();
 }
 
-void Player::stopMoveForward() const
+void Player::stopMove() const
 {
-  myKart.stopMoveForward();
-}
-
-void Player::stopMoveBackward() const
-{
-  myKart.stopMoveBackward();
+  myKart.stopMove();
 }
 
 void Player::stopTurning() const

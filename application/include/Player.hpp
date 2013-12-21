@@ -15,8 +15,7 @@ public:
   void moveBackward() const;
   void turnLeft() const;
   void turnRight() const;
-  void stopMoveForward() const;
-  void stopMoveBackward() const;
+  void stopMove() const;
   void stopTurning() const;
   void brake() const;
   void drift() const;

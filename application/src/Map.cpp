@@ -11,6 +11,11 @@
   #include <sys/types.h>
 #endif
 
+/**
+ * @brief Map::Map
+ * Attention truc degueu :
+ * depuis Blender faut inverser y et z...
+ */
 Map::Map() :
   completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f)))
 {
@@ -109,8 +114,8 @@ void Map::loadCheckpoint(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> checkpoint.position.x;
-      mapStream >> checkpoint.position.y;
       mapStream >> checkpoint.position.z;
+      mapStream >> checkpoint.position.y;
     }
     else if (attribute == "radius")
     {
@@ -139,15 +144,15 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> position.x;
-      mapStream >> position.y;
       mapStream >> position.z;
+      mapStream >> position.y;
       bb.setPosition(position);
     }
     else if (attribute == "size")
     {
       mapStream >> size.x;
-      mapStream >> size.y;
       mapStream >> size.z;
+      mapStream >> size.y;
       bb.setSize(size);
     }
   }
@@ -168,8 +173,8 @@ void Map::loadItem(std::ifstream& mapStream)
   mapStream >> attribute; //je sais que c'est forcement "location"
 
   mapStream >> itemPosition.x;
-  mapStream >> itemPosition.y;
   mapStream >> itemPosition.z;
+  mapStream >> itemPosition.y;
 
   itemsPositions.push_back(itemPosition);
 }
@@ -193,14 +198,14 @@ void Map::loadFrictionArea(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> area.position.x;
-      mapStream >> area.position.y;
       mapStream >> area.position.z;
+      mapStream >> area.position.y;
     }
     else if (attribute == "size")
     {
       mapStream >> area.size.x;
-      mapStream >> area.size.y;
       mapStream >> area.size.z;
+      mapStream >> area.size.y;
     }
   }
 
