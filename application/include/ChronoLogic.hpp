@@ -14,7 +14,6 @@ public:
 
 private:
   float timer;
-  bool ready = false;
 };
 
 #endif // CHRONO_HPP
