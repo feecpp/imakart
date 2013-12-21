@@ -103,13 +103,14 @@ ChronoLogic& GameEngine::getChrono() const
 void GameEngine::doPhysic()
 {
   assert(currentMap != nullptr);
+  //Securite
   auto boundingBoxes = currentMap->getBoudingBoxes();
   for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
   {
     //Oui, c'est sale
     if (getPlayerKart().getBoundingBox().collideWith(*it))
     {
-      getPlayerKart().brake();
+      getPlayerKart().bounce();
     }
   }
 }
