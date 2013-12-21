@@ -375,14 +375,6 @@ public:
     currentDistance = 0.f;
     distanceToTravel = log(abs(kart.speed)) - 0.5f;//au hasard
     kart.speed = -kart.speed;
-    if (kart.speed > 0.f)
-    {
-      kart.currentAcceleration = 6.f;
-    }
-    else
-    {
-      kart.currentAcceleration = -6.f;
-    }
     bouncing = true;
   }
 
