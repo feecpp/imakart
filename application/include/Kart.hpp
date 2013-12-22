@@ -48,7 +48,7 @@ public:
   };
 
   Kart();
-  Kart(std::string);
+  Kart(std::string kartName);
   Kart(glm::vec3 position, glm::quat direction, float speed);
   explicit Kart(const Kart& kartToCopy);
   virtual ~Kart();
@@ -68,6 +68,7 @@ public:
   void bounce();
 
   virtual const glm::vec3& getPosition() const;
+  void setPosition(glm::vec3 pos);
   virtual const glm::quat& getOrientation() const;
 
   std::string getName() const

@@ -73,6 +73,10 @@ Kart::~Kart()
   currentState = nullptr;
 }
 
+void Kart:: setPosition(glm::vec3 pos){
+  position = pos;
+}
+
 void Kart::update(float elapsedTimeInSecond)
 {
   currentState->update(elapsedTimeInSecond);
