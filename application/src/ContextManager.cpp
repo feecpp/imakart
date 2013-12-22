@@ -110,8 +110,8 @@ void ContextManager::setupRaceContext() const
 
   //Gérer plusieurs lumières ponctuelles
   Light* lightpon1 = new Light(glm::vec3(30.f,0.f,5.f));
-  Light* lightpon2 = new Light();
-  Light* lightpon3 = new Light();
+  Light* lightpon2 = new Light(glm::vec3(0.f,0.f,0.f));
+  Light* lightpon3 = new Light(glm::vec3(0.f,0.f,-10.f));
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -156,7 +156,9 @@ void ContextManager::setupRaceContext() const
   //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
   graphicEngine.addLight(light);
-  graphicEngine.addLight(lightpon1);
+  //graphicEngine.addLight(lightpon1);
+  //graphicEngine.addLight(lightpon2);
+  //graphicEngine.addLight(lightpon3);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(mapMesh);
   graphicEngine.getSkybox()->setCamera(camera);
