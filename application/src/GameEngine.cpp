@@ -77,7 +77,7 @@ void GameEngine::setupPlayer(const std::string& playerKartName)
 void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
   for (unsigned int i=0; i<nbOpponents; ++i){
-    opponents.push_back(new Opponent(hangar.createKartInstanceByName("unicorn")));
+    opponents.push_back(new Opponent(hangar.createKartInstanceByName("Licorne")));
   }
 }
 

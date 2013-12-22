@@ -26,6 +26,7 @@ void MenuEventHandler::releaseDown() const
 
 void MenuEventHandler::pressLeft() const
 {	
+  gameEngine.getMenuLogic().previousButton();
 }
 void MenuEventHandler::releaseLeft() const
 {
@@ -33,7 +34,7 @@ void MenuEventHandler::releaseLeft() const
 
 void MenuEventHandler::pressRight() const
 {
-
+  gameEngine.getMenuLogic().nextButton();
 }
 void MenuEventHandler::releaseRight() const
 {
