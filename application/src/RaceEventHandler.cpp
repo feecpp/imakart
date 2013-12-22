@@ -55,7 +55,7 @@ void RaceEventHandler::releaseEnter() const
 
 void RaceEventHandler::pressSpace() const
 {
-  gameEngine.getPlayer().drift();
+  gameEngine.getPlayer().brake();
 }
 
 void RaceEventHandler::releaseSpace() const

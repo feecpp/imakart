@@ -129,7 +129,7 @@ void ContextManager::setupRaceContext() const
   }
   gameEngine.setCurrentMap(map);
 
-  /*
+
   Mesh* mapMesh = new Mesh();
   try
   {
@@ -141,7 +141,7 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   mapMesh->setModelToRepresent(*map);
-  */
+
 
   //---------Chargements relatifs au Kart
   Mesh* minionMesh = new Mesh();
@@ -159,10 +159,10 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCamera(camera);
   graphicEngine.setLight(light);
   graphicEngine.addObject3D(minionMesh);
-  //graphicEngine.addObject3D(mapMesh);
+  graphicEngine.addObject3D(mapMesh);
   graphicEngine.getSkybox()->setCamera(camera);
 
-  //Vieux truc dégueu pour voir les bounding boxes sous forme de cube
+  //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
