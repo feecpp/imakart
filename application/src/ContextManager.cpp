@@ -109,11 +109,9 @@ void ContextManager::setupRaceContext() const
   light->linkToPositionable(gameEngine.getPlayerKart());
 
   //Gérer plusieurs lumières ponctuelles
-  std::vector<Light> lights;
-  lights.resize(3);
-  Light lightpon1; lights[0] = lightpon1;
-  Light lightpon2; lights[1] = lightpon2;
-  Light lightpon3; lights[2] = lightpon3;
+  Light* lightpon1 = new Light(glm::vec3(30.f,0.f,5.f));
+  Light* lightpon2 = new Light();
+  Light* lightpon3 = new Light();
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -157,7 +155,8 @@ void ContextManager::setupRaceContext() const
 
   //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
-  graphicEngine.setLight(light);
+  graphicEngine.addLight(light);
+  graphicEngine.addLight(lightpon1);
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(mapMesh);
   graphicEngine.getSkybox()->setCamera(camera);

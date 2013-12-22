@@ -86,6 +86,8 @@ public:
    *setLight défini une nouvelle source de lumière
    */
   void setLight(Light* newLight);
+  void addLight(Light* newLight)
+      {lights.push_back(newLight);}
 
 
   /*
@@ -116,7 +118,9 @@ private:
 
   Camera* currentCamera;
 
-  Light* currentLight;
+  //Light* currentLight;
+  std::vector<Light*> lights;
+
   Skybox* skybox;
 
   //Avant de trouver une meilleure mÃƒÂ©thode...
