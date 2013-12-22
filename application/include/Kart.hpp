@@ -79,7 +79,7 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
-
+Specifications specifications;
 private:
   void initStates();
   //Ouais,c'est un peu sale, mais j'ai pas trouve plus simple pour l'instant
@@ -109,7 +109,7 @@ private:
   ///La vitesse angulaire actuelle en degres/seconde
   float currentAngularSpeed;
   float currentAcceleration;
-  Specifications specifications;
+
   std::string name;
 
   KartState* forwardAccelerationState;

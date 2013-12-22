@@ -172,9 +172,24 @@ void ContextManager::setupRaceContext() const
     graphicEngine.addObject3D(visibleBB);
   }
 
+  //Dessin d'un adversaire
+  Mesh* opponentMesh = new Mesh();
+  try
+  {
+    opponentMesh->loadFromFile("data/"+ gameEngine.getOpponentKart(0).getName() + ".dae");
+  }catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(0));
+  graphicEngine.addObject3D(opponentMesh);
+  gameEngine.getOpponent(0).startMovement();
+
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
   graphicEngine.addObjectTexte(chrono);
+
 }
 
 const EventHandler& ContextManager::getHandler() const

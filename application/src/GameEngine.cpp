@@ -6,6 +6,7 @@ GameEngine::GameEngine()
   : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
 {
   chrono = new ChronoLogic();
+  setupOpponents(1);
 }
 
 GameEngine::~GameEngine()
@@ -13,6 +14,11 @@ GameEngine::~GameEngine()
   delete player;
   delete currentMap;
   delete chrono;
+
+  for (unsigned int i = 0; i < opponents.size(); ++i)
+  {
+    delete opponents[i];
+  }
 }
 
 void GameEngine::init()
@@ -38,6 +44,7 @@ void GameEngine::update()
     {
       //Uniformiser la gestion du temps
       getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
+      getOpponentKart(0).update(TURN_DURATION_IN_MILLIS / 1000.f);
       chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
       //Premiere gestion ultra basique de la physique des collisions
       doPhysic();
@@ -67,6 +74,12 @@ void GameEngine::setupPlayer(const std::string& playerKartName)
   player = new Player(hangar.createKartInstanceByName(playerKartName));
 }
 
+void GameEngine::setupOpponents(unsigned int nbOpponents)
+{
+  for (unsigned int i=0; i<nbOpponents; ++i){
+    opponents.push_back(new Opponent(hangar.createKartInstanceByName("unicorn")));
+  }
+}
 
 Player& GameEngine::getPlayer() const
 {
@@ -75,10 +88,24 @@ Player& GameEngine::getPlayer() const
   return *player;
 }
 
+
+Opponent& GameEngine::getOpponent(unsigned int id) const
+{
+  //Pas mal de taff encore sur la gestion propre de la création du Player, des Karts...
+  assert(opponents[id] != nullptr);
+  return *(opponents[id]);
+}
+
 Kart& GameEngine::getPlayerKart() const
 {
   assert(player != nullptr);
   return player->getKart();
+}
+
+Kart& GameEngine::getOpponentKart(unsigned int id) const
+{
+  assert(opponents[id] != nullptr);
+  return opponents[id]->getKart();
 }
 
 void GameEngine::setCurrentMap(Map* newMap)
