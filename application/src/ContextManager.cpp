@@ -109,11 +109,9 @@ void ContextManager::setupRaceContext() const
   light->linkToPositionable(gameEngine.getPlayerKart());
 
   //Gérer plusieurs lumières ponctuelles
-  std::vector<Light> lights;
-  lights.resize(3);
-  Light lightpon1; lights[0] = lightpon1;
-  Light lightpon2; lights[1] = lightpon2;
-  Light lightpon3; lights[2] = lightpon3;
+  Light* lightpon1 = new Light(glm::vec3(30.f,0.f,5.f));
+  Light* lightpon2 = new Light(glm::vec3(0.f,0.f,0.f));
+  Light* lightpon3 = new Light(glm::vec3(0.f,0.f,-10.f));
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -129,7 +127,7 @@ void ContextManager::setupRaceContext() const
   }
   gameEngine.setCurrentMap(map);
 
-  /*
+
   Mesh* mapMesh = new Mesh();
   try
   {
@@ -141,7 +139,7 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   mapMesh->setModelToRepresent(*map);
-  */
+
 
   //---------Chargements relatifs au Kart
   Mesh* minionMesh = new Mesh();
@@ -157,12 +155,15 @@ void ContextManager::setupRaceContext() const
 
   //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
   graphicEngine.setCamera(camera);
-  graphicEngine.setLight(light);
+  graphicEngine.addLight(light);
+  //graphicEngine.addLight(lightpon1);
+  //graphicEngine.addLight(lightpon2);
+  //graphicEngine.addLight(lightpon3);
   graphicEngine.addObject3D(minionMesh);
-  //graphicEngine.addObject3D(mapMesh);
+  graphicEngine.addObject3D(mapMesh);
   graphicEngine.getSkybox()->setCamera(camera);
 
-  //Vieux truc dégueu pour voir les bounding boxes sous forme de cube
+  //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();

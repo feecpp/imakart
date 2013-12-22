@@ -6,12 +6,12 @@ Light::Light()
 {
 }
 
-Light::Light(glm::vec3 direction)
-    :objectToFollow(nullptr),direction(direction),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
+Light::Light(glm::vec3 direction) // Constructeur pour lumière directionnelle
+    :objectToFollow(nullptr),direction(direction),position(0.f,0.f,0.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 
-Light::Light(glm::vec3 position, glm::vec3 intensity)
+Light::Light(glm::vec3 position, glm::vec3 intensity) // Constructeur pour lumière ponctuelle
     :objectToFollow(nullptr),direction(0.f,0.f,0.f),position(position),intensity(intensity)
 {
 }

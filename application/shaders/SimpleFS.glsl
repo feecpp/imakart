@@ -44,5 +44,5 @@ vec4 blinnPhongPonctuelle(){
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = blinnPhongPonctuelle();
+  oFragColor = blinnPhong();
 }

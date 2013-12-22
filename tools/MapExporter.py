@@ -34,6 +34,7 @@ def isFrictionArea(object):
         return False
     return object.type == 'LATTICE' 
 
+# !!!!!!!!!! BLENDER INVERSE Y et Z et Z et dans l'autre sens !!!!!!!!!!
 def write_imakart_map(context, filepath, use_some_setting):
     print("Export Imakart map objects...")
     f = open(filepath, 'w', encoding='utf-8')
@@ -50,25 +51,30 @@ def write_imakart_map(context, filepath, use_some_setting):
     #On écrit les checkpoints...
     for checkpoint in checkpoints:
         f.write("Checkpoint %s\n" % checkpoint.name)
-        f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.y, checkpoint.location.z))
+        f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.z, -checkpoint.location.y))
         f.write("radius %f\n" % checkpoint.empty_draw_size)
         
     #Puis les Bounding boxes 
     for bbox in bounding_boxes:
+        #Hack : un cube de scale 1 fait deux unités sous Blender...donc on s'adapte
+        tmp_bb = bbox.copy()
+        tmp_bb.scale.x = 2 * bbox.scale.x
+        tmp_bb.scale.y = 2 * bbox.scale.y
+        tmp_bb.scale.z = 2 * bbox.scale.z
         f.write("BoundingBox %s\n" % bbox.name)
-        f.write("location %f %f %f\n" % (bbox.location.x, bbox.location.y, bbox.location.z))
-        f.write("size %f %f %f\n" % (bbox.scale.x, bbox.scale.y, bbox.scale.z))
+        f.write("location %f %f %f\n" % (bbox.location.x, bbox.location.z, -bbox.location.y))
+        f.write("size %f %f %f\n" % (tmp_bb.scale.x, tmp_bb.scale.z, tmp_bb.scale.y))
         
      #Puis les items 
     for item in items:
         f.write("Item %s\n" % item.name)
-        f.write("location %f %f %f\n" % (item.location.x, item.location.y, item.location.z))
+        f.write("location %f %f %f\n" % (item.location.x, item.location.z, -item.location.y))
         
     #Et enfin les zones de friction
     for area in friction_areas:
         f.write("FrictionArea %s\n" % area.name)
-        f.write("location %f %f %f\n" % (area.location.x, area.location.y, area.location.z))
-        f.write("size %f %f %f\n" % (area.scale.x, area.scale.y, area.scale.z))
+        f.write("location %f %f %f\n" % (area.location.x, area.location.z, -area.location.y))
+        f.write("size %f %f %f\n" % (area.scale.x, area.scale.z, area.scale.y))
         
     f.close()
     

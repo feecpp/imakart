@@ -13,7 +13,7 @@
 #include <SFML/OpenGL.hpp>
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), currentLight(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr), texte2DProgram(nullptr), skyboxProgram(nullptr)
+  : currentCamera(nullptr), skybox(nullptr), currentProgram(nullptr), menuProgram(nullptr), raceProgram(nullptr), texte2DProgram(nullptr), skyboxProgram(nullptr)
 {
 }
 
@@ -27,7 +27,7 @@ GraphicEngine::~GraphicEngine()
   delete texte2DProgram;
   delete skyboxProgram;
   delete currentCamera;
-  delete currentLight;
+  //delete currentLight;
   delete skybox;
 }
 
@@ -103,15 +103,30 @@ void GraphicEngine::renderFrame()
   }
 
   //Gestion de la lumière
-  if (currentLight != nullptr)
+  /*if (currentLight != nullptr)
   {
     const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
     //currentLight->updateLightDirection();
     currentLight->updateLight(viewMatrix);
-    std::cout<<"LightPos : " << currentLight->getLightPosition().x <<", "<< currentLight->getLightPosition().y<<", " << currentLight->getLightPosition().z <<std::endl;
     const glm::vec3& direction = currentLight->getLighDirection();
     const glm::vec3& position = currentLight->getLightPosition();
     const glm::vec3& intensity = currentLight->getLightIntensity();
+    GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
+    GLint lightPosId = currentProgram->getUniformIndex("uLightPos");
+    GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
+    currentProgram->setUniform(lightDirId,1,direction);
+    currentProgram->setUniform(lightPosId,1, position);
+    currentProgram->setUniform(lightIntensityId, intensity);
+  }*/
+  std::vector<Light*>::iterator oneLight;
+  for (oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
+  {
+    const glm::mat4& viewMatrix = currentCamera->getViewMatrix();
+    //(*oneLight)->updateLightDirection();
+    (*oneLight)->updateLight(viewMatrix);
+    const glm::vec3& direction = (*oneLight)->getLighDirection();
+    const glm::vec3& position = (*oneLight)->getLightPosition();
+    const glm::vec3& intensity = (*oneLight)->getLightIntensity();
     GLint lightDirId = currentProgram->getUniformIndex("uLightDir");
     GLint lightPosId = currentProgram->getUniformIndex("uLightPos");
     GLint lightIntensityId = currentProgram->getUniformIndex("uLi");
@@ -234,10 +249,10 @@ void GraphicEngine::setCamera(Camera* newCamera)
   currentCamera = newCamera;
 }
 
-void GraphicEngine::setLight(Light* newLight){
+/*void GraphicEngine::setLight(Light* newLight){
     delete currentLight;
     currentLight = newLight;
-}
+}*/
 
 void GraphicEngine::useMenuProgram()
 {

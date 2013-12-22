@@ -67,12 +67,7 @@ void Mesh::loadFromFile(const std::string& filePath)
   Assimp::Importer importer;
 
   const aiScene* scene = importer.ReadFile( filePath,
-         aiProcess_PreTransformVertices     |
-         aiProcess_Triangulate              |
-         aiProcess_JoinIdenticalVertices    |
-         aiProcess_GenNormals               |
-         aiProcess_OptimizeGraph            |
-         aiProcess_SortByPType              );
+         aiProcess_PreTransformVertices);
 
   if (!scene)
   {
