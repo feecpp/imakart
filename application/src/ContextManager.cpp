@@ -162,7 +162,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.addObject3D(minionMesh);
   graphicEngine.addObject3D(mapMesh);
   graphicEngine.getSkybox()->setCamera(camera);
-
+ 
   //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
