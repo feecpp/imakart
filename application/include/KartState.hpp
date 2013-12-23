@@ -26,6 +26,12 @@ public:
     kart.currentAngularSpeed = 0.f;
   }
 
+  //Implem par defaut
+  virtual void bounce()
+  {
+    kart.setState(kart.bounceState);
+  }
+
   virtual void brake() = 0;
   virtual void drift() = 0;
 
@@ -74,6 +80,7 @@ public:
   {
     kart.currentAcceleration = - kart.specifications.breakingCoefficient * kart.currentAcceleration;
   }
+
 };
 
 class ForwardAcceleration : public Acceleration
@@ -100,6 +107,7 @@ public:
 
   virtual void moveBackward()
   {
+    brake();
     kart.setState(kart.backwardAccelerationState);
   }
 
@@ -155,11 +163,12 @@ public:
 
   virtual void start()
   {
-    kart.currentAcceleration = -kart.specifications.acceleration;
+      kart.currentAcceleration = -kart.specifications.acceleration;
   }
 
   virtual void moveForward()
   {
+    brake();
     kart.setState(kart.forwardAccelerationState);
   }
 
@@ -260,6 +269,7 @@ public:
 
   virtual void moveBackward()
   {
+    brake();
     kart.setState(kart.backwardAccelerationState);
   }
 
@@ -299,6 +309,7 @@ public:
 
   virtual void moveForward()
   {
+    brake();
     kart.setState(kart.forwardAccelerationState);
   }
 
@@ -353,6 +364,8 @@ public:
     kart.setState(kart.backwardAccelerationState);
   }
 
+  //On peut pas bouncer immobile
+  virtual void bounce() {}
   virtual void turnLeft() {}
   virtual void turnRight() {}
   virtual void stopMove() {}
@@ -394,6 +407,9 @@ public:
     kart.position += direction * travelledDistance;
     currentDistance = currentDistance + travelledDistance;
   }
+
+  //Redefinition, TODO y'a ptete un truc mieux a faire
+  virtual void bounce() {}
 
   virtual void moveBackward() {}
   virtual void moveForward() {}
