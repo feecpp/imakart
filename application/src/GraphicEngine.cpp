@@ -172,6 +172,10 @@ void GraphicEngine::renderFrame()
         useMenuProgram();
     }
 
+    //Arrivé ici, tous les éléments sont affichés à l'écran (fin du chargement)
+    if(currentProgram == raceProgram){
+      scenario->update("graphicReady");
+    }
 }
 
 void GraphicEngine::initShaderPrograms()
@@ -248,6 +252,10 @@ void GraphicEngine::setCamera(Camera* newCamera)
 {
   delete currentCamera;
   currentCamera = newCamera;
+}
+
+const void GraphicEngine::attach(Observer* obs){
+  scenario = obs;
 }
 
 /*void GraphicEngine::setLight(Light* newLight){

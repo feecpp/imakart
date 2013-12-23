@@ -104,7 +104,6 @@ Kart& GameEngine::getPlayerKart() const
 
 Kart& GameEngine::getOpponentKart(unsigned int id) const
 {
-  assert(opponents.size() == 0);
   assert(opponents[id] != nullptr);
   return opponents[id]->getKart();
 }
@@ -126,6 +125,10 @@ ChronoLogic& GameEngine::getChrono() const
 {
   assert(chrono != nullptr);
   return *chrono;
+}
+
+const void GameEngine::attach(Observer* obs){
+  scenario = obs;
 }
 
 void GameEngine::doPhysic()

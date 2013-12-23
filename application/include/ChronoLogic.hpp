@@ -11,6 +11,7 @@ public:
   float getTime() const
   {return timer;}
   const bool isSelected() const;
+  void init();
 
 private:
   float timer;

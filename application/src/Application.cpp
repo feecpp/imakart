@@ -6,6 +6,13 @@
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
 {
+  scenario = new Scenario_obs();
+  gameEngine.attach(scenario);
+  graphicEngine.attach(scenario);
+
+  //L'observateur n'est pas passif il doit les connaitre pour leur donner des ordres.
+  scenario->gameE = &gameEngine;
+  scenario->graphicE = &graphicEngine;
 }
 
 sf::RenderWindow& Application::setupEverything()

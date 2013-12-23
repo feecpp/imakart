@@ -6,6 +6,7 @@
 #include <string>
 #include "ShaderProgram.hpp"
 #include <map>
+#include "Observable.hpp"
 
 
 class Object3D;
@@ -40,7 +41,7 @@ struct GraphicSettings
  * Contient Ã©galement une liste d'objets 2D
  * qui constituent l'interface.
  */
-class GraphicEngine
+class GraphicEngine : public Observable
 {
 public:
   GraphicEngine();
@@ -88,6 +89,8 @@ public:
   void setLight(Light* newLight);
   void addLight(Light* newLight)
       {lights.push_back(newLight);}
+
+  virtual const void attach(Observer* obs);
 
 
   /*
@@ -138,6 +141,8 @@ private:
   sf::RenderWindow window;
   sf::Font font;
   std::vector<GLuint> tabTextures;
+
+  Observer* scenario;
 
 };
 

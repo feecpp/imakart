@@ -11,6 +11,7 @@
 #include <SFML/System.hpp>
 #include "ChronoLogic.hpp"
 #include "Opponent.hpp"
+#include "Observable.hpp"
 #include <vector>
 
 /**
@@ -18,7 +19,7 @@
  * Gère le déroulement du jeu. C'est le GameEngine
  * qui gère le temps dans la simulation.
  */
-class GameEngine
+class GameEngine : public Observable
 {
 public:
   GameEngine();
@@ -70,6 +71,8 @@ public:
   MenuLogic& getMenuLogic()
     {return menu;}
 
+  virtual const void attach(Observer* obs);
+
 private:
   void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
@@ -82,6 +85,7 @@ private:
   Map* currentMap;
   sf::Clock clock;
   ChronoLogic* chrono;
+  Observer* scenario;
   bool exitFlag;
 
   ///Pour la gestion du temps
