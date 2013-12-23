@@ -10,7 +10,6 @@ void ChronoLogic::init(){
 
 void ChronoLogic::update(float time){
   timer += time;
-  std::cout << "timer = " << timer << std::endl;
 }
 
 ChronoLogic::~ChronoLogic(){

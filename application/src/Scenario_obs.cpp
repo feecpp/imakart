@@ -18,16 +18,23 @@ Scenario_obs::~Scenario_obs(){
 void Scenario_obs::update(std::string notification){
 
   switch(mapStates[notification]){
+
     case graphicEngineReady:{
         if(loadIterations != 2){ //On attend deux tours de boucle du graphicEngine IN_RACE avant de reset le chrono
           state=notification;
           gameE->getChrono().init();
-          std::cout << "i'm in"<< std::endl;
           loadIterations++;
         }else{
           isGraphicReady = true;
         }
       break;
     }
+    case countdown:{
+      break;
+    }
+    case sleep:{
+      break;
+    }
   }
+
 }
