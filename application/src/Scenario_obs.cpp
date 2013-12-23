@@ -3,8 +3,8 @@
 Scenario_obs::Scenario_obs()
 {
   mapStates["graphicReady"] = graphicEngineReady;
-  mapStates["sleep"] = sleep;
-  state = "sleep";
+  mapStates["sleepGame"] = sleepGame;
+  state = "sleepGame";
   loadIterations = 0;
   isGraphicReady = false;
 }
@@ -32,7 +32,7 @@ void Scenario_obs::update(std::string notification){
     case countdown:{
       break;
     }
-    case sleep:{
+    case sleepGame:{
       break;
     }
   }

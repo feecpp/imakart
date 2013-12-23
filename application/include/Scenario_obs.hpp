@@ -10,7 +10,7 @@
 
 enum states { graphicEngineReady,
                        countdown,
-                           sleep};
+                           sleepGame};
 
 class Scenario_obs  : public Observer{
 
