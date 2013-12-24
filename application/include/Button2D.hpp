@@ -21,10 +21,6 @@ public:
 
 	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	void update();
-
-	ObjectTexte* getObjTexte2D(){
-		return &myText;
-	}
 	
 private:
 	glimac::Vertex2DUV vertices[4];

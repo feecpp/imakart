@@ -18,10 +18,10 @@ public:
   Texte2D(std::string mText);
   ~Texte2D();
 
-  void draw(const glimac::ShaderProgram& shaderProgram);
+  void draw(const glimac::ShaderProgram& shaderProgram) const;
   void setPosition(int x, int y, int size);
 
-  void update();
+  void update(int x, int y, int size);
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;

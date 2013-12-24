@@ -32,7 +32,7 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 
 	float n_x_bottom = x_bottom * 400.f + 400.f; //Pour mettre entre 0 et 800 (comme modifié apres dans le shader)
 	float n_y = (y_left - 0.1f) * 300.f + 300.f;
-	myText.setPosition(n_x_bottom, n_y, 20);
+  myText.update(n_x_bottom, n_y, 20);
 
 	setVBO();
 	setVAO();
@@ -66,6 +66,9 @@ void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	activTexture->unbind();
 	vao.unbind();
+
+  //Dessin du texte 2D
+  myText.draw(shaderProgram);
 }
 
 void Button2D::update(){

@@ -57,8 +57,8 @@ void Interface::draw() const
   objectTextProgram.use();
   for (auto objectText = objectsTexte.begin(); objectText != objectsTexte.end(); ++objectText)
   {
-    (*objectText)->update();
-    //Attention : le vertex shader doit contenir les bonnes uniforms
+    //ULTRA DEGUEU, trouver quand positionner les ObjectText, actuellement c'est un peu la fete du slip
+    (*objectText)->update(10, 570, 20);
     (*objectText)->draw(objectTextProgram);
   }
 }

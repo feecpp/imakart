@@ -42,8 +42,6 @@ void Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();	 
 
-  bool inRace = gameEngine.getState() == IN_RACE;
-
   sf::Event e;
   while (window.pollEvent(e))
   {
@@ -55,22 +53,22 @@ void Application::handleEvents(sf::RenderWindow& window)
         break;
 
         case sf::Event::KeyPressed:
-            if (e.key.code == sf::Keyboard::Down && !inRace)
+            if (e.key.code == sf::Keyboard::Down)
               handler.pressDown();
 
-            else if (e.key.code == sf::Keyboard::Up && !inRace)
+            else if (e.key.code == sf::Keyboard::Up)
               handler.pressUp();
 
-            else if (e.key.code == sf::Keyboard::Left && !inRace)
+            else if (e.key.code == sf::Keyboard::Left)
               handler.pressLeft();
 
-            else if (e.key.code == sf::Keyboard::Right && !inRace)
+            else if (e.key.code == sf::Keyboard::Right)
               handler.pressRight();
 
             else if (e.key.code == sf::Keyboard::Return)
               handler.pressEnter();
 
-            else if (e.key.code == sf::Keyboard::Space && !inRace)
+            else if (e.key.code == sf::Keyboard::Space)
               handler.pressSpace();
 
             break;
@@ -99,22 +97,6 @@ void Application::handleEvents(sf::RenderWindow& window)
         default:
           break;
       }
-  }
-
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && inRace){
-    handler.pressUp();
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && inRace){
-    handler.pressDown();
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && inRace){
-    handler.pressLeft();
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && inRace){
-    handler.pressRight();
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && inRace){
-    handler.pressSpace();
   }
 
 }

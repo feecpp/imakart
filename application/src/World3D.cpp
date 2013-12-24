@@ -1,8 +1,11 @@
 #include "World3D.hpp"
 #include "Object3D.hpp"
 #include <stdexcept>
+#include "Light.hpp"
+#include "Camera.hpp"
 
 World3D::World3D()
+  : camera(new Camera(1024,768)) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -23,6 +26,7 @@ World3D::~World3D()
   }
 
   objects3D.erase(objects3D.begin(), objects3D.end());
+  delete camera;
 }
 
 void World3D::init()
@@ -43,6 +47,7 @@ void World3D::init()
   {
     throw std::runtime_error("Impossible d'initialiser la SkyBox");
   }
+  skybox.setCamera(camera);
 }
 
 void World3D::draw() const
@@ -52,8 +57,42 @@ void World3D::draw() const
 
   raceProgram.use();
 
+  //Mise a jour matrice ViewProjection
+  //Attention : le vertex shader doit contenir les bonnes uniforms
+  camera->updateViewProjectionMatrix();
+  const glm::mat4& viewMatrix = camera->getViewMatrix();
+  const glm::mat4& viewProjection = camera->getViewProjectionMatrix();
+  GLint viewId = raceProgram.getUniformIndex("uView");
+  GLint viewProjectionId = raceProgram.getUniformIndex("viewProjection");
+  raceProgram.setUniform(viewId, viewMatrix);
+  raceProgram.setUniform(viewProjectionId, viewProjection);
+
+  //Ranger aussi la gestion des lumieres
+  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
+  {
+    (*oneLight)->updateLight(viewMatrix);
+    const glm::vec3& direction = (*oneLight)->getLighDirection();
+    const glm::vec3& position = (*oneLight)->getLightPosition();
+    const glm::vec3& intensity = (*oneLight)->getLightIntensity();
+    GLint lightDirId = raceProgram.getUniformIndex("uLightDir");
+    GLint lightPosId = raceProgram.getUniformIndex("uLightPos");
+    GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
+    raceProgram.setUniform(lightDirId,1,direction);
+    raceProgram.setUniform(lightPosId,1, position);
+    raceProgram.setUniform(lightIntensityId, intensity);
+  }
+
   for (auto object3D = objects3D.begin(); object3D != objects3D.end(); ++object3D)
   {
+    (*object3D)->setViewMatrix(camera->getViewMatrix());
+    (*object3D)->update();
     (*object3D)->draw(raceProgram);
   }
+}
+
+void World3D::setCamera(Camera* newCamera)
+{
+  delete camera;
+  camera = newCamera;
+  skybox.setCamera(camera);
 }

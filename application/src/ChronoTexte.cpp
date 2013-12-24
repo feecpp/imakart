@@ -11,7 +11,8 @@ ChronoTexte::ChronoTexte(){
 }
 
 
-std::string ChronoTexte::prepareText(){
+std::string ChronoTexte::prepareText() const
+{
   int minutes, seconds;
   float centisecs;
 
@@ -68,15 +69,49 @@ std::string ChronoTexte::prepareText(){
   return time;
 }
 
-void ChronoTexte::printChronoTexte(int x, int y, int size, const glimac::ShaderProgram& shaderProgram)
+void ChronoTexte::draw(const glimac::ShaderProgram& shaderProgram) const
 {
+  //Dessin du texte
+  vao.bind();
+  GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
+  shaderProgram.setUniform(Text2DUniform, 0);
+  texture->bind();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDisable(GL_BLEND);
+  texture->unbind();
+  vao.unbind();
+}
+
+void ChronoTexte::setVBO(){
+
+  glimac::Vertex2DUV verticesForVBO[vertices.size()];
+  for(unsigned int i=0; i< vertices.size(); ++i){
+    verticesForVBO[i] = vertices[i];
+  }
+  vbo.setBufferData(verticesForVBO, sizeof(verticesForVBO), GL_STATIC_DRAW);
+}
+
+void ChronoTexte::setVAO(){
+  vao.enableVertexAttribArray(0);
+  vao.enableVertexAttribArray(1);
+  vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
+  vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
+}
+
+void ChronoTexte::update(int x, int y, int size){
+  if(model != nullptr)
+    timer = model->getTime();
+
+  //Je suppose que ces variables devraient pouvoir etre definies
   std::string time = prepareText();
   std::string text = "Time: "+time;
   unsigned int length = text.size();
 
   vertices.clear();
-  for ( unsigned int i=0 ; i<length ; ++i ){
-
+  for (unsigned int i=0 ; i < length ; ++i )
+  {
     char character = text[i];
 
     float uv_x = (character%16)/16.0f;
@@ -97,46 +132,8 @@ void ChronoTexte::printChronoTexte(int x, int y, int size, const glimac::ShaderP
     vertices.push_back(down_left);
   }
 
-
   setVBO();
   setVAO();
-
-  //Dessin du texte
-  vao.bind();
-  GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
-  shaderProgram.setUniform(Text2DUniform, 0);
-  texture->bind();
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-  glDisable(GL_BLEND);
-  texture->unbind();
-  vao.unbind();
-}
-
-void ChronoTexte::draw(const glimac::ShaderProgram& shaderProgram){
-  printChronoTexte(10, 570, 20, shaderProgram);
-}
-
-void ChronoTexte::setVBO(){
-
-  glimac::Vertex2DUV verticesForVBO[vertices.size()];
-  for(unsigned int i=0; i< vertices.size(); ++i){
-    verticesForVBO[i] = vertices[i];
-  }
-  vbo.setBufferData(verticesForVBO, sizeof(verticesForVBO), GL_STATIC_DRAW);
-}
-
-void ChronoTexte::setVAO(){
-  vao.enableVertexAttribArray(0);
-  vao.enableVertexAttribArray(1);
-  vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
-  vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
-}
-
-void ChronoTexte::update(){
-  if(model != nullptr)
-    timer = model->getTime();
 }
 
 ChronoTexte::~ChronoTexte(){

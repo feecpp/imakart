@@ -20,7 +20,7 @@ Texte2D::Texte2D(std::string mText):
 
 Texte2D::~Texte2D(){}
 
-void Texte2D::setPosition(int x, int y, int size) //En pixel ...
+void Texte2D::update(int x, int y, int size) //En pixel ...
 {
   std::ostringstream os;
   os << myText;
@@ -52,11 +52,10 @@ void Texte2D::setPosition(int x, int y, int size) //En pixel ...
 
   setVBO();
   setVAO();
-
-
 }
 
-void Texte2D::draw(const glimac::ShaderProgram& shaderProgram){
+void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const
+{
     //Dessin du texte
   vao.bind();
   GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
@@ -84,7 +83,4 @@ void Texte2D::setVAO(){
   vao.enableVertexAttribArray(1);
   vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
   vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
-}
-
-void Texte2D::update(){
 }

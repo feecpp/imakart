@@ -19,8 +19,8 @@ public:
     texture = NULL;
   }
 
-  virtual void draw(const glimac::ShaderProgram& shaderProgram) = 0;
-  virtual void update() = 0;
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const = 0;
+  virtual void update(int x, int y, int size) = 0;
 
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}

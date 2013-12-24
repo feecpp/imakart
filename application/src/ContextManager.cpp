@@ -13,6 +13,8 @@
 #include <iostream>
 #include <stdexcept>
 #include "Camera.hpp"
+#include "Interface.hpp"
+#include "World3D.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -48,7 +50,6 @@ void ContextManager::updateContextIfNeeded()
 void ContextManager::setupMenuContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
 
@@ -58,32 +59,39 @@ void ContextManager::setupMenuContext() const
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+  Interface* interfaceMenu = new Interface();
+  interfaceMenu->addObject2D(menu2D);
+
+  graphicEngine.setCurrentInterface(interfaceMenu);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupMenuKartContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
-
 
   Menu2D* menu2D = Menu2D::initialiseKartMenu(gameEngine.getHangar().getKartsName());
   MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(gameEngine.getHangar().getKartsName());
 
+  Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    graphicEngine.addObjectTexte(menu2D->getTab2DMenu(i)->getObjTexte2D());
   }
-
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+
+  menuInterface->addObject2D(menu2D);
+  graphicEngine.setCurrentInterface(menuInterface);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupMenuMapContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMapMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMapMenu();
 
@@ -93,25 +101,20 @@ void ContextManager::setupMenuMapContext() const
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+  Interface* menuInterface = new Interface();
+  menuInterface->addObject2D(menu2D);
+  graphicEngine.setCurrentInterface(menuInterface);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useRaceProgram();
-
-  const GraphicSettings& settings = graphicEngine.getSettings();
-  Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
-  camera->linkToPositionable(gameEngine.getPlayerKart());
 
   Light* light = new Light();
   light->linkToPositionable(gameEngine.getPlayerKart());
-
-  //Gérer plusieurs lumières ponctuelles
-  Light* lightpon1 = new Light(glm::vec3(30.f,0.f,5.f));
-  Light* lightpon2 = new Light(glm::vec3(0.f,0.f,0.f));
-  Light* lightpon3 = new Light(glm::vec3(0.f,0.f,-10.f));
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -153,15 +156,16 @@ void ContextManager::setupRaceContext() const
   }
   minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
 
-  //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
-  graphicEngine.setCamera(camera);
-  graphicEngine.addLight(light);
-  //graphicEngine.addLight(lightpon1);
-  //graphicEngine.addLight(lightpon2);
-  //graphicEngine.addLight(lightpon3);
-  graphicEngine.addObject3D(minionMesh);
-  graphicEngine.addObject3D(mapMesh);
-  graphicEngine.getSkybox()->setCamera(camera);
+  //L'engine devient le propriÃ©taire de la camera et prend en charge sa destruction
+  const GraphicSettings& settings = graphicEngine.getSettings();
+  Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
+  camera->linkToPositionable(gameEngine.getPlayerKart());
+
+  World3D* gameWorld = new World3D();
+  gameWorld->setCamera(camera);
+  gameWorld->addLight(light);
+  gameWorld->addObject3D(minionMesh);
+  gameWorld->addObject3D(mapMesh);
  
   //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
@@ -169,7 +173,7 @@ void ContextManager::setupRaceContext() const
     KartCube* visibleBB = new KartCube();
     visibleBB->setSize(it->getSize());
     visibleBB->setModelToRepresent(*it);
-    graphicEngine.addObject3D(visibleBB);
+    gameWorld->addObject3D(visibleBB);
   }
 
   //Dessin d'un adversaire
@@ -183,12 +187,16 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(0));
-  graphicEngine.addObject3D(opponentMesh);
+  gameWorld->addObject3D(opponentMesh);
   gameEngine.getOpponent(0).startMovement();
 
+  Interface* gameInterface = new Interface();
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
-  graphicEngine.addObjectTexte(chrono);
+  gameInterface->addObjectTexte(chrono);
+
+  graphicEngine.setCurrentInterface(gameInterface);
+  graphicEngine.setCurrentWorld3D(gameWorld);
 
 }
 
