@@ -413,7 +413,7 @@ public:
 
   virtual void moveBackward() {}
   virtual void moveForward() {}
-  virtual void turnLeft() {}
+  virtual void turnLeft(){}
   virtual void turnRight() {}
   virtual void stopMove() {}
   virtual void brake() {}
