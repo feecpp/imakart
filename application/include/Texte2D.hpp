@@ -19,9 +19,9 @@ public:
   ~Texte2D();
 
   void draw(const glimac::ShaderProgram& shaderProgram) const;
-  void setPosition(int x, int y, int size);
+  virtual void setPosition(int x, int y, int size);
 
-  void update(int x, int y, int size);
+  virtual void update();
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;

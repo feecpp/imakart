@@ -27,7 +27,7 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		textures = textures + kartsName[i];
 		std::string texturesS = textures + "Selected.jpg";
 		textures = textures + ".jpg";
-		Button2D* kart = new Button2D(- 0.9 + i * 0.6, -0.25, 0.5, 0.5, textures, texturesS, kartsName[i]);
+    Button2D* kart = new Button2D(- 0.9 + i * 0.6, -0.25, 0.5, 0.5, textures, texturesS, kartsName[i]);
 		kartMenu->addButton(kart);
 	}
 

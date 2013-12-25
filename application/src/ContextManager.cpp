@@ -52,14 +52,13 @@ void ContextManager::setupMenuContext() const
   graphicEngine.reset();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
-
+  Interface* interfaceMenu = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
   }
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  Interface* interfaceMenu = new Interface();
   interfaceMenu->addObject2D(menu2D);
 
   graphicEngine.setCurrentInterface(interfaceMenu);
@@ -78,6 +77,7 @@ void ContextManager::setupMenuKartContext() const
   Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+    menuInterface->addObjectTexte(menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText());
   }
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
@@ -95,13 +95,14 @@ void ContextManager::setupMenuMapContext() const
   Menu2D* menu2D = Menu2D::initialiseMapMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMapMenu();
 
+  Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
   }
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  Interface* menuInterface = new Interface();
+
   menuInterface->addObject2D(menu2D);
   graphicEngine.setCurrentInterface(menuInterface);
 
@@ -193,6 +194,7 @@ void ContextManager::setupRaceContext() const
   Interface* gameInterface = new Interface();
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
+  chrono->setPosition(10, 570, 20);
   gameInterface->addObjectTexte(chrono);
 
   graphicEngine.setCurrentInterface(gameInterface);

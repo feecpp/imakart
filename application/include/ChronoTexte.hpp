@@ -18,7 +18,8 @@ public:
   ~ChronoTexte();
 
   void draw(const glimac::ShaderProgram& shaderProgram) const;
-  void update(int x, int y, int size);
+  virtual void update();
+  virtual void setPosition(int x, int y, int size);
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;
@@ -28,6 +29,9 @@ private:
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
   std::string prepareText() const;
+
+  glm::vec2 position;
+  int size;
 };
 
 #endif // CHRONOTEXTE_HPP

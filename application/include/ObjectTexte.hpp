@@ -20,7 +20,8 @@ public:
   }
 
   virtual void draw(const glimac::ShaderProgram& shaderProgram) const = 0;
-  virtual void update(int x, int y, int size) = 0;
+  virtual void update() = 0;
+  virtual void setPosition(int x, int y, int size) = 0;
 
   void setModelToRepresent(const InterfaceElement& myModel)
     {model = &myModel;}

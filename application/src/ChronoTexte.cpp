@@ -100,9 +100,16 @@ void ChronoTexte::setVAO(){
   vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
 }
 
-void ChronoTexte::update(int x, int y, int size){
+void ChronoTexte::update(){
   if(model != nullptr)
     timer = model->getTime();
+
+  setPosition(position.x, position.y, size);
+}
+
+void ChronoTexte::setPosition(int x, int y, int size)
+{
+  position.x = x; position.y = y; this->size = size;//Pour garder en mémoire et utilsier dans update
 
   //Je suppose que ces variables devraient pouvoir etre definies
   std::string time = prepareText();

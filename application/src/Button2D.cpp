@@ -1,7 +1,7 @@
 #include "Button2D.hpp"
 
 Button2D::Button2D()
-	:myText()
+  :generatedText(new Texte2D()), ownership(true)
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,1));
@@ -13,7 +13,7 @@ Button2D::Button2D()
 }
 
 Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height, std::string pathTextureNoSelect, std::string pathTextureSelect, std::string nameOfButton)
-	:myText(nameOfButton)
+  :generatedText(new Texte2D(nameOfButton)), ownership(true)
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,1));
@@ -29,16 +29,19 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 	tabTexture.push_back(second);
 
 	activTexture = tabTexture[0];
-
-	float n_x_bottom = x_bottom * 400.f + 400.f; //Pour mettre entre 0 et 800 (comme modifié apres dans le shader)
-	float n_y = (y_left - 0.1f) * 300.f + 300.f;
-  myText.update(n_x_bottom, n_y, 20);
-
+  float n_x_bottom = x_bottom * 400.f + 400.f; //Pour mettre entre 0 et 800 (comme modifié apres dans le shader)
+  float n_y = (y_left - 0.1f) * 300.f + 300.f;
+  generatedText->setPosition(n_x_bottom, n_y, 20);
 	setVBO();
 	setVAO();
 }
 
-Button2D::~Button2D(){
+Button2D::~Button2D()
+{
+  if (ownership)
+  {
+    delete generatedText;
+  }
 }
 
 const glimac::Vertex2DUV* Button2D::getVertices() const{
@@ -61,14 +64,11 @@ void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	GLint locationUTexture = shaderProgram.getUniformIndex("uTexture");
 	GLint locationUMat = shaderProgram.getUniformIndex("uModelMatrix");
     shaderProgram.setUniform(locationUTexture, 0);
-    shaderProgram.setUniform(locationUMat, glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,1))); 
+    shaderProgram.setUniform(locationUMat, glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,1)));
 	activTexture->bind();
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	activTexture->unbind();
 	vao.unbind();
-
-  //Dessin du texte 2D
-  myText.draw(shaderProgram);
 }
 
 void Button2D::update(){

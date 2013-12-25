@@ -58,7 +58,7 @@ void Interface::draw() const
   for (auto objectText = objectsTexte.begin(); objectText != objectsTexte.end(); ++objectText)
   {
     //ULTRA DEGUEU, trouver quand positionner les ObjectText, actuellement c'est un peu la fete du slip
-    (*objectText)->update(10, 570, 20);
+    (*objectText)->update();
     (*objectText)->draw(objectTextProgram);
   }
 }
