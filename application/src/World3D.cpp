@@ -52,14 +52,13 @@ void World3D::init()
 
 void World3D::draw() const
 {
+  //Mise a jour matrice ViewProjection
+  //Attention : le vertex shader doit contenir les bonnes uniforms
+  camera->updateViewProjectionMatrix();
   skyboxProgram.use();
   skybox.render(skyboxProgram);
 
   raceProgram.use();
-
-  //Mise a jour matrice ViewProjection
-  //Attention : le vertex shader doit contenir les bonnes uniforms
-  camera->updateViewProjectionMatrix();
   const glm::mat4& viewMatrix = camera->getViewMatrix();
   const glm::mat4& viewProjection = camera->getViewProjectionMatrix();
   GLint viewId = raceProgram.getUniformIndex("uView");
