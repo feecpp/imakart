@@ -18,6 +18,8 @@ void Kart::initStates()
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
   bounceState = new Bounce(*this);
+  forwardBrakeState = new ForwardBrake(*this);
+  backwardBrakeState = new BackwardBrake(*this);
   currentState = noMoveState;
 }
 
@@ -64,6 +66,8 @@ Kart::~Kart()
   delete backwardMaxSpeedReached;
   delete noMoveState;
   delete bounceState;
+  delete forwardBrakeState;
+  delete backwardBrakeState;
   currentState = nullptr;
 }
 

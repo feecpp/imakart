@@ -95,6 +95,8 @@ private:
   friend class Deceleration;
   friend class NoMove;
   friend class Bounce;
+  friend class ForwardBrake;
+  friend class BackwardBrake;
 
   void setState(KartState* newState);
 
@@ -120,6 +122,8 @@ private:
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
   KartState* bounceState;
+  KartState* forwardBrakeState;
+  KartState* backwardBrakeState;
   KartState* currentState;
 
 };
