@@ -25,27 +25,29 @@ class NoMove;
  * alors que le Kart en lui meme sauvegarde son etat "en cours" (vitesse actuelle, vitesse angulaire
  * actuelle etc) qui evolue au fil du temps.
  */
+
+struct Specifications
+ {
+  Specifications()
+    : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
+
+  ///Doit etre positive
+  float acceleration;
+  ///Doit etre positive
+  float maxSpeed;
+  ///Doit etre positive
+  float angularSpeed;
+  ///Doit etre positif
+  float breakingCoefficient;
+  ///Doit être positif
+  unsigned int weight;
+};
+
 class Kart : public Positionable
 {
 public:
 
   //Structure qui empacte les caractéristiques du Kart
-  struct Specifications
-  {
-    Specifications()
-      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
-
-    ///Doit etre positive
-    float acceleration;
-    ///Doit etre positive
-    float maxSpeed;
-    ///Doit etre positive
-    float angularSpeed;
-    ///Doit etre positif
-    float breakingCoefficient;
-    ///Doit être positif
-    unsigned int weight;
-  };
 
   Kart();
   Kart(std::string kartName);

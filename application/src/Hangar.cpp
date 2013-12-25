@@ -66,6 +66,10 @@ Kart& Hangar::createKartInstanceByName(const std::string& kartName)
   return *newInstance;
 }
 
+Kart& Hangar::getKartByName(const std::string& kartName){
+  return *(kartTemplates[kartName]);
+}
+
 std::vector<std::string> Hangar::findKartFiles(){
     std::vector<std::string> fileNames;
 

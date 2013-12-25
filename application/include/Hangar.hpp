@@ -20,6 +20,7 @@ public:
   static Hangar* getSingletonHangar();
   static void kill ();
   Kart& createKartInstanceByName(const std::string& kartName);
+  Kart& getKartByName(const std::string& kartName);
 
   std::vector<std::string> getKartsName() const
   {
