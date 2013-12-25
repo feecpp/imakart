@@ -62,12 +62,6 @@ public:
 
   ChronoLogic& getChrono() const;
 
-  const Hangar& getHangar() const
-    {return hangar;}
-
-  Hangar& getHangar()
-    {return hangar;}
-
   MenuLogic& getMenuLogic()
     {return menu;}
 
@@ -79,7 +73,7 @@ private:
 
   GameState state;
   MenuLogic menu;
-  Hangar hangar;
+  //Hangar hangar;
   Player* player;
   std::vector<Opponent*> opponents;
   Map* currentMap;

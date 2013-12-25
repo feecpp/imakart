@@ -6,6 +6,23 @@
   #include <sys/types.h>
 #endif
 
+Hangar* Hangar::singletonHangar = NULL;
+
+Hangar* Hangar::getSingletonHangar(){
+  if(singletonHangar == NULL){
+    singletonHangar = new Hangar();
+  }
+  return singletonHangar;
+}
+
+void Hangar::kill (){
+  if (NULL != singletonHangar){
+    delete singletonHangar;
+    singletonHangar = NULL;
+  }
+}
+
+
 Hangar::Hangar()
 {
   instancedKarts.resize(0);

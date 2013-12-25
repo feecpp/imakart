@@ -71,13 +71,13 @@ bool GameEngine::getExitFlag() const
 
 void GameEngine::setupPlayer(const std::string& playerKartName)
 {
-  player = new Player(hangar.createKartInstanceByName(playerKartName));
+  player = new Player(Hangar::getSingletonHangar()->createKartInstanceByName(playerKartName));
 }
 
 void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
   for (unsigned int i=0; i<nbOpponents; ++i){
-    opponents.push_back(new Opponent(hangar.createKartInstanceByName("Licorne")));
+    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
   }
 }
 

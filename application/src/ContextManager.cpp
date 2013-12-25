@@ -6,6 +6,7 @@
 #include "KartCube.hpp"
 #include "Skybox.hpp"
 #include "Cube.hpp"
+#include "Hangar.hpp"
 #include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
@@ -70,9 +71,8 @@ void ContextManager::setupMenuContext() const
 void ContextManager::setupMenuKartContext() const
 {
   graphicEngine.reset();
-
-  Menu2D* menu2D = Menu2D::initialiseKartMenu(gameEngine.getHangar().getKartsName());
-  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(gameEngine.getHangar().getKartsName());
+  Menu2D* menu2D = Menu2D::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
+  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
 
   Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
@@ -122,7 +122,7 @@ void ContextManager::setupRaceContext() const
   //Plus tard à remplacer par le choix dans le menu
   try
   {
-    map->loadFromFile("maps/Imakart_Map_test.txt");
+    map->loadFromFile("maps/plage.txt");
   }
   catch(std::runtime_error er)
   {
@@ -135,7 +135,7 @@ void ContextManager::setupRaceContext() const
   Mesh* mapMesh = new Mesh();
   try
   {
-    mapMesh->loadFromFile("data/Imakart_Map_test.dae");
+    mapMesh->loadFromFile("data/plage.dae");
   }
   catch(std::runtime_error er)
   {
