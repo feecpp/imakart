@@ -116,6 +116,7 @@ void ContextManager::setupRaceContext() const
 
   Light* light = new Light();
   light->linkToPositionable(gameEngine.getPlayerKart());
+  //Light* l = new Light(glm::vec3(-3.,-30.,-3.));
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -165,6 +166,7 @@ void ContextManager::setupRaceContext() const
   World3D* gameWorld = new World3D();
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
+  //gameWorld->addLight(l);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
  

@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include "Light.hpp"
 #include "Camera.hpp"
+#include <iostream>
 
 World3D::World3D()
   : camera(new Camera(1024,768)) //Un peu degueu, a voir, c'est pour simplifier
@@ -69,7 +70,9 @@ void World3D::draw() const
   //Ranger aussi la gestion des lumieres
   for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
+    (*oneLight)->updateLightDirection();
     (*oneLight)->updateLight(viewMatrix);
+      std::cout << "lightDir :" << (*oneLight)->getLighDirection().x << ", " << (*oneLight)->getLighDirection().y << ", "<<(*oneLight)->getLighDirection().z << std::endl;
     const glm::vec3& direction = (*oneLight)->getLighDirection();
     const glm::vec3& position = (*oneLight)->getLightPosition();
     const glm::vec3& intensity = (*oneLight)->getLightIntensity();
