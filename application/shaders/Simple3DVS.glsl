@@ -23,6 +23,7 @@ out vec4 vPosition;
 //En rapport avec material
 out vec4 Kd;
 out vec4 Ks;
+out vec4 Ka;
 out float shine;
 
 
@@ -37,6 +38,7 @@ void main() {
   vPosition =  uView * model * vertexPosition;
   Kd = material.diffuse;
   Ks = material.specular;
+  Ka = material.ambient;
   shine = material.shininess;
 
   gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);

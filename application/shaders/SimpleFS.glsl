@@ -6,6 +6,7 @@ in vec4 vPosition; //Position en fonction de la caméra
 //////// EN RAPPORT AVEC L'OBJET //////////
 in vec4 Kd; //--> coef reflection diffuse du materiau de l'objet
 in vec4 Ks; //--> coef reflection glossy du materiau de l'objet
+in vec4 Ka;
 in float shine; //--> controlle la taille de la "tache" de brillance (en fonction du materiau de l'objet)
 
 
@@ -25,7 +26,7 @@ vec4 blinnPhong() {
   vec4 w0 = normalize(-vPosition);//Vecteur qui pointe vers la camera
   vec4 halfVector = (w0+wi)*0.5f;
 
-  vec4 res = vec4(uLi,1.0)*( Kd*dot(wi,vNormal_vs) +  Ks*pow(dot(halfVector,vNormal_vs),shine));
+  vec4 res = vec4(uLi,1.0)*( Kd*dot(wi,vNormal_vs) +  Ks*pow(dot(halfVector,vNormal_vs),shine) + Ka);
 
   return res;
 }
@@ -36,7 +37,7 @@ vec4 blinnPhongPonctuelle(){
     vec4 halfVector = (w0+wi)*0.5f;
     float d = length(wi);
 
-    vec4 res = vec4(uLi,1.0)*( Kd*dot(wi,vNormal_vs) +  Ks*pow(dot(halfVector,vNormal_vs),shine))/(d*d);
+    vec4 res = vec4(uLi,1.0)*( Kd*dot(wi,vNormal_vs) +  Ks*pow(dot(halfVector,vNormal_vs),shine) + Ka)/(d*d);
 
     return res;
 }
