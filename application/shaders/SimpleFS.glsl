@@ -34,6 +34,36 @@ vec4 blinnPhong() {
   return res;
 }
 
+vec4 ambientDiffuse()
+{
+  vec4 ambientLight = vec4(1);
+
+  float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(uLightDir, 0.f))));
+  vec4 vDiffuseColor = vec4(material.diffuse.rgb * uLi * fDotProduct, 1.0);
+  vec4 vAmbientColor = ambientLight * material.ambient;
+
+  return vAmbientColor + vDiffuseColor;
+}
+
+vec4 ADS()
+{
+    // Dot product gives us diffuse intensity
+    float diff = max(0.0, dot(normalize(vNormal_vs),normalize(vec4(uLightDir, 0.f))));
+    // Multiply intensity by diffuse color, force alpha to 1.0
+    vec4 res = diff * material.diffuse;
+    // Add in ambient light
+    res += material.ambient;
+    // Specular Light
+    vec4 vReflection = normalize(reflect(-normalize(vec4(uLightDir, 0.f)),normalize(vNormal_vs)));
+    float spec = max(0.0, dot(normalize(vNormal_vs), vReflection));
+    // If the diffuse light is zero, don’t even bother with the pow function
+    if(diff != 0) {
+        float fSpec = pow(spec, 128.0);
+        res.rgb += vec3(fSpec, fSpec, fSpec);
+    }
+    return res;
+}
+
 vec4 blinnPhongPonctuelle(){
     vec4 wi = normalize(vec4(uLightPos,1.0)-vPosition_vs);//Vecteur qui pointe vers la lumière
     vec4 w0 = normalize(-vPosition_vs);//Vecteur qui pointe vers la camera
@@ -48,5 +78,5 @@ vec4 blinnPhongPonctuelle(){
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = blinnPhong();
+  oFragColor = ADS();
 }
