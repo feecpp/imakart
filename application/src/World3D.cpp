@@ -1,12 +1,11 @@
 #include "World3D.hpp"
 #include "Object3D.hpp"
 #include <stdexcept>
-#include "Light.hpp"
 #include "Camera.hpp"
 
 
 World3D::World3D()
-  : camera(new Camera(1024,768)) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(1024,768)), sun(new DirectionnalLight()) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -68,7 +67,7 @@ void World3D::draw() const
   raceProgram.setUniform(viewProjectionId, viewProjection);
 
   //Ranger aussi la gestion des lumieres
-  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
+/*  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
     (*oneLight)->updateLightDirection();
     (*oneLight)->updateLight(viewMatrix);
@@ -81,7 +80,14 @@ void World3D::draw() const
     raceProgram.setUniform(lightDirId,1,direction);
     raceProgram.setUniform(lightPosId,1, position);
     raceProgram.setUniform(lightIntensityId, intensity);
-  }
+  }*/
+  sun->updateLight(viewMatrix);
+  const glm::vec3& direction = sun->getLightDirection();
+  const glm::vec3& intensity = sun->getLightIntensity();
+  GLint lightDirId = raceProgram.getUniformIndex("uLightDir");
+  GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
+  raceProgram.setUniform(lightDirId,1,direction);
+  raceProgram.setUniform(lightIntensityId,1,intensity);
 
   for (auto object3D = objects3D.begin(); object3D != objects3D.end(); ++object3D)
   {

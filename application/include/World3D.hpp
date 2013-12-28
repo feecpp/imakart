@@ -4,10 +4,10 @@
 #include <vector>
 #include <ShaderProgram.hpp>
 #include "Skybox.hpp"
+#include "DirectionnalLight.hpp"
 #include "Camera.hpp"
 
 class Object3D;
-class Light;
 class Camera;
 
 class World3D
@@ -40,21 +40,21 @@ public:
   void setCamera(Camera* newCamera);
 
   /*
-   *setLight défini une nouvelle source de lumière
+   *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
    */
-  void setLight(Light* newLight);
-  void addLight(Light* newLight)
+  /*void addLight(Light* newLight)
       {lights.push_back(newLight);}
-
+*/
 
 private:
   std::vector<Object3D* > objects3D;
   glimac::ShaderProgram raceProgram;
   glimac::ShaderProgram skyboxProgram;
 
-  std::vector<Light* > lights;
+  //std::vector<Light* > lights;
   Skybox skybox;
   Camera* camera;
+  DirectionnalLight* sun;
 
 };
 
