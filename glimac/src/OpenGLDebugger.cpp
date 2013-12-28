@@ -1,6 +1,7 @@
 #include "OpenGLDebugger.hpp"
 #include <GL/glew.h>
 #include <iostream>
+#include <cassert>
 
 using namespace glimac;
 
@@ -39,4 +40,10 @@ void OpenGLDebugger::checkError()
     break;
 
   }
+
+#if DEBUG
+  if (lastError != GL_NO_ERROR)
+    assert(false);
+#endif
+
 }
