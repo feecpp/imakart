@@ -74,7 +74,6 @@ private:
 
   GraphicSettings settings;
 
-  Camera* currentCamera;
   World3D* world3D;
   Interface* interface;
 

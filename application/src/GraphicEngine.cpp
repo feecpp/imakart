@@ -11,7 +11,7 @@
 #include "Interface.hpp"
 
 GraphicEngine::GraphicEngine()
-  : currentCamera(nullptr), world3D(nullptr), interface(nullptr)
+  : world3D(nullptr), interface(nullptr)
 {
 }
 
@@ -53,12 +53,6 @@ void GraphicEngine::renderFrame()
   //Il existe toujours un World3D meme dans le menu (il fait rien actuellement)
   assert(world3D && interface);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //En attendant une meilleure gestion de la camÃ©ra dans le menu,
-  //menu => camera == nullptr
-  if (currentCamera != nullptr)
-  {
-
-  }
 
   world3D->draw();
   interface->draw();
