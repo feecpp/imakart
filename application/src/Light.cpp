@@ -6,12 +6,12 @@ Light::Light()
 {
 }
 
-Light::Light(glm::vec3 direction)
-    :objectToFollow(nullptr),direction(direction),position(1.f,1.f,1.f),intensity(1.f,1.f,1.f)
+Light::Light(glm::vec3 direction) // Constructeur pour lumière directionnelle
+    :objectToFollow(nullptr),direction(direction),position(0.f,0.f,0.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 
-Light::Light(glm::vec3 position, glm::vec3 intensity)
+Light::Light(glm::vec3 position, glm::vec3 intensity) // Constructeur pour lumière ponctuelle
     :objectToFollow(nullptr),direction(0.f,0.f,0.f),position(position),intensity(intensity)
 {
 }
@@ -30,11 +30,12 @@ const glm::vec3 Light::getLightIntensity() const {
 
 void Light::updateLightDirection(){
     //La lumière suit le Kart, un peu comme le soleil nous "suit"
-    direction = objectToFollow->getPosition();
+    direction.x = (objectToFollow->getPosition().x)-5;
+    direction.z = (objectToFollow->getPosition().z)-10;
 
 }
 
 void Light::updateLight(const glm::mat4 viewMatrix) {
-    direction = glm::vec3(viewMatrix * glm::vec4(3,30,3, 1));
+    direction = glm::vec3(viewMatrix * glm::vec4(direction.x, 30,direction.z, 1));
     position = glm::vec3(viewMatrix * glm::vec4(1,1,1,1));
 }

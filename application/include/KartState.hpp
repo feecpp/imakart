@@ -19,6 +19,7 @@ public:
   virtual void turnLeft() = 0;
   virtual void turnRight() = 0;
   virtual void stopMove() = 0;
+  virtual void brake() = 0;
 
   //Implem par defaut
   virtual void stopTurning()
@@ -26,7 +27,12 @@ public:
     kart.currentAngularSpeed = 0.f;
   }
 
-  virtual void brake() = 0;
+  //Implem par defaut
+  virtual void bounce()
+  {
+    kart.setState(kart.bounceState);
+  }
+
   virtual void drift() = 0;
 
 protected:
@@ -62,7 +68,7 @@ public:
 
     kart.speed = travelledDistance / elapsedTimeInSecond;
 
-    if (kart.speed >= kart.specifications.maxSpeed)
+    if (abs(kart.speed) >= kart.specifications.maxSpeed)
     {
       setMaxSpeedState();//définie par les classes filles
     }
@@ -70,10 +76,6 @@ public:
 
   virtual void setMaxSpeedState() = 0;
 
-  virtual void brake()
-  {
-    kart.currentAcceleration = - kart.specifications.breakingCoefficient * kart.currentAcceleration;
-  }
 };
 
 class ForwardAcceleration : public Acceleration
@@ -100,7 +102,7 @@ public:
 
   virtual void moveBackward()
   {
-    kart.setState(kart.backwardAccelerationState);
+    brake();
   }
 
   virtual void turnLeft()
@@ -116,6 +118,11 @@ public:
   virtual void stopMove()
   {
     kart.setState(kart.forwardDecelerationState);
+  }
+
+  virtual void brake()
+  {
+    kart.setState(kart.forwardBrakeState);
   }
 
   void drift()
@@ -160,7 +167,7 @@ public:
 
   virtual void moveForward()
   {
-    kart.setState(kart.forwardAccelerationState);
+    brake();
   }
 
   virtual void moveBackward()
@@ -181,6 +188,11 @@ public:
   virtual void stopMove()
   {
     kart.setState(kart.backwardDecelerationState);
+  }
+
+  virtual void brake()
+  {
+    kart.setState(kart.backwardBrakeState);
   }
 
   void drift()
@@ -234,12 +246,6 @@ public:
     kart.position += direction * travelledDistance;
   }
 
-  //Le freinage aussi est commun
-  virtual void brake()
-  {
-    kart.currentAcceleration = kart.specifications.breakingCoefficient * kart.currentAcceleration;
-  }
-
 };
 
 class ForwardDeceleration : public Deceleration
@@ -260,7 +266,7 @@ public:
 
   virtual void moveBackward()
   {
-    kart.setState(kart.backwardAccelerationState);
+    brake();
   }
 
   virtual void turnLeft()
@@ -276,6 +282,11 @@ public:
   virtual void stopMove()
   {
     //What the fuck am I doing here ?? :p
+  }
+
+  virtual void brake()
+  {
+    kart.setState(kart.forwardBrakeState);
   }
 
   void drift()
@@ -299,7 +310,7 @@ public:
 
   virtual void moveForward()
   {
-    kart.setState(kart.forwardAccelerationState);
+    brake();
   }
 
   virtual void moveBackward()
@@ -320,6 +331,11 @@ public:
   virtual void stopMove()
   {
     //What the fuck am I doing here ?? :p
+  }
+
+  virtual void brake()
+  {
+    kart.setState(kart.backwardBrakeState);
   }
 
   virtual void drift()
@@ -353,6 +369,8 @@ public:
     kart.setState(kart.backwardAccelerationState);
   }
 
+  //On peut pas bouncer immobile
+  virtual void bounce() {}
   virtual void turnLeft() {}
   virtual void turnRight() {}
   virtual void stopMove() {}
@@ -375,14 +393,6 @@ public:
     currentDistance = 0.f;
     distanceToTravel = log(abs(kart.speed)) - 0.5f;//au hasard
     kart.speed = -kart.speed;
-    if (kart.speed > 0.f)
-    {
-      kart.currentAcceleration = 6.f;
-    }
-    else
-    {
-      kart.currentAcceleration = -6.f;
-    }
     bouncing = true;
   }
 
@@ -403,9 +413,12 @@ public:
     currentDistance = currentDistance + travelledDistance;
   }
 
+  //Redefinition, TODO y'a ptete un truc mieux a faire
+  virtual void bounce() {}
+
   virtual void moveBackward() {}
   virtual void moveForward() {}
-  virtual void turnLeft() {}
+  virtual void turnLeft(){}
   virtual void turnRight() {}
   virtual void stopMove() {}
   virtual void brake() {}
@@ -417,6 +430,38 @@ private:
   double currentDistance;
   bool bouncing;
 
+};
+
+class ForwardBrake : public ForwardDeceleration
+{
+public:
+  ForwardBrake(Kart& kart)
+    : ForwardDeceleration(kart) {}
+
+  virtual void start()
+  {
+    kart.currentAcceleration = - kart.specifications.breakingCoefficient * kart.specifications.acceleration;
+  }
+
+  virtual void stopMove() {}
+  virtual void brake() {}
+  virtual void drift() {}
+};
+
+class BackwardBrake : public BackwardDeceleration
+{
+public:
+  BackwardBrake(Kart& kart)
+    : BackwardDeceleration(kart) {}
+
+  virtual void start()
+  {
+    kart.currentAcceleration = kart.specifications.breakingCoefficient * kart.specifications.acceleration;
+  }
+
+  virtual void stopMove() {}
+  virtual void brake() {}
+  virtual void drift() {}
 };
 
 #endif // KARTSTATE_HPP

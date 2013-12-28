@@ -25,32 +25,36 @@ class NoMove;
  * alors que le Kart en lui meme sauvegarde son etat "en cours" (vitesse actuelle, vitesse angulaire
  * actuelle etc) qui evolue au fil du temps.
  */
+
+struct Specifications
+ {
+  Specifications()
+    : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
+
+  ///Doit etre positive
+  float acceleration;
+  ///Doit etre positive
+  float maxSpeed;
+  ///Doit etre positive
+  float angularSpeed;
+  ///Doit etre positif
+  float breakingCoefficient;
+  ///Doit être positif
+  unsigned int weight;
+};
+
 class Kart : public Positionable
 {
 public:
 
   //Structure qui empacte les caractéristiques du Kart
-  struct Specifications
-  {
-    Specifications()
-      : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
-
-    ///Doit etre positive
-    float acceleration;
-    ///Doit etre positive
-    float maxSpeed;
-    ///Doit etre positive
-    float angularSpeed;
-    ///Doit etre positif
-    float breakingCoefficient;
-    ///Doit être positif
-    unsigned int weight;
-  };
 
   Kart();
-  Kart(std::string);
+  Kart(std::string kartName);
   Kart(glm::vec3 position, glm::quat direction, float speed);
+
   explicit Kart(const Kart& kartToCopy);
+
   virtual ~Kart();
 
   //Met à jour le Kart en fonction des ordres qui lui ont été donnés
@@ -68,6 +72,7 @@ public:
   void bounce();
 
   virtual const glm::vec3& getPosition() const;
+  void setPosition(glm::vec3 pos);
   virtual const glm::quat& getOrientation() const;
 
   std::string getName() const
@@ -76,7 +81,7 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
-
+Specifications specifications;
 private:
   void initStates();
   //Ouais,c'est un peu sale, mais j'ai pas trouve plus simple pour l'instant
@@ -92,6 +97,8 @@ private:
   friend class Deceleration;
   friend class NoMove;
   friend class Bounce;
+  friend class ForwardBrake;
+  friend class BackwardBrake;
 
   void setState(KartState* newState);
 
@@ -106,7 +113,7 @@ private:
   ///La vitesse angulaire actuelle en degres/seconde
   float currentAngularSpeed;
   float currentAcceleration;
-  Specifications specifications;
+
   std::string name;
 
   KartState* forwardAccelerationState;
@@ -117,6 +124,8 @@ private:
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
   KartState* bounceState;
+  KartState* forwardBrakeState;
+  KartState* backwardBrakeState;
   KartState* currentState;
 
 };

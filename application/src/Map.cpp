@@ -114,8 +114,8 @@ void Map::loadCheckpoint(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> checkpoint.position.x;
-      mapStream >> checkpoint.position.z;
       mapStream >> checkpoint.position.y;
+      mapStream >> checkpoint.position.z;
     }
     else if (attribute == "radius")
     {
@@ -144,15 +144,15 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> position.x;
-      mapStream >> position.z;
       mapStream >> position.y;
+      mapStream >> position.z;
       bb.setPosition(position);
     }
     else if (attribute == "size")
     {
       mapStream >> size.x;
-      mapStream >> size.z;
       mapStream >> size.y;
+      mapStream >> size.z;
       bb.setSize(size);
     }
   }
@@ -173,8 +173,8 @@ void Map::loadItem(std::ifstream& mapStream)
   mapStream >> attribute; //je sais que c'est forcement "location"
 
   mapStream >> itemPosition.x;
-  mapStream >> itemPosition.z;
   mapStream >> itemPosition.y;
+  mapStream >> itemPosition.z;
 
   itemsPositions.push_back(itemPosition);
 }
@@ -198,14 +198,14 @@ void Map::loadFrictionArea(std::ifstream& mapStream)
     if (attribute == "location")
     {
       mapStream >> area.position.x;
-      mapStream >> area.position.z;
       mapStream >> area.position.y;
+      mapStream >> area.position.z;
     }
     else if (attribute == "size")
     {
       mapStream >> area.size.x;
-      mapStream >> area.size.z;
       mapStream >> area.size.y;
+      mapStream >> area.size.z;
     }
   }
 

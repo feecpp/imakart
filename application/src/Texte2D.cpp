@@ -20,7 +20,27 @@ Texte2D::Texte2D(std::string mText):
 
 Texte2D::~Texte2D(){}
 
-void Texte2D::setPosition(int x, int y, int size) //En pixel ...
+void Texte2D::update() //En pixel ...
+{
+
+}
+
+void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const
+{
+    //Dessin du texte
+  vao.bind();
+  GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
+  shaderProgram.setUniform(Text2DUniform, 0);
+  texture->bind();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDisable(GL_BLEND);
+  texture->unbind();
+  vao.unbind();
+}
+
+void Texte2D::setPosition(int x, int y, int size)
 {
   std::ostringstream os;
   os << myText;
@@ -52,22 +72,6 @@ void Texte2D::setPosition(int x, int y, int size) //En pixel ...
 
   setVBO();
   setVAO();
-
-
-}
-
-void Texte2D::draw(const glimac::ShaderProgram& shaderProgram){
-    //Dessin du texte
-  vao.bind();
-  GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
-  shaderProgram.setUniform(Text2DUniform, 0);
-  texture->bind();
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-  glDisable(GL_BLEND);
-  texture->unbind();
-  vao.unbind();
 }
 
 void Texte2D::setVBO(){
@@ -84,7 +88,4 @@ void Texte2D::setVAO(){
   vao.enableVertexAttribArray(1);
   vao.vertexAttribPointer(vbo, 0, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (0 * sizeof(GLfloat)) );
   vao.vertexAttribPointer(vbo, 1, 2, GL_FLOAT, GL_FALSE, sizeof(glimac::Vertex2DUV), (const GLvoid*) (2 * sizeof(GLfloat)) );
-}
-
-void Texte2D::update(){
 }

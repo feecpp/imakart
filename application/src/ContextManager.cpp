@@ -6,6 +6,7 @@
 #include "KartCube.hpp"
 #include "Skybox.hpp"
 #include "Cube.hpp"
+#include "Hangar.hpp"
 #include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
@@ -13,6 +14,8 @@
 #include <iostream>
 #include <stdexcept>
 #include "Camera.hpp"
+#include "Interface.hpp"
+#include "World3D.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -48,79 +51,79 @@ void ContextManager::updateContextIfNeeded()
 void ContextManager::setupMenuContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMainMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
-
+  Interface* interfaceMenu = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
   }
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+  interfaceMenu->addObject2D(menu2D);
+
+  graphicEngine.setCurrentInterface(interfaceMenu);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupMenuKartContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
+  Menu2D* menu2D = Menu2D::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
+  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
 
-
-  Menu2D* menu2D = Menu2D::initialiseKartMenu(gameEngine.getHangar().getKartsName());
-  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(gameEngine.getHangar().getKartsName());
-
+  Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    graphicEngine.addObjectTexte(menu2D->getTab2DMenu(i)->getObjTexte2D());
+    menuInterface->addObjectTexte(menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText());
   }
-
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+
+  menuInterface->addObject2D(menu2D);
+  graphicEngine.setCurrentInterface(menuInterface);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupMenuMapContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useMenuProgram();
   Menu2D* menu2D = Menu2D::initialiseMapMenu();
   MenuLogic* menuLogic = MenuLogic::initialiseMapMenu();
 
+  Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
   }
 
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  graphicEngine.addObject2D(menu2D);
+
+  menuInterface->addObject2D(menu2D);
+  graphicEngine.setCurrentInterface(menuInterface);
+
+  World3D* menuWorld = new World3D();//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
 void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
-  graphicEngine.useRaceProgram();
-
-  const GraphicSettings& settings = graphicEngine.getSettings();
-  Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
-  camera->linkToPositionable(gameEngine.getPlayerKart());
 
   Light* light = new Light();
   light->linkToPositionable(gameEngine.getPlayerKart());
-
-  //Gérer plusieurs lumières ponctuelles
-  std::vector<Light> lights;
-  lights.resize(3);
-  Light lightpon1; lights[0] = lightpon1;
-  Light lightpon2; lights[1] = lightpon2;
-  Light lightpon3; lights[2] = lightpon3;
+  //Light* l = new Light(glm::vec3(-3.,-30.,-3.));
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
   //Plus tard à remplacer par le choix dans le menu
   try
   {
-    map->loadFromFile("maps/Imakart_Map_test.txt");
+    map->loadFromFile("maps/plage.txt");
   }
   catch(std::runtime_error er)
   {
@@ -129,11 +132,11 @@ void ContextManager::setupRaceContext() const
   }
   gameEngine.setCurrentMap(map);
 
-  /*
+
   Mesh* mapMesh = new Mesh();
   try
   {
-    mapMesh->loadFromFile("data/Imakart_Map_test.dae");
+    mapMesh->loadFromFile("data/plage.dae");
   }
   catch(std::runtime_error er)
   {
@@ -141,7 +144,7 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   mapMesh->setModelToRepresent(*map);
-  */
+
 
   //---------Chargements relatifs au Kart
   Mesh* minionMesh = new Mesh();
@@ -155,25 +158,50 @@ void ContextManager::setupRaceContext() const
   }
   minionMesh->setModelToRepresent(gameEngine.getPlayerKart());
 
-  //L'engine devient le propriÃ©taire de la camÃ©ra et prend en charge sa destruction
-  graphicEngine.setCamera(camera);
-  graphicEngine.setLight(light);
-  graphicEngine.addObject3D(minionMesh);
-  //graphicEngine.addObject3D(mapMesh);
-  graphicEngine.getSkybox()->setCamera(camera);
+  //L'engine devient le propriÃ©taire de la camera et prend en charge sa destruction
+  const GraphicSettings& settings = graphicEngine.getSettings();
+  Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
+  camera->linkToPositionable(gameEngine.getPlayerKart());
 
-  //Vieux truc dégueu pour voir les bounding boxes sous forme de cube
+  World3D* gameWorld = new World3D();
+  gameWorld->setCamera(camera);
+  gameWorld->addLight(light);
+  //gameWorld->addLight(l);
+  gameWorld->addObject3D(minionMesh);
+  gameWorld->addObject3D(mapMesh);
+ 
+  //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
     visibleBB->setSize(it->getSize());
     visibleBB->setModelToRepresent(*it);
-    graphicEngine.addObject3D(visibleBB);
+    gameWorld->addObject3D(visibleBB);
   }
 
+  //Dessin d'un adversaire
+  Mesh* opponentMesh = new Mesh();
+  try
+  {
+    opponentMesh->loadFromFile("data/"+ gameEngine.getOpponentKart(0).getName() + ".dae");
+  }catch(std::runtime_error er)
+  {
+    std::cerr << er.what() << std::endl;
+    gameEngine.activateExitFlag();
+  }
+  opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(0));
+  gameWorld->addObject3D(opponentMesh);
+  gameEngine.getOpponent(0).startMovement();
+
+  Interface* gameInterface = new Interface();
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
-  graphicEngine.addObjectTexte(chrono);
+  chrono->setPosition(10, 570, 20);
+  gameInterface->addObjectTexte(chrono);
+
+  graphicEngine.setCurrentInterface(gameInterface);
+  graphicEngine.setCurrentWorld3D(gameWorld);
+
 }
 
 const EventHandler& ContextManager::getHandler() const

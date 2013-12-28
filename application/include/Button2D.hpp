@@ -7,7 +7,7 @@
 #include "VAO.hpp"
 
 #include <string>
-
+#include <memory>
 
 class Button2D : public Object2D
 {
@@ -22,16 +22,18 @@ public:
 	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	void update();
 
-	ObjectTexte* getObjTexte2D(){
-		return &myText;
-	}
+  //Un peu sale mais au moins la memoire est correctement geree
+  Texte2D* getOwnershipOnGeneratedText()
+    {ownership = false; return generatedText;}
+
+
 	
 private:
 	glimac::Vertex2DUV vertices[4];
 	glimac::LowLevelVBO vbo;
 	glimac::VAO vao;
-	
-	Texte2D myText;
+  Texte2D* generatedText;
+  bool ownership;
 
 	bool done;
 	void setVBO(); //call in the constructor

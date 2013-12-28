@@ -4,9 +4,12 @@
 ChronoLogic::ChronoLogic(): timer(0.f){
 }
 
+void ChronoLogic::init(){
+  timer=0.f;
+}
+
 void ChronoLogic::update(float time){
   timer += time;
-  //std::cout << "timerchrono " << timer << std::endl;
 }
 
 ChronoLogic::~ChronoLogic(){

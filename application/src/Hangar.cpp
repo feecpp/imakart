@@ -6,6 +6,23 @@
   #include <sys/types.h>
 #endif
 
+Hangar* Hangar::singletonHangar = NULL;
+
+Hangar* Hangar::getSingletonHangar(){
+  if(singletonHangar == NULL){
+    singletonHangar = new Hangar();
+  }
+  return singletonHangar;
+}
+
+void Hangar::kill (){
+  if (NULL != singletonHangar){
+    delete singletonHangar;
+    singletonHangar = NULL;
+  }
+}
+
+
 Hangar::Hangar()
 {
   instancedKarts.resize(0);
@@ -47,6 +64,10 @@ Kart& Hangar::createKartInstanceByName(const std::string& kartName)
   }
   instancedKarts.push_back(newInstance);
   return *newInstance;
+}
+
+Kart& Hangar::getKartByName(const std::string& kartName){
+  return *(kartTemplates[kartName]);
 }
 
 std::vector<std::string> Hangar::findKartFiles(){

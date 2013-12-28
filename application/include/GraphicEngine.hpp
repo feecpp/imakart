@@ -6,14 +6,12 @@
 #include <string>
 #include "ShaderProgram.hpp"
 #include <map>
+#include "Observable.hpp"
 
-
-class Object3D;
-class Object2D;
+class World3D;
+class Interface;
 class Camera;
 class Light;
-class Skybox;
-class ObjectTexte;
 
 /**
  * @brief Les options graphiques bas niveau
@@ -40,7 +38,7 @@ struct GraphicSettings
  * Contient Ã©galement une liste d'objets 2D
  * qui constituent l'interface.
  */
-class GraphicEngine
+class GraphicEngine : public Observable
 {
 public:
   GraphicEngine();
@@ -52,88 +50,39 @@ public:
 
   const GraphicSettings& getSettings() const;
 
-  /**
-   * @brief reset
-   * Nettoie la liste des objets 2D et 3D.
+  /** Delete le world3D actuel et prend le nouveau.
+   * Prend en charge la memoire du nouveau.
+   * Appelle la methode init() de l'interface
    */
-  void reset();
+  void setCurrentWorld3D(World3D* newWorld3D);
 
-  /**
-   * @brief addObject3D Ajout un objet 3D dans la liste d'affichage
-   * du GraphicEngine. Le GraphicEngine devient propriÃƒÂ©taire de cet objet
-   * et prend en charge sa destruction. Actuellement dÃƒÂ©finir une camÃƒÂ©ra dÃƒÂ©fini
-   * l'ÃƒÂ©ventuelle ancienne camÃƒÂ©ra dÃƒÂ©tenue par le GraphicEngine.
-   * @param newObject3D
+  /** Delete le world3D actuel et prend le nouveau.
+   * Prend en charge la memoire du nouveau.
+   * Appel la methode init() de l'interface
    */
-  void addObject3D(Object3D* newObject3D)
-    {objects3D.push_back(newObject3D);}
-    
-  void addObject2D(Object2D* newObject2D)
-    {objects2D.push_back(newObject2D);}
+  void setCurrentInterface(Interface* newInterface);
 
-  void addObjectTexte(ObjectTexte* newObjectTexte)
-    {objectsTexte.push_back(newObjectTexte);}
-
-  /**
-   * @brief setCamera dÃ©fini une nouvelle camÃ©ra
-   * pour afficher la scÃ¨ne. Le GraphicEngine devient le propriÃƒÂ©taire
-   * de newCamera et prendra en charge sa destruction.
-   * @param newCamera
-   */
-  void setCamera(Camera* newCamera);
-
-  /*
-   *setLight défini une nouvelle source de lumière
-   */
-  void setLight(Light* newLight);
-
-
-  /*
-   * C'est un peu moisi comme mÃ©thode
-   * mais Ã§a suffit pour l'instant. A amÃ©liorier
-   * quand le graphique engine aura plus de ShaderProgram
-   * Ã  gÃ©rer
-   **/
-  void useMenuProgram();
-  void useRaceProgram();
-  void useTexteProgram();
-  void useSkyboxProgram();
+  virtual const void attach(Observer* obs);
 
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
-  Skybox* getSkybox(){
-    return skybox;
-  }
+  void reset();
 
 private:
-  void drawWorld();
-  void drawInterface();
-  void initShaderPrograms();
   void initTextures();
 
   GraphicSettings settings;
 
-  Camera* currentCamera;
+  World3D* world3D;
+  Interface* interface;
 
-  Light* currentLight;
-  Skybox* skybox;
-
-  //Avant de trouver une meilleure mÃƒÂ©thode...
-  glimac::ShaderProgram* currentProgram;
-  glimac::ShaderProgram* menuProgram;
-  glimac::ShaderProgram* raceProgram;
-  glimac::ShaderProgram* texte2DProgram;
-  glimac::ShaderProgram* skyboxProgram;
-
-  //GraphicSettings settings;
-  std::vector<Object3D* > objects3D;
-  std::vector<Object2D* > objects2D;
-  std::vector<ObjectTexte* > objectsTexte;
+  //Light* currentLight;
 
   sf::RenderWindow window;
-  sf::Font font;
   std::vector<GLuint> tabTextures;
+
+  Observer* scenario;
 
 };
 

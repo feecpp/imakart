@@ -15,11 +15,11 @@ class ChronoTexte : public ObjectTexte
 {
 public:
   ChronoTexte();
-  void printChronoTexte(int x, int y, int size, const glimac::ShaderProgram& shaderProgram);
   ~ChronoTexte();
 
-  void draw(const glimac::ShaderProgram& shaderProgram);
-  void update();
+  void draw(const glimac::ShaderProgram& shaderProgram) const;
+  virtual void update();
+  virtual void setPosition(int x, int y, int size);
 
 private:
   std::vector<glimac::Vertex2DUV> vertices;
@@ -28,6 +28,10 @@ private:
   float timer;
   void setVBO(); //called in the constructor
   void setVAO(); //called in the constructor
+  std::string prepareText() const;
+
+  glm::vec2 position;
+  int size;
 };
 
 #endif // CHRONOTEXTE_HPP

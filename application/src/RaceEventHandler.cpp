@@ -10,7 +10,6 @@ RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphi
 void RaceEventHandler::pressUp() const
 {
   gameEngine.getPlayer().moveForward();
-
 }
 void RaceEventHandler::releaseUp() const
 {
@@ -55,7 +54,7 @@ void RaceEventHandler::releaseEnter() const
 
 void RaceEventHandler::pressSpace() const
 {
-  gameEngine.getPlayer().drift();
+  gameEngine.getPlayer().brake();
 }
 
 void RaceEventHandler::releaseSpace() const

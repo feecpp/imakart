@@ -18,6 +18,8 @@ void Kart::initStates()
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
   bounceState = new Bounce(*this);
+  forwardBrakeState = new ForwardBrake(*this);
+  backwardBrakeState = new BackwardBrake(*this);
   currentState = noMoveState;
 }
 
@@ -47,12 +49,6 @@ Kart::Kart(std::string kartName)
   initStates();
  }
 
-Kart::Kart(glm::vec3 position, glm::quat orientation, float speed)
-  : position(position), boundingBox(position, BOUNDING_BOX_SIZE), orientation(orientation), speed(speed)
-{
-  initStates();
-}
-
 Kart::Kart(const Kart& kartToCopy)
   : position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
     currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name)
@@ -70,7 +66,13 @@ Kart::~Kart()
   delete backwardMaxSpeedReached;
   delete noMoveState;
   delete bounceState;
+  delete forwardBrakeState;
+  delete backwardBrakeState;
   currentState = nullptr;
+}
+
+void Kart:: setPosition(glm::vec3 pos){
+  position = pos;
 }
 
 void Kart::update(float elapsedTimeInSecond)

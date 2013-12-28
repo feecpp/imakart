@@ -9,7 +9,8 @@ void main(){
 
 	vec2 vertexPosition_homoneneousspace = vertexPosition_screenspace - vec2(400,300);
 	vertexPosition_homoneneousspace /= vec2(400,300);
-	gl_Position =  vec4(vertexPosition_homoneneousspace,0,1);
+  gl_Position =  vec4(vertexPosition_homoneneousspace,0,1);
+  //gl_Position =  vec4(vertexPosition_screenspace,0,1);
 
 	UV = vertexUV;
 }
