@@ -1,19 +1,22 @@
 #include "Button2D.hpp"
 
 Button2D::Button2D()
-  :generatedText(new Texte2D()), ownership(true)
+  :ownership(true)
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(-0.5f, -0.5f), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(0.5f, -0.5f), glm::vec2(1,1));
 	vertices[2] = glimac::Vertex2DUV(glm::vec2(0.5f, 0.5f), glm::vec2(1,0));
 	vertices[3] = glimac::Vertex2DUV(glm::vec2(-0.5f, 0.5f), glm::vec2(0,0));
 
+	Texte2D* text = new Texte2D();
+  generatedText.push_back(text);
+
 	setVBO();
 	setVAO();
 }
 
 Button2D::Button2D(const float x_bottom, const float y_left, const float width, const float height, std::string pathTextureNoSelect, std::string pathTextureSelect, std::string nameOfButton)
-  :generatedText(new Texte2D(nameOfButton)), ownership(true)
+  : ownership(true)
 {
 	vertices[0] = glimac::Vertex2DUV(glm::vec2(x_bottom, y_left), glm::vec2(0,1));
 	vertices[1] = glimac::Vertex2DUV(glm::vec2(x_bottom + width, y_left), glm::vec2(1,1));
@@ -27,11 +30,12 @@ Button2D::Button2D(const float x_bottom, const float y_left, const float width, 
 	glimac::Texture* second = new glimac::Texture(GL_TEXTURE_2D);
 	second->loadTexture2D(pathTextureNoSelect);
 	tabTexture.push_back(second);
-
 	activTexture = tabTexture[0];
   float n_x_bottom = x_bottom * 400.f + 400.f; //Pour mettre entre 0 et 800 (comme modifié apres dans le shader)
   float n_y = (y_left - 0.1f) * 300.f + 300.f;
-  generatedText->setPosition(n_x_bottom, n_y, 20);
+	Texte2D* text = new Texte2D(nameOfButton);
+  text->setPosition(n_x_bottom, n_y, 20);
+  generatedText.push_back(text);
 	setVBO();
 	setVAO();
 }
@@ -40,7 +44,9 @@ Button2D::~Button2D()
 {
   if (ownership)
   {
-    delete generatedText;
+  	for(unsigned int i = 0; i < generatedText.size(); ++i){
+    	delete generatedText[i];
+  	}
   }
 }
 

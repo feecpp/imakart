@@ -21,18 +21,16 @@ public:
 
 	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	void update();
-
+	
   //Un peu sale mais au moins la memoire est correctement geree
-  Texte2D* getOwnershipOnGeneratedText()
+  std::vector<Texte2D*> getOwnershipOnGeneratedText()
     {ownership = false; return generatedText;}
 
-
-	
-private:
+protected:
 	glimac::Vertex2DUV vertices[4];
 	glimac::LowLevelVBO vbo;
 	glimac::VAO vao;
-  Texte2D* generatedText;
+  std::vector<Texte2D*> generatedText;
   bool ownership;
 
 	bool done;

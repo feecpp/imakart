@@ -77,7 +77,10 @@ void ContextManager::setupMenuKartContext() const
   Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    menuInterface->addObjectTexte(menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText());
+
+    for(unsigned int j = 0; j<menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText().size(); ++j){
+      menuInterface->addObjectTexte((menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText())[j]);
+    }
   }
   gameEngine.setMenu(menuLogic);
   menu2D->setModelToRepresent(gameEngine.getMenuLogic());
