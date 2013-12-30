@@ -97,3 +97,7 @@ void World3D::setCamera(Camera* newCamera)
   camera = newCamera;
   skybox.setCamera(camera);
 }
+
+void World3D::switchView(){
+  camera->switchView();
+}

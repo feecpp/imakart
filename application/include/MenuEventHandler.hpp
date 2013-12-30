@@ -23,6 +23,7 @@ public:
   virtual void releaseRight() const;
   virtual void releaseEnter() const;
   virtual void releaseSpace() const;
+  virtual void pressNumpad0() const;
 
   void setMenu(MenuLogic* menu)
    	{this->menu = menu;}

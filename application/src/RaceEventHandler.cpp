@@ -1,5 +1,6 @@
 #include "RaceEventHandler.hpp"
 #include "GameEngine.hpp"
+#include "GraphicEngine.hpp"
 #include <iostream>
 
 RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine)
@@ -59,4 +60,9 @@ void RaceEventHandler::pressSpace() const
 
 void RaceEventHandler::releaseSpace() const
 {
+}
+
+void RaceEventHandler::pressNumpad0() const
+{
+  graphicEngine.getWorld3D()->switchView();
 }

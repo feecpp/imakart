@@ -8,7 +8,6 @@
 
 class Object3D;
 class Light;
-class Camera;
 
 class World3D
 {
@@ -38,6 +37,11 @@ public:
    * @param newCamera
    */
   void setCamera(Camera* newCamera);
+
+  /*
+   * Change de la premiere personne à la troisieme personne
+   */
+  void switchView();
 
   /*
    *setLight défini une nouvelle source de lumière

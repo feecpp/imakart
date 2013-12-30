@@ -7,8 +7,8 @@
 #include "ShaderProgram.hpp"
 #include <map>
 #include "Observable.hpp"
+#include "World3D.hpp"
 
-class World3D;
 class Interface;
 class Camera;
 class Light;
@@ -66,6 +66,8 @@ public:
 
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
+
+  World3D* getWorld3D();
 
   void reset();
 
