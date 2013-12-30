@@ -5,7 +5,7 @@
 
 
 World3D::World3D()
-    : camera(new Camera(1024,768)), sun(new DirectionnalLight()) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(1024,768)), sun(new DirectionalLight()) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");

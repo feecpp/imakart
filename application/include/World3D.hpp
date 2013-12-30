@@ -4,7 +4,7 @@
 #include <vector>
 #include <ShaderProgram.hpp>
 #include "Skybox.hpp"
-#include "DirectionnalLight.hpp"
+#include "DirectionalLight.hpp"
 #include "Camera.hpp"
 
 class Object3D;
@@ -54,7 +54,7 @@ private:
   //std::vector<Light* > lights;
   Skybox skybox;
   Camera* camera;
-  DirectionnalLight* sun;
+  DirectionalLight* sun;
 
 };
 
