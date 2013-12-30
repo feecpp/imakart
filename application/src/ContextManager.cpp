@@ -119,7 +119,7 @@ void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
 
-  //Light* light = new Light();
+  //PointLight* light = new PointLight();
   //light->linkToPositionable(gameEngine.getPlayerKart());
 
   //-------------Chargement relatifs a la map

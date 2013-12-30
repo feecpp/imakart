@@ -2,6 +2,7 @@
 #define WORLD3D_HPP
 
 #include <vector>
+#include <glm/glm.hpp>
 #include <ShaderProgram.hpp>
 #include "Skybox.hpp"
 #include "DirectionalLight.hpp"
@@ -42,9 +43,12 @@ public:
   /*
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
    */
-  /*void addLight(Light* newLight)
+  /*void addLight(PointLight* newLight)
       {lights.push_back(newLight);}
 */
+  const glm::vec4 getAmbientLight() const
+    {return ambientLight;}
+
 
 private:
   std::vector<Object3D* > objects3D;
@@ -55,6 +59,7 @@ private:
   Skybox skybox;
   Camera* camera;
   DirectionalLight* sun;
+  glm::vec4 ambientLight;
 
 };
 

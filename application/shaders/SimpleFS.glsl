@@ -18,6 +18,7 @@ uniform mat4 model = mat4(1);
 uniform vec3 uLightDir;
 uniform vec3 uLightPos;
 uniform vec3 uLi; //--> LightIntensity
+uniform vec4 uAmbientLight;
 
 
 out vec4 oFragColor;
@@ -46,7 +47,6 @@ vec4 ambientDiffuse()
 
 vec4 ADS()
 {
-    vec4 ambientLight = vec4(0.3f,0.3f,0.3f,1.f);
 
     float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(uLightDir, 0.f))));
     vec4 vDiffuseColor = vec4(material.diffuse.rgb * uLi * fDotProduct, 1.0);
@@ -56,7 +56,7 @@ vec4 ADS()
     float PowProduct = pow(DotProduct,material.shininess);
     vec4 vSpecularColor = vec4(material.specular.rgb * uLi * PowProduct,1.0);
 
-    vec4 vAmbientColor = ambientLight * material.ambient;
+    vec4 vAmbientColor = uAmbientLight * material.ambient;
 
     return vAmbientColor + vDiffuseColor + vSpecularColor;
 }

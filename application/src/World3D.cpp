@@ -5,7 +5,7 @@
 
 
 World3D::World3D()
-    : camera(new Camera(1024,768)), sun(new DirectionalLight()) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(1024,768)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -89,6 +89,10 @@ void World3D::draw() const
   GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
   raceProgram.setUniform(lightDirId,direction);
   raceProgram.setUniform(lightIntensityId, intensity);
+
+  const glm::vec4& ambient = getAmbientLight();
+  GLint ambientLightId = raceProgram.getUniformIndex("uAmbientLight");
+  raceProgram.setUniform(ambientLightId, ambient);
 
   for (auto object3D = objects3D.begin(); object3D != objects3D.end(); ++object3D)
   {
