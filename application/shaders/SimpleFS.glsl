@@ -35,27 +35,6 @@ uniform vec4 uAmbientLight;
 out vec4 oFragColor;
 
 //Calcul de la luminosite
-vec4 blinnPhong() {
-  vec4 wi = normalize(vec4(directional.uLightDir,1.0));//Vecteur qui pointe vers la lumiÃ¨re
-  vec4 w0 = normalize(-vPosition_vs);//Vecteur qui pointe vers la camera
-  vec4 halfVector = (w0+wi)*0.5f;
-
-  vec4 res = vec4(directional.uLi,1.0)*( material.diffuse*max(dot(wi,vNormal_vs),0.0) +  material.specular*pow(max(dot(halfVector,vNormal_vs),0.0),material.shininess) + material.ambient);
-
-  return res;
-}
-
-vec4 ambientDiffuse()
-{
-  vec4 ambientLight = vec4(0.3f,0.3f,0.3f,1.f);
-
-  float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(directional.uLightDir, 0.f))));
-  vec4 vDiffuseColor = vec4(material.diffuse.rgb * directional.uLi * fDotProduct, 1.0);
-  vec4 vAmbientColor = ambientLight * material.ambient;
-
-  return vAmbientColor + vDiffuseColor;
-}
-
 vec4 ADS()
 {
   float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(directional.uLightDir, 0.f))));
@@ -107,5 +86,5 @@ vec4 blinnPhongPonctuelle(){
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = blinnPhongPonctuelle();
+  oFragColor = ADS();
 }

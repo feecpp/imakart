@@ -2,12 +2,12 @@
 #include "Positionable.hpp"
 
 DirectionalLight::DirectionalLight()
-  :direction(3.f,30.f,3.f),intensity(1.5f,1.5f,1.5f)
+  :direction(3.f,30.f,3.f),intensity(3.5f,3.5f,3.5f)
 {
 }
 
 DirectionalLight::DirectionalLight(glm::vec3 direction)
-    :direction(direction),intensity(1.5f,1.5f,1.5f)
+    :direction(direction),intensity(3.5f,3.5f,3.5f)
 {
 }
 

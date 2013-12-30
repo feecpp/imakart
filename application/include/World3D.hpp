@@ -43,16 +43,12 @@ public:
   void setCamera(Camera* newCamera);
 
   /*
-<<<<<<< HEAD
    * Change de la premiere personne à la troisieme personne
    */
   void switchView();
 
   /*
-   *setLight défini une nouvelle source de lumière
-=======
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
->>>>>>> 161359c8cc56e33a08055671b6faa9503cf810a9
    */
   void addLight(PointLight* newLight)
       {lights.push_back(newLight);}
