@@ -127,6 +127,28 @@ void Kart::bounce()
   setState(bounceState);
 }
 
+void Kart::boost()
+{
+  if(currentState == backwardAccelerationState || currentState == backwardDecelerationState){
+    speed -= 10;
+    if(speed < -specifications.maxSpeed){
+      speed = -specifications.maxSpeed;
+    }
+  }else if (currentState == noMoveState || currentState == forwardBrakeState){
+    speed += 10;
+    currentAcceleration = -1;
+    if(speed > specifications.maxSpeed){
+      speed = specifications.maxSpeed;
+    }
+    setState(forwardAccelerationState);
+  }else if (currentState == forwardAccelerationState || currentState == forwardDecelerationState || currentState == backwardBrakeState){
+    speed += 10;
+    if(speed > specifications.maxSpeed){
+      speed = specifications.maxSpeed;
+    }
+  }
+}
+
 const glm::vec3& Kart::getPosition() const
   {return position;}
 

@@ -1,10 +1,12 @@
 #include "Player.hpp"
 #include "Kart.hpp"
+#include "ItemLogic.hpp"
 #include <iostream>
 
 Player::Player(Kart& kart)
-  :myKart(kart)
+  :myKart(kart), myCurrentItem(nullptr)
 {
+  myCurrentItem = new ItemLogic(1);
 }
 
 const Kart& Player::getKart() const
@@ -15,6 +17,16 @@ const Kart& Player::getKart() const
 Kart& Player::getKart()
 {
   return myKart;
+}
+
+const ItemLogic* Player::getItem() const
+{
+  return myCurrentItem;
+}
+
+ItemLogic* Player::getItem()
+{
+  return myCurrentItem;
 }
 
 void Player::moveForward() const
@@ -57,5 +69,24 @@ void Player::drift() const
   myKart.drift();
 }
 
+void Player::setItem(ItemLogic* newItem)
+{
+  myCurrentItem = newItem;
+}
 
+void Player::useItem()
+{
+  if(myCurrentItem != nullptr){
+    switch(myCurrentItem->getEffect()){
+      case 1:
+        myKart.boost();
+        break;
 
+      default:
+        break;
+    }
+
+    delete myCurrentItem;
+    myCurrentItem = nullptr;
+  } 
+}

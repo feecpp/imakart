@@ -1,7 +1,6 @@
 #include "RaceEventHandler.hpp"
 #include "GameEngine.hpp"
 #include "GraphicEngine.hpp"
-#include <iostream>
 
 RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine)
@@ -46,7 +45,7 @@ void RaceEventHandler::releaseRight() const
 
 void RaceEventHandler::pressEnter() const
 {	
-
+  gameEngine.getPlayer().useItem();
 }
 
 void RaceEventHandler::releaseEnter() const

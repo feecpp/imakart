@@ -14,7 +14,7 @@ public:
   virtual const bool isSelected() const = 0;
 
   const char* getName() const
-		{return name;}
+	{return name;}
 
   virtual float getTime() const
     {return 0;}
