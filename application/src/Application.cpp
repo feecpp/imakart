@@ -42,7 +42,6 @@ void Application::handleEvents(sf::RenderWindow& window)
 {
   const EventHandler& handler = contextManager.getHandler();	 
 
-  //J'avoue, c'est pas vraiment plus propre
   if (gameEngine.getState() == IN_RACE)
   {
 
@@ -92,6 +91,9 @@ void Application::handleEvents(sf::RenderWindow& window)
 
             else if (e.key.code == sf::Keyboard::Space)
               handler.pressSpace();
+
+            else if (e.key.code == sf::Keyboard::Numpad0)
+              handler.pressNumpad0();
 
             break;
 

@@ -20,6 +20,8 @@ public:
   void linkToPositionable(const Positionable& objectToFollow)
     {this->objectToFollow = &objectToFollow;}
 
+  void switchView();
+
 private:
   const Positionable* objectToFollow;
   glm::mat4 viewMatrix;
@@ -28,6 +30,8 @@ private:
 
   size_t windowWidth;
   size_t windowHeight;
+
+  bool viewThirdPerson;
 };
 
 #endif // CAMERA_HPP

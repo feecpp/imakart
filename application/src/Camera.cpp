@@ -4,7 +4,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 Camera::Camera(size_t windowWidth, size_t windowHeight)
-  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight)
+  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight), viewThirdPerson(true)
 {
 }
 
@@ -52,3 +52,6 @@ void Camera::updateViewProjectionMatrix()
   viewProjection = projectionMatrix * viewMatrix;
 }
 
+void Camera::switchView(){
+  
+}

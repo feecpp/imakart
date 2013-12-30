@@ -70,6 +70,7 @@ public:
   void brake();
   void drift();
   void bounce();
+  void boost();
 
   virtual const glm::vec3& getPosition() const;
   void setPosition(glm::vec3 pos);

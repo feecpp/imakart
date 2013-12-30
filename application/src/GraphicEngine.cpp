@@ -7,7 +7,6 @@
 #include "Light.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
-#include "World3D.hpp"
 #include "Interface.hpp"
 
 GraphicEngine::GraphicEngine()
@@ -82,6 +81,9 @@ const void GraphicEngine::attach(Observer* obs){
   scenario = obs;
 }
 
+World3D* GraphicEngine::getWorld3D(){ 
+  return world3D;
+}
 
 void GraphicEngine::reset()
 {
