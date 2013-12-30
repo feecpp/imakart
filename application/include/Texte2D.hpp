@@ -23,7 +23,7 @@ public:
 
   virtual void update();
 
-private:
+protected:
   std::vector<glimac::Vertex2DUV> vertices;
 
   glimac::LowLevelVBO vbo;

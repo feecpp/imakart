@@ -16,6 +16,8 @@
 #include "Camera.hpp"
 #include "Interface.hpp"
 #include "World3D.hpp"
+#include "SpeedTexte.hpp"
+#include "convert.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -194,11 +196,16 @@ void ContextManager::setupRaceContext() const
   gameWorld->addObject3D(opponentMesh);
   gameEngine.getOpponent(0).startMovement();
 
+  //Init de l'interface
   Interface* gameInterface = new Interface();
   ChronoTexte* chrono = new ChronoTexte();
   chrono->setModelToRepresent(gameEngine.getChrono());
   chrono->setPosition(10, 570, 20);
   gameInterface->addObjectTexte(chrono);
+
+  //Récupérer le speed du kart
+  SpeedTexte* currentSpeedKart = new SpeedTexte(gameEngine.getPlayerKart().getCurrentSpeed());
+  gameInterface->addObjectTexte(currentSpeedKart);
 
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
