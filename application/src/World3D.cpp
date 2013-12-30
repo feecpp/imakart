@@ -87,8 +87,8 @@ void World3D::draw() const
   const glm::vec3& intensity = sun->getLightIntensity();
   GLint lightDirId = raceProgram.getUniformIndex("uLightDir");
   GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
-  raceProgram.setUniform(lightDirId,1,direction);
-  raceProgram.setUniform(lightIntensityId,1,intensity);
+  raceProgram.setUniform(lightDirId,direction);
+  raceProgram.setUniform(lightIntensityId, intensity);
 
   for (auto object3D = objects3D.begin(); object3D != objects3D.end(); ++object3D)
   {
