@@ -19,12 +19,7 @@ uniform Material material;
 
 out vec4 FragColor;
 out vec4 vNormal_vs;
-out vec4 vPosition;
-//En rapport avec material
-out vec4 Kd;
-out vec4 Ks;
-out vec4 Ka;
-out float shine;
+out vec4 vPosition_vs;
 
 
 void main() {
@@ -35,11 +30,8 @@ void main() {
   //Calcul des valeurs de sortie
   FragColor = material.ambient + material.diffuse + material.specular;
   vNormal_vs = uNormal * vertexNormal;
-  vPosition =  uView * model * vertexPosition;
-  Kd = material.diffuse;
-  Ks = material.specular;
-  Ka = material.ambient;
-  shine = material.shininess;
+  vPosition_vs =  uView * model * vertexPosition;
+
 
   gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);
 }
