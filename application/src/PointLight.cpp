@@ -19,6 +19,5 @@ const glm::vec3 PointLight::getLightIntensity() const {
 }
 
 void PointLight::updateLight(const glm::mat4 viewMatrix) {
-    position = glm::vec3(viewMatrix * glm::vec4(1,1,1,1));
+    position = glm::vec3(viewMatrix * glm::vec4(1.f,1.f,1.f,0.f));
 }
-

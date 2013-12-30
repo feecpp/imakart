@@ -22,10 +22,9 @@ uniform vec3 uLi; //--> LightIntensity
 
 out vec4 oFragColor;
 
-
 //Calcul de la luminosite
 vec4 blinnPhong() {
-  vec4 wi = normalize(vec4(uLightDir,1.0));//Vecteur qui pointe vers la lumière
+  vec4 wi = normalize(vec4(uLightDir,1.0));//Vecteur qui pointe vers la lumiÃ¨re
   vec4 w0 = normalize(-vPosition_vs);//Vecteur qui pointe vers la camera
   vec4 halfVector = (w0+wi)*0.5f;
 
@@ -34,43 +33,32 @@ vec4 blinnPhong() {
   return res;
 }
 
-vec4 BP(){
-    // set the specular term to black
-    vec4 spec = vec4(0.0);
-    vec4 diff = vec4(0.0);
-    vec4 amb = vec4(0.0);
-
-    // normalize both input vectors
-    vec3 n = normalize(vNormal_vs.rgb);
-    vec3 e = normalize(-vPosition_vs.rgb);
-
-    float intensity = max(dot(n,uLightDir), 0.0);
-    //float intensity = 0.1f;
-
-    // if the vertex is lit compute the specular color
-    if (intensity > 0.0) {
-        // compute the half vector
-        vec3 h = normalize((uLightDir + e)*0.5f);
-        // compute the specular term into spec
-        float intSpec = max(dot(h,n), 0.0);
-        spec = material.specular * pow(intSpec,material.shininess);
-        diff = material.diffuse * max(dot(n,uLightDir), 0.0);
-        amb = material.ambient * intensity;
-    }
-
-    vec4 res = max(intensity * material.diffuse + spec, material.ambient);
-    return res;
-}
-
 vec4 ambientDiffuse()
 {
-  vec4 ambientLight = vec4(1);
+  vec4 ambientLight = vec4(0.3f,0.3f,0.3f,1.f);
 
   float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(uLightDir, 0.f))));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * uLi * fDotProduct, 1.0);
   vec4 vAmbientColor = ambientLight * material.ambient;
 
   return vAmbientColor + vDiffuseColor;
+}
+
+vec4 ADS()
+{
+    vec4 ambientLight = vec4(0.3f,0.3f,0.3f,1.f);
+
+    float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(uLightDir, 0.f))));
+    vec4 vDiffuseColor = vec4(material.diffuse.rgb * uLi * fDotProduct, 1.0);
+
+    vec4 halfVector = (normalize(-vPosition_vs)+normalize(vec4(uLightDir, 0.f)))*0.5f;
+    float DotProduct = max(0.0f, dot(normalize(vNormal_vs),halfVector));
+    float PowProduct = pow(DotProduct,material.shininess);
+    vec4 vSpecularColor = vec4(material.specular.rgb * uLi * PowProduct,1.0);
+
+    vec4 vAmbientColor = ambientLight * material.ambient;
+
+    return vAmbientColor + vDiffuseColor + vSpecularColor;
 }
 
 vec4 blinnPhongPonctuelle(){
@@ -87,5 +75,5 @@ vec4 blinnPhongPonctuelle(){
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = ambientDiffuse();
+  oFragColor = ADS();
 }

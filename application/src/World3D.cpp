@@ -27,6 +27,7 @@ World3D::~World3D()
 
   objects3D.erase(objects3D.begin(), objects3D.end());
   delete camera;
+  delete sun;
 }
 
 void World3D::init()
