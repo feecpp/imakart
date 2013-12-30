@@ -6,6 +6,7 @@
 #include <ShaderProgram.hpp>
 #include "Skybox.hpp"
 #include "DirectionalLight.hpp"
+#include "PointLight.hpp"
 #include "Camera.hpp"
 
 class Object3D;
@@ -43,9 +44,9 @@ public:
   /*
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
    */
-  /*void addLight(PointLight* newLight)
+  void addLight(PointLight* newLight)
       {lights.push_back(newLight);}
-*/
+
   const glm::vec4 getAmbientLight() const
     {return ambientLight;}
 
@@ -55,7 +56,7 @@ private:
   glimac::ShaderProgram raceProgram;
   glimac::ShaderProgram skyboxProgram;
 
-  //std::vector<Light* > lights;
+  std::vector<PointLight* > lights;
   Skybox skybox;
   Camera* camera;
   DirectionalLight* sun;

@@ -2,6 +2,7 @@
 #include "Object3D.hpp"
 #include <stdexcept>
 #include "Camera.hpp"
+#include <iostream>
 
 
 World3D::World3D()
@@ -68,25 +69,24 @@ void World3D::draw() const
   raceProgram.setUniform(viewProjectionId, viewProjection);
 
   //Ranger aussi la gestion des lumieres
-/*  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
+  //Gestion des lumières ponctuelles
+  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
-    (*oneLight)->updateLightDirection();
     (*oneLight)->updateLight(viewMatrix);
-    const glm::vec3& direction = (*oneLight)->getLighDirection();
     const glm::vec3& position = (*oneLight)->getLightPosition();
     const glm::vec3& intensity = (*oneLight)->getLightIntensity();
-    GLint lightDirId = raceProgram.getUniformIndex("uLightDir");
-    GLint lightPosId = raceProgram.getUniformIndex("uLightPos");
-    GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
-    raceProgram.setUniform(lightDirId,1,direction);
-    raceProgram.setUniform(lightPosId,1, position);
+    GLint lightPosId = raceProgram.getUniformIndex("point.uLightPos");
+    GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
+    raceProgram.setUniform(lightPosId,position);
     raceProgram.setUniform(lightIntensityId, intensity);
-  }*/
+  }
+
+  //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);
   const glm::vec3& direction = sun->getLightDirection();
   const glm::vec3& intensity = sun->getLightIntensity();
-  GLint lightDirId = raceProgram.getUniformIndex("uLightDir");
-  GLint lightIntensityId = raceProgram.getUniformIndex("uLi");
+  GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
+  GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
   raceProgram.setUniform(lightDirId,direction);
   raceProgram.setUniform(lightIntensityId, intensity);
 

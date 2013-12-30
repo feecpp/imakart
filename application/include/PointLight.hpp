@@ -8,6 +8,7 @@ class PointLight
 {
 public:
     PointLight();
+    PointLight(glm::vec3 position);
     PointLight(glm::vec3 position, glm::vec3 intensity);
 
     const glm::vec3 getLightPosition() const;
@@ -16,6 +17,7 @@ public:
 
 private:
   glm::vec3 position;
+  glm::vec3 info;
   glm::vec3 intensity;
 };
 

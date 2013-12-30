@@ -119,7 +119,8 @@ void ContextManager::setupRaceContext() const
 {
   graphicEngine.reset();
 
-  //PointLight* light = new PointLight();
+  PointLight* light = new PointLight();
+  PointLight* l = new PointLight(glm::vec3(50.f,30.f,50.f));
   //light->linkToPositionable(gameEngine.getPlayerKart());
 
   //-------------Chargement relatifs a la map
@@ -169,7 +170,8 @@ void ContextManager::setupRaceContext() const
 
   World3D* gameWorld = new World3D();
   gameWorld->setCamera(camera);
-  //gameWorld->addLight(light);
+  gameWorld->addLight(light);
+  gameWorld->addLight(l);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
  
