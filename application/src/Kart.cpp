@@ -50,7 +50,7 @@ Kart::Kart(std::string kartName)
  }
 
 Kart::Kart(const Kart& kartToCopy)
-  : position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
+  : specifications(kartToCopy.specifications), position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
     currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name)
 {
   initStates();

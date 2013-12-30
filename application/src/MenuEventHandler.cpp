@@ -48,7 +48,6 @@ void MenuEventHandler::pressEnter() const
 
 	switch(action){
 		case PLAY:
-			std::cout << "Play pressed" << std::endl;
 			gameEngine.setState(IN_MENU_KART);
 			break;
 
@@ -64,8 +63,6 @@ void MenuEventHandler::pressEnter() const
 
 		case SELECT:
       		gameEngine.setupPlayer(button->name);
-
-			std::cout << "Kart player game engine : " << gameEngine.getPlayer().getKart().getName() << std::endl;
 
 			gameEngine.setState(IN_RACE);
 			break;

@@ -81,6 +81,9 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
+  const float* getCurrentSpeed() const
+    {return &speed; }
+
 Specifications specifications;
 private:
   void initStates();

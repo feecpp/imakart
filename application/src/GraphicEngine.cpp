@@ -23,7 +23,6 @@ GraphicEngine::~GraphicEngine()
 sf::RenderWindow& GraphicEngine::init()
 {
   (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
-  std::cout << "taille de la fenetre : " << settings.WINDOW_WIDTH << " : " <<  settings.WINDOW_HEIGHT << std::endl;
   sf::RenderWindow& myWindow = window;
 
   window.setFramerateLimit(settings.FPS);
