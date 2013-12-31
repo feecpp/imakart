@@ -1,8 +1,8 @@
-#include "KartFile.hpp"
+#include "ObjectFile.hpp"
 #include <iostream>
 #include <vector>
 
-KartFile::KartFile(const std::string& filePath){
+ObjectFile::ObjectFile(const std::string& filePath){
 
   std::ifstream fileStream;
   fileStream.open(filePath);

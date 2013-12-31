@@ -12,8 +12,8 @@ public:
   const Kart& getKart() const;
   Kart& getKart();
 
-  const ItemLogic* getItem() const;
-  ItemLogic* getItem();
+  const ItemLogic& getItem() const;
+  ItemLogic& getItem();
 
   void moveForward() const;
   void moveBackward() const;

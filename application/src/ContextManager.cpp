@@ -18,6 +18,8 @@
 #include "World3D.hpp"
 #include "SpeedTexte.hpp"
 #include "convert.hpp"
+#include "ItemGraphic2D.hpp"
+#include "ItemInterface.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -208,6 +210,12 @@ void ContextManager::setupRaceContext() const
   //Récupérer le speed du kart
   SpeedTexte* currentSpeedKart = new SpeedTexte(gameEngine.getPlayerKart().getCurrentSpeed());
   gameInterface->addObjectTexte(currentSpeedKart);
+
+  //Afficher un objet mode degeu :D
+  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/banane.png");
+  InterfaceElement* item = ItemInterface::getSingletonItemInterface();
+  playerItem2D->setModelToRepresent(*item);
+  gameInterface->addObject2D(playerItem2D);
 
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);

@@ -2,7 +2,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <SFML/System.hpp>
-#include <KartFile.hpp>
+#include <ObjectFile.hpp>
 #include <iostream>
 #include "KartState.hpp"
 
@@ -36,8 +36,8 @@ Kart::Kart(std::string kartName)
 {
   const std::string path = "karts/"+kartName+".kart";
 
-  //Je crée un KartFile à partir du fichier.kart et récupère un std::map
-  KartFile kartFile(path);
+  //Je crée un ObjectFile à partir du fichier.kart et récupère un std::map
+  ObjectFile kartFile(path);
   std::map<std::string, std::string> map = kartFile.getData();
 
   //Mise a jour des specs à partir de la std::map

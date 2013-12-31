@@ -1,18 +1,26 @@
 #ifndef ITEMLOGIC_HPP
 #define ITEMLOGIC_HPP
 
+#include "Positionable.hpp"
 #include <string>
+
+class ItemInterface;
 
 class ItemLogic{
 public:
-	ItemLogic(const int effect);
-	~ItemLogic();
+  ItemLogic(const std::string oName);
+  ~ItemLogic();
 
-	const int getEffect();
+  void update();
+
+  const std::string getEffect();
 
 private:
-	int numEffect;
-	bool used;
+  std::string name;
+  std::string effect;
+  bool used;
+
+  ItemInterface* myInterface;
 };
 
 #endif
