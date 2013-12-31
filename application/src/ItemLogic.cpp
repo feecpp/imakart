@@ -1,10 +1,11 @@
 #include "ItemLogic.hpp"
 #include "ObjectFile.hpp"
+#include "ItemInterface.hpp"
 #include <iostream>
 #include <cassert>
 
-ItemLogic::ItemLogic(std::string name):
-	name(name), used(false)
+ItemLogic::ItemLogic(const std::string oName):
+	name(oName), used(false), myInterface(ItemInterface::getSingletonItemInterface())
 {
   const std::string path = "items/"+name+".item";
 
@@ -16,11 +17,18 @@ ItemLogic::ItemLogic(std::string name):
   effect = map["Effect"] ;
 }
 
-ItemLogic::~ItemLogic(){}
+ItemLogic::~ItemLogic(){
+  update();
+  myInterface = nullptr;
+}
 
 const std::string ItemLogic::getEffect(){
 	assert(used == false);
 	used = true;
 
 	return effect;
+}
+
+void ItemLogic::update(){
+  myInterface->noSelected();
 }

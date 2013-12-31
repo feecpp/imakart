@@ -20,14 +20,14 @@ Kart& Player::getKart()
   return myKart;
 }
 
-const ItemLogic* Player::getItem() const
+const ItemLogic& Player::getItem() const
 {
-  return myCurrentItem;
+  return *myCurrentItem;
 }
 
-ItemLogic* Player::getItem()
+ItemLogic& Player::getItem()
 {
-  return myCurrentItem;
+  return *myCurrentItem;
 }
 
 void Player::moveForward() const
@@ -81,7 +81,7 @@ void Player::useItem()
     if(myCurrentItem->getEffect() == "boost()"){
         myKart.boost();
     }
-
+    
     delete myCurrentItem;
     myCurrentItem = nullptr;
   } 

@@ -1,0 +1,4 @@
+#ifndef ITEMINTERFACE_HPP
+#define ITEMLOGIC_HPP
+
+#endif
