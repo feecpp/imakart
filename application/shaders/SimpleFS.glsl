@@ -28,6 +28,12 @@ struct Point
     vec3 uLi;
 };
 uniform Point point;
+uniform int nbLights;
+/*
+layout (std140) uniform Lights {
+   Point light[nbLights];
+}
+*/
 
 uniform vec4 uAmbientLight;
 
@@ -51,6 +57,9 @@ vec4 ADS()
 }
 
 vec4 blinnPhongPonctuelle(){
+    vec4 res =vec4(0);
+  //for (int index = 0; index < nbLights; ++index)
+  //{
   float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(point.uLightPos, 0.f)-vPosition_vs)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
   float d = length(normalize(vec4(point.uLightPos, 0.f)-vPosition_vs));
@@ -62,29 +71,14 @@ vec4 blinnPhongPonctuelle(){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  return (vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d);
+  res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d));
+ //}
 
-  /*vec4 wi = normalize(vec4(point.uLightPos,0.f)-vPosition_vs);//Vecteur qui pointe vers la lumière
-  vec4 w0 = normalize(-vPosition_vs);//Vecteur qui pointe vers la camera
-  vec4 halfVector = (w0+wi)*0.5f;
-  float d = length(wi);
-
-  float dotDiffuse = max(0.0f,dot(normalize(vNormal_vs),wi));
-  vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * dotDiffuse,1.0);
-
-  float dotSpecular = max(0.0f, dot(normalize(vNormal_vs),halfVector));
-  float powSpec = pow(dotSpecular,material.shininess);
-  vec4 vSpecularColor = vec4(material.specular.rgb * point.uLi * powSpec,1.0);
-
-  vec4 vAmbientColor = material.ambient*uAmbientLight;
-
-  vec4 res = (vDiffuseColor + vSpecularColor + vAmbientColor )/(d*d);
-
-  return res;*/
+  return res;
 }
 
 void main(void)
 {
   //oFragColor = FragColor;
-  oFragColor = ADS();
+  oFragColor = blinnPhongPonctuelle();
 }

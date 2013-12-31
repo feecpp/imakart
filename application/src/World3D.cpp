@@ -5,6 +5,7 @@
 #include <iostream>
 
 
+
 World3D::World3D()
     : camera(new Camera(1024,768)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
 {
@@ -29,6 +30,7 @@ World3D::~World3D()
   objects3D.erase(objects3D.begin(), objects3D.end());
   delete camera;
   delete sun;
+
 }
 
 void World3D::init()
@@ -70,6 +72,13 @@ void World3D::draw() const
 
   //Ranger aussi la gestion des lumieres
   //Gestion des lumières ponctuelles
+  /*GLuint m_lightsUBO;
+  glGenBuffers(1,&m_lightsUBO);
+  glBindBuffer(GL_UNIFORM_BUFFER, m_lightsUBO);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(PointLight)* lights.size(), (const GLvoid*) lights[0], GL_DYNAMIC_DRAW);
+  glBindBufferRange(GL_UNIFORM_BUFFER, 1, m_lightsUBO, 0, sizeof(PointLight)* lights.size()); */
+
+  int i =0;
   for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
     (*oneLight)->updateLight(viewMatrix);
@@ -79,7 +88,15 @@ void World3D::draw() const
     GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
     raceProgram.setUniform(lightPosId,position);
     raceProgram.setUniform(lightIntensityId, intensity);
+    ++i;
+
   }
+  /*glBindBuffer(GL_UNIFORM_BUFFER,m_lightsUBO);
+  glBufferSubData(GL_UNIFORM_BUFFER,0,lights.size(),lights.data());
+  glBindBuffer(GL_UNIFORM_BUFFER,0);*/
+  GLint nbLightsId = raceProgram.getUniformIndex("nbLights");
+  raceProgram.setUniform(nbLightsId,i);
+
 
   //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);
