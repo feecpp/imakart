@@ -1,12 +1,13 @@
 #include "Player.hpp"
 #include "Kart.hpp"
 #include "ItemLogic.hpp"
+#include "ItemBox.hpp"
 #include <iostream>
 
 Player::Player(Kart& kart)
   :myKart(kart), myCurrentItem(nullptr)
 {
-  myCurrentItem = new ItemLogic(1);
+  myCurrentItem = ItemBox::getSingletonItemBox()->createItemInstanceByName("Banana");
 }
 
 const Kart& Player::getKart() const
@@ -77,13 +78,8 @@ void Player::setItem(ItemLogic* newItem)
 void Player::useItem()
 {
   if(myCurrentItem != nullptr){
-    switch(myCurrentItem->getEffect()){
-      case 1:
+    if(myCurrentItem->getEffect() == "boost()"){
         myKart.boost();
-        break;
-
-      default:
-        break;
     }
 
     delete myCurrentItem;

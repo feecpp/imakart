@@ -5,13 +5,14 @@
 
 class ItemLogic{
 public:
-	ItemLogic(const int effect);
+	ItemLogic(std::string name);
 	~ItemLogic();
 
-	const int getEffect();
+	const std::string getEffect();
 
 private:
-	int numEffect;
+	std::string name;
+	std::string effect;
 	bool used;
 };
 
