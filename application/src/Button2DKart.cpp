@@ -8,21 +8,21 @@ Button2DKart::Button2DKart(const float x_bottom, const float y_left, const float
   	std::string descriptionKartTotal = "Acceleration : " + descriptionKart[0];
   	Texte2D* acceleration = new Texte2D(descriptionKartTotal);
   	float n_x_bottom = numeroOfTheButton * 240 + 40.f;
-  	float n_y = 170.f;
+  	float n_y = 260.f;
   	acceleration->setPosition(n_x_bottom, n_y, 12);
   	generatedText.push_back(acceleration);
 
   	descriptionKartTotal = "Vitesse : " + descriptionKart[1];
   	Texte2D* speed = new Texte2D(descriptionKartTotal);
   	n_x_bottom = numeroOfTheButton * 240 + 40.f;
-  	n_y = 150.f;
+  	n_y = 240.f;
   	speed->setPosition(n_x_bottom, n_y, 12);
   	generatedText.push_back(speed);
 
   	descriptionKartTotal = "Poids : " + descriptionKart[2];
   	Texte2D* weight = new Texte2D(descriptionKartTotal);
   	n_x_bottom = numeroOfTheButton * 240 + 40.f;
-  	n_y = 130.f;
+  	n_y = 220.f;
   	weight->setPosition(n_x_bottom, n_y, 12);
   	generatedText.push_back(weight);
   }
