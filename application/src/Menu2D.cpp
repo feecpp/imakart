@@ -24,6 +24,26 @@ Menu2D* Menu2D::initialiseMainMenu(){
 	return mainMenu;
 }
 
+Menu2D* Menu2D::initialiseOptionsMenu(){
+	
+	Menu2D* optionsMenu = new Menu2D;
+	
+	Button2D* sizeWindow1 = new Button2D(-0.8, 0.1, 0.5, 0.5, "textures/options/windowSize1.png", "textures/options/windowSize1Select.png", "800*600");
+	Button2D* sizeWindow2 = new Button2D(-0.25, 0.1, 0.5, 0.5, "textures/options/windowSize2.png", "textures/options/windowSize2Select.png", "1024*768");
+	Button2D* sizeWindow3 = new Button2D(0.3, 0.1, 0.5, 0.5, "textures/options/windowSize3.png", "textures/options/windowSize3Select.png", "1600*1200");
+
+	Button2D* returnMainMenu = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/options/returnMainMenu.png", "textures/options/returnMainMenuSelect.png", "returnMainMenu");
+
+	optionsMenu->addButton(sizeWindow1);
+	optionsMenu->addButton(sizeWindow2);
+	optionsMenu->addButton(sizeWindow3);
+
+	optionsMenu->addButton(returnMainMenu);
+	
+	return optionsMenu;
+}
+
+
 Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 	Menu2D* kartMenu = new Menu2D;
 	for(unsigned int i = 0; i < kartsName.size(); ++i){

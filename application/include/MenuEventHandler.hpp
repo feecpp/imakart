@@ -5,11 +5,12 @@
 #include "MenuLogic.hpp"
 
 class GameEngine;
+class GraphicEngine;
 
 class MenuEventHandler : public EventHandler
 {
 public:
-  MenuEventHandler(GameEngine& gameEngine);
+  MenuEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine);
 
   virtual void pressUp() const;
   virtual void pressDown() const;
@@ -31,6 +32,7 @@ public:
 
 private:
   GameEngine& gameEngine;
+  GraphicEngine& graphicEngine;
   MenuLogic* menu;
 };
 

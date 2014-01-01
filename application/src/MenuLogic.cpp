@@ -32,6 +32,29 @@ MenuLogic* MenuLogic::initialiseMainMenu(){
 	return mainMenu;
 }
 
+MenuLogic* MenuLogic::initialiseOptionsMenu(){
+	MenuLogic* optionMenu = new MenuLogic;
+	
+	ButtonLogic* sizeWindow1 = new ButtonLogic("800*600");
+	ButtonLogic* sizeWindow2 = new ButtonLogic("1024*768");
+	ButtonLogic* sizeWindow3 = new ButtonLogic("1600*1200");
+
+	ButtonLogic* returnMainMenu = new ButtonLogic("returnMainMenu");
+
+	sizeWindow1->setAction(WINDOW_RESIZE);
+	sizeWindow2->setAction(WINDOW_RESIZE);
+	sizeWindow3->setAction(WINDOW_RESIZE);
+
+	returnMainMenu->setAction(RETURN_MAIN_MENU);
+
+	optionMenu->addButton(sizeWindow1);
+	optionMenu->addButton(sizeWindow2);
+	optionMenu->addButton(sizeWindow3);
+	optionMenu->addButton(returnMainMenu);
+	
+	return optionMenu;
+}
+
 MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
 	MenuLogic* kartMenu = new MenuLogic;
 

@@ -17,6 +17,7 @@ public:
 		{return tab2DMenu[positionToSelect];}
 	
 	static Menu2D* initialiseMainMenu();
+	static Menu2D* initialiseOptionsMenu();
 	static Menu2D* initialiseKartMenu(std::vector <std::string> kartsName);
 	static Menu2D* initialiseMapMenu();
 

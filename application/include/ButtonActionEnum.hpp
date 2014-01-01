@@ -7,7 +7,9 @@ enum ButtonAction
   OPTIONS,
   CREDITS,
   EXIT,
-  SELECT
+  SELECT,
+  WINDOW_RESIZE,
+  RETURN_MAIN_MENU
 };
 
 #endif
