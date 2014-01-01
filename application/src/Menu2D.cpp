@@ -11,14 +11,12 @@ Menu2D* Menu2D::initialiseMainMenu(){
 	
 	Menu2D* mainMenu = new Menu2D;
 	
-	Button2D* jouer = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/jouer.png", "textures/jouerSelect.png", "jouer");
-	Button2D* options = new Button2D(-0.3, 0.0, 0.6, 0.2, "textures/options.png", "textures/optionsSelect.png", "options");
-	Button2D* credits = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/credits.png", "textures/creditsSelect.png", "credits");
-	Button2D* quitter = new Button2D(-0.3, -0.6, 0.6, 0.2, "textures/quitter.png", "textures/quitterSelect.png", "quitter");
+	Button2D* jouer = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/menu/jouer.png", "textures/menu/jouerSelect.png", "jouer");
+	Button2D* options = new Button2D(-0.3, 0.0, 0.6, 0.2, "textures/menu/options.png", "textures/menu/optionsSelect.png", "options");
+	Button2D* quitter = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/menu/quitter.png", "textures/menu/quitterSelect.png", "quitter");
 
 	mainMenu->addButton(jouer);
 	mainMenu->addButton(options);
-	mainMenu->addButton(credits);
 	mainMenu->addButton(quitter);
 	
 	return mainMenu;
