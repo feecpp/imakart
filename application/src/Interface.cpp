@@ -45,20 +45,23 @@ void Interface::init()
 
 void Interface::draw() const
 {
-  //Dessin des objets 2D
-  object2DProgram.use();
-  for(auto object2D = objects2D.begin(); object2D != objects2D.end(); ++object2D)
-  {
-    (*object2D)->update();
-    (*object2D)->draw(object2DProgram);
-  }
 
   //Dessin des objets Texte
   objectTextProgram.use();
   for (auto objectText = objectsTexte.begin(); objectText != objectsTexte.end(); ++objectText)
   {
     //ULTRA DEGUEU, trouver quand positionner les ObjectText, actuellement c'est un peu la fete du slip
+    // Dessiner le text avnt les objets 2D permet de les voir dans les menus sinon ils sont cachés sous les menus !
+    // Côté logique, c'est pas ce que j'avais en tête mais ça fonctionne
     (*objectText)->update();
     (*objectText)->draw(objectTextProgram);
+  }
+
+  //Dessin des objets 2D
+  object2DProgram.use();
+  for(auto object2D = objects2D.begin(); object2D != objects2D.end(); ++object2D)
+  {
+    (*object2D)->update();
+    (*object2D)->draw(object2DProgram);
   }
 }
