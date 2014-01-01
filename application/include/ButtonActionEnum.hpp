@@ -5,7 +5,6 @@ enum ButtonAction
 {
   PLAY,
   OPTIONS,
-  CREDITS,
   EXIT,
   SELECT,
   WINDOW_RESIZE,

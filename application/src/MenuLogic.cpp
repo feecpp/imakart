@@ -16,17 +16,14 @@ MenuLogic* MenuLogic::initialiseMainMenu(){
 	
 	ButtonLogic* jouer = new ButtonLogic("jouer");
 	ButtonLogic* options = new ButtonLogic("options");
-	ButtonLogic* credits = new ButtonLogic("credits");
 	ButtonLogic* quitter = new ButtonLogic("quitter");
 
 	jouer->setAction(PLAY);
 	options->setAction(OPTIONS);
-	credits->setAction(CREDITS);
 	quitter->setAction(EXIT);
 
 	mainMenu->addButton(jouer);
 	mainMenu->addButton(options);
-	mainMenu->addButton(credits);
 	mainMenu->addButton(quitter);
 	
 	return mainMenu;

@@ -64,10 +64,7 @@ void MenuEventHandler::pressEnter() const
 		case OPTIONS:
 			gameEngine.setState(IN_MENU_OPTIONS);
 			break;
-
-		case CREDITS:
-			break;
-
+			
 		case EXIT:
      		gameEngine.activateExitFlag();
 			break;
