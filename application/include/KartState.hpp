@@ -154,7 +154,21 @@ public:
   BackwardAcceleration(Kart& kart)
     : Acceleration(kart) {}
 
-  //Pas besoin de redéfinir update !
+  virtual void update(float elapsedTimeInSecond)
+  {
+    glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
+
+    float travelledDistance = kart.speed * elapsedTimeInSecond + kart.currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+    kart.position += direction * travelledDistance;
+
+    kart.speed = travelledDistance / elapsedTimeInSecond;
+
+    if (abs(kart.speed) >= 5)
+    {
+      setMaxSpeedState();//définie par les classes filles
+    }
+  }
+
   virtual void setMaxSpeedState()
   {
     kart.setState(kart.backwardMaxSpeedReached);

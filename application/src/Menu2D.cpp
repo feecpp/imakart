@@ -33,9 +33,9 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		textures = textures + ".jpg";
 		Specifications spe = Hangar::getSingletonHangar()->getKartByName(kartsName[i]).specifications;
 		std::vector<std::string> caracteristique;
-		caracteristique.push_back(glimac::convert(spe.acceleration));
-		caracteristique.push_back(glimac::convert(spe.maxSpeed));
-		caracteristique.push_back(glimac::convert(spe.weight));
+		caracteristique.push_back(glimac::convertToString(spe.acceleration));
+		caracteristique.push_back(glimac::convertToString(spe.maxSpeed));
+		caracteristique.push_back(glimac::convertToString(spe.weight));
     Button2DKart* kart = new Button2DKart(- 0.9 + i * 0.6, -0.25, 0.5, 0.5, textures, texturesS, kartsName[i], caracteristique, i);
 		kartMenu->addButton(kart);
 	}
