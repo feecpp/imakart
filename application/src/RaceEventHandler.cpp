@@ -1,6 +1,7 @@
 #include "RaceEventHandler.hpp"
 #include "GameEngine.hpp"
 #include "GraphicEngine.hpp"
+#include <iostream>
 
 RaceEventHandler::RaceEventHandler(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine)
@@ -19,10 +20,15 @@ void RaceEventHandler::releaseUp() const
 void RaceEventHandler::pressDown() const
 {
   gameEngine.getPlayer().moveBackward();
+  if(*(gameEngine.getPlayerKart().getCurrentSpeed()) <= 0){
+    graphicEngine.getWorld3D()->switchInBackwardView();
+  }
 }
 void RaceEventHandler::releaseDown() const
 {
   gameEngine.getPlayer().stopMove();
+
+  graphicEngine.getWorld3D()->switchInForwardView();
 }
 
 void RaceEventHandler::pressLeft() const
@@ -63,5 +69,10 @@ void RaceEventHandler::releaseSpace() const
 
 void RaceEventHandler::pressNumpad0() const
 {
-  graphicEngine.getWorld3D()->switchView();
+  graphicEngine.getWorld3D()->switchInBackwardView();
+}
+
+void RaceEventHandler::releaseNumpad0() const
+{
+  graphicEngine.getWorld3D()->switchInForwardView();
 }

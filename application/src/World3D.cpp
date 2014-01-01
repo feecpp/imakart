@@ -109,6 +109,10 @@ void World3D::setCamera(Camera* newCamera)
   skybox.setCamera(camera);
 }
 
-void World3D::switchView(){
-  camera->switchView();
+void World3D::switchInBackwardView(){
+  camera->switchInBackwardView();
+}
+
+void World3D::switchInForwardView(){
+  camera->switchInForwardView();
 }

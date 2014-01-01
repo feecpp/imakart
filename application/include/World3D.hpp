@@ -43,9 +43,10 @@ public:
   void setCamera(Camera* newCamera);
 
   /*
-   * Change de la premiere personne à la troisieme personne
+   * Vue en marche arriere ou marche avant
    */
-  void switchView();
+  void switchInBackwardView();
+  void switchInForwardView();
 
   /*
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector

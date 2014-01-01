@@ -20,7 +20,8 @@ public:
   void linkToPositionable(const Positionable& objectToFollow)
     {this->objectToFollow = &objectToFollow;}
 
-  void switchView();
+  void switchInBackwardView();
+  void switchInForwardView();
 
 private:
   const Positionable* objectToFollow;
@@ -32,6 +33,7 @@ private:
   size_t windowHeight;
 
   bool viewThirdPerson;
+  bool viewBackward;
 };
 
 #endif // CAMERA_HPP

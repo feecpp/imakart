@@ -116,6 +116,9 @@ void Application::handleEvents(sf::RenderWindow& window)
             else if (e.key.code == sf::Keyboard::Space)
               handler.releaseSpace();
 
+            else if (e.key.code == sf::Keyboard::Numpad0)
+              handler.releaseNumpad0();
+
             break;
 
         default:
