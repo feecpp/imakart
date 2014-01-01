@@ -40,6 +40,7 @@ protected:
   inline glm::vec3 setKartOrientationAndComputeDirection(float elapsedTimeInSecond)
   {
     kart.directionAngle += kart.currentAngularSpeed * (elapsedTimeInSecond); //en degres/secondes
+
     kart.orientation = glm::angleAxis(kart.directionAngle, glm::vec3(0.f, 1.f, 0.f));
 
     const glm::vec3 initialDirection = glm::vec3(0.f, 0.f, -1.f);

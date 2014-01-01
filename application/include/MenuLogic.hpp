@@ -18,6 +18,7 @@ public:
 		{return false;}
 		
 	static MenuLogic* initialiseMainMenu();
+	static MenuLogic* initialiseOptionsMenu();
 	static MenuLogic* initialiseKartMenu(std::vector <std::string> kartsName);
 	static MenuLogic* initialiseMapMenu();
 

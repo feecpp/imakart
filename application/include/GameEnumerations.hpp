@@ -8,6 +8,7 @@ enum GameState
 {
   NO_STATE,
   IN_MENU,
+  IN_MENU_OPTIONS,
   IN_MENU_KART,
   IN_MENU_MAP,
   IN_RACE,

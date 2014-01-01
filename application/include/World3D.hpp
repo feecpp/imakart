@@ -16,7 +16,7 @@ class Light;
 class World3D
 {
 public:
-  World3D();
+  World3D(const unsigned int width, const unsigned int height);
 
   ~World3D();
 
@@ -41,6 +41,7 @@ public:
    * @param newCamera
    */
   void setCamera(Camera* newCamera);
+  void setSize(const unsigned int width, const unsigned int height);
 
   /*
    * Vue en marche arriere ou marche avant
