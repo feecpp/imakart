@@ -30,8 +30,8 @@ protected:
 	glimac::Vertex2DUV vertices[4];
 	glimac::LowLevelVBO vbo;
 	glimac::VAO vao;
-  std::vector<Texte2D*> generatedText;
-  bool ownership;
+    std::vector<Texte2D*> generatedText;
+    bool ownership;
 
 	bool done;
 	void setVBO(); //call in the constructor
