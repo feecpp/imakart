@@ -4,8 +4,10 @@
 #include <glm/gtx/quaternion.hpp>
 #include <iostream>
 
+float bendValue = 0.f;
+
 Camera::Camera(size_t windowWidth, size_t windowHeight)
-  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight), viewThirdPerson(true), viewBackward(false)
+  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight), viewThirdPerson(true), viewBackward(false), viewRightBend(false), viewLeftBend(false)
 {
 }
 
@@ -20,8 +22,25 @@ const glm::vec3 Camera::getPosition() const
       initialDirection = glm::vec3(0.f, 0.f, -3.f);
     }
 
-    glm::vec3 direction = glm::toMat3(objectToFollow->getOrientation()) * initialDirection;
+    float step = 0.1f;
+    if(bendValue < 1.f && bendValue >= -1.f){
+      if(viewLeftBend){
+        bendValue += step;
+      }else if (viewRightBend){
+        bendValue -= step;
+      }
+    }
+    if(!viewLeftBend && !viewRightBend){
+      if(bendValue >= 0.f)
+        bendValue -= step;
+      if(bendValue < 0.f)
+        bendValue += step;
+    }
 
+
+    initialDirection.x = bendValue;
+
+    glm::vec3 direction = glm::toMat3(objectToFollow->getOrientation()) * initialDirection;
     return  (objectToFollow->getPosition() - direction) + glm::vec3(0.f, 2.f, 0.f);
   }
   else
@@ -72,4 +91,14 @@ void Camera::switchInBackwardView(){
 
 void Camera::switchInForwardView(){
   viewBackward = false;
+  viewRightBend = false;
+  viewLeftBend = false;
+}
+
+void Camera::switchInRightBendView(){
+  viewRightBend = true;
+}
+
+void Camera::switchInLeftBendView(){
+  viewLeftBend = true;
 }
