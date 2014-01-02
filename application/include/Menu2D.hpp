@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include "Button2D.hpp"
+#include "VBO.hpp"
+#include "VAO.hpp"
 
 class Menu2D: public Object2D
 {
@@ -17,6 +19,7 @@ public:
 		{return tab2DMenu[positionToSelect];}
 	
 	static Menu2D* initialiseMainMenu();
+	static Menu2D* initialiseOptionsMenu();
 	static Menu2D* initialiseKartMenu(std::vector <std::string> kartsName);
 	static Menu2D* initialiseMapMenu();
 
@@ -25,8 +28,14 @@ public:
 	void draw(const glimac::ShaderProgram& shaderProgram) const;
 	
 private:
+	glimac::Vertex2DUV vertices[4];
+	glimac::LowLevelVBO vbo;
+	glimac::VAO vao;
 	std::vector<Button2D* > tab2DMenu;
 	InterfaceElement* model;
+
+	void setVBO(); //call in the constructor
+	void setVAO(); //call in the constructor
 };
 
 #endif //MENU2D_HPP

@@ -5,9 +5,8 @@
 #include <iostream>
 
 
-
-World3D::World3D()
-    : camera(new Camera(1024,768)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
+World3D::World3D(const unsigned int width, const unsigned int height)
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -126,6 +125,14 @@ void World3D::setCamera(Camera* newCamera)
   skybox.setCamera(camera);
 }
 
-void World3D::switchView(){
-  camera->switchView();
+void World3D::switchInBackwardView(){
+  camera->switchInBackwardView();
+}
+
+void World3D::switchInForwardView(){
+  camera->switchInForwardView();
+}
+
+void World3D::setSize(const unsigned int width, const unsigned int height){
+  camera->setSize(width, height);
 }

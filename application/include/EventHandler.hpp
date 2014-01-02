@@ -61,6 +61,7 @@ public:
    * Pavé numérique 0
    */
   virtual void pressNumpad0() const = 0;
+  virtual void releaseNumpad0() const = 0;
    
 };
 

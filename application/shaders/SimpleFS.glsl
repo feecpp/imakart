@@ -28,8 +28,7 @@ struct Point
     vec3 uLi;
 };
 uniform Point point;
-uniform int nbLights;
-/*
+/*uniform int nbLights;
 layout (std140) uniform Lights {
    Point light[nbLights];
 }
@@ -57,9 +56,8 @@ vec4 ADS()
 }
 
 vec4 blinnPhongPonctuelle(){
-    vec4 res =vec4(0);
-  //for (int index = 0; index < nbLights; ++index)
-  //{
+  vec4 res =vec4(0);
+
   float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(point.uLightPos, 0.f)-vPosition_vs)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
   float d = length(normalize(vec4(point.uLightPos, 0.f)-vPosition_vs));
@@ -72,7 +70,6 @@ vec4 blinnPhongPonctuelle(){
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
   res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d));
- //}
 
   return res;
 }

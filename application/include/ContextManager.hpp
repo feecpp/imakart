@@ -41,6 +41,7 @@ public:
 
 private:
   void setupMenuContext() const;
+  void setupMenuOptionsContext() const;
   void setupMenuKartContext() const;
   void setupMenuMapContext() const;
   void setupRaceContext() const;

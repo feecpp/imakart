@@ -2,9 +2,10 @@
 #include "Positionable.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <iostream>
 
 Camera::Camera(size_t windowWidth, size_t windowHeight)
-  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight), viewThirdPerson(true)
+  : objectToFollow(nullptr), windowWidth(windowWidth), windowHeight(windowHeight), viewThirdPerson(true), viewBackward(false)
 {
 }
 
@@ -12,8 +13,15 @@ const glm::vec3 Camera::getPosition() const
 {
   if (objectToFollow != nullptr)
   {
-    const glm::vec3 initialDirection = glm::vec3(0.f, 0.f, -1.f);
+    glm::vec3 initialDirection;
+    if(viewBackward){
+      initialDirection = glm::vec3(0.f, 0.f, 3.f);
+    }else{
+      initialDirection = glm::vec3(0.f, 0.f, -3.f);
+    }
+
     glm::vec3 direction = glm::toMat3(objectToFollow->getOrientation()) * initialDirection;
+
     return  (objectToFollow->getPosition() - direction) + glm::vec3(0.f, 2.f, 0.f);
   }
   else
@@ -52,6 +60,16 @@ void Camera::updateViewProjectionMatrix()
   viewProjection = projectionMatrix * viewMatrix;
 }
 
-void Camera::switchView(){
-  
+void Camera::setSize(const unsigned int width, const unsigned int height){
+  windowWidth = width;
+  windowHeight = height;
+  updateViewProjectionMatrix();
+}
+
+void Camera::switchInBackwardView(){
+  viewBackward = true;
+}
+
+void Camera::switchInForwardView(){
+  viewBackward = false;
 }

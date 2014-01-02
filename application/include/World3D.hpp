@@ -16,7 +16,7 @@ class Light;
 class World3D
 {
 public:
-  World3D();
+  World3D(const unsigned int width, const unsigned int height);
 
   ~World3D();
 
@@ -41,11 +41,13 @@ public:
    * @param newCamera
    */
   void setCamera(Camera* newCamera);
+  void setSize(const unsigned int width, const unsigned int height);
 
   /*
-   * Change de la premiere personne à la troisieme personne
+   * Vue en marche arriere ou marche avant
    */
-  void switchView();
+  void switchInBackwardView();
+  void switchInForwardView();
 
   /*
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector

@@ -46,6 +46,11 @@ const GraphicSettings&GraphicEngine::getSettings() const
   return settings;
 }
 
+void GraphicEngine::setNewSizeWindow(const unsigned int width, const unsigned int height){
+  settings.WINDOW_WIDTH = width;
+  settings.WINDOW_HEIGHT = height;
+}
+
 void GraphicEngine::renderFrame()
 {
   //Il existe toujours un World3D meme dans le menu (il fait rien actuellement)
@@ -83,6 +88,10 @@ const void GraphicEngine::attach(Observer* obs){
 
 World3D* GraphicEngine::getWorld3D(){ 
   return world3D;
+}
+
+sf::RenderWindow& GraphicEngine::getWindow(){
+  return window;
 }
 
 void GraphicEngine::reset()

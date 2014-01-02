@@ -50,6 +50,8 @@ public:
 
   const GraphicSettings& getSettings() const;
 
+  void setNewSizeWindow(const unsigned int width, const unsigned int height);
+
   /** Delete le world3D actuel et prend le nouveau.
    * Prend en charge la memoire du nouveau.
    * Appelle la methode init() de l'interface
@@ -68,6 +70,8 @@ public:
     { return tabTextures[positionToSelect]; }
 
   World3D* getWorld3D();
+  
+  sf::RenderWindow& getWindow();
 
   void reset();
 

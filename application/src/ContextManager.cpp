@@ -23,7 +23,7 @@
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
-    menuEventHandler(gameEngine), lastGameState(NO_STATE)
+    menuEventHandler(gameEngine, graphicEngine), lastGameState(NO_STATE)
 {
 }
 
@@ -37,6 +37,9 @@ void ContextManager::updateContextIfNeeded()
 
   if (currentGameSate == IN_MENU)
     setupMenuContext();
+
+  else if (currentGameSate == IN_MENU_OPTIONS)
+    setupMenuOptionsContext();
 
   else if (currentGameSate == IN_MENU_KART)
     setupMenuKartContext();
@@ -68,7 +71,27 @@ void ContextManager::setupMenuContext() const
 
   graphicEngine.setCurrentInterface(interfaceMenu);
 
-  World3D* menuWorld = new World3D();//Vide
+  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
+  graphicEngine.setCurrentWorld3D(menuWorld);
+}
+
+void ContextManager::setupMenuOptionsContext() const
+{
+  graphicEngine.reset();
+  Menu2D* menu2D = Menu2D::initialiseOptionsMenu();
+  MenuLogic* menuLogic = MenuLogic::initialiseOptionsMenu();
+  Interface* interfaceMenu = new Interface();
+  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+  }
+
+  gameEngine.setMenu(menuLogic);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  interfaceMenu->addObject2D(menu2D);
+
+  graphicEngine.setCurrentInterface(interfaceMenu);
+
+  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
   graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
@@ -92,7 +115,7 @@ void ContextManager::setupMenuKartContext() const
   menuInterface->addObject2D(menu2D);
   graphicEngine.setCurrentInterface(menuInterface);
 
-  World3D* menuWorld = new World3D();//Vide
+  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
   graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
@@ -113,7 +136,7 @@ void ContextManager::setupMenuMapContext() const
   menuInterface->addObject2D(menu2D);
   graphicEngine.setCurrentInterface(menuInterface);
 
-  World3D* menuWorld = new World3D();//Vide
+  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
   graphicEngine.setCurrentWorld3D(menuWorld);
 }
 
@@ -170,7 +193,7 @@ void ContextManager::setupRaceContext() const
   Camera* camera = new Camera(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
-  World3D* gameWorld = new World3D();
+  World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
   gameWorld->addLight(l);
