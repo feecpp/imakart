@@ -34,6 +34,14 @@ layout (std140) uniform Lights {
 }
 */
 
+struct Spot
+{
+    struct Point base;
+    vec3 uLightDir;
+    float uCutoff;
+};
+uniform Spot spot;
+
 uniform vec4 uAmbientLight;
 
 
@@ -55,8 +63,8 @@ vec4 ADS()
   return vAmbientColor + vDiffuseColor + vSpecularColor;
 }
 
-vec4 blinnPhongPonctuelle(){
-  vec4 res =vec4(0);
+vec4 blinnPhongPonctuelle(struct Point point){
+  vec4 res = vec4(0);
 
   float fDotProduct = max(0.0f, dot(normalize(vNormal_vs), normalize(vec4(point.uLightPos, 0.f)-vPosition_vs)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
@@ -74,8 +82,20 @@ vec4 blinnPhongPonctuelle(){
   return res;
 }
 
+vec4 CalcSpotLight() {
+    vec4 res = vec4(0);
+    float spotFactor = max(0.0f, dot(vec4(spot.uLightDir,0.f) ,normalize(vec4(spot.base.uLightPos, 0.f)-vPosition_vs)));
+
+    if (spotFactor > spot.uCutoff) {
+        res = blinnPhongPonctuelle(spot.base);
+        res = res * (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - spot.uCutoff));
+    }
+
+    return res;
+}
+
 void main(void)
 {
-  //oFragColor = FragColor;
-  oFragColor = ADS() + blinnPhongPonctuelle();
+  oFragColor = CalcSpotLight();
+  //oFragColor = ADS() + blinnPhongPonctuelle(point);
 }
