@@ -62,7 +62,6 @@ void ContextManager::updateContextIfNeeded()
     lastGameState = currentGameState;
   }
 
-
   std::stack<GameEvent>& eventStack = gameEngine.getEvents();
   while(!eventStack.empty())
   {
@@ -73,7 +72,7 @@ void ContextManager::updateContextIfNeeded()
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        splashText = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000, glm::vec2(400,400));
+        splashText = new TimeLimitedText(glimac::convertToString(current.data.lastSecond), 1000, glm::vec2(400,400));
         interface.addTimeLimitedText(splashText);
         break;
 
@@ -83,7 +82,7 @@ void ContextManager::updateContextIfNeeded()
         break;
 
       case NEW_LAP:
-        splashText = new TimeLimitedText(std::string("Tour " + std::to_string(current.data.lapNumber)), 1000, glm::vec2(150,500));
+        splashText = new TimeLimitedText(std::string("Tour " + glimac::convertToString(current.data.lapNumber)), 1000, glm::vec2(150,500));
         interface.addTimeLimitedText(splashText);
         break;
 

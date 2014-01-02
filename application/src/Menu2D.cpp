@@ -113,6 +113,7 @@ void Menu2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	}
 	
 	vao.bind();
+
 	GLint locationUTexture = shaderProgram.getUniformIndex("uTexture");
 	GLint locationUMat = shaderProgram.getUniformIndex("uModelMatrix");
     shaderProgram.setUniform(locationUTexture, 0);
@@ -123,6 +124,7 @@ void Menu2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glDisable(GL_BLEND);
 	activTexture->unbind();
+
 	vao.unbind();
 }
 

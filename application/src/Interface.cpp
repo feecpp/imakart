@@ -73,7 +73,6 @@ void Interface::draw() const
   objectTextProgram.use();
   for (auto objectText = objectsTexte.begin(); objectText != objectsTexte.end(); ++objectText)
   {
-    //ULTRA DEGUEU, trouver quand positionner les ObjectText, actuellement c'est un peu la fete du slip
     // Dessiner le text avnt les objets 2D permet de les voir dans les menus sinon ils sont cachés sous les menus !
     // Côté logique, c'est pas ce que j'avais en tête mais ça fonctionne
     (*objectText)->update();
