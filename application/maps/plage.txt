@@ -1,3 +1,12 @@
+Checkpoint Empty.001
+location -172.398300 0.161708 166.159500
+radius 2.414259
+Checkpoint Empty.002
+location -341.898346 0.161708 -3.340530
+radius 2.414259
+Checkpoint Empty.003
+location -167.363647 0.161708 -174.518784
+radius 2.414259
 Checkpoint Empty.004
-location 0.012714 0.096148 0.015903
-radius 1.000000
+location -0.660625 0.161708 0.015903
+radius 2.414259
