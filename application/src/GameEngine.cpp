@@ -3,7 +3,8 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f)
+  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f), lastSecond(3), counterStarted(false)
+
 {
   chrono = new ChronoLogic();
   setupOpponents(1);
@@ -28,13 +29,42 @@ void GameEngine::init()
 
 void GameEngine::update()
 {
-  if(!pause){
+  if(!pause)
+  {
     float elapsedTime = clock.restart().asMilliseconds();
     lag += elapsedTime;
 
-    //Mettre à jour les objets de la simulation ici (en fonction du temps)
-    //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
+  //Gestion du compte à rebour du début de course
+  //C'est pas propre, dès que j'ai le temps (si j'en ai) je nettoie
+  if (state == BEFORE_RACE_BEGIN)
+  {
+    if (!counterStarted)
+    {
+      counter.restart();
+      counterStarted = true;
+    }
 
+    if (counter.getElapsedTime().asSeconds() >= 2 && lastSecond <= 0)
+    {
+      GameEventData data;
+      data.lastSecond = lastSecond;
+      eventStack.push(GameEvent(RACE_BEGIN, data));
+      state = IN_RACE;
+      counterStarted = false;
+    }
+
+    if (counter.getElapsedTime().asSeconds() >= 2 && lastSecond > 0)
+    {
+      GameEventData data;
+      data.lastSecond = lastSecond;
+      eventStack.push(GameEvent(COUNTER_UPDATE, data));
+      counter.restart();
+      lastSecond--;
+    }
+  }
+
+  //Mettre à jour les objets de la simulation ici (en fonction du temps)
+  //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
     while (lag >= TURN_DURATION_IN_MILLIS)
     {
       if(state != IN_RACE)
@@ -53,9 +83,21 @@ void GameEngine::update()
 
       lag -= TURN_DURATION_IN_MILLIS;
     }
-  }else{
+  }
+  else
+  {
     clock.restart();
   }
+}
+
+void GameEngine::switchPause()
+{
+  //Si on sort de la pause pendant le chrono
+  if (state == BEFORE_RACE_BEGIN && pause)
+    counter.restart();
+
+  pause = !pause;
+
 }
 
 void GameEngine::activateExitFlag()
@@ -130,10 +172,6 @@ ChronoLogic& GameEngine::getChrono() const
 {
   assert(chrono != nullptr);
   return *chrono;
-}
-
-const void GameEngine::attach(Observer* obs){
-  scenario = obs;
 }
 
 void GameEngine::doPhysic()

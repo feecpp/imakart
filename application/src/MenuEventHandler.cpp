@@ -72,7 +72,7 @@ void MenuEventHandler::pressEnter() const
 		case SELECT:
       		gameEngine.setupPlayer(button->name);
 
-			gameEngine.setState(IN_RACE);
+      gameEngine.setState(PREPARING_RACE);
 			break;
 
 		case WINDOW_RESIZE:
@@ -117,9 +117,12 @@ void MenuEventHandler::pressNumpad0() const {}
 void MenuEventHandler::releaseNumpad0() const {}
 
 void MenuEventHandler::pressEscape() const {
-	if(gameEngine.getState() == IN_RACE_MENU){
+  if(gameEngine.getState() == IN_RACE_MENU)
+  {
 		gameEngine.setState(IN_RACE);
-	}else{
+  }
+  else
+  {
 		gameEngine.setState(IN_MENU);
 	}
 }

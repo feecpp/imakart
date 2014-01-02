@@ -58,6 +58,7 @@ void GraphicEngine::renderFrame()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   world3D->draw();
+  interface->update();
   interface->draw();
 
   //Arrivé ici, tous les éléments sont affichés à l'écran (fin du chargement)
@@ -82,16 +83,8 @@ void GraphicEngine::setCurrentInterface(Interface* newInterface)
   interface->init();
 }
 
-const void GraphicEngine::attach(Observer* obs){
-  scenario = obs;
-}
-
 World3D* GraphicEngine::getWorld3D(){ 
   return world3D;
-}
-
-Interface* GraphicEngine::getInterface(){ 
-  return interface;
 }
 
 sf::RenderWindow& GraphicEngine::getWindow(){

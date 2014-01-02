@@ -38,7 +38,7 @@ struct GraphicSettings
  * Contient Ã©galement une liste d'objets 2D
  * qui constituent l'interface.
  */
-class GraphicEngine : public Observable
+class GraphicEngine
 {
 public:
   GraphicEngine();
@@ -64,13 +64,13 @@ public:
    */
   void setCurrentInterface(Interface* newInterface);
 
-  virtual const void attach(Observer* obs);
+  Interface& getCurrentInterface()
+    {assert(interface); return *interface;}
 
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
   World3D* getWorld3D();
-  Interface* getInterface();
   
   sf::RenderWindow& getWindow();
 
