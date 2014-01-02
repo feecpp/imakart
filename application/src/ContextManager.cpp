@@ -32,26 +32,46 @@ void ContextManager::updateContextIfNeeded()
   GameState currentGameSate = gameEngine.getState();
 
   //Rien Ã  faire dans ce cas
-  if (lastGameState == currentGameSate)
-    return;
+  if (lastGameState != currentGameSate)
+  {
+    if (currentGameSate == IN_MENU)
+      setupMenuContext();
 
-  if (currentGameSate == IN_MENU)
-    setupMenuContext();
+    else if (currentGameSate == IN_MENU_OPTIONS)
+      setupMenuOptionsContext();
 
-  else if (currentGameSate == IN_MENU_OPTIONS)
-    setupMenuOptionsContext();
+    else if (currentGameSate == IN_MENU_KART)
+      setupMenuKartContext();
 
-  else if (currentGameSate == IN_MENU_KART)
-    setupMenuKartContext();
+    else if (currentGameSate == IN_MENU_MAP)
+      setupMenuMapContext();
 
-  else if (currentGameSate == IN_MENU_MAP)
-    setupMenuMapContext();
+    else if (currentGameSate == PREPARING_RACE)
+      setupRaceContext();
 
-  else if (currentGameSate == IN_RACE)
-    setupRaceContext();
+    lastGameState = currentGameSate;
+  }
 
-  lastGameState = currentGameSate;
+  std::stack<GameEvent>& eventStack = gameEngine.getEvents();
+  while(!eventStack.empty())
+  {
+    GameEvent current = eventStack.top();
+    eventStack.pop();
+    Interface& interface = graphicEngine.getCurrentInterface();
+    TimeLimitedText* counter = nullptr;
+    switch(current.type)
+    {
+      case COUNTER_UPDATE:
+        counter = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000);
+        interface.addTimeLimitedText(counter);
+        break;
+      case RACE_BEGIN:
+        counter = new TimeLimitedText(std::string("GO !"), 1000);
+        interface.addTimeLimitedText(counter);
+        break;
 
+    }
+  }
   //Ajouter gestion du menu en course
 }
 
@@ -243,6 +263,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
 
+  gameEngine.setState(BEFORE_RACE_BEGIN);
 }
 
 const EventHandler& ContextManager::getHandler() const
