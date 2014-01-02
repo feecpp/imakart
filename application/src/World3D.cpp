@@ -88,7 +88,6 @@ void World3D::draw() const
     raceProgram.setUniform(lightPosId,position);
     raceProgram.setUniform(lightIntensityId, intensity);
     ++i;
-
   }
   /*glBindBuffer(GL_UNIFORM_BUFFER,m_lightsUBO);
   glBufferSubData(GL_UNIFORM_BUFFER,0,lights.size(),lights.data());
@@ -97,9 +96,9 @@ void World3D::draw() const
   raceProgram.setUniform(nbLightsId,i);
 
   //Gestion d'une spotLight
-  spot->updateLightPosition(camera->getPosition());
-  spot->updateLightDirection(camera->getWhereILook());
-  //spot->updateLight(viewMatrix);
+  spot->updateLightPosition();
+  //spot->updateLightDirection();
+  spot->updateLight(viewMatrix);
   const glm::vec3& spotPos = spot->getLightPosition();
   const glm::vec3& spotDir = spot->getLightDirection();
   const glm::vec3& spotIntensity = spot->getLightIntensity();
@@ -115,7 +114,7 @@ void World3D::draw() const
 
   std::cout << "camera Look :" << camera->getPosition().x <<", " << camera->getPosition().y <<", "<<camera->getPosition().z << std::endl;
   std::cout << "spotPos :" << spot->getLightPosition().x <<", " <<spot->getLightPosition().y <<", "<<spot->getLightPosition().z << std::endl;
-   std::cout << "spotDir :" << spot->getLightDirection().x <<", " <<spot->getLightDirection().y <<", "<<spot->getLightDirection().z << std::endl;
+  std::cout << "spotDir :" << spot->getLightDirection().x <<", " <<spot->getLightDirection().y <<", "<<spot->getLightDirection().z << std::endl;
 
   //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);
@@ -143,6 +142,12 @@ void World3D::setCamera(Camera* newCamera)
   delete camera;
   camera = newCamera;
   skybox.setCamera(camera);
+}
+
+void World3D::setSpot(SpotLight* newSpot)
+{
+  delete spot;
+  spot = newSpot;
 }
 
 void World3D::switchInBackwardView(){

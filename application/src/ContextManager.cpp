@@ -7,7 +7,6 @@
 #include "Skybox.hpp"
 #include "Cube.hpp"
 #include "Hangar.hpp"
-#include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
 #include "Mesh.hpp"
@@ -73,8 +72,8 @@ void ContextManager::updateContextIfNeeded()
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        counter = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000);
-        interface.addTimeLimitedText(counter);
+        //counter = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000);
+        //interface.addTimeLimitedText(counter);
         break;
       case RACE_BEGIN:
         counter = new TimeLimitedText(std::string("GO !"), 1000);
@@ -177,7 +176,9 @@ void ContextManager::setupRaceContext() const
 
   PointLight* light = new PointLight();
   PointLight* l = new PointLight(glm::vec3(50.f,30.f,50.f));
-  //light->linkToPositionable(gameEngine.getPlayerKart());
+
+  SpotLight* spot = new SpotLight();
+  spot->linkToPositionable(gameEngine.getPlayerKart());
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -228,6 +229,7 @@ void ContextManager::setupRaceContext() const
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
   gameWorld->addLight(l);
+  gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
 

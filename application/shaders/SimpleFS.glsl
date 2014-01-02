@@ -96,6 +96,6 @@ vec4 CalcSpotLight() {
 
 void main(void)
 {
-  oFragColor = CalcSpotLight();
-  //oFragColor = ADS() + blinnPhongPonctuelle(point);
+  //oFragColor = CalcSpotLight();
+  oFragColor = ADS() + blinnPhongPonctuelle(point);
 }

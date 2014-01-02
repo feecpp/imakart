@@ -61,6 +61,8 @@ public:
   void addLight(PointLight* newLight)
       {lights.push_back(newLight);}
 
+  void setSpot(SpotLight* newspot);
+
   const glm::vec4 getAmbientLight() const
     {return ambientLight;}
 
