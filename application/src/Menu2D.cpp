@@ -71,6 +71,9 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		kartMenu->addButton(kart);
 	}
 
+	Button2D* returnMainMenu = new Button2D(-0.8, -0.6, 0.6, 0.2, "textures/options/returnMainMenu.png", "textures/options/returnMainMenuSelect.png", "");
+	kartMenu->addButton(returnMainMenu);
+
 	return kartMenu;
 }
 
