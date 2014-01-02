@@ -61,12 +61,31 @@ MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
 		kartMenu->addButton(kart);
 	}
 
+	ButtonLogic* returnMainMenu = new ButtonLogic("returnMainMenu");
+	returnMainMenu->setAction(RETURN_MAIN_MENU);
+	kartMenu->addButton(returnMainMenu);
+
 	return kartMenu;
 }
 
 MenuLogic* MenuLogic::initialiseMapMenu(){
 	MenuLogic* mapMenu = new MenuLogic;
 	return mapMenu;
+}
+
+MenuLogic* MenuLogic::initialiseRaceMenu(){
+	MenuLogic* raceMenu = new MenuLogic;
+
+	ButtonLogic* reprendre = new ButtonLogic("reprendre");
+	ButtonLogic* quitter = new ButtonLogic("quitter");
+
+	reprendre->setAction(TAKE_BACK);
+	quitter->setAction(EXIT);
+
+	raceMenu->addButton(reprendre);
+	raceMenu->addButton(quitter);
+	
+	return raceMenu;
 }
 
 void MenuLogic::addButton(ButtonLogic* buttonToAdd){

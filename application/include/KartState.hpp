@@ -226,8 +226,7 @@ public:
   {
     glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
 
-    //Seul changement : cette ligne ! (diff par rapport a la forward : le moins devant maxspeed)
-    float travelledDistance = - kart.specifications.maxSpeed * elapsedTimeInSecond;
+    float travelledDistance = kart.speed * elapsedTimeInSecond;
     kart.position += direction * travelledDistance;
 
   }

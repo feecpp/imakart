@@ -26,6 +26,7 @@ public:
   virtual void releaseSpace() const;
   virtual void pressNumpad0() const;
   virtual void releaseNumpad0() const;
+  virtual void pressEscape() const;
 
 private:
   GameEngine& gameEngine;

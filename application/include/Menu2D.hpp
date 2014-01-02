@@ -12,7 +12,7 @@ class Menu2D: public Object2D
 public:
 	unsigned int nbButtonInMenu;
 
-	Menu2D();
+	Menu2D(const std::string pathTextureMenu);
 	~Menu2D();
 	
 	Button2D* getTab2DMenu(const unsigned int positionToSelect)
@@ -22,6 +22,7 @@ public:
 	static Menu2D* initialiseOptionsMenu();
 	static Menu2D* initialiseKartMenu(std::vector <std::string> kartsName);
 	static Menu2D* initialiseMapMenu();
+	static Menu2D* initialiseRaceMenu();
 
 	void addButton(Button2D* buttonToAdd);
     void update();

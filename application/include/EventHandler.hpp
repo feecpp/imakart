@@ -62,6 +62,12 @@ public:
    */
   virtual void pressNumpad0() const = 0;
   virtual void releaseNumpad0() const = 0;
+
+  /**
+   * @brief pressEscape
+   * Touche Echap
+   */
+  virtual void pressEscape() const = 0;
    
 };
 

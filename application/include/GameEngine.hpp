@@ -55,6 +55,11 @@ public:
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
 
+  void switchPause();
+
+  const bool inPause() const
+    {return pause;}
+
   /**
    * @brief setExitFlag indique que le jeu va quitter
    * (la fonction getExitFlag() renvoie true)
@@ -98,6 +103,8 @@ private:
   ChronoLogic* chrono;
   Observer* scenario;
   bool exitFlag;
+  bool pause;
+  float buffer;
 
   ///Pour la gestion du temps
   float lag;

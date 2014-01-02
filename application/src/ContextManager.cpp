@@ -29,28 +29,39 @@ ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEng
 
 void ContextManager::updateContextIfNeeded()
 {
-  GameState currentGameSate = gameEngine.getState();
+  GameState currentGameState = gameEngine.getState();
 
-  //Rien Ã  faire dans ce cas
-  if (lastGameState != currentGameSate)
+  if (lastGameState != currentGameState)
   {
-    if (currentGameSate == IN_MENU)
+    if (currentGameState == IN_MENU)
       setupMenuContext();
 
-    else if (currentGameSate == IN_MENU_OPTIONS)
+    else if (currentGameState == IN_MENU_OPTIONS)
       setupMenuOptionsContext();
 
-    else if (currentGameSate == IN_MENU_KART)
+    else if (currentGameState == IN_MENU_KART)
       setupMenuKartContext();
 
-    else if (currentGameSate == IN_MENU_MAP)
+    else if (currentGameState == IN_MENU_MAP)
       setupMenuMapContext();
 
-    else if (currentGameSate == PREPARING_RACE)
+    else if (currentGameState == PREPARING_RACE)
       setupRaceContext();
 
-    lastGameState = currentGameSate;
+    else if (currentGameState == IN_RACE_MENU)
+      setupRaceMenuContext();
+
+    else if (currentGameState == IN_RACE && lastGameState == IN_RACE_MENU)
+    {
+      Interface& gameInterface = graphicEngine.getCurrentInterface();
+      //Supprime le menu de pause
+      gameInterface.deleteLastObject2D();
+      gameEngine.switchPause();
+    }
+
+    lastGameState = currentGameState;
   }
+
 
   std::stack<GameEvent>& eventStack = gameEngine.getEvents();
   while(!eventStack.empty())
@@ -69,7 +80,6 @@ void ContextManager::updateContextIfNeeded()
         counter = new TimeLimitedText(std::string("GO !"), 1000);
         interface.addTimeLimitedText(counter);
         break;
-
     }
   }
   //Ajouter gestion du menu en course
@@ -162,6 +172,7 @@ void ContextManager::setupMenuMapContext() const
 
 void ContextManager::setupRaceContext() const
 {
+
   graphicEngine.reset();
 
   PointLight* light = new PointLight();
@@ -219,7 +230,7 @@ void ContextManager::setupRaceContext() const
   gameWorld->addLight(l);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
- 
+
   //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
@@ -262,15 +273,32 @@ void ContextManager::setupRaceContext() const
 
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
-
   gameEngine.setState(BEFORE_RACE_BEGIN);
+
+ 
+}
+
+void ContextManager::setupRaceMenuContext() const{
+  Interface& gameInterface = graphicEngine.getCurrentInterface();
+
+  Menu2D* menu2D = Menu2D::initialiseRaceMenu();
+  MenuLogic* menuLogic = MenuLogic::initialiseRaceMenu();
+
+  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+  }
+
+  gameEngine.setMenu(menuLogic);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  gameInterface.addObject2D(menu2D);
 }
 
 const EventHandler& ContextManager::getHandler() const
 {
-  if (gameEngine.getState() == IN_MENU || gameEngine.getState() == IN_MENU_MAP || gameEngine.getState() == IN_MENU_KART)
+  if (gameEngine.getState() == IN_MENU || gameEngine.getState() == IN_MENU_MAP || gameEngine.getState() == IN_MENU_KART || gameEngine.getState() == IN_RACE_MENU){
     return menuEventHandler;
-  else if (gameEngine.getState() == IN_RACE)
+  }else if (gameEngine.getState() == IN_RACE || gameEngine.getState() == BEFORE_RACE_BEGIN){
     return raceEventHandler;
+  }
   return menuEventHandler;//TODO
 }

@@ -2,7 +2,7 @@
 #include "Positionable.hpp"
 
 DirectionalLight::DirectionalLight()
-  :direction(3.f,30.f,3.f),intensity(3.5f,3.5f,3.5f)
+  :direction(3.f,30.f,3.f),intensity(2.5f,2.5f,2.5f)
 {
 }
 
