@@ -12,6 +12,8 @@ class Kart;
 class Player
 {
 public:
+  static const unsigned int MAX_LAP;
+
   explicit Player(Kart& kart, std::stack<GameEvent>& eventStack);
 
   const Kart& getKart() const;

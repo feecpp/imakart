@@ -4,6 +4,8 @@
 #include "ItemBox.hpp"
 #include <iostream>
 
+const unsigned int Player::MAX_LAP = 2;
+
 Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
   :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false)
 {
@@ -36,7 +38,6 @@ void Player::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
   this->checkpoints = checkpoints;
 }
 
-#include <iostream>
 void Player::validateCheckpoints()
 {
   bool allChecked = true;
@@ -66,11 +67,17 @@ void Player::validateCheckpoints()
   if (newLap)
   {
     currentLap++;
-    std::cerr << "new lap:" << currentLap << std::endl;
     //On émet un event nouveau tour
+    if (currentLap > Player::MAX_LAP)
+    {
+      eventStack.push(GameEvent(RACE_FINISHED, GameEventData()));
+    }
+    else
+    {
     GameEventData data;
     data.lapNumber = currentLap;
     eventStack.push(GameEvent(NEW_LAP, data));
+    }
     newLapNextTime = false;
   }
 

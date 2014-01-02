@@ -44,6 +44,8 @@ public:
 
   void switchPause();
 
+  void initNewRace();
+
   const bool inPause() const
     {return pause;}
 
@@ -100,6 +102,10 @@ private:
   int lastSecond;
   sf::Clock counter;
   bool counterStarted;
+
+  //Gestion de la fin
+  sf::Clock finishTimer;
+  bool finishTimerStarted;
 };
 
 #endif // GAMEENGINE_HPP

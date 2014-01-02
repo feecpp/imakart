@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f), lastSecond(3), counterStarted(false)
+  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f), lastSecond(3), counterStarted(false), finishTimerStarted(false)
 
 {
   chrono = new ChronoLogic();
@@ -88,6 +88,23 @@ void GameEngine::update()
   else
   {
     clock.restart();
+  }
+
+  //LALALA JE SUIS SALE : code de fin de jeu
+  if (state == END_OF_RACE)
+  {
+    if (!finishTimerStarted)
+    {
+      finishTimer.restart();
+      finishTimerStarted = true;
+    }
+    //On réinitialise tout
+    if (finishTimer.getElapsedTime().asSeconds() > 5)
+    {
+      state = IN_MENU;
+      finishTimerStarted = false;
+      counterStarted = false;
+    }
   }
 }
 
