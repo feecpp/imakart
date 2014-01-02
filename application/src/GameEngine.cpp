@@ -104,6 +104,7 @@ void GameEngine::update()
       state = IN_MENU;
       finishTimerStarted = false;
       counterStarted = false;
+      lastSecond = 3;
     }
   }
 }
@@ -116,14 +117,6 @@ void GameEngine::switchPause()
 
   pause = !pause;
 
-}
-
-void GameEngine::initNewRace()
-{
-  chrono->init();
-  counter.restart();
-  getPlayerKart().setPosition(glm::vec3(0,0,0));
-  state = BEFORE_RACE_BEGIN;
 }
 
 void GameEngine::activateExitFlag()
