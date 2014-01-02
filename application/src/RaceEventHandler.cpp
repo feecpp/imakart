@@ -34,19 +34,23 @@ void RaceEventHandler::releaseDown() const
 void RaceEventHandler::pressLeft() const
 {
   gameEngine.getPlayer().turnLeft();
+  graphicEngine.getWorld3D()->switchInLeftBendView();
 }
 void RaceEventHandler::releaseLeft() const
 {
   gameEngine.getPlayer().stopTurning();
+  graphicEngine.getWorld3D()->switchInForwardView();
 }
 
 void RaceEventHandler::pressRight() const
 {
   gameEngine.getPlayer().turnRight();
+  graphicEngine.getWorld3D()->switchInRightBendView();
 }
 void RaceEventHandler::releaseRight() const
 {
   gameEngine.getPlayer().stopTurning();
+  graphicEngine.getWorld3D()->switchInForwardView();
 }
 
 void RaceEventHandler::pressEnter() const
@@ -75,4 +79,10 @@ void RaceEventHandler::pressNumpad0() const
 void RaceEventHandler::releaseNumpad0() const
 {
   graphicEngine.getWorld3D()->switchInForwardView();
+}
+
+void RaceEventHandler::pressEscape() const
+{
+  gameEngine.setState(IN_RACE_MENU);
+  gameEngine.switchPause();
 }

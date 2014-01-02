@@ -153,6 +153,15 @@ void World3D::switchInForwardView(){
   camera->switchInForwardView();
 }
 
+void World3D::switchInLeftBendView(){
+  camera->switchInLeftBendView();
+}
+
+void World3D::switchInRightBendView(){
+  camera->switchInRightBendView();
+}
+
+
 void World3D::setSize(const unsigned int width, const unsigned int height){
   camera->setSize(width, height);
 }

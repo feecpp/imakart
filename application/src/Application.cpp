@@ -6,13 +6,6 @@
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
 {
-  scenario = new Scenario_obs();
-  gameEngine.attach(scenario);
-  graphicEngine.attach(scenario);
-
-  //L'observateur n'est pas passif il doit les connaitre pour leur donner des ordres.
-  scenario->gameE = &gameEngine;
-  scenario->graphicE = &graphicEngine;
 }
 
 sf::RenderWindow& Application::setupEverything()
@@ -82,7 +75,6 @@ void Application::handleEvents(sf::RenderWindow& window)
             else if (e.key.code == sf::Keyboard::Left)
               handler.pressLeft();
 
-
             else if (e.key.code == sf::Keyboard::Right)
               handler.pressRight();
 
@@ -95,7 +87,10 @@ void Application::handleEvents(sf::RenderWindow& window)
             else if (e.key.code == sf::Keyboard::Numpad0)
               handler.pressNumpad0();
 
-            break;
+            else if (e.key.code == sf::Keyboard::Escape)
+              handler.pressEscape();
+
+        break;
 
         case sf::Event::KeyReleased:
             if (e.key.code == sf::Keyboard::Down)

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "ShaderProgram.hpp"
+#include "TimeLimitedText.hpp"
 
 class Object2D;
 class ObjectTexte;
@@ -15,6 +16,7 @@ public:
   ~Interface();
 
   void init();
+  void update();
 
   void draw() const;
 
@@ -24,9 +26,18 @@ public:
   void addObjectTexte(ObjectTexte* newObjectTexte)
     {objectsTexte.push_back(newObjectTexte);}
 
+
+  void addTimeLimitedText(TimeLimitedText* newTimeLimitedText)
+    {newTimeLimitedText->start(); timeLimitedTexts.push_back(newTimeLimitedText);}
+
+  void deleteLastObject2D()
+    {objects2D.pop_back();}
+
 private:
   std::vector<Object2D* > objects2D;
   std::vector<ObjectTexte* > objectsTexte;
+  std::vector<TimeLimitedText* > timeLimitedTexts;
+
   glimac::ShaderProgram object2DProgram;
   glimac::ShaderProgram objectTextProgram;
 

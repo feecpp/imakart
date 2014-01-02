@@ -16,7 +16,6 @@ class GraphicEngine;
  */
 
 /**
- * Classe Singleton
  * @brief The ContextManager class
  * se charge du sale boulot d'instancier tout ce qu'il faut et de dÃ©truire
  * tout ce qu'il faut Ã  chaque nouveau contexte, pour l'instant :
@@ -45,6 +44,7 @@ private:
   void setupMenuKartContext() const;
   void setupMenuMapContext() const;
   void setupRaceContext() const;
+  void setupRaceMenuContext() const;
 
   GameEngine& gameEngine;
   GraphicEngine& graphicEngine;

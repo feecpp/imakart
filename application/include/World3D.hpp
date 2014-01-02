@@ -49,6 +49,11 @@ public:
    */
   void switchInBackwardView();
   void switchInForwardView();
+  /*
+   * Vues adaptées pour les virages
+   */
+  void switchInLeftBendView();
+  void switchInRightBendView();
 
   /*
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector

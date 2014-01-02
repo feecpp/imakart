@@ -2,6 +2,7 @@
 #define CAMERA_HPP
 
 #include <glm/glm.hpp>
+#include <string>
 
 class Positionable;
 
@@ -24,6 +25,8 @@ public:
 
   void switchInBackwardView();
   void switchInForwardView();
+  void switchInRightBendView();
+  void switchInLeftBendView();
 
 private:
   const Positionable* objectToFollow;
@@ -36,6 +39,8 @@ private:
 
   bool viewThirdPerson;
   bool viewBackward;
+  bool viewRightBend;
+  bool viewLeftBend;
 };
 
 #endif // CAMERA_HPP

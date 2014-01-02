@@ -72,7 +72,7 @@ void MenuEventHandler::pressEnter() const
 		case SELECT:
       		gameEngine.setupPlayer(button->name);
 
-			gameEngine.setState(IN_RACE);
+      gameEngine.setState(PREPARING_RACE);
 			break;
 
 		case WINDOW_RESIZE:
@@ -94,6 +94,10 @@ void MenuEventHandler::pressEnter() const
 			gameEngine.setState(IN_MENU);
 			break;
 
+		case TAKE_BACK:
+			pressEscape();
+			break;
+
 		default:
 			std::cout << "No implementation" << std::endl;
 			break;
@@ -111,3 +115,15 @@ void MenuEventHandler::pressSpace() const {}
 void MenuEventHandler::releaseSpace() const {}
 void MenuEventHandler::pressNumpad0() const {}
 void MenuEventHandler::releaseNumpad0() const {}
+
+void MenuEventHandler::pressEscape() const {
+  if(gameEngine.getState() == IN_RACE_MENU)
+  {
+		gameEngine.setState(IN_RACE);
+  }
+  else
+  {
+		gameEngine.setState(IN_MENU);
+	}
+}
+
