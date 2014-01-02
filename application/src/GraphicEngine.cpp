@@ -90,6 +90,10 @@ World3D* GraphicEngine::getWorld3D(){
   return world3D;
 }
 
+Interface* GraphicEngine::getInterface(){ 
+  return interface;
+}
+
 sf::RenderWindow& GraphicEngine::getWindow(){
   return window;
 }

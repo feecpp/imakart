@@ -94,6 +94,10 @@ void MenuEventHandler::pressEnter() const
 			gameEngine.setState(IN_MENU);
 			break;
 
+		case TAKE_BACK:
+			pressEscape();
+			break;
+
 		default:
 			std::cout << "No implementation" << std::endl;
 			break;
@@ -114,7 +118,6 @@ void MenuEventHandler::releaseNumpad0() const {}
 
 void MenuEventHandler::pressEscape() const {
 	if(gameEngine.getState() == IN_RACE_MENU){
-		std::cout << "NOOOOOOOOOOONNNNNNNNN PAUSSEEEEEEEE" << std::endl;
 		gameEngine.setState(IN_RACE);
 	}else{
 		gameEngine.setState(IN_MENU);

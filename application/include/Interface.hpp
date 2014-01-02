@@ -24,6 +24,9 @@ public:
   void addObjectTexte(ObjectTexte* newObjectTexte)
     {objectsTexte.push_back(newObjectTexte);}
 
+  void deleteLastObject2D()
+    {objects2D.pop_back();}
+
 private:
   std::vector<Object2D* > objects2D;
   std::vector<ObjectTexte* > objectsTexte;

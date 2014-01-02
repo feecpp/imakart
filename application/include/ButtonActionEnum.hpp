@@ -8,7 +8,8 @@ enum ButtonAction
   EXIT,
   SELECT,
   WINDOW_RESIZE,
-  RETURN_MAIN_MENU
+  RETURN_MAIN_MENU,
+  TAKE_BACK
 };
 
 #endif

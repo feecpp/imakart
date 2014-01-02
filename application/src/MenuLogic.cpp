@@ -73,6 +73,21 @@ MenuLogic* MenuLogic::initialiseMapMenu(){
 	return mapMenu;
 }
 
+MenuLogic* MenuLogic::initialiseRaceMenu(){
+	MenuLogic* raceMenu = new MenuLogic;
+
+	ButtonLogic* reprendre = new ButtonLogic("reprendre");
+	ButtonLogic* quitter = new ButtonLogic("quitter");
+
+	reprendre->setAction(TAKE_BACK);
+	quitter->setAction(EXIT);
+
+	raceMenu->addButton(reprendre);
+	raceMenu->addButton(quitter);
+	
+	return raceMenu;
+}
+
 void MenuLogic::addButton(ButtonLogic* buttonToAdd){
 	tabButtonLogicMenu.push_back(buttonToAdd);
 	if(nbButtonInMenu == 0){
