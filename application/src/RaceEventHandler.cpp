@@ -80,3 +80,9 @@ void RaceEventHandler::releaseNumpad0() const
 {
   graphicEngine.getWorld3D()->switchInForwardView();
 }
+
+void RaceEventHandler::pressEscape() const
+{
+  gameEngine.setState(IN_RACE_MENU);
+  gameEngine.switchPause();
+}

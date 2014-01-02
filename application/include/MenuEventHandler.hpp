@@ -26,6 +26,7 @@ public:
   virtual void releaseSpace() const;
   virtual void pressNumpad0() const;
   virtual void releaseNumpad0() const;
+  virtual void pressEscape() const;
 
   void setMenu(MenuLogic* menu)
    	{this->menu = menu;}

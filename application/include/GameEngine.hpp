@@ -13,13 +13,28 @@
 #include "Opponent.hpp"
 #include "Observable.hpp"
 #include <vector>
+#include <stack>
+
+union GameEventData
+{
+  int lastSecond;
+};
+
+struct GameEvent
+{
+  GameEvent(GameEventType type, GameEventData data)
+    : type(type), data(data) {}
+
+  GameEventType type;
+  GameEventData data;
+};
 
 /**
  * @brief Classe principale d'Imakart
  * Gère le déroulement du jeu. C'est le GameEngine
  * qui gère le temps dans la simulation.
  */
-class GameEngine : public Observable
+class GameEngine
 {
 public:
   GameEngine();
@@ -27,6 +42,9 @@ public:
 
   void init();
   void update();
+
+  std::stack<GameEvent>& getEvents()
+    {return eventStack;}
 
   const GameState getState() const
     {return state;}
@@ -36,6 +54,11 @@ public:
 
   void setMenu(MenuLogic* menuToSet)
     {menu = *menuToSet;}
+
+  void switchPause();
+
+  const bool inPause() const
+    {return pause;}
 
   /**
    * @brief setExitFlag indique que le jeu va quitter
@@ -65,15 +88,14 @@ public:
   MenuLogic& getMenuLogic()
     {return menu;}
 
-  virtual const void attach(Observer* obs);
-
 private:
   void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
 
   GameState state;
   MenuLogic menu;
-  //Hangar hangar;
+  std::stack<GameEvent> eventStack;
+
   Player* player;
   std::vector<Opponent*> opponents;
   Map* currentMap;
@@ -81,9 +103,16 @@ private:
   ChronoLogic* chrono;
   Observer* scenario;
   bool exitFlag;
+  bool pause;
+  float buffer;
 
   ///Pour la gestion du temps
   float lag;
+
+  //Gestion compte à rebours du départ
+  int lastSecond;
+  sf::Clock counter;
+  bool counterStarted;
 };
 
 #endif // GAMEENGINE_HPP

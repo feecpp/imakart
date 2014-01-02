@@ -24,8 +24,14 @@ Interface::~Interface()
     delete objectsTexte[i];
   }
 
+  for (size_t i = 0; i < timeLimitedTexts.size(); ++i)
+  {
+    delete timeLimitedTexts[i];
+  }
+
   objectsTexte.erase(objectsTexte.begin(), objectsTexte.end());
   objects2D.erase(objects2D.begin(), objects2D.end());
+  timeLimitedTexts.erase(timeLimitedTexts.begin(), timeLimitedTexts.end());
 }
 
 void Interface::init()
@@ -43,6 +49,23 @@ void Interface::init()
   }
 }
 
+void Interface::update()
+{
+  for (auto timeLimitedText = timeLimitedTexts.begin(); timeLimitedText != timeLimitedTexts.end(); ++timeLimitedText)
+  {
+    (*timeLimitedText)->update();
+    if ((*timeLimitedText)->isFinished())
+    {
+      delete *timeLimitedText;
+      *timeLimitedText = nullptr;
+      timeLimitedTexts.erase(timeLimitedText);
+      timeLimitedText = timeLimitedTexts.begin();
+      if (timeLimitedText == timeLimitedTexts.end())
+        break;
+    }
+  }
+}
+
 void Interface::draw() const
 {
 
@@ -57,6 +80,11 @@ void Interface::draw() const
     (*objectText)->draw(objectTextProgram);
   }
 
+  for (auto timeLimitedText = timeLimitedTexts.begin(); timeLimitedText != timeLimitedTexts.end(); ++timeLimitedText)
+  {
+    (*timeLimitedText)->draw(objectTextProgram);
+  }
+
   //Dessin des objets 2D
   object2DProgram.use();
   for(auto object2D = objects2D.begin(); object2D != objects2D.end(); ++object2D)
@@ -64,4 +92,6 @@ void Interface::draw() const
     (*object2D)->update();
     (*object2D)->draw(object2DProgram);
   }
+
+
 }

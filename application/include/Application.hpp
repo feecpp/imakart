@@ -4,7 +4,6 @@
 #include "GraphicEngine.hpp"
 #include "GameEngine.hpp"
 #include "ContextManager.hpp"
-#include "Scenario_obs.hpp"
 
 class Application
 {
@@ -20,7 +19,6 @@ private:
   GameEngine gameEngine;
   GraphicEngine graphicEngine;
   ContextManager contextManager;
-  Scenario_obs* scenario;
 };
 
 #endif // APPLICATION_HPP

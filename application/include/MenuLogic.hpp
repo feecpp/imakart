@@ -21,6 +21,7 @@ public:
 	static MenuLogic* initialiseOptionsMenu();
 	static MenuLogic* initialiseKartMenu(std::vector <std::string> kartsName);
 	static MenuLogic* initialiseMapMenu();
+	static MenuLogic* initialiseRaceMenu();
 
 	void addButton(ButtonLogic* buttonToAdd);
 	void nextButton();
