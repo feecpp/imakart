@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameEngine::GameEngine()
-  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), lag(0.f)
+  : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f)
 {
   chrono = new ChronoLogic();
   setupOpponents(1);
@@ -28,29 +28,33 @@ void GameEngine::init()
 
 void GameEngine::update()
 {
-  float elapsedTime = clock.restart().asMilliseconds();
-  lag += elapsedTime;
+  if(!pause){
+    float elapsedTime = clock.restart().asMilliseconds();
+    lag += elapsedTime;
 
-  //Mettre à jour les objets de la simulation ici (en fonction du temps)
-  //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
+    //Mettre à jour les objets de la simulation ici (en fonction du temps)
+    //Cette partie a vraiment besoin qu'on réfléchisse sur l'archi du Game Engine!
 
-  while (lag >= TURN_DURATION_IN_MILLIS)
-  {
-    if(state != IN_RACE)
+    while (lag >= TURN_DURATION_IN_MILLIS)
     {
-      chrono->update(0.f);
-    }
-    else
-    {
-      //Uniformiser la gestion du temps
-      getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
-      getOpponentKart(0).update(TURN_DURATION_IN_MILLIS / 1000.f);
-      chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
-      //Premiere gestion ultra basique de la physique des collisions
-      doPhysic();
-    }
+      if(state != IN_RACE)
+      {
+        chrono->update(0.f);
+      }
+      else
+      {
+        //Uniformiser la gestion du temps
+        getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
+        getOpponentKart(0).update(TURN_DURATION_IN_MILLIS / 1000.f);
+        chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
+        //Premiere gestion ultra basique de la physique des collisions
+        doPhysic();
+      }
 
-    lag -= TURN_DURATION_IN_MILLIS;
+      lag -= TURN_DURATION_IN_MILLIS;
+    }
+  }else{
+    clock.restart();
   }
 }
 

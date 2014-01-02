@@ -131,8 +131,8 @@ void Kart::boost()
 {
   if(currentState == backwardAccelerationState || currentState == backwardDecelerationState){
     speed -= 10;
-    if(speed < -specifications.maxSpeed){
-      speed = -specifications.maxSpeed;
+    if(speed < -5){
+      speed = -5;
     }
   }else if (currentState == noMoveState || currentState == forwardBrakeState){
     speed += 10;
@@ -146,6 +146,8 @@ void Kart::boost()
     if(speed > specifications.maxSpeed){
       speed = specifications.maxSpeed;
     }
+  }else if (currentState == forwardMaxSpeedReached){
+    speed += 5;
   }
 }
 

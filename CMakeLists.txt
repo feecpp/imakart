@@ -20,7 +20,7 @@ SET(ENABLE_BOOST_WORKAROUND ON)
 SET(BUILD_STATIC_LIB ON)
 SET(BUILD_ASSIMP_TOOLS OFF)
 add_subdirectory(third-party/assimp--3.0.1270)
-#desactive les warnings degueulasses
+#desactive les warnings
 set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
 
 #glm

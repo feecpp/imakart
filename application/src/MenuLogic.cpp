@@ -61,6 +61,10 @@ MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
 		kartMenu->addButton(kart);
 	}
 
+	ButtonLogic* returnMainMenu = new ButtonLogic("returnMainMenu");
+	returnMainMenu->setAction(RETURN_MAIN_MENU);
+	kartMenu->addButton(returnMainMenu);
+
 	return kartMenu;
 }
 

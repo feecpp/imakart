@@ -50,6 +50,9 @@ void ContextManager::updateContextIfNeeded()
   else if (currentGameSate == IN_RACE)
     setupRaceContext();
 
+  else if (currentGameSate == IN_RACE_MENU)
+    setupRaceMenuContext();
+
   lastGameState = currentGameSate;
 
   //Ajouter gestion du menu en course
@@ -142,6 +145,7 @@ void ContextManager::setupMenuMapContext() const
 
 void ContextManager::setupRaceContext() const
 {
+if(!gameEngine.inPause()){
   graphicEngine.reset();
 
   PointLight* light = new PointLight();
@@ -242,14 +246,23 @@ void ContextManager::setupRaceContext() const
 
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
+}else{
+  std::cout << "je ne fais rien" << std::endl;
+  gameEngine.switchPause();
+}
+ 
+}
+
+void ContextManager::setupRaceMenuContext() const{
 
 }
 
 const EventHandler& ContextManager::getHandler() const
 {
-  if (gameEngine.getState() == IN_MENU || gameEngine.getState() == IN_MENU_MAP || gameEngine.getState() == IN_MENU_KART)
+  if (gameEngine.getState() == IN_MENU || gameEngine.getState() == IN_MENU_MAP || gameEngine.getState() == IN_MENU_KART || gameEngine.getState() == IN_RACE_MENU){
     return menuEventHandler;
-  else if (gameEngine.getState() == IN_RACE)
+  }else if (gameEngine.getState() == IN_RACE){
     return raceEventHandler;
+  }
   return menuEventHandler;//TODO
 }
