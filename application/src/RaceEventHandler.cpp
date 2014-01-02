@@ -83,6 +83,9 @@ void RaceEventHandler::releaseNumpad0() const
 
 void RaceEventHandler::pressEscape() const
 {
+  if (gameEngine.getState() == BEFORE_RACE_BEGIN || RACE_FINISHED)
+    return;
+
   gameEngine.setState(IN_RACE_MENU);
   gameEngine.switchPause();
 }
