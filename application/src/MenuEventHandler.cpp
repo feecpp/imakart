@@ -111,3 +111,13 @@ void MenuEventHandler::pressSpace() const {}
 void MenuEventHandler::releaseSpace() const {}
 void MenuEventHandler::pressNumpad0() const {}
 void MenuEventHandler::releaseNumpad0() const {}
+
+void MenuEventHandler::pressEscape() const {
+	if(gameEngine.getState() == IN_RACE_MENU){
+		std::cout << "NOOOOOOOOOOONNNNNNNNN PAUSSEEEEEEEE" << std::endl;
+		gameEngine.setState(IN_RACE);
+	}else{
+		gameEngine.setState(IN_MENU);
+	}
+}
+
