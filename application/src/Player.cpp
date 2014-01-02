@@ -38,25 +38,36 @@ void Player::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
   this->checkpoints = checkpoints;
 }
 
+#include <iostream>
 void Player::validateCheckpoints()
 {
   bool allChecked = true;
   bool newLap = false;
+  int cpt = 0;
+  int nbChecked = 0;
   for (auto it = checkpoints.begin(); it != checkpoints.end(); ++it)
   {
+    if (newLapNextTime && !it->start)
+      continue;
     if (it->contains(myKart.getPosition()))
     {
+      std::cout << "in checkpoint " << cpt << std::endl;
       it->checked = true;
       if(it->start && (newLapNextTime || currentLap == 0))
         newLap = true;
     }
     if ( !it->checked)
       allChecked = false;
+    else
+      nbChecked++;
+    cpt++;
   }
 
+  std::cout << "nb checked " << nbChecked << " / " << checkpoints.size() << std::endl;
   //Si tous les checkpoints sont check : reset
   if (allChecked)
   {
+    std::cout << "all checked" << std::endl;
     newLapNextTime = true;
     for (auto it = checkpoints.begin(); it != checkpoints.end(); ++it)
     {
