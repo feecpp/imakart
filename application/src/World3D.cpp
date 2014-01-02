@@ -98,7 +98,7 @@ void World3D::draw() const
   //Gestion d'une spotLight
   spot->updateLightPosition();
   //spot->updateLightDirection();
-  spot->updateLight(viewMatrix);
+  //spot->updateLight(viewMatrix);
   const glm::vec3& spotPos = spot->getLightPosition();
   const glm::vec3& spotDir = spot->getLightDirection();
   const glm::vec3& spotIntensity = spot->getLightIntensity();
@@ -112,8 +112,9 @@ void World3D::draw() const
   raceProgram.setUniform(spotIntensityId, spotIntensity);
   raceProgram.setUniform(spotCutId,spotCutoff);
 
-  std::cout << "camera Look :" << camera->getPosition().x <<", " << camera->getPosition().y <<", "<<camera->getPosition().z << std::endl;
+  std::cout << "camera Pos :" << camera->getPosition().x <<", " << camera->getPosition().y <<", "<<camera->getPosition().z << std::endl;
   std::cout << "spotPos :" << spot->getLightPosition().x <<", " <<spot->getLightPosition().y <<", "<<spot->getLightPosition().z << std::endl;
+  std::cout << "camera Look :" << camera->getWhereILook().x <<", " << camera->getWhereILook().y <<", "<<camera->getWhereILook().z << std::endl;
   std::cout << "spotDir :" << spot->getLightDirection().x <<", " <<spot->getLightDirection().y <<", "<<spot->getLightDirection().z << std::endl;
 
   //Gestion de la lumière directionnelle

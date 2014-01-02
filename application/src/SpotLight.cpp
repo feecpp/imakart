@@ -1,9 +1,10 @@
 #include "SpotLight.hpp"
 #include "Positionable.hpp"
 #include <iostream>
+#include <glm/gtx/quaternion.hpp>
 
 SpotLight::SpotLight()
-    :position(1.f,30.f,1.f),direction(3.f,3.f,3.f),intensity(3.5f,3.5f,3.5f), cutoff(0.f), objectToFollow(nullptr)
+    :position(0.f,3.f,-3.f),direction(0.f,0.f,-3.f),intensity(5.5f,5.5f,5.5f), cutoff(0.f), objectToFollow(nullptr)
 {
 }
 
@@ -24,10 +25,10 @@ const float SpotLight::getLightCutoff() const {
 }
 
 void SpotLight::updateLightPosition(){
+    glm::vec3 initialDirection = glm::vec3(0.f, -2.f, -3.f);
     if (objectToFollow != nullptr) {
-      std::cout << "objectToFollow différent de nullptr" <<std::endl;
-      direction = objectToFollow->getPosition() - position;
-      position = objectToFollow->getPosition();
+      direction = glm::toMat3(objectToFollow->getOrientation()) * initialDirection;;
+      position = objectToFollow->getPosition()  - direction + glm::vec3(0.f,0.f,-5.f);
     }else{
         std::cout << "Erreur : objectToFollow est vide" <<std::endl;
     }
