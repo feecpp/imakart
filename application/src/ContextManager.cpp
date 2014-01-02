@@ -69,12 +69,10 @@ void ContextManager::updateContextIfNeeded()
     eventStack.pop();
     Interface& interface = graphicEngine.getCurrentInterface();
     TimeLimitedText* counter = nullptr;
-    std::ostringstream convert;
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        convert << current.data.lastSecond;
-        counter = new TimeLimitedText(convert.str(), 1000);
+        counter = new TimeLimitedText(glimac::convertToString(current.data.lastSecond), 1000);
         interface.addTimeLimitedText(counter);
         break;
       case RACE_BEGIN:
