@@ -6,7 +6,7 @@
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f), spot(new SpotLight()) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -96,6 +96,26 @@ void World3D::draw() const
   GLint nbLightsId = raceProgram.getUniformIndex("nbLights");
   raceProgram.setUniform(nbLightsId,i);
 
+  //Gestion d'une spotLight
+  spot->updateLightPosition(camera->getPosition());
+  spot->updateLightDirection(camera->getWhereILook());
+  //spot->updateLight(viewMatrix);
+  const glm::vec3& spotPos = spot->getLightPosition();
+  const glm::vec3& spotDir = spot->getLightDirection();
+  const glm::vec3& spotIntensity = spot->getLightIntensity();
+  const float& spotCutoff = spot->getLightCutoff();
+  GLint spotPosId = raceProgram.getUniformIndex("spot.uLightPos");
+  GLint spotDirId = raceProgram.getUniformIndex("spot.uLightDir");
+  GLint spotIntensityId = raceProgram.getUniformIndex("spot.uLi");
+  GLint spotCutId = raceProgram.getUniformIndex("spot.uCutoff");
+  raceProgram.setUniform(spotPosId,spotPos);
+  raceProgram.setUniform(spotDirId,spotDir);
+  raceProgram.setUniform(spotIntensityId, spotIntensity);
+  raceProgram.setUniform(spotCutId,spotCutoff);
+
+  std::cout << "camera Look :" << camera->getPosition().x <<", " << camera->getPosition().y <<", "<<camera->getPosition().z << std::endl;
+  std::cout << "spotPos :" << spot->getLightPosition().x <<", " <<spot->getLightPosition().y <<", "<<spot->getLightPosition().z << std::endl;
+   std::cout << "spotDir :" << spot->getLightDirection().x <<", " <<spot->getLightDirection().y <<", "<<spot->getLightDirection().z << std::endl;
 
   //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);

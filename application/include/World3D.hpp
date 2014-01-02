@@ -7,6 +7,7 @@
 #include "Skybox.hpp"
 #include "DirectionalLight.hpp"
 #include "PointLight.hpp"
+#include "SpotLight.hpp"
 #include "Camera.hpp"
 
 class Object3D;
@@ -64,11 +65,12 @@ private:
   glimac::ShaderProgram raceProgram;
   glimac::ShaderProgram skyboxProgram;
 
-  std::vector<PointLight* > lights;
+  std::vector<PointLight*> lights;
   Skybox skybox;
   Camera* camera;
   DirectionalLight* sun;
   glm::vec4 ambientLight;
+  SpotLight* spot;
 
 };
 
