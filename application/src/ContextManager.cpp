@@ -285,8 +285,6 @@ void ContextManager::setupRaceContext() const
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
   gameEngine.setState(BEFORE_RACE_BEGIN);
-
- 
 }
 
 void ContextManager::setupRaceMenuContext() const{

@@ -118,6 +118,14 @@ void GameEngine::switchPause()
 
 }
 
+void GameEngine::initNewRace()
+{
+  chrono->init();
+  counter.restart();
+  getPlayerKart().setPosition(glm::vec3(0,0,0));
+  state = BEFORE_RACE_BEGIN;
+}
+
 void GameEngine::activateExitFlag()
 {
   exitFlag = true;
