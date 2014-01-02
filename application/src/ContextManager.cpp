@@ -205,13 +205,13 @@ if(!gameEngine.inPause()){
   gameWorld->addObject3D(mapMesh);
  
   //pour voir les bounding boxes sous forme de cube
-  for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
+  /*for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
     visibleBB->setSize(it->getSize());
     visibleBB->setModelToRepresent(*it);
     gameWorld->addObject3D(visibleBB);
-  }
+  }*/
 
   //Dessin d'un adversaire
   Mesh* opponentMesh = new Mesh();
