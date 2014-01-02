@@ -1,19 +1,27 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include "Checkpoint.hpp"
+#include <vector>
+#include <stack>
+#include "GameEvent.hpp"
+
 class ItemLogic;
 class Kart;
 
 class Player
 {
 public:
-  explicit Player(Kart& kart);
+  explicit Player(Kart& kart, std::stack<GameEvent>& eventStack);
 
   const Kart& getKart() const;
   Kart& getKart();
 
   const ItemLogic& getItem() const;
   ItemLogic& getItem();
+
+  void fillCheckpoints(const std::vector<Checkpoint> checkpoints);
+  void validateCheckpoints();
 
   void moveForward() const;
   void moveBackward() const;
@@ -29,7 +37,17 @@ public:
 
 private:
   Kart& myKart;
+  std::stack<GameEvent>& eventStack;
+
   ItemLogic* myCurrentItem;
+
+  //Gestion des tours / checkpoints
+  //Contient une copie des checkpoints de la map en cours (vide si en dehors d'une course)
+  std::vector<Checkpoint> checkpoints;
+  unsigned int currentLap;
+  bool newLapNextTime;
+  Checkpoint lastCheckPointChecked;
+
 };
 
 #endif // PLAYER_HPP

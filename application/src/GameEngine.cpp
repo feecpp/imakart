@@ -79,6 +79,7 @@ void GameEngine::update()
         chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
         //Premiere gestion ultra basique de la physique des collisions
         doPhysic();
+        player->validateCheckpoints();
       }
 
       lag -= TURN_DURATION_IN_MILLIS;
@@ -117,7 +118,7 @@ bool GameEngine::getExitFlag() const
 
 void GameEngine::setupPlayer(const std::string& playerKartName)
 {
-  player = new Player(Hangar::getSingletonHangar()->createKartInstanceByName(playerKartName));
+  player = new Player(Hangar::getSingletonHangar()->createKartInstanceByName(playerKartName), eventStack);
 }
 
 void GameEngine::setupOpponents(unsigned int nbOpponents)

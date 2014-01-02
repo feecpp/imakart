@@ -7,7 +7,7 @@ radius 6.320000
 Checkpoint Empty.003
 location -167.363647 0.581088 -180.772171
 radius 6.320000
-Checkpoint Empty.004
+Checkpoint Start
 location 5.482278 0.513663 0.015903
 radius 6.320000
 BoundingBox Empty.005

@@ -9,10 +9,10 @@ class TimeLimitedText : public Object2D
 {
 public:
 
-  TimeLimitedText(const std::string& textString, float durationInMillis)
+  TimeLimitedText(const std::string& textString, float durationInMillis, glm::vec2 position)
     : text(textString), durationInMillis(durationInMillis), active(false)
   {
-    text.setPosition(400, 400, 20);
+    text.setPosition(position.x, position.y, 50);
   }
 
   void start()
