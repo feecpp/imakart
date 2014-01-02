@@ -86,7 +86,7 @@ Menu2D* Menu2D::initialiseMapMenu(){
 Menu2D* Menu2D::initialiseRaceMenu(){
 	Menu2D* raceMenu = new Menu2D("textures/menu/raceMenu.png");
 
-	Button2D* reprendre = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/menu/jouer.png", "textures/menu/jouerSelect.png", "reprendre");
+	Button2D* reprendre = new Button2D(-0.3, 0.3, 0.6, 0.2, "textures/menu/back.png", "textures/menu/backSelect.png", "reprendre");
 	Button2D* quitter = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/menu/quitter.png", "textures/menu/quitterSelect.png", "quitter");
 
 	raceMenu->addButton(reprendre);

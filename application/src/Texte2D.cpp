@@ -6,7 +6,7 @@ Texte2D::Texte2D():
   myText("")
 {
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
+  texture->loadTexture2D("textures/fontInversed2.png");
   model = nullptr;
 }
 
@@ -14,7 +14,7 @@ Texte2D::Texte2D(std::string mText):
   myText(mText)
 {
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
+  texture->loadTexture2D("textures/fontInversed2.png");
   model = nullptr;
 }
 

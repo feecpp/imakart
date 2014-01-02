@@ -5,7 +5,7 @@
 
 ChronoTexte::ChronoTexte(){
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
+  texture->loadTexture2D("textures/fontInversed2.png");
   timer = 0.f;
   model = nullptr;
 }
