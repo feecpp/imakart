@@ -79,7 +79,6 @@ void RaceEventHandler::releaseNumpad0() const
 
 void RaceEventHandler::pressEscape() const
 {
-  std::cout << "PAUSSEEEEEEEE" << std::endl;
   gameEngine.setState(IN_RACE_MENU);
   gameEngine.switchPause();
 }

@@ -247,14 +247,27 @@ if(!gameEngine.inPause()){
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
 }else{
-  std::cout << "je ne fais rien" << std::endl;
+  Interface* gameInterface = graphicEngine.getInterface();
+  //Supprime le menu de pause
+  gameInterface->deleteLastObject2D();
   gameEngine.switchPause();
 }
  
 }
 
 void ContextManager::setupRaceMenuContext() const{
+  Interface* gameInterface = graphicEngine.getInterface();
 
+  Menu2D* menu2D = Menu2D::initialiseRaceMenu();
+  MenuLogic* menuLogic = MenuLogic::initialiseRaceMenu();
+
+  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
+    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+  }
+
+  gameEngine.setMenu(menuLogic);
+  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
+  gameInterface->addObject2D(menu2D);
 }
 
 const EventHandler& ContextManager::getHandler() const

@@ -70,6 +70,7 @@ public:
     { return tabTextures[positionToSelect]; }
 
   World3D* getWorld3D();
+  Interface* getInterface();
   
   sf::RenderWindow& getWindow();
 
