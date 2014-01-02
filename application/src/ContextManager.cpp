@@ -62,7 +62,6 @@ void ContextManager::updateContextIfNeeded()
     lastGameState = currentGameState;
   }
 
-
   std::stack<GameEvent>& eventStack = gameEngine.getEvents();
   while(!eventStack.empty())
   {
@@ -70,10 +69,12 @@ void ContextManager::updateContextIfNeeded()
     eventStack.pop();
     Interface& interface = graphicEngine.getCurrentInterface();
     TimeLimitedText* counter = nullptr;
+    std::ostringstream convert;
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        counter = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000);
+        convert << current.data.lastSecond;
+        counter = new TimeLimitedText(convert.str(), 1000);
         interface.addTimeLimitedText(counter);
         break;
       case RACE_BEGIN:
