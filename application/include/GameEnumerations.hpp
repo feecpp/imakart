@@ -20,7 +20,8 @@ enum GameState
 enum GameEventType
 {
   RACE_BEGIN,
-  COUNTER_UPDATE
+  COUNTER_UPDATE,
+  NEW_LAP
 };
 
 #endif // GAMEENUMERATIONS_HPP

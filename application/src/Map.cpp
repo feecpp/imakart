@@ -103,8 +103,13 @@ void Map::loadCheckpoint(std::ifstream& mapStream)
   Checkpoint checkpoint;
 
   std::string attribute;
-  //Pour l'instant on zappe le name;
+
   mapStream >> attribute;
+  if (attribute == "Start")
+    checkpoint.start = true;
+  else
+    checkpoint.start = false;
+
   attribute.clear();
 
   //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par checkpoint...
@@ -122,6 +127,7 @@ void Map::loadCheckpoint(std::ifstream& mapStream)
       mapStream >> checkpoint.radius;
     }
   }
+  checkpoint.checked = false;
   checkpoints.push_back(checkpoint);
 }
 

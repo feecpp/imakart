@@ -69,17 +69,24 @@ void ContextManager::updateContextIfNeeded()
     GameEvent current = eventStack.top();
     eventStack.pop();
     Interface& interface = graphicEngine.getCurrentInterface();
-    TimeLimitedText* counter = nullptr;
+    TimeLimitedText* splashText = nullptr;
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        counter = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000);
-        interface.addTimeLimitedText(counter);
+        splashText = new TimeLimitedText(std::to_string(current.data.lastSecond), 1000, glm::vec2(400,400));
+        interface.addTimeLimitedText(splashText);
         break;
+
       case RACE_BEGIN:
-        counter = new TimeLimitedText(std::string("GO !"), 1000);
-        interface.addTimeLimitedText(counter);
+        splashText = new TimeLimitedText(std::string("GO !"), 1000, glm::vec2(400,400));
+        interface.addTimeLimitedText(splashText);
         break;
+
+      case NEW_LAP:
+        splashText = new TimeLimitedText(std::string("Tour " + std::to_string(current.data.lapNumber)), 1000, glm::vec2(150,500));
+        interface.addTimeLimitedText(splashText);
+        break;
+
     }
   }
   //Ajouter gestion du menu en course
@@ -192,7 +199,7 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   gameEngine.setCurrentMap(map);
-
+  gameEngine.getPlayer().fillCheckpoints(map->getCheckpoints());
 
   Mesh* mapMesh = new Mesh();
   try

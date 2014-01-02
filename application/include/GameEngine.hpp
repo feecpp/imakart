@@ -14,20 +14,7 @@
 #include "Observable.hpp"
 #include <vector>
 #include <stack>
-
-union GameEventData
-{
-  int lastSecond;
-};
-
-struct GameEvent
-{
-  GameEvent(GameEventType type, GameEventData data)
-    : type(type), data(data) {}
-
-  GameEventType type;
-  GameEventData data;
-};
+#include "GameEvent.hpp"
 
 /**
  * @brief Classe principale d'Imakart
