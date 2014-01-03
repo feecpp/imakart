@@ -81,7 +81,7 @@ void World3D::draw() const
   for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
     (*oneLight)->updateLight(viewMatrix);
-    const glm::vec3& position = (*oneLight)->getLightPosition();
+    const glm::vec4& position = (*oneLight)->getLightPosition();
     const glm::vec3& intensity = (*oneLight)->getLightIntensity();
     GLint lightPosId = raceProgram.getUniformIndex("point.uLightPos");
     GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
@@ -99,8 +99,8 @@ void World3D::draw() const
   spot->updateLightPosition();
   //spot->updateLightDirection();
   //spot->updateLight(viewMatrix);
-  const glm::vec3& spotPos = spot->getLightPosition();
-  const glm::vec3& spotDir = spot->getLightDirection();
+  const glm::vec4& spotPos = spot->getLightPosition();
+  const glm::vec4& spotDir = spot->getLightDirection();
   const glm::vec3& spotIntensity = spot->getLightIntensity();
   const float& spotCutoff = spot->getLightCutoff();
   GLint spotPosId = raceProgram.getUniformIndex("spot.uLightPos");
@@ -119,7 +119,7 @@ void World3D::draw() const
 
   //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);
-  const glm::vec3& direction = sun->getLightDirection();
+  const glm::vec4& direction = sun->getLightDirection();
   const glm::vec3& intensity = sun->getLightIntensity();
   GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
   GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");

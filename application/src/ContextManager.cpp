@@ -186,7 +186,6 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec3(50.f,30.f,50.f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
@@ -239,7 +238,6 @@ void ContextManager::setupRaceContext() const
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
-  gameWorld->addLight(l);
   gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
