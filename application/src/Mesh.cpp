@@ -27,6 +27,8 @@ Mesh::~Mesh()
     delete vbo;
   for (glimac::VAO*& vao : meshVAOs)
     delete vao;
+  for (glimac::Texture*& texture : textures)
+    delete texture;
 }
 
 void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
@@ -37,6 +39,7 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
   shaderProgram.setUniform(normalId, normalMatrix);
   GLint modelIndex = shaderProgram.getUniformIndex("model");
   shaderProgram.setUniform(modelIndex, modelMatrix);
+  GLint isTexturedIndex = shaderProgram.getUniformIndex("isTextured");
   GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
   GLint ambientIndex = shaderProgram.getUniformIndex("material.ambient");
   GLint specularIndex = shaderProgram.getUniformIndex("material.specular");
@@ -49,9 +52,23 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
     shaderProgram.setUniform(specularIndex, materials[i].specularColor);
     shaderProgram.setUniform(shininessIndex, materials[i].shininess);
 
+    if (textures[i])
+    {
+      shaderProgram.setUniform(isTexturedIndex, true);
+      textures[i]->bind();
+    }
+    else
+    {
+      shaderProgram.setUniform(isTexturedIndex, false);
+    }
     meshVAOs[i]->bind();
     glDrawElements(GL_TRIANGLES, indices[i].size(), GL_UNSIGNED_INT, &(indices[i][0]));
     meshVAOs[i]->unbind();
+
+    if (textures[i])
+    {
+      textures[i]->unbind();
+    }
   }
 }
 
@@ -81,11 +98,21 @@ void Mesh::loadFromFile(const std::string& filePath)
   meshVAOs.reserve(scene->mNumMeshes);
   materials.resize(scene->mNumMeshes);
   indices.resize(scene->mNumMeshes);
+  textures.resize(scene->mNumMeshes);
+
+  //Sécurité surtout pour les textures qui sont pas toujours présentes
+  for (unsigned int i = 0; i < textures.size(); ++i)
+  {
+    meshVBOs[i] = nullptr;
+    meshVAOs[i] = nullptr;
+    textures[i] = nullptr;
+  }
 
   //On les rÃ©utilise Ã  chaque fois pour optim
   aiColor3D ambient;
   aiColor3D diffuse;
   aiColor3D specular;
+  aiString texturePath;
   float shininess;
   for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
   {
@@ -95,6 +122,14 @@ void Mesh::loadFromFile(const std::string& filePath)
     material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
     material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
     material->Get(AI_MATKEY_SHININESS, shininess);
+    if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+    {
+      material->GetTexture(aiTextureType_DIFFUSE,0, &texturePath);
+      glimac::Texture* texture = new glimac::Texture(GL_TEXTURE_2D);
+      texture->loadTexture2D(std::string("data/" + std::string(texturePath.C_Str())));
+      textures[i] = texture;
+    }
+
     materials[i].ambientColor.r = ambient.r; materials[i].ambientColor.g = ambient.g;
     materials[i].ambientColor.b = ambient.b; materials[i].ambientColor.a = 1.f;
     materials[i].diffuseColor.r = diffuse.r; materials[i].diffuseColor.g = diffuse.g;

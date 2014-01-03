@@ -6,6 +6,7 @@
 #include <VAO.hpp>
 #include <vector>
 #include <glm/glm.hpp>
+#include "Texture.hpp"
 
 /**
  * @brief The Mesh class represente un objet 3D modelise et non anime.
@@ -49,6 +50,7 @@ private:
   std::vector<glimac::LowLevelVBO* > meshVBOs;
   std::vector<glimac::VAO *> meshVAOs;
   std::vector<Material> materials;
+  std::vector<glimac::Texture* > textures;
 
   std::vector<std::vector<unsigned int>> indices;
   glm::mat4 modelMatrix;

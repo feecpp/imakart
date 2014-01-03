@@ -74,6 +74,7 @@ public:
   void setUniform(GLint uniformIndex, const glm::vec3& vector) const;
   void setUniform(GLint uniformIndex, float scalar) const;
   void setUniform(GLint uniformIndex, int scalar) const;
+  void setUniform(GLint uniformIndex, bool value) const;
 
   GLint getId() const
     {return programId;}

@@ -16,7 +16,8 @@ class ObjectTexte
 {
 public:
   virtual ~ObjectTexte() {
-    texture = NULL;
+    delete texture;
+    texture = nullptr;
   }
 
   virtual void draw(const glimac::ShaderProgram& shaderProgram) const = 0;

@@ -18,7 +18,9 @@ Texte2D::Texte2D(std::string mText):
   model = nullptr;
 }
 
-Texte2D::~Texte2D(){}
+Texte2D::~Texte2D()
+{
+}
 
 void Texte2D::update() //Voir le shader pour les dimensions de la fenetre
 {

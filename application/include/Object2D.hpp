@@ -16,7 +16,7 @@ class Object2D
 {
 public:
   virtual ~Object2D() {
-    activTexture = NULL;
+    activTexture = nullptr;
     for(unsigned int i = 0; i < tabTexture.size(); ++i){
       delete tabTexture[i];
     }

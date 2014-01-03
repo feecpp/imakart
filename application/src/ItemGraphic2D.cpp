@@ -31,7 +31,9 @@ ItemGraphic2D::ItemGraphic2D(const float x_bottom, const float y_left, const flo
 	setVAO();
 }
 
-ItemGraphic2D::~ItemGraphic2D(){}
+ItemGraphic2D::~ItemGraphic2D()
+{
+}
 
 const glimac::Vertex2DUV* ItemGraphic2D::getVertices() const{
 	return vertices;

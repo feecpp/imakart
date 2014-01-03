@@ -20,6 +20,7 @@ uniform Material material;
 out vec4 FragColor;
 out vec4 vNormal_vs;
 out vec4 vPosition_vs;
+out vec2 TexCoord;
 
 
 void main() {
@@ -32,6 +33,6 @@ void main() {
   vNormal_vs = uNormal * vertexNormal;
   vPosition_vs =  uView * model * vertexPosition;
 
-
+  TexCoord = iTexCoord;
   gl_Position = viewProjection * model * vec4(iVertexPosition, 1.f);
 }
