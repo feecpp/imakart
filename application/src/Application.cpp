@@ -24,10 +24,11 @@ void Application::startGame(sf::RenderWindow& window)
   {
     graphicEngine.renderFrame();
     gameEngine.update();
+
     handleEvents(window);
     contextManager.updateContextIfNeeded();
-
     graphicEngine.swapBuffers();
+
   } while (!gameEngine.getExitFlag());
 }
 
