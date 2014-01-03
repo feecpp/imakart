@@ -7,7 +7,6 @@
 #include "Skybox.hpp"
 #include "Cube.hpp"
 #include "Hangar.hpp"
-#include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
 #include "Mesh.hpp"
@@ -190,8 +189,9 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec3(50.f,30.f,50.f));
-  //light->linkToPositionable(gameEngine.getPlayerKart());
+
+  SpotLight* spot = new SpotLight();
+  spot->linkToPositionable(gameEngine.getPlayerKart());
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -241,7 +241,7 @@ void ContextManager::setupRaceContext() const
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
-  gameWorld->addLight(l);
+  gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
 
