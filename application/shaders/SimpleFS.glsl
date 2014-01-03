@@ -36,9 +36,9 @@ layout (std140) uniform Lights {
 
 struct Spot
 {
-    struct Point base;
-    vec4 uLightDir;
-    float uCutoff;
+  Point base;
+  vec4 uLightDir;
+  float uCutoff;
 };
 uniform Spot spot;
 
@@ -66,7 +66,7 @@ vec4 ADS()
   return vAmbientColor + vDiffuseColor + vSpecularColor;
 }
 
-vec4 blinnPhongPonctuelle(struct Point point){
+vec4 blinnPhongPonctuelle(Point point){
   vec4 res = vec4(0);
 
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(point.uLightPos-vPosition_vs)));
