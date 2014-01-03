@@ -220,7 +220,6 @@ void ContextManager::setupRaceContext() const
   }
   mapMesh->setModelToRepresent(*map);
 
-
   //---------Chargements relatifs au Kart
   Mesh* minionMesh = new Mesh();
   try
@@ -244,6 +243,24 @@ void ContextManager::setupRaceContext() const
   gameWorld->addLight(l);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
+
+  //Pour les itemGenerator
+  auto itemsOnMap = map->getItemsGenerators();
+  for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
+  {
+    Mesh* itemGeneratorMesh = new Mesh();
+    try
+    {
+      itemGeneratorMesh->loadFromFile("data/itemGenerator.dae");
+    }
+    catch(std::runtime_error er)
+    {
+      std::cerr << er.what() << std::endl;
+      gameEngine.activateExitFlag();
+    }
+    itemGeneratorMesh->setModelToRepresent(*(*it));
+    gameWorld->addObject3D(itemGeneratorMesh);
+  }
 
   //pour voir les bounding boxes sous forme de cube
   /*for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
@@ -283,7 +300,7 @@ void ContextManager::setupRaceContext() const
   LapText* currentLap = new LapText(gameEngine.getPlayer().getCurrentLap());
   gameInterface->addObjectTexte(currentLap);
 
-  //Afficher un objet mode degeu :D
+  //Afficher l'interface de l'item sans item selectionné
   ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/noItem.png");
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);

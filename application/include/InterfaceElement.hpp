@@ -2,6 +2,7 @@
 #define INTERFACEELEMENT_HPP
 
 #include <glm/glm.hpp>
+#include <string>
 
 /**
  * @brief The Positionable interface
@@ -13,14 +14,14 @@ public:
   virtual ~InterfaceElement() {}
   virtual const bool isSelected() const = 0;
 
-  const char* getName() const
+  const std::string& getName() const
 	{return name;}
 
   virtual float getTime() const
     {return 0;}
 
 protected:
-  const char* name;
+  std::string name;
 };
 
 #endif // INTERFACEELEMENT_HPP

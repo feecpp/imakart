@@ -3,14 +3,22 @@
 
 #include <glm/glm.hpp>
 #include "BoundingBox.hpp"
+#include "Positionable.hpp"
+#include <iostream>
 
 class ItemLogic;
 class ItemBox;
 
-class ItemGenerator{
+class ItemGenerator: public Positionable{
 public:
   ItemGenerator(const glm::vec3 position);
   ~ItemGenerator();
+
+  const glm::vec3& getPosition() const
+  	{return itemPosition;}
+
+  const glm::quat& getOrientation() const
+  	{return itemOrientation;}
 
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
@@ -19,6 +27,7 @@ public:
 
 private:
   glm::vec3 itemPosition;
+  glm::quat itemOrientation;
 
   ItemBox* itemBox;
   BoundingBox boundingBox;

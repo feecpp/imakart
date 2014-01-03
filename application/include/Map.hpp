@@ -39,7 +39,7 @@ public:
     {return name;}
   const std::vector<Checkpoint>& getCheckpoints() const
     {return checkpoints;}
-  const std::vector<ItemGenerator>& getItemsGenerators() const
+  const std::vector<ItemGenerator*>& getItemsGenerators() const
     {return itemsGenerator;}
   const std::vector<BoundingBox>& getBoudingBoxes() const
     {return boundingBoxes;}
@@ -66,7 +66,7 @@ private :
 
   std::vector<Checkpoint> checkpoints;
   std::vector<BoundingBox> boundingBoxes;
-  std::vector<ItemGenerator> itemsGenerator;
+  std::vector<ItemGenerator*> itemsGenerator;
   std::vector<FrictionArea> frictionAreas;
   bool completed;
 

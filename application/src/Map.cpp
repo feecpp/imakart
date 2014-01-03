@@ -23,6 +23,10 @@ Map::Map() :
 
 Map::~Map()
 {
+  for(unsigned int i = 0; i < itemsGenerator.size(); ++i){
+    delete itemsGenerator[i];
+  }
+  itemsGenerator.erase(itemsGenerator.begin(),itemsGenerator.end());
 }
 
 void Map::loadFromFile(const std::string& filePath)
@@ -182,8 +186,7 @@ void Map::loadItem(std::ifstream& mapStream)
   mapStream >> itemPosition.y;
   mapStream >> itemPosition.z;
 
-  ItemGenerator itemGenerator(itemPosition);
-
+  ItemGenerator* itemGenerator = new ItemGenerator(itemPosition);
   itemsGenerator.push_back(itemGenerator);
 }
 

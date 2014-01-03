@@ -84,9 +84,9 @@ void GameEngine::update()
         auto itemsOnMap = currentMap->getItemsGenerators();
         for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
         {
-          if (getPlayerKart().getBoundingBox().collideWith(it->getBoundingBox()) && !getPlayer().hasItem())
+          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
           {
-            getPlayer().setItem(it->getRandomItem());
+            getPlayer().setItem((*it)->getRandomItem());
           }
         }
 
