@@ -5,6 +5,7 @@
 #include <string>
 #include <BoundingBox.hpp>
 #include <glm/glm.hpp>
+#include "ItemGenerator.hpp"
 
 #include "Positionable.hpp"
 
@@ -38,8 +39,8 @@ public:
     {return name;}
   const std::vector<Checkpoint>& getCheckpoints() const
     {return checkpoints;}
-  const std::vector<glm::vec3>& getItemsPositions() const
-    {return itemsPositions;}
+  const std::vector<ItemGenerator>& getItemsGenerators() const
+    {return itemsGenerator;}
   const std::vector<BoundingBox>& getBoudingBoxes() const
     {return boundingBoxes;}
   const std::vector<FrictionArea>& getFrictionAreas() const
@@ -65,7 +66,7 @@ private :
 
   std::vector<Checkpoint> checkpoints;
   std::vector<BoundingBox> boundingBoxes;
-  std::vector<glm::vec3> itemsPositions;
+  std::vector<ItemGenerator> itemsGenerator;
   std::vector<FrictionArea> frictionAreas;
   bool completed;
 

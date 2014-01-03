@@ -10,7 +10,7 @@ Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
   :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false)
 {
   checkpoints.resize(0);
-  myCurrentItem = ItemBox::getSingletonItemBox()->createItemInstanceByName("Banana");
+  myCurrentItem = nullptr;
 }
 
 const Kart& Player::getKart() const
@@ -31,6 +31,12 @@ const ItemLogic& Player::getItem() const
 ItemLogic& Player::getItem()
 {
   return *myCurrentItem;
+}
+
+const bool Player::hasItem() const{
+  if(myCurrentItem == nullptr)
+    return false;
+  return true;
 }
 
 const unsigned int& Player::getCurrentLap() const
@@ -143,6 +149,7 @@ void Player::drift() const
 void Player::setItem(ItemLogic* newItem)
 {
   myCurrentItem = newItem;
+  myCurrentItem->update();
 }
 
 void Player::useItem()

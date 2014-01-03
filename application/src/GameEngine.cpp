@@ -1,5 +1,6 @@
 #include "GameEngine.hpp"
 #include "Kart.hpp"
+#include "ItemLogic.hpp"
 #include <iostream>
 
 GameEngine::GameEngine()
@@ -79,6 +80,16 @@ void GameEngine::update()
         chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
         //Premiere gestion ultra basique de la physique des collisions
         doPhysic();
+
+        auto itemsOnMap = currentMap->getItemsGenerators();
+        for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
+        {
+          if (getPlayerKart().getBoundingBox().collideWith(it->getBoundingBox()) && !getPlayer().hasItem())
+          {
+            getPlayer().setItem(it->getRandomItem());
+          }
+        }
+
         player->validateCheckpoints();
       }
 

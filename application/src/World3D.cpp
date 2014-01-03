@@ -6,7 +6,7 @@
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f), spot(new SpotLight()) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -81,14 +81,13 @@ void World3D::draw() const
   for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
     (*oneLight)->updateLight(viewMatrix);
-    const glm::vec3& position = (*oneLight)->getLightPosition();
+    const glm::vec4& position = (*oneLight)->getLightPosition();
     const glm::vec3& intensity = (*oneLight)->getLightIntensity();
     GLint lightPosId = raceProgram.getUniformIndex("point.uLightPos");
     GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
     raceProgram.setUniform(lightPosId,position);
     raceProgram.setUniform(lightIntensityId, intensity);
     ++i;
-
   }
   /*glBindBuffer(GL_UNIFORM_BUFFER,m_lightsUBO);
   glBufferSubData(GL_UNIFORM_BUFFER,0,lights.size(),lights.data());
@@ -96,10 +95,26 @@ void World3D::draw() const
   GLint nbLightsId = raceProgram.getUniformIndex("nbLights");
   raceProgram.setUniform(nbLightsId,i);
 
+  //Gestion d'une spotLight
+  spot->updateLightPosition();
+  //spot->updateLightDirection();
+  //spot->updateLight(viewMatrix);
+  const glm::vec4& spotPos = spot->getLightPosition();
+  const glm::vec4& spotDir = spot->getLightDirection();
+  const glm::vec3& spotIntensity = spot->getLightIntensity();
+  const float& spotCutoff = spot->getLightCutoff();
+  GLint spotPosId = raceProgram.getUniformIndex("spot.uLightPos");
+  GLint spotDirId = raceProgram.getUniformIndex("spot.uLightDir");
+  GLint spotIntensityId = raceProgram.getUniformIndex("spot.uLi");
+  GLint spotCutId = raceProgram.getUniformIndex("spot.uCutoff");
+  raceProgram.setUniform(spotPosId,spotPos);
+  raceProgram.setUniform(spotDirId,spotDir);
+  raceProgram.setUniform(spotIntensityId, spotIntensity);
+  raceProgram.setUniform(spotCutId,spotCutoff);
 
   //Gestion de la lumière directionnelle
   sun->updateLight(viewMatrix);
-  const glm::vec3& direction = sun->getLightDirection();
+  const glm::vec4& direction = sun->getLightDirection();
   const glm::vec3& intensity = sun->getLightIntensity();
   GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
   GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
@@ -123,6 +138,12 @@ void World3D::setCamera(Camera* newCamera)
   delete camera;
   camera = newCamera;
   skybox.setCamera(camera);
+}
+
+void World3D::setSpot(SpotLight* newSpot)
+{
+  delete spot;
+  spot = newSpot;
 }
 
 void World3D::switchInBackwardView(){

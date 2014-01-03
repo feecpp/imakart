@@ -17,7 +17,7 @@ void ItemInterface::kill (){
 }
 
 ItemInterface::ItemInterface():
-	used(false){}
+	used(true){}
 
 ItemInterface::~ItemInterface(){}
 
@@ -26,5 +26,5 @@ const bool ItemInterface::isSelected() const{
 }
 
 void ItemInterface::noSelected(){
-	used = true;
+	used = !used;
 }

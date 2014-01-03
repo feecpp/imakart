@@ -22,6 +22,8 @@ public:
   const ItemLogic& getItem() const;
   ItemLogic& getItem();
 
+  const bool hasItem() const;
+
   const unsigned int& getCurrentLap() const;
   unsigned int& getCurrentLap();
 

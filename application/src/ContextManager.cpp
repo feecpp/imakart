@@ -7,7 +7,6 @@
 #include "Skybox.hpp"
 #include "Cube.hpp"
 #include "Hangar.hpp"
-#include "Light.hpp"
 #include "Kart.hpp"
 #include "Map3D.hpp"
 #include "Mesh.hpp"
@@ -21,6 +20,8 @@
 #include "convert.hpp"
 #include "ItemGraphic2D.hpp"
 #include "ItemInterface.hpp"
+#include "ItemGenerator.hpp"
+#include "ItemLogic.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -188,8 +189,9 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec3(50.f,30.f,50.f));
-  //light->linkToPositionable(gameEngine.getPlayerKart());
+
+  SpotLight* spot = new SpotLight();
+  spot->linkToPositionable(gameEngine.getPlayerKart());
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
@@ -239,7 +241,7 @@ void ContextManager::setupRaceContext() const
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
-  gameWorld->addLight(l);
+  gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
 
@@ -282,7 +284,7 @@ void ContextManager::setupRaceContext() const
   gameInterface->addObjectTexte(currentLap);
 
   //Afficher un objet mode degeu :D
-  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/banane.png");
+  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/noItem.png");
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);
