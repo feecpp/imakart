@@ -33,6 +33,16 @@ ItemLogic& Player::getItem()
   return *myCurrentItem;
 }
 
+const unsigned int& Player::getCurrentLap() const
+{
+  return currentLap;
+}
+
+unsigned int& Player::getCurrentLap()
+{
+  return currentLap;
+}
+
 void Player::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 {
   this->checkpoints = checkpoints;
@@ -42,8 +52,12 @@ void Player::validateCheckpoints()
 {
   bool allChecked = true;
   bool newLap = false;
+  int cpt = 0;
+  int nbChecked = 0;
   for (auto it = checkpoints.begin(); it != checkpoints.end(); ++it)
   {
+    if (newLapNextTime && !it->start)
+      continue;
     if (it->contains(myKart.getPosition()))
     {
       it->checked = true;
@@ -52,6 +66,9 @@ void Player::validateCheckpoints()
     }
     if ( !it->checked)
       allChecked = false;
+    else
+      nbChecked++;
+    cpt++;
   }
 
   //Si tous les checkpoints sont check : reset

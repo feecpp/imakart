@@ -104,6 +104,7 @@ void GameEngine::update()
       state = IN_MENU;
       finishTimerStarted = false;
       counterStarted = false;
+      lastSecond = 3;
     }
   }
 }

@@ -6,7 +6,7 @@ Texte2D::Texte2D():
   myText("")
 {
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
+  texture->loadTexture2D("textures/fontInversed2.png");
   model = nullptr;
 }
 
@@ -14,7 +14,7 @@ Texte2D::Texte2D(std::string mText):
   myText(mText)
 {
   texture = new glimac::Texture(GL_TEXTURE_2D);
-  texture->loadTexture2D("textures/fontInversed.png");
+  texture->loadTexture2D("textures/fontInversed2.png");
   model = nullptr;
 }
 
@@ -32,10 +32,19 @@ void Texte2D::draw(const glimac::ShaderProgram& shaderProgram) const
   GLint Text2DUniform = shaderProgram.getUniformIndex("myTextureSampler");
   shaderProgram.setUniform(Text2DUniform, 0);
   texture->bind();
+
+  glEnable(GL_ALPHA_TEST);
+  glAlphaFunc(GL_GREATER, 0.8);
+
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
   glDisable(GL_BLEND);
+
+  glDisable(GL_ALPHA_TEST);
+
   texture->unbind();
   vao.unbind();
 }

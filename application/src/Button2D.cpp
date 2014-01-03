@@ -68,14 +68,22 @@ void Button2D::setVAO(){
 void Button2D::draw(const glimac::ShaderProgram& shaderProgram) const{
 	vao.bind();
 	GLint locationUTexture = shaderProgram.getUniformIndex("uTexture");
-	GLint locationUMat = shaderProgram.getUniformIndex("uModelMatrix");
     shaderProgram.setUniform(locationUTexture, 0);
-    shaderProgram.setUniform(locationUMat, glm::mat3(glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,1)));
 	activTexture->bind();
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.8);
+
 	glEnable(GL_BLEND);
   	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
 	glDisable(GL_BLEND);
+
+	glDepthMask(GL_TRUE);
+
+	glDisable(GL_ALPHA_TEST);
+
 	activTexture->unbind();
 	vao.unbind();
 }

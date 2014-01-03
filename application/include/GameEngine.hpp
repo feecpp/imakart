@@ -44,8 +44,6 @@ public:
 
   void switchPause();
 
-  void initNewRace();
-
   const bool inPause() const
     {return pause;}
 
