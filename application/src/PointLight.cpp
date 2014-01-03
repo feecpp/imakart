@@ -1,7 +1,7 @@
 #include "PointLight.hpp"
 
 PointLight::PointLight()
-  :position(0.f,3.f,0.f,1.f),info(0.f,3.f,0.f,1.f),intensity(1.5f,1.5f,1.5f)
+  :position(0.f,30.f,0.f,1.f),info(0.f,30.f,0.f,1.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 

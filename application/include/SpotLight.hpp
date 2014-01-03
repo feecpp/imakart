@@ -22,7 +22,7 @@ public:
     void updateLight(const glm::mat4 viewMatrix);
 
     void linkToPositionable(const Positionable& object)
-    {this->objectToFollow = &object; std::cout<<"objectToFollow change :"<<std::endl;}
+    {this->objectToFollow = &object;}
 
 private:
   const Positionable* objectToFollow;

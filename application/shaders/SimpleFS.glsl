@@ -53,12 +53,15 @@ vec4 ADS()
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(directional.uLightDir)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * directional.uLi * fDotProduct, 1.0);
 
-  vec4 halfVector = (-vPosition_vs+normalize(directional.uLightDir))*0.5f;
+  vec4 halfVector = (normalize(-vPosition_vs)+normalize(directional.uLightDir))*0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
   float PowProduct = pow(DotProduct,material.shininess);
   vec4 vSpecularColor = vec4(material.specular.rgb * directional.uLi * PowProduct,1.0);
 
-  vec4 vAmbientColor = uAmbientLight * material.ambient;
+  vec4 vAmbientColor = vec4(0);
+  if( material.ambient != vec4(0.f,0.f,0.f,1.f)){
+    vAmbientColor = uAmbientLight * material.ambient;
+  }
 
   return vAmbientColor + vDiffuseColor + vSpecularColor;
 }
@@ -70,12 +73,15 @@ vec4 blinnPhongPonctuelle(struct Point point){
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
   float d = length(normalize(point.uLightPos-vPosition_vs));
 
-  vec4 halfVector = (-vPosition_vs+normalize(point.uLightPos-vPosition_vs))*0.5f;
+  vec4 halfVector = (normalize(-vPosition_vs)+normalize(point.uLightPos-vPosition_vs))*0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
   float PowProduct = pow(DotProduct,material.shininess);
   vec4 vSpecularColor = vec4(material.specular.rgb * point.uLi * PowProduct,1.0);
 
-  vec4 vAmbientColor = uAmbientLight * material.ambient;
+  vec4 vAmbientColor = vec4(0);
+  if( material.ambient != vec4(0.f,0.f,0.f,1.f)){
+    vAmbientColor = uAmbientLight * material.ambient;
+  }
 
   res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d));
 
@@ -85,11 +91,11 @@ vec4 blinnPhongPonctuelle(struct Point point){
 vec4 CalcSpotLight() {
     vec4 res = vec4(0);
     vec4 spotDirection  = normalize(spot.uLightDir * vNormal_vs);
-    float spotFactor = max(0.0f, dot(spotDirection ,-normalize(spot.base.uLightPos-vPosition_vs)));
+    float spotFactor = max(0.0f, dot(spotDirection ,normalize(spot.base.uLightPos-vPosition_vs)));
 
     if (spotFactor > spot.uCutoff) {
         res = blinnPhongPonctuelle(spot.base);
-        //res = res * (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - spot.uCutoff)); //Je crois pas que ça soit utile
+
     }
 
     return res;
@@ -98,5 +104,6 @@ vec4 CalcSpotLight() {
 void main(void)
 {
   //oFragColor = CalcSpotLight();
-  oFragColor = ADS() + blinnPhongPonctuelle(point);
+    oFragColor = ADS() + blinnPhongPonctuelle(point);
+  //oFragColor = material.ambient + material.diffuse + material.specular;
 }

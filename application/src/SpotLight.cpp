@@ -29,8 +29,6 @@ void SpotLight::updateLightPosition(){
     if (objectToFollow != nullptr) {
       direction = glm::vec4(glm::toMat3(objectToFollow->getOrientation()) * initialDirection,1.0f);
       position = glm::vec4(objectToFollow->getPosition(),1.0f)  - direction + glm::vec4(0.f,0.f,-5.f,1.f);
-    }else{
-        std::cout << "Erreur : objectToFollow est vide" <<std::endl;
     }
 }
 

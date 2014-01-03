@@ -2,7 +2,7 @@
 #include "Positionable.hpp"
 
 DirectionalLight::DirectionalLight()
-  :direction(3.f,30.f,3.f,0.f),intensity(0.5f,0.5f,0.5f)
+  :direction(-10.f,30.f,-10.f,0.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 
@@ -20,5 +20,5 @@ const glm::vec3 DirectionalLight::getLightIntensity() const {
 }
 
 void DirectionalLight::updateLight(const glm::mat4 viewMatrix){
-    direction = viewMatrix * glm::vec4(3.f,30.f,3.f, 0.f);
+    direction = viewMatrix * glm::vec4(-10.f,30.f,-10.f, 0.f);
 }
