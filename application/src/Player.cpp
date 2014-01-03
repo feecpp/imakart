@@ -33,6 +33,16 @@ ItemLogic& Player::getItem()
   return *myCurrentItem;
 }
 
+const unsigned int& Player::getCurrentLap() const
+{
+  return currentLap;
+}
+
+unsigned int& Player::getCurrentLap()
+{
+  return currentLap;
+}
+
 void Player::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 {
   this->checkpoints = checkpoints;

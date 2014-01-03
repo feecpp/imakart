@@ -22,6 +22,9 @@ public:
   const ItemLogic& getItem() const;
   ItemLogic& getItem();
 
+  const unsigned int& getCurrentLap() const;
+  unsigned int& getCurrentLap();
+
   void fillCheckpoints(const std::vector<Checkpoint> checkpoints);
   void validateCheckpoints();
 

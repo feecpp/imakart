@@ -17,6 +17,7 @@
 #include "Interface.hpp"
 #include "World3D.hpp"
 #include "SpeedTexte.hpp"
+#include "LapText.hpp"
 #include "convert.hpp"
 #include "ItemGraphic2D.hpp"
 #include "ItemInterface.hpp"
@@ -275,6 +276,10 @@ void ContextManager::setupRaceContext() const
   //Récupérer le speed du kart
   SpeedTexte* currentSpeedKart = new SpeedTexte(gameEngine.getPlayerKart().getCurrentSpeed());
   gameInterface->addObjectTexte(currentSpeedKart);
+
+  //Récupérer le numero du tour
+  LapText* currentLap = new LapText(gameEngine.getPlayer().getCurrentLap());
+  gameInterface->addObjectTexte(currentLap);
 
   //Afficher un objet mode degeu :D
   ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/banane.png");
