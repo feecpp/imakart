@@ -13,7 +13,8 @@ public:
   static ItemBox* getSingletonItemBox();
   static void kill ();
 
-  ItemLogic* createItemInstanceByName(const std::string& itemName);
+  ItemLogic* createItemInstanceRandom();
+
   ItemLogic& getItemByName(const std::string& itemName);
 
   std::vector<std::string> getItemsName() const
@@ -30,6 +31,8 @@ private:
 
   std::vector<std::string> findItemFiles();
   std::vector<std::string> itemsNames;
+  std::map<int, std::string> associationIntName;
+
   std::map<std::string, ItemLogic*> itemTemplates;
   //Les item qui vont conretements être dans la course
   std::vector<ItemLogic* > instancedItems;

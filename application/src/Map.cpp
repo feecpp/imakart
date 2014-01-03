@@ -182,7 +182,9 @@ void Map::loadItem(std::ifstream& mapStream)
   mapStream >> itemPosition.y;
   mapStream >> itemPosition.z;
 
-  itemsPositions.push_back(itemPosition);
+  ItemGenerator itemGenerator(itemPosition);
+
+  itemsGenerator.push_back(itemGenerator);
 }
 
 void Map::loadFrictionArea(std::ifstream& mapStream)

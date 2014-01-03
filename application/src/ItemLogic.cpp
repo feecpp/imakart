@@ -8,7 +8,6 @@ ItemLogic::ItemLogic(const std::string oName):
 	name(oName), used(false), myInterface(ItemInterface::getSingletonItemInterface())
 {
   const std::string path = "items/"+name+".item";
-
   //Je crée un ObjectFile à partir du fichier.item et récupère un std::map
   ObjectFile itemFile(path);
   std::map<std::string, std::string> map = itemFile.getData();
@@ -27,6 +26,10 @@ const std::string ItemLogic::getEffect(){
 	used = true;
 
 	return effect;
+}
+
+const std::string ItemLogic::getName(){
+  return name;
 }
 
 void ItemLogic::update(){

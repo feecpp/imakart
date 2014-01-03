@@ -1,6 +1,8 @@
 #include "ItemBox.hpp"
 #include "ItemLogic.hpp"
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 #include <dirent.h>
 #ifndef WIN32
@@ -31,6 +33,7 @@ ItemBox::ItemBox()
 
   for(unsigned int i=0; i<itemsNames.size(); ++i){
       itemTemplates.insert(std::pair<std::string,ItemLogic*>(itemsNames[i], new ItemLogic(itemsNames[i])));
+      associationIntName.insert(std::pair<int, std::string>(i+1, itemsNames[i]));
   }
 }
 
@@ -51,18 +54,14 @@ ItemBox::~ItemBox()
   itemTemplates.erase(itemTemplates.begin(), itemTemplates.end());
 }
 
-ItemLogic* ItemBox::createItemInstanceByName(const std::string& itemName)
+ItemLogic* ItemBox::createItemInstanceRandom()
 {
   //Cette nouvelle instance est stockee dans
   //instancedItems pour pouvoir etre liberee a la destruction du ItemBox
-  ItemLogic* newInstance = nullptr;
-  if(itemTemplates[itemName] != nullptr)
-  {
-    newInstance = new ItemLogic(*itemTemplates[itemName]);
-  }else
-  {
-    newInstance = itemTemplates["Banana"]; //par défaut
-  }
+  srand(time(NULL));
+  int randomItem = rand() % itemsNames.size() + 1;
+  ItemLogic* newInstance = new ItemLogic(*itemTemplates[associationIntName[randomItem]]);
+
   instancedItems.push_back(newInstance);
   return newInstance;
 }
