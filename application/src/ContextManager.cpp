@@ -21,6 +21,8 @@
 #include "convert.hpp"
 #include "ItemGraphic2D.hpp"
 #include "ItemInterface.hpp"
+#include "ItemGenerator.hpp"
+#include "ItemLogic.hpp"
 
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
@@ -282,7 +284,7 @@ void ContextManager::setupRaceContext() const
   gameInterface->addObjectTexte(currentLap);
 
   //Afficher un objet mode degeu :D
-  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/banane.png");
+  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/noItem.png");
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);

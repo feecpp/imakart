@@ -80,5 +80,8 @@ void ItemGraphic2D::update(){
 	if(model->isSelected() && oldItem == false){
 		setNewTexture("textures/items/noItem.png");
 		oldItem = true;
+	}else if(!model->isSelected() && oldItem == true){
+		setNewTexture("textures/items/banane.png");
+		oldItem = false;
 	}
 }
