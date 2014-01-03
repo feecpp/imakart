@@ -255,6 +255,7 @@ void ContextManager::setupRaceContext() const
   }*/
 
   //Dessin d'un adversaire
+  gameEngine.getOpponent(0).fillCheckpoints(map->getCheckpoints());
   Mesh* opponentMesh = new Mesh();
   try
   {
