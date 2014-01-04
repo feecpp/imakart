@@ -446,6 +446,63 @@ private:
 
 };
 
+class Boost: public KartState{
+public:
+
+Boost(Kart& kart)
+    : KartState(kart), time(200), boost(false) {}
+
+  virtual void start()
+  {
+    //Si on est deja en train de booster on reinitialise pas
+    if (boost)
+      return;
+
+    boost = true;
+    time = 200;
+    kart.currentAcceleration = kart.specifications.acceleration + 10;
+  }
+
+  virtual void update(float elapsedTimeInSecond)
+  {
+    time -= 1;
+    if (time <= 0)
+    {
+      kart.currentAcceleration = kart.specifications.acceleration;
+      if(kart.speed > kart.specifications.maxSpeed){
+        kart.speed = kart.specifications.maxSpeed;
+      }else{
+        kart.setState(kart.forwardAccelerationState);
+      }
+      //Se remet a zero
+      boost = false;
+      return;
+    }
+
+    glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
+    float travelledDistance = kart.speed * elapsedTimeInSecond + kart.currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
+    kart.speed = travelledDistance / elapsedTimeInSecond;
+    kart.position += direction * travelledDistance;
+  }
+
+  //Redefinition, TODO y'a ptete un truc mieux a faire
+  virtual void bounce() {}
+  virtual void moveBackward() {}
+  virtual void moveForward() {}
+  virtual void turnLeft(){
+     kart.currentAngularSpeed = kart.specifications.angularSpeed;
+  }
+  virtual void turnRight() {
+     kart.currentAngularSpeed = -kart.specifications.angularSpeed;
+  }
+  virtual void stopMove() {}
+  virtual void brake() {}
+  virtual void drift() {}
+private:
+  int time;
+  bool boost;
+};
+
 class ForwardBrake : public ForwardDeceleration
 {
 public:

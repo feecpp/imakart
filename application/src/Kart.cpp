@@ -18,6 +18,7 @@ void Kart::initStates()
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
   bounceState = new Bounce(*this);
+  boostState = new Boost(*this);
   forwardBrakeState = new ForwardBrake(*this);
   backwardBrakeState = new BackwardBrake(*this);
   currentState = noMoveState;
@@ -66,6 +67,7 @@ Kart::~Kart()
   delete backwardMaxSpeedReached;
   delete noMoveState;
   delete bounceState;
+  delete boostState;
   delete forwardBrakeState;
   delete backwardBrakeState;
   currentState = nullptr;
@@ -129,26 +131,7 @@ void Kart::bounce()
 
 void Kart::boost()
 {
-  if(currentState == backwardAccelerationState || currentState == backwardDecelerationState){
-    speed -= 10;
-    if(speed < -5){
-      speed = -5;
-    }
-  }else if (currentState == noMoveState || currentState == forwardBrakeState){
-    speed += 10;
-    currentAcceleration = -1;
-    if(speed > specifications.maxSpeed){
-      speed = specifications.maxSpeed;
-    }
-    setState(forwardAccelerationState);
-  }else if (currentState == forwardAccelerationState || currentState == forwardDecelerationState || currentState == backwardBrakeState){
-    speed += 10;
-    if(speed > specifications.maxSpeed){
-      speed = specifications.maxSpeed;
-    }
-  }else if (currentState == forwardMaxSpeedReached){
-    speed += 5;
-  }
+  setState(boostState);
 }
 
 const glm::vec3& Kart::getPosition() const
