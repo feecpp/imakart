@@ -16,7 +16,7 @@ class Texte2D : public ObjectTexte
 public:
   Texte2D();
   Texte2D(std::string mText);
-  ~Texte2D();
+  virtual ~Texte2D();
 
   void draw(const glimac::ShaderProgram& shaderProgram) const;
   virtual void setPosition(int x, int y, int size);

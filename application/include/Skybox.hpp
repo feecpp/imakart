@@ -36,10 +36,6 @@ public:
 
   void setVAO();
 
-  glimac::CubemapTexture* getCubeMapTexture() const{
-    return m_pCubemapTex;
-  }
-
 private:
   const GLsizeiptr verticesSize() const
     {return 36 * sizeof(glimac::Vertex3D);}

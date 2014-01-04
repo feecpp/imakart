@@ -127,11 +127,25 @@ void ShaderProgram::setUniform(GLint uniformIndex, const glm::vec3& vector) cons
 void ShaderProgram::setUniform(GLint uniformIndex, float scalar) const
 {
   glUniform1f(uniformIndex,scalar);
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
 }
 
 void ShaderProgram::setUniform(GLint uniformIndex, int scalar) const
 {
   glUniform1i(uniformIndex,scalar);
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
+}
+
+void ShaderProgram::setUniform(GLint uniformIndex, bool value) const
+{
+  glUniform1i(uniformIndex,value);
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
 }
 
 ShaderProgram ShaderProgram::loadProgram(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)

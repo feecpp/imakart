@@ -4,6 +4,14 @@ MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){
 }
 
+MenuLogic& MenuLogic::operator=(MenuLogic& other){
+	this->nbButtonInMenu = other.nbButtonInMenu;
+	this->positionButtonSelected = other.positionButtonSelected;
+	this->tabButtonLogicMenu = other.tabButtonLogicMenu;
+
+	return *this;
+}
+
 const InterfaceElement* MenuLogic::getTabInterfaceElement(const unsigned int positionOfElement){
 	if(positionOfElement < nbButtonInMenu)
 		return tabButtonLogicMenu[positionOfElement];

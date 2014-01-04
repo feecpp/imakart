@@ -14,7 +14,7 @@ public:
   void update();
 
   const std::string getEffect();
-  const std::string getName();
+  const std::string& getName();
 
 private:
   std::string name;

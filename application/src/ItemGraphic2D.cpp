@@ -31,7 +31,9 @@ ItemGraphic2D::ItemGraphic2D(const float x_bottom, const float y_left, const flo
 	setVAO();
 }
 
-ItemGraphic2D::~ItemGraphic2D(){}
+ItemGraphic2D::~ItemGraphic2D()
+{
+}
 
 const glimac::Vertex2DUV* ItemGraphic2D::getVertices() const{
 	return vertices;
@@ -81,7 +83,10 @@ void ItemGraphic2D::update(){
 		setNewTexture("textures/items/noItem.png");
 		oldItem = true;
 	}else if(!model->isSelected() && oldItem == true){
-		setNewTexture("textures/items/banane.png");
+		std::string path = "textures/items/";
+		path = path + model->getName();
+		path = path + ".png";
+		setNewTexture(path);
 		oldItem = false;
 	}
 }

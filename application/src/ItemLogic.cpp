@@ -28,10 +28,11 @@ const std::string ItemLogic::getEffect(){
 	return effect;
 }
 
-const std::string ItemLogic::getName(){
+const std::string& ItemLogic::getName(){
   return name;
 }
 
 void ItemLogic::update(){
   myInterface->noSelected();
+  myInterface->setName(name);
 }

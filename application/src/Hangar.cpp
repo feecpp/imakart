@@ -82,7 +82,6 @@ std::vector<std::string> Hangar::findKartFiles(){
 
     //tous les fichiers du répertoire sont parcourus
     struct dirent* file = NULL;
-    std::cout << "" << std::endl;
     while ((file = readdir(kartsDir)) != NULL){
 
         std::string tmp = std::string(file->d_name); //nom + extension

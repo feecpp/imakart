@@ -2,6 +2,10 @@
 in vec4 FragColor;
 in vec4 vNormal_vs; //Normale de "l'objet"
 in vec4 vPosition_vs; //Position en fonction de la caméra
+in vec2 TexCoord;
+
+uniform sampler2D uTexture;
+uniform bool isTextured = false;
 
 //////// EN RAPPORT AVEC L'OBJET //////////
 struct Material
@@ -104,6 +108,9 @@ vec4 CalcSpotLight() {
 void main(void)
 {
   //oFragColor = CalcSpotLight();
+  if (isTextured)
+    oFragColor = texture(uTexture, TexCoord) * (ADS() + blinnPhongPonctuelle(point));
+  else
     oFragColor = ADS() + blinnPhongPonctuelle(point);
   //oFragColor = material.ambient + material.diffuse + material.specular;
 }

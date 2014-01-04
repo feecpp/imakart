@@ -84,13 +84,21 @@ void GameEngine::update()
         auto itemsOnMap = currentMap->getItemsGenerators();
         for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
         {
-          if (getPlayerKart().getBoundingBox().collideWith(it->getBoundingBox()) && !getPlayer().hasItem())
+          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
           {
-            getPlayer().setItem(it->getRandomItem());
+            getPlayer().setItem((*it)->getRandomItem());
           }
         }
 
+        //Gestion checkpoints pour adversaires
+        auto checkpointsOnMap = currentMap->getCheckpoints();
+        for (auto it = checkpointsOnMap.begin(); it != checkpointsOnMap.end(); ++it)
+        {
+
+        }
+
         player->validateCheckpoints();
+        opponents[0]->validateCheckpoints();
       }
 
       lag -= TURN_DURATION_IN_MILLIS;
@@ -154,7 +162,7 @@ void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
   for (unsigned int i=0; i<nbOpponents; ++i){
     //Pour ceux qui se demanderait, le hangar se crée a ce moment, c'est a dire au lancement du jeu
-    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
+    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne"), eventStack));
   }
 }
 

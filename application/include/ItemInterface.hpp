@@ -2,6 +2,7 @@
 #define ITEMINTERFACE_HPP
 
 #include "InterfaceElement.hpp"
+#include <string>
 
 class ItemInterface: public InterfaceElement{
 public:
@@ -11,6 +12,8 @@ public:
 	const bool isSelected() const;
 
 	void noSelected();
+
+	void setName(const std::string iName);
 
 private:
 	ItemInterface();

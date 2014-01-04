@@ -46,7 +46,7 @@ Skybox::Skybox()
 Skybox::~Skybox()
 {
   m_pCamera = nullptr;
-  m_pCubemapTex = nullptr;
+  delete m_pCubemapTex;
 }
 
 

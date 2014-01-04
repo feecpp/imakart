@@ -13,6 +13,8 @@ public:
 	MenuLogic();
 	~MenuLogic();
 	
+	MenuLogic& operator=(MenuLogic& other);
+	
 	const InterfaceElement* getTabInterfaceElement(const unsigned int positionOfElement);
 	const bool isSelected() const
 		{return false;}

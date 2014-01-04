@@ -24,7 +24,8 @@ sf::RenderWindow& GraphicEngine::init()
   (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
   sf::RenderWindow& myWindow = window;
 
-  window.setFramerateLimit(settings.FPS);
+  window.setFramerateLimit(0);
+  window.setVerticalSyncEnabled(false);
   GLenum glewCode = glewInit();
   if(GLEW_OK != glewCode) {
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
@@ -65,8 +66,8 @@ void GraphicEngine::renderFrame()
   /*
   if(currentProgram == raceProgram){
     scenario->update("graphicReady");
-  }
-  */
+  }*/
+
 }
 
 void GraphicEngine::setCurrentWorld3D(World3D* newWorld3D)

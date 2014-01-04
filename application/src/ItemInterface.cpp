@@ -28,3 +28,7 @@ const bool ItemInterface::isSelected() const{
 void ItemInterface::noSelected(){
 	used = !used;
 }
+
+void ItemInterface::setName(const std::string iName){
+  name = iName;
+}
