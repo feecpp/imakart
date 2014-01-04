@@ -24,8 +24,8 @@ sf::RenderWindow& GraphicEngine::init()
   (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
   sf::RenderWindow& myWindow = window;
 
-  window.setFramerateLimit(0);
-  window.setVerticalSyncEnabled(false);
+  window.setFramerateLimit(settings.FPS);
+
   GLenum glewCode = glewInit();
   if(GLEW_OK != glewCode) {
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
