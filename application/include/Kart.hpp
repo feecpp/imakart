@@ -101,6 +101,7 @@ private:
   friend class Deceleration;
   friend class NoMove;
   friend class Bounce;
+  friend class Boost;
   friend class ForwardBrake;
   friend class BackwardBrake;
 
@@ -128,6 +129,7 @@ private:
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
   KartState* bounceState;
+  KartState* boostState;
   KartState* forwardBrakeState;
   KartState* backwardBrakeState;
   KartState* currentState;
