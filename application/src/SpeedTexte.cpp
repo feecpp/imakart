@@ -9,6 +9,7 @@ SpeedTexte::~SpeedTexte(){}
 
 void SpeedTexte::update(){
 	myText = glimac::convertToIntString(*pCurrentSpeedKart);
+	myText = myText + " lumatas";
 	setPosition(350, 570, 20);
 
 }
