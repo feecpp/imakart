@@ -57,7 +57,7 @@ void GraphicEngine::renderFrame()
   //Il existe toujours un World3D meme dans le menu (il fait rien actuellement)
   assert(world3D && interface);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+  std::cout << "--------------------------" << std::endl;
   world3D->draw();
   interface->update();
   interface->draw();
