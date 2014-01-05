@@ -21,6 +21,8 @@ public:
 private:
   Kart& opponentKart;
   std::vector<Checkpoint> checkpoints;
+  float angle;
+  float heading;
 };
 
 #endif // OPPONENT_HPP
