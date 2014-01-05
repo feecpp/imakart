@@ -108,11 +108,15 @@ public:
 
   virtual void turnLeft()
   {
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
     kart.currentAngularSpeed = kart.specifications.angularSpeed;
   }
 
   virtual void turnRight()
   {
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
     kart.currentAngularSpeed = - kart.specifications.angularSpeed;
   }
 
@@ -141,6 +145,10 @@ public:
 
   virtual void update(float elapsedTimeInSecond)
   {
+    if(kart.speed < kart.specifications.maxSpeed){
+      //Si il perd de la vitesse parcequ'il tourne il faut le faire accelerer
+      kart.setState(kart.forwardAccelerationState);
+    }
     glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
 
     //Seul changement : cette ligne !
@@ -285,11 +293,15 @@ public:
 
   virtual void turnLeft()
   {
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
     kart.currentAngularSpeed = kart.specifications.angularSpeed;
   }
 
   virtual void turnRight()
   {
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
     kart.currentAngularSpeed = -kart.specifications.angularSpeed;
   }
 
@@ -490,9 +502,13 @@ Boost(Kart& kart)
   virtual void moveBackward() {}
   virtual void moveForward() {}
   virtual void turnLeft(){
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
      kart.currentAngularSpeed = kart.specifications.angularSpeed;
   }
   virtual void turnRight() {
+    if(kart.speed >= 15)
+      kart.speed -= 0.25;
      kart.currentAngularSpeed = -kart.specifications.angularSpeed;
   }
   virtual void stopMove() {}
@@ -514,7 +530,10 @@ public:
     kart.currentAcceleration = - kart.specifications.breakingCoefficient * kart.specifications.acceleration;
   }
 
-  virtual void stopMove() {}
+  virtual void stopMove() {
+    kart.currentAcceleration = kart.specifications.acceleration;
+    kart.setState(kart.forwardDecelerationState);
+  }
   virtual void brake() {}
   virtual void drift() {}
 };
@@ -527,10 +546,13 @@ public:
 
   virtual void start()
   {
-    kart.currentAcceleration = kart.specifications.breakingCoefficient * kart.specifications.acceleration;
+    kart.currentAcceleration = kart.specifications.breakingCoefficient/2 * kart.specifications.acceleration;
   }
 
-  virtual void stopMove() {}
+  virtual void stopMove() {
+    kart.currentAcceleration = -kart.specifications.acceleration;
+    kart.setState(kart.backwardDecelerationState);
+  }
   virtual void brake() {}
   virtual void drift() {}
 };
