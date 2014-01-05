@@ -15,6 +15,7 @@
 #include <vector>
 #include <stack>
 #include "GameEvent.hpp"
+#include <SFML/Audio.hpp>
 
 /**
  * @brief Classe principale d'Imakart
@@ -78,6 +79,8 @@ public:
 private:
   void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
+
+  sf::Music backgroundMusic;
 
   GameState state;
   MenuLogic menu;
