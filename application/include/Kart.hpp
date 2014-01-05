@@ -29,7 +29,7 @@ class NoMove;
 struct Specifications
  {
   Specifications()
-    : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(1.5f), weight(2) {}
+    : acceleration(4.f), maxSpeed(20.f), angularSpeed(90.f), breakingCoefficient(6.0f), weight(2) {}
 
   ///Doit etre positive
   float acceleration;

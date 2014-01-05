@@ -244,6 +244,7 @@ public:
   //Donc la valeur de kart.currentAcceleration devrait toujours etre bonne quand on arrive ici
   virtual void update(float elapsedTimeInSecond)
   {
+    std::cout << "Mon acceleration : " <<  kart.currentAcceleration << std::endl;
     glm::vec3 direction = setKartOrientationAndComputeDirection(elapsedTimeInSecond);
     //Attention ici au moins : nous sommes en phase de deceleration
     float travelledDistance = kart.speed * elapsedTimeInSecond + kart.currentAcceleration * (elapsedTimeInSecond * elapsedTimeInSecond) / 2.f;
@@ -514,7 +515,11 @@ public:
     kart.currentAcceleration = - kart.specifications.breakingCoefficient * kart.specifications.acceleration;
   }
 
-  virtual void stopMove() {}
+  virtual void stopMove() {
+    kart.currentAcceleration = kart.specifications.acceleration;
+    std::cout << "Je passe ici : " <<  kart.currentAcceleration << std::endl;
+    kart.setState(kart.forwardDecelerationState);
+  }
   virtual void brake() {}
   virtual void drift() {}
 };
@@ -527,10 +532,13 @@ public:
 
   virtual void start()
   {
-    kart.currentAcceleration = kart.specifications.breakingCoefficient * kart.specifications.acceleration;
+    kart.currentAcceleration = kart.specifications.breakingCoefficient/2 * kart.specifications.acceleration;
   }
 
-  virtual void stopMove() {}
+  virtual void stopMove() {
+    kart.currentAcceleration = -kart.specifications.acceleration;
+    kart.setState(kart.backwardDecelerationState);
+  }
   virtual void brake() {}
   virtual void drift() {}
 };
