@@ -155,7 +155,7 @@ void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
   for (unsigned int i=0; i<nbOpponents; ++i){
     //Pour ceux qui se demanderait, le hangar se crée a ce moment, c'est a dire au lancement du jeu
-    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
+    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Jet")));
   }
 }
 
