@@ -26,6 +26,12 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
+  if (backgroundMusic.openFromFile("data/03_Astat_-_Daily_Dozen.ogg"))
+  {
+    backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(75.f);
+  }
+  else std::cerr << "Impossible de charger la musique" << std::endl;
 }
 
 void GameEngine::update()
@@ -39,8 +45,10 @@ void GameEngine::update()
   //C'est pas propre, dès que j'ai le temps (si j'en ai) je nettoie
   if (state == BEFORE_RACE_BEGIN)
   {
+
     if (!counterStarted)
     {
+      backgroundMusic.play();
       counter.restart();
       counterStarted = true;
     }
@@ -117,6 +125,7 @@ void GameEngine::update()
       finishTimerStarted = false;
       counterStarted = false;
       lastSecond = 3;
+      backgroundMusic.stop();
     }
   }
 }
