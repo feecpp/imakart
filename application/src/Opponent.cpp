@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f)
+  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), turnRight(true)
 {
   checkpoints.resize(0);
 }
@@ -53,36 +53,18 @@ void Opponent::validateCheckpoints()
 
       x = checkpoints[cpt].position.x - opponentKart.getPosition().x;
       z = checkpoints[cpt].position.z - opponentKart.getPosition().z;
-     // std::cout <<"x : "<< x << std::endl;
-    //  std::cout <<"z : "<< z << std::endl;
-
-      //Calcul de l'angle
-      //angle = 2* atan(z / (x + sqrt(x*x + z*z)));
-     // std::cout <<"angle radian : "<< angle << std::endl;
-      //angle = angle * 360.f / (2*M_PI);
-      //std::cout <<"angle degres : "<< angle << std::endl;
-
-
-      //std::cout <<"heading "<< qx << "," << qy << "," <<  qz << std::endl;
-      //std::cout <<"attitude "<< attitude<< std::endl;
-      //std::cout <<"bank "<< bank << std::endl;
-
-
-      //std::cout <<"position du checkpoint suivant x : "<< checkpoints[cpt].position.x << std::endl;
-     // std::cout <<"position du checkpoint suivant z : "<< checkpoints[cpt].position.z << std::endl;
-     // std::cout <<"cpt : "<< cpt << std::endl;
-
-      // calcul de l'angle
-
-      //actualisation mouvement
     }
     cpt++;
 
   }
   cpt = 0;
 
-  angle = 2* atan(z / (x + sqrt(x*x + z*z)));
+  angle = 2* atan(x / (z + sqrt(z*z + x*x)));
   angle = angle * 360.f / (2*M_PI);
+  angle = angle -180;
+  if(angle < -180){
+    angle += 360.f;
+  }
 
   std::cout << "----------------------------------------------------------" << std::endl;
   std::cout <<"x  "<< x << std::endl;
@@ -97,34 +79,42 @@ void Opponent::validateCheckpoints()
 
   heading = (atan2(2*qy*qw-2*qx*qz , 1 - 2*qy*qy - 2*qz*qz)) * 360.f / (2*M_PI);
   std::cout <<"heading  "<< heading << std::endl;
+
+
+
   if(angle != 0.f){
-    if((-90.f - angle) > -180.f){
-      if(heading <= (-90.f - angle -1.5f) || heading >= (-90.f - angle +1.5f)){
+      if(heading <= (angle -1.5f) || heading >= (angle +1.5f)){
         std::cout <<"right " << std::endl;
         opponentKart.moveForward();
-       // if(fabs(heading) - fabs(-90.f - angle) <0){
-          opponentKart.turnRight();
-        //}else{
-         // opponentKart.turnLeft();
-        //}
+        if(heading <= 0 && angle <= 0){
+          if(fabs(heading) - fabs(angle) <0){
+            opponentKart.turnRight();
+          }else{
+            opponentKart.turnLeft();
+          }
+        }else if(heading > 0 && angle > 0){
+          if(fabs(heading) - fabs(angle) >0){
+            opponentKart.turnRight();
+          }else{
+            opponentKart.turnLeft();
+          }
+        }else if(heading > 0 && angle < 0){
+          if(heading - angle < 180.f){
+            opponentKart.turnRight();
+          }else{
+            opponentKart.turnLeft();
+          }
+        }else if(heading < 0 && angle > 0){
+          if(angle - heading > 180.f){
+            opponentKart.turnRight();
+          }else{
+            opponentKart.turnLeft();
+          }
+        }
       }else{
         std::cout <<"dontmove " << std::endl;
         opponentKart.stopTurning();
       }
-    }else{
-      if(heading <= (-90.f - angle -1.5f +360.f) || heading >= (-90.f - angle +1.5f +360.f)){
-       // std::cout <<"right+ " << std::endl;
-        opponentKart.moveForward();
-        //if(fabs(heading) - fabs(angle) <0){
-          opponentKart.turnRight();
-        //}else{
-          //opponentKart.turnLeft();
-        //}
-      }else{
-        //std::cout <<"dontmove+" << std::endl;
-        opponentKart.stopTurning();
-      }
-    }
   }
   std::cout << "----------------------------------------------------------" << std::endl;
 }
