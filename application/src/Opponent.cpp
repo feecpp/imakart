@@ -31,9 +31,9 @@ void Opponent::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 void Opponent::validateCheckpoints()
 {
   unsigned int cpt = 0;
-  for (auto it = checkpoints.begin(); it != checkpoints.end(); ++it)
+  for (unsigned int i = 0; i < checkpoints.size(); ++i)
   {
-    if (it->contains(opponentKart.getPosition()))
+    if (checkpoints[i].contains(opponentKart.getPosition()))
     {
       if(cpt == checkpoints.size()-1){
         cpt = 0;
