@@ -57,13 +57,14 @@ def write_imakart_map(context, filepath, use_some_setting):
     #Puis les Bounding boxes 
     for bbox in bounding_boxes:
         #Hack : un cube de scale 1 fait deux unités sous Blender...donc on s'adapte
-        tmp_bb = bbox.copy()
-        tmp_bb.scale.x = 2 * bbox.scale.x
-        tmp_bb.scale.y = 2 * bbox.scale.y
-        tmp_bb.scale.z = 2 * bbox.scale.z
+        scalex = 2 * bbox.scale.x
+        scaley = 2 * bbox.scale.y
+        scalez = 2 * bbox.scale.z
+        print(bbox.name)
+        print(scalex)
         f.write("BoundingBox %s\n" % bbox.name)
         f.write("location %f %f %f\n" % (bbox.location.x, bbox.location.z, -bbox.location.y))
-        f.write("size %f %f %f\n" % (tmp_bb.scale.x, tmp_bb.scale.z, tmp_bb.scale.y))
+        f.write("size %f %f %f\n" % (scalex, scalez, scaley))
         
      #Puis les items 
     for item in items:

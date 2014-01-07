@@ -10,7 +10,7 @@
 #include "Interface.hpp"
 
 GraphicEngine::GraphicEngine()
-  : world3D(nullptr), interface(nullptr)
+  : world3D(nullptr), interface(nullptr), motionBlur(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT)
 {
 }
 
@@ -61,12 +61,7 @@ void GraphicEngine::renderFrame()
   world3D->draw();
   interface->update();
   interface->draw();
-
-  //Arrivé ici, tous les éléments sont affichés à l'écran (fin du chargement)
-  /*
-  if(currentProgram == raceProgram){
-    scenario->update("graphicReady");
-  }*/
+  motionBlur.renderFrame();
 
 }
 
