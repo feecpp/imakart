@@ -200,7 +200,7 @@ void ContextManager::setupRaceContext() const
   //Plus tard à remplacer par le choix dans le menu
   try
   {
-    map->loadFromFile("maps/plage.txt");
+    map->loadFromFile("maps/road.txt");
   }
   catch(std::runtime_error er)
   {
@@ -213,7 +213,7 @@ void ContextManager::setupRaceContext() const
   Mesh* mapMesh = new Mesh();
   try
   {
-    mapMesh->loadFromFile("data/plage.dae");
+    mapMesh->loadFromFile("data/road.dae");
   }
   catch(std::runtime_error er)
   {
