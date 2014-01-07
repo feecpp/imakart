@@ -1,18 +1,9 @@
-Checkpoint EmptyCircle_002
-location 155.609894 0.600840 -112.242455
-radius 26.860000
-Checkpoint EmptyCircle_007
-location 330.062805 2.298361 347.107849
-radius 28.140000
-Checkpoint EmptyCircle_008
-location 138.707764 0.820850 380.637421
-radius 26.360000
-Checkpoint EmptyCircle_009
-location 74.609161 0.820850 324.468536
-radius 23.670000
 Checkpoint EmptyCircle_001
 location 43.701771 0.738261 -174.940002
 radius 19.628132
+Checkpoint EmptyCircle_002
+location 155.609894 0.600840 -112.242455
+radius 26.860000
 Checkpoint EmptyCircle_003
 location 291.024353 0.688433 -176.125702
 radius 15.283775
@@ -22,12 +13,21 @@ radius 18.138287
 Checkpoint EmptyCircle_005
 location 117.271500 1.138149 114.281601
 radius 19.669735
-Checkpoint EmptyCircle_010
-location -35.152939 1.319664 401.599915
-radius 18.431458
 Checkpoint EmptyCircle_006
 location 345.362305 1.222626 168.706863
 radius 21.480356
+Checkpoint EmptyCircle_007
+location 330.062805 2.298361 347.107849
+radius 28.140000
+Checkpoint EmptyCircle_008
+location 138.707764 0.820850 380.637421
+radius 26.360000
+Checkpoint EmptyCircle_009
+location 74.609161 0.820850 324.468536
+radius 23.670000
+Checkpoint EmptyCircle_010
+location -35.152939 1.319664 401.599915
+radius 18.431458
 Checkpoint Start
 location 5.482278 0.513663 -4.149558
 radius 7.480153
