@@ -10,13 +10,14 @@
 #include "Interface.hpp"
 
 GraphicEngine::GraphicEngine()
-  : world3D(nullptr), interface(nullptr)
+  : world3D(nullptr), interface(nullptr), motionBlur(nullptr), motionBlurEnabled(false)
 {
 }
 
 GraphicEngine::~GraphicEngine()
 {
   reset();
+  delete motionBlur;
 }
 
 sf::RenderWindow& GraphicEngine::init()
@@ -31,6 +32,8 @@ sf::RenderWindow& GraphicEngine::init()
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
     return window;
   }
+
+  motionBlur = new MotionBlur(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
@@ -61,12 +64,8 @@ void GraphicEngine::renderFrame()
   interface->update();
   interface->draw();
 
-  //Arrivé ici, tous les éléments sont affichés à l'écran (fin du chargement)
-  /*
-  if(currentProgram == raceProgram){
-    scenario->update("graphicReady");
-  }*/
-
+  if (motionBlurEnabled)
+    motionBlur->renderFrame();
 }
 
 void GraphicEngine::setCurrentWorld3D(World3D* newWorld3D)

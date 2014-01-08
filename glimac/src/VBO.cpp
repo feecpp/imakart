@@ -5,7 +5,8 @@
   #include "OpenGLDebugger.hpp"
 #endif
 
-using namespace glimac;
+namespace glimac
+{
 
 LowLevelVBO::LowLevelVBO(GLenum target)
   : target(target){
@@ -57,3 +58,5 @@ void LowLevelVBO::unbind() const
   OpenGLDebugger::checkError();
 #endif
 }
+
+} //namespace glimac

@@ -11,6 +11,7 @@ Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
 {
   checkpoints.resize(0);
   myCurrentItem = nullptr;
+  myKart.setEventStack(&eventStack);
 }
 
 const Kart& Player::getKart() const

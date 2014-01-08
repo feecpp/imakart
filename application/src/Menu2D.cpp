@@ -62,7 +62,7 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		textures = textures + kartsName[i];
 		std::string texturesS = textures + "Selected.jpg";
 		textures = textures + ".jpg";
-		Specifications spe = Hangar::getSingletonHangar()->getKartByName(kartsName[i]).specifications;
+    Specifications spe = Hangar::getSingletonHangar()->getKartByName(kartsName[i]).specifications;
 		std::vector<std::string> caracteristique;
 		caracteristique.push_back(glimac::convertToString(spe.acceleration));
 		caracteristique.push_back(glimac::convertToString(spe.maxSpeed));

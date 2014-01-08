@@ -85,6 +85,9 @@ bool ShaderProgram::compileAndLinkShaders(std::string &logInfo) const
 void ShaderProgram::use() const
 {
   glUseProgram(programId);
+#if DEBUG
+  OpenGLDebugger::checkError();
+#endif
 }
 
 GLint ShaderProgram::getUniformIndex(const std::string &uniformName) const

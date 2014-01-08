@@ -14,10 +14,15 @@ import bpy
 def isLogicObject(object):
     return object.type == 'EMPTY' or object.type == 'LATTICE'
 
-def isCheckpoint(object):
+def isPlayerCheckpoint(object):
     if not isLogicObject(object):
         return False
     return object.empty_draw_type == 'CIRCLE'    
+
+def isOpponentCheckpoint(object):
+    if not isLogicObject(object):
+        return False
+    return object.empty_draw_type == 'CONE'    
 
 def isBoundingBox(object):
     if not isLogicObject(object):
@@ -43,16 +48,22 @@ def write_imakart_map(context, filepath, use_some_setting):
     logic_objects = list(filter(isLogicObject, bpy.data.objects))
     
     #On les trie : checkpoints, bouding boxes, items, surface de friction !
-    checkpoints = list(filter(isCheckpoint, logic_objects))
+    opponent_checkpoints = list(filter(isOpponentCheckpoint, logic_objects))
+    player_checkpoints = list(filter(isPlayerCheckpoint, logic_objects))
     bounding_boxes = list(filter(isBoundingBox, logic_objects))
     items = list(filter(isItem, logic_objects))
     friction_areas = list(filter(isFrictionArea, logic_objects))
     
     #On écrit les checkpoints...
-    for checkpoint in checkpoints:
-        f.write("Checkpoint %s\n" % checkpoint.name)
+    for checkpoint in player_checkpoints:
+        f.write("PlayerCheckpoint %s\n" % checkpoint.name)
         f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.z, -checkpoint.location.y))
         f.write("radius %f\n" % checkpoint.empty_draw_size)
+        
+    for checkpoint in opponent_checkpoints:
+        f.write("OpponentCheckpoint %s\n" % checkpoint.name)
+        f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.z, -checkpoint.location.y))
+        f.write("radius %f\n" % 5.0)
         
     #Puis les Bounding boxes 
     for bbox in bounding_boxes:

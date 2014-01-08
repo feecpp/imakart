@@ -43,9 +43,13 @@ void Map::loadFromFile(const std::string& filePath)
   std::string currentWord;
   while (mapStream >> currentWord)
   {
-    if (currentWord == "Checkpoint")
+    if (currentWord == "PlayerCheckpoint")
     {
-      loadCheckpoint(mapStream);
+      loadCheckpoint(mapStream, true);
+    }
+    else if (currentWord == "OpponentCheckpoint")
+    {
+      loadCheckpoint(mapStream, false);
     }
     else if (currentWord == "Item")
     {
@@ -70,7 +74,7 @@ const glm::vec3& Map::getPosition() const
 const glm::quat& Map::getOrientation() const
 {return orientation;}
 
-void Map::loadCheckpoint(std::ifstream& mapStream)
+void Map::loadCheckpoint(std::ifstream& mapStream, bool playerCheckpoint)
 {
   assert(mapStream);
 
@@ -102,7 +106,10 @@ void Map::loadCheckpoint(std::ifstream& mapStream)
     }
   }
   checkpoint.checked = false;
-  checkpoints.push_back(checkpoint);
+  if (playerCheckpoint)
+    playerCheckpoints.push_back(checkpoint);
+  else
+    opponentCheckpoints.push_back(checkpoint);
 }
 
 void Map::loadBoundingBox(std::ifstream& mapStream)
