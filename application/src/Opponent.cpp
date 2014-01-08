@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), turnRight(true)
+  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0)
 {
   checkpoints.resize(0);
 }
@@ -45,14 +45,15 @@ void Opponent::validateCheckpoints()
       }else{
         cpt++;
       }
-
-      x = checkpoints[cpt].position.x - opponentKart.getPosition().x;
-      z = checkpoints[cpt].position.z - opponentKart.getPosition().z;
+      nextCheck = cpt;
     }
     cpt++;
 
   }
   cpt = 0;
+
+  x = checkpoints[nextCheck].position.x - opponentKart.getPosition().x;
+  z = checkpoints[nextCheck].position.z - opponentKart.getPosition().z;
 
   angle = 2* atan(x / (z + sqrt(z*z + x*x)));
   angle = angle * 360.f / (2*M_PI);
@@ -71,7 +72,7 @@ void Opponent::validateCheckpoints()
   opponentKart.moveForward();
 
   if(angle != 0.f){
-      if(heading <= (angle -1.5f) || heading >= (angle +1.5f)){
+      if(heading <= (angle -2.f) || heading >= (angle +2.f)){
         if(heading <= 0 && angle <= 0){
           if(fabs(heading) - fabs(angle) <0){
             opponentKart.turnRight();

@@ -25,7 +25,7 @@ private:
   float angle;
   float heading;
   float x, z;
-  bool turnRight;
+  int nextCheck;
 };
 
 #endif // OPPONENT_HPP
