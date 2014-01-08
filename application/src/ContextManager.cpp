@@ -17,6 +17,7 @@
 #include "World3D.hpp"
 #include "SpeedTexte.hpp"
 #include "LapText.hpp"
+#include "RankingText.hpp"
 #include "convert.hpp"
 #include "ItemGraphic2D.hpp"
 #include "ItemInterface.hpp"
@@ -336,6 +337,10 @@ void ContextManager::setupRaceContext() const
   //Récupérer le numero du tour
   LapText* currentLap = new LapText(gameEngine.getPlayer().getCurrentLap());
   gameInterface->addObjectTexte(currentLap);
+
+  //Récupérer la position du joueur
+  RankingText* currentRank = new RankingText(gameEngine.getPlayerKart().getCurrentSpeed());
+  gameInterface->addObjectTexte(currentRank);
 
   //Afficher l'interface de l'item sans item selectionné
   ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/noItem.png");
