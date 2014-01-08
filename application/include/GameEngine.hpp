@@ -69,6 +69,9 @@ public:
     return opponents;
   }
 
+  //Item sur la map, il devient responsable de la mémoire liée à ce pointeur
+  void setNewItemOnMap(ItemLogic* newItem);
+
   ///Le GameEngine devient responsable de la memoire liee a ce pointeur
   void setCurrentMap(Map* newMap);
   Map& getCurrentMap() const;
@@ -93,6 +96,7 @@ private:
 
   Player* player;
   std::vector<Opponent*> opponents;
+  std::vector<ItemLogic*> itemsOnMap;
   Map* currentMap;
   std::string selectMapName;
   sf::Clock clock;
