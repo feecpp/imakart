@@ -28,7 +28,7 @@ GameEngine::~GameEngine()
     delete opponents[i];
   }
 
-  for (unsigned int i = 0; i < opponents.size(); ++i)
+  for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
   {
     delete itemsOnMap[i];
   }
