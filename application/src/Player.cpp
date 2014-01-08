@@ -163,6 +163,7 @@ void Player::useItem()
       launchItem();
     }
     
+    myCurrentItem->noInterface();
     delete myCurrentItem;
     myCurrentItem = nullptr;
   } 
