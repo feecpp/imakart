@@ -27,6 +27,7 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
+  void noInterface();
   void update();
   void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher, const float directionAngleLauncher);
   void updateLaunch();

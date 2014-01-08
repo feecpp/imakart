@@ -104,6 +104,7 @@ void GameEngine::update()
           }
         }
 
+        //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
         {
           itemsOnMap[i]->updateLaunch();
@@ -116,6 +117,16 @@ void GameEngine::update()
             if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
             {
               itemsOnMap[i]->colid();
+            }
+          }
+
+          for(unsigned int j =0; j< opponents.size(); ++j)
+          {
+            if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
+            {
+              std::cout << "TOUCHEEE" << std::endl;
+              //Ajouter ici ce que dois faire l'opponent touché 
+              //opponents[i]->touched();
             }
           }
         }

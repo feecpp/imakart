@@ -23,6 +23,11 @@ Kart& Opponent::getKart()
   return opponentKart;
 }
 
+void Opponent::touched()
+{
+  opponentKart.stopMove();
+}
+
 void Opponent::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 {
   this->checkpoints = checkpoints;
