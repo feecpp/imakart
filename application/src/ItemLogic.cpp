@@ -20,10 +20,7 @@ ItemLogic::ItemLogic(const ItemLogic& other):
   boundingBox(other.boundingBox), position(other.position), orientation(other.orientation), directionAngle(other.directionAngle), name(other.name), effect(other.effect), used(other.used), myInterface(other.myInterface)
 {}
 
-ItemLogic::~ItemLogic(){
-  update();
-  myInterface = nullptr;
-}
+ItemLogic::~ItemLogic(){}
 
 const std::string ItemLogic::getEffect(){
 	assert(used == false);
@@ -34,6 +31,11 @@ const std::string ItemLogic::getEffect(){
 
 const std::string& ItemLogic::getName(){
   return name;
+}
+
+void ItemLogic::noInterface(){
+  update();
+  myInterface = nullptr;
 }
 
 void ItemLogic::update(){

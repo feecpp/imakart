@@ -29,6 +29,8 @@ include_directories(third-party/glm)
 #--------Imakart------------------
 add_definitions(-Wall)
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
+set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
+
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/data DESTINATION ./application)
 file(COPY application/fonts DESTINATION ./application)

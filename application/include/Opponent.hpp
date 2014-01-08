@@ -14,7 +14,8 @@ public:
   const Kart& getKart() const;
   Kart& getKart();
   void startMovement();
-
+  void touched();
+  
   void fillCheckpoints(const std::vector<Checkpoint> checkpoints);
   void validateCheckpoints();
 
