@@ -26,14 +26,14 @@ void Kart::initStates()
 
 Kart::Kart()
   : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), name("standard")
+    directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), name("standard"), eventStack(nullptr)
 {
   initStates();
 }
 
 Kart::Kart(std::string kartName)
     : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), eventStack(nullptr)
 {
   const std::string path = "karts/"+kartName+".kart";
 
@@ -52,7 +52,7 @@ Kart::Kart(std::string kartName)
 
 Kart::Kart(const Kart& kartToCopy)
   : specifications(kartToCopy.specifications), position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
-    currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name)
+    currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name), eventStack(kartToCopy.eventStack)
 {
   initStates();
 }
@@ -139,6 +139,13 @@ const glm::vec3& Kart::getPosition() const
 
 const glm::quat& Kart::getOrientation() const
 {return orientation;}
+
+void Kart::setEventStack(std::stack<GameEvent>* const eventStack)
+{
+  this->eventStack = eventStack;
+  boostState->setEventStack(eventStack);
+  bounceState->setEventStack(eventStack);
+}
 
 void Kart::setState(KartState* newState)
 {

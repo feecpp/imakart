@@ -67,6 +67,8 @@ void ContextManager::updateContextIfNeeded()
   }
 
   std::stack<GameEvent>& eventStack = gameEngine.getEvents();
+  //Pas très propre mais je sais pas encore comment détecter que le boost est fini
+
   while(!eventStack.empty())
   {
     GameEvent current = eventStack.top();
@@ -94,6 +96,14 @@ void ContextManager::updateContextIfNeeded()
         splashText = new TimeLimitedText(std::string("Course terminee"), 1000, glm::vec2(150,500), 25);
         interface.addTimeLimitedText(splashText);
         gameEngine.setState(END_OF_RACE);
+        break;
+
+      case USE_BOOST_BEGIN:
+        graphicEngine.setMotionBlur(true);
+        break;
+
+      case USE_BOOST_END:
+        graphicEngine.setMotionBlur(false);
         break;
     }
   }
@@ -210,7 +220,7 @@ void ContextManager::setupRaceContext() const
   }
   gameEngine.setCurrentMap(map);
 
-  gameEngine.getPlayer().fillCheckpoints(map->getCheckpoints());
+  gameEngine.getPlayer().fillCheckpoints(map->getPlayerCheckpoints());
 
   Mesh* mapMesh = new Mesh();
   try
@@ -277,7 +287,7 @@ void ContextManager::setupRaceContext() const
   }*/
 
   //Dessin d'un adversaire
-  gameEngine.getOpponent(0).fillCheckpoints(map->getCheckpoints());
+  gameEngine.getOpponent(0).fillCheckpoints(map->getOpponentCheckpoints());
   Mesh* opponentMesh = new Mesh();
   try
   {
