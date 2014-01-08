@@ -167,12 +167,13 @@ void ContextManager::setupMenuKartContext() const
 void ContextManager::setupMenuMapContext() const
 {
   graphicEngine.reset();
-  Menu2D* menu2D = Menu2D::initialiseMapMenu();
-  MenuLogic* menuLogic = MenuLogic::initialiseMapMenu();
+  Menu2D* menu2D = Menu2D::initialiseMapMenu(findMapFiles());
+  MenuLogic* menuLogic = MenuLogic::initialiseMapMenu(findMapFiles());
 
   Interface* menuInterface = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+    menuInterface->addObjectTexte(menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText()[0]);
   }
 
   gameEngine.setMenu(menuLogic);
@@ -197,10 +198,10 @@ void ContextManager::setupRaceContext() const
 
   //-------------Chargement relatifs a la map
   Map* map = new Map();
-  //Plus tard à remplacer par le choix dans le menu
+  std::string mapName = gameEngine.getSelectMapName();
   try
   {
-    map->loadFromFile("maps/road.txt");
+    map->loadFromFile("maps/" + mapName + ".txt");
   }
   catch(std::runtime_error er)
   {
@@ -208,12 +209,13 @@ void ContextManager::setupRaceContext() const
     gameEngine.activateExitFlag();
   }
   gameEngine.setCurrentMap(map);
+
   gameEngine.getPlayer().fillCheckpoints(map->getCheckpoints());
 
   Mesh* mapMesh = new Mesh();
   try
   {
-    mapMesh->loadFromFile("data/road.dae");
+    mapMesh->loadFromFile("data/" + mapName + ".dae");
   }
   catch(std::runtime_error er)
   {

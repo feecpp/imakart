@@ -1,4 +1,5 @@
 #include "MenuLogic.hpp"
+#include <iostream>
 
 MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){
@@ -65,7 +66,7 @@ MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
 
 	for(unsigned int i = 0; i < kartsName.size(); ++i){
 		ButtonLogic* kart = new ButtonLogic(kartsName[i]);
-		kart->setAction(SELECT);
+		kart->setAction(SELECT_KART);
 		kartMenu->addButton(kart);
 	}
 
@@ -76,8 +77,20 @@ MenuLogic* MenuLogic::initialiseKartMenu(std::vector <std::string> kartsName){
 	return kartMenu;
 }
 
-MenuLogic* MenuLogic::initialiseMapMenu(){
+MenuLogic* MenuLogic::initialiseMapMenu(std::vector <std::string> mapsName){
 	MenuLogic* mapMenu = new MenuLogic;
+
+	for(unsigned int i = 0; i < mapsName.size(); ++i){
+		std::cout << "mapsName i : " << mapsName[i] << std::endl;
+		ButtonLogic* map = new ButtonLogic(mapsName[i]);
+		map->setAction(SELECT_MAP);
+		mapMenu->addButton(map);
+	}
+
+	ButtonLogic* returnMainMenu = new ButtonLogic("returnMainMenu");
+	returnMainMenu->setAction(RETURN_MAIN_MENU);
+	mapMenu->addButton(returnMainMenu);
+
 	return mapMenu;
 }
 

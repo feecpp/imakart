@@ -2,6 +2,12 @@
 #include "Kart.hpp"
 #include "ItemLogic.hpp"
 #include <iostream>
+#include <fstream>
+#include <dirent.h>
+#ifndef WIN32
+  #include <sys/types.h>
+#endif
+
 
 GameEngine::GameEngine()
   : state (IN_MENU), player(nullptr), currentMap(nullptr), chrono(nullptr), exitFlag(false), pause(false), buffer(0.f), lag(0.f), lastSecond(3), counterStarted(false), finishTimerStarted(false)
@@ -208,6 +214,16 @@ Map& GameEngine::getCurrentMap() const
   return *currentMap;
 }
 
+std::string GameEngine::getSelectMapName() const
+{
+  return selectMapName;
+}
+
+void GameEngine::setMapName(const std::string newMapName)
+{
+  selectMapName = newMapName;
+}
+
 ChronoLogic& GameEngine::getChrono() const
 {
   assert(chrono != nullptr);
@@ -227,4 +243,35 @@ void GameEngine::doPhysic()
       getPlayerKart().bounce();
     }
   }
+}
+
+
+std::vector<std::string> findMapFiles()
+{
+    std::vector<std::string> fileNames;
+
+    //Ouverture du répertoire des maps
+    DIR* mapsDir = NULL;
+    mapsDir = opendir("maps");
+    if (mapsDir == NULL){
+        std::cout << "Erreur - impossible d'accéder au répertoire des Maps" << std::endl;
+    }
+
+    //tous les fichiers du répertoire sont parcourus
+    struct dirent* file = NULL;
+    std::cout << "" << std::endl;
+    while ((file = readdir(mapsDir)) != NULL){
+
+        std::string tmp = std::string(file->d_name); //nom + extension
+        std::size_t found = tmp.find(".");
+        std::string extension = tmp.substr (found+1);
+        std::string name = tmp.substr (0,found);
+
+        if(extension == "txt"){//L'extension va ptete changer
+            fileNames.push_back(name);
+        }
+    }
+
+    closedir(mapsDir);
+    return fileNames;
 }

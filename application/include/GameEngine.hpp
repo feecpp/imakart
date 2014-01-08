@@ -71,6 +71,9 @@ public:
   void setCurrentMap(Map* newMap);
   Map& getCurrentMap() const;
 
+  std::string getSelectMapName() const;
+  void setMapName(const std::string newMapName);
+
   ChronoLogic& getChrono() const;
 
   MenuLogic& getMenuLogic()
@@ -89,6 +92,7 @@ private:
   Player* player;
   std::vector<Opponent*> opponents;
   Map* currentMap;
+  std::string selectMapName;
   sf::Clock clock;
   ChronoLogic* chrono;
   Observer* scenario;
@@ -108,5 +112,7 @@ private:
   sf::Clock finishTimer;
   bool finishTimerStarted;
 };
+
+std::vector<std::string> findMapFiles();
 
 #endif // GAMEENGINE_HPP
