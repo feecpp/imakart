@@ -170,7 +170,7 @@ void Player::useItem()
 
 void Player::launchItem()
 {
-  myCurrentItem->launch(myKart.getPosition(), myKart.getOrientation());
+  myCurrentItem->launch(myKart.getPosition(), myKart.getOrientation(), myKart.getDirectionAngle());
   GameEventData data;
   data.itemLogicOnMap = new ItemLogic(*myCurrentItem);
   eventStack.push(GameEvent(NEW_ITEM_ON_MAP, data));

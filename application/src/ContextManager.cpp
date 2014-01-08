@@ -113,6 +113,8 @@ void ContextManager::updateContextIfNeeded()
           std::cerr << er.what() << std::endl;
           gameEngine.activateExitFlag();
         }
+        gameEngine.setNewItemOnMap(current.data.itemLogicOnMap);
+
         itemGeneratorMesh->setModelToRepresent(*(current.data.itemLogicOnMap));
         world3D.addObject3D(itemGeneratorMesh);
         break;

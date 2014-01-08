@@ -4,6 +4,8 @@
 #include "Positionable.hpp"
 #include "BoundingBox.hpp"
 #include <string>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class ItemInterface;
 
@@ -12,6 +14,9 @@ public:
   ItemLogic(const std::string oName);
   ItemLogic(const ItemLogic& other);
   ~ItemLogic();
+
+  const glm::vec3 getDirection() const
+    {return glm::normalize(glm::toMat3(orientation) * glm::vec3(0,0,-1)); }
 
   const glm::vec3& getPosition() const
   	{return position;}
@@ -23,7 +28,9 @@ public:
     {return boundingBox;}
 
   void update();
-  void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher);
+  void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher, const float directionAngleLauncher);
+  void updateLaunch();
+  void colid();
 
   const std::string getEffect();
   const std::string& getName();
@@ -33,6 +40,7 @@ private:
 
   glm::vec3 position;
   glm::quat orientation;
+  float directionAngle;
 
   std::string name;
   std::string effect;
