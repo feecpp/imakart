@@ -110,7 +110,7 @@ void Player::validateCheckpoints()
     newLapNextTime = false;
   }
 
-  int cptOpp = 0;
+  unsigned int cptOpp = 0;
   for (auto it = opponentCheckpoints.begin(); it != opponentCheckpoints.end(); ++it)
   {
     if (it->contains(myKart.getPosition()))

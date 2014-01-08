@@ -116,7 +116,7 @@ void GameEngine::update()
           {
             if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
             {
-              itemsOnMap[i]->colid();
+              itemsOnMap[i]->colision();
             }
           }
 

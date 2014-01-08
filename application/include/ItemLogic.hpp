@@ -31,7 +31,7 @@ public:
   void update();
   void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher, const float directionAngleLauncher);
   void updateLaunch();
-  void colid();
+  void colision();
 
   const std::string getEffect();
   const std::string& getName();
@@ -47,6 +47,9 @@ private:
   std::string effect;
   bool used;
 
+  bool colid;
+  float time; 
+  
   ItemInterface* myInterface;
 };
 
