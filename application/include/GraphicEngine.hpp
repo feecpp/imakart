@@ -21,7 +21,7 @@ class Light;
 struct GraphicSettings
 {
   GraphicSettings()
-    : FPS(30), WINDOW_WIDTH(1024), WINDOW_HEIGHT(768), WINDOW_BPP(32)
+    : FPS(30), WINDOW_WIDTH(1024), WINDOW_HEIGHT(768), WINDOW_BPP(32), ANTIALIAS_LEVEL(4)
   {
     FRAME_DURATION = 1000.f / FPS;
   }
@@ -31,6 +31,7 @@ struct GraphicSettings
   unsigned int WINDOW_WIDTH;
   unsigned int WINDOW_HEIGHT;
   unsigned int WINDOW_BPP;
+  unsigned int ANTIALIAS_LEVEL;
 };
 
 /**
