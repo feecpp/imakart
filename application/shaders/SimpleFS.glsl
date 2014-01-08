@@ -109,7 +109,9 @@ void main(void)
 {
   //oFragColor = CalcSpotLight();
   if (isTextured)
+  {
     oFragColor = texture(uTexture, TexCoord) * (ADS() + blinnPhongPonctuelle(point));
+  }
   else
     oFragColor = ADS() + blinnPhongPonctuelle(point);
   //oFragColor = material.ambient + material.diffuse + material.specular;
