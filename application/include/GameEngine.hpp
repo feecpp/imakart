@@ -15,7 +15,6 @@
 #include <vector>
 #include <stack>
 #include "GameEvent.hpp"
-#include <SFML/Audio.hpp>
 
 /**
  * @brief Classe principale d'Imakart
@@ -66,6 +65,9 @@ public:
   void setupOpponents(unsigned int nbOpponents);
   Opponent& getOpponent(unsigned int id) const;
   Kart& getOpponentKart(unsigned int id) const;
+  std::vector<Opponent*> getOpponents() const{
+    return opponents;
+  }
 
   //Item sur la map, il devient responsable de la mémoire liée à ce pointeur
   void setNewItemOnMap(ItemLogic* newItem);
@@ -86,7 +88,7 @@ private:
   void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
 
-  sf::Music backgroundMusic;
+  //sf::Music backgroundMusic;
 
   GameState state;
   MenuLogic menu;

@@ -307,19 +307,22 @@ void ContextManager::setupRaceContext() const
   }*/
 
   //Dessin d'un adversaire
-  gameEngine.getOpponent(0).fillCheckpoints(map->getOpponentCheckpoints());
-  Mesh* opponentMesh = new Mesh();
-  try
-  {
-    opponentMesh->loadFromFile("data/"+ gameEngine.getOpponentKart(0).getName() + ".dae");
-  }catch(std::runtime_error er)
-  {
-    std::cerr << er.what() << std::endl;
-    gameEngine.activateExitFlag();
+
+  for(unsigned int i = 0; i< gameEngine.getOpponents().size();++i){
+    gameEngine.getOpponent(i).fillCheckpoints(map->getOpponentCheckpoints());
+    Mesh* opponentMesh = new Mesh();
+    try
+    {
+      opponentMesh->loadFromFile("data/"+ gameEngine.getOpponentKart(i).getName() + ".dae");
+    }catch(std::runtime_error er)
+    {
+      std::cerr << er.what() << std::endl;
+      gameEngine.activateExitFlag();
+    }
+    opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(i));
+    gameWorld->addObject3D(opponentMesh);
+    gameEngine.getOpponent(i).startMovement();
   }
-  opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(0));
-  gameWorld->addObject3D(opponentMesh);
-  gameEngine.getOpponent(0).startMovement();
 
   //Init de l'interface
   Interface* gameInterface = new Interface();

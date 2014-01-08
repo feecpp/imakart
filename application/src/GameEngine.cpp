@@ -14,7 +14,7 @@ GameEngine::GameEngine()
 
 {
   chrono = new ChronoLogic();
-  setupOpponents(1);
+  setupOpponents(3);
 }
 
 GameEngine::~GameEngine()
@@ -37,12 +37,6 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
-  if (backgroundMusic.openFromFile("data/03_Astat_-_Daily_Dozen.ogg"))
-  {
-    backgroundMusic.setLoop(true);
-    backgroundMusic.setVolume(75.f);
-  }
-  else std::cerr << "Impossible de charger la musique" << std::endl;
 }
 
 void GameEngine::update()
@@ -59,7 +53,6 @@ void GameEngine::update()
 
     if (!counterStarted)
     {
-      backgroundMusic.play();
       counter.restart();
       counterStarted = true;
     }
@@ -95,7 +88,9 @@ void GameEngine::update()
       {
         //Uniformiser la gestion du temps
         getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
-        getOpponentKart(0).update(TURN_DURATION_IN_MILLIS / 1000.f);
+        for(unsigned int i =0; i<opponents.size(); ++i){
+          getOpponentKart(i).update(TURN_DURATION_IN_MILLIS / 1000.f);
+        }
         chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
         //Premiere gestion ultra basique de la physique des collisions
         doPhysic();
@@ -126,7 +121,9 @@ void GameEngine::update()
         }
 
         player->validateCheckpoints();
-        opponents[0]->validateCheckpoints();
+        for(unsigned int i =0; i< opponents.size(); ++i){
+          opponents[i]->validateCheckpoints();
+        }
       }
 
       lag -= TURN_DURATION_IN_MILLIS;
@@ -152,7 +149,6 @@ void GameEngine::update()
       finishTimerStarted = false;
       counterStarted = false;
       lastSecond = 3;
-      backgroundMusic.stop();
     }
   }
 }
@@ -189,9 +185,18 @@ void GameEngine::setupPlayer(const std::string& playerKartName)
 
 void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
-  for (unsigned int i=0; i<nbOpponents; ++i){
+  for (unsigned int i=1; i<=nbOpponents; ++i){
     //Pour ceux qui se demanderait, le hangar se crée a ce moment, c'est a dire au lancement du jeu
-    opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Jet")));
+    if(i%3 == 1){
+      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Rocket")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(9.f,0.f,-1.2f));
+    }else if(i%3 == 2){
+      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(1.9f,0.f,2.2f));
+    }else if (i%3 == 0){
+      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Jet")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(9.f,0.f,4.8f));
+    }
   }
 }
 
