@@ -32,7 +32,7 @@ Kart::Kart()
 }
 
 Kart::Kart(std::string kartName)
-    : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
+    : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(1.9f, 0.f, 6.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
       directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), eventStack(nullptr)
 {
   const std::string path = "karts/"+kartName+".kart";

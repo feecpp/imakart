@@ -166,12 +166,16 @@ void GameEngine::setupOpponents(unsigned int nbOpponents)
 {
   for (unsigned int i=1; i<=nbOpponents; ++i){
     //Pour ceux qui se demanderait, le hangar se crée a ce moment, c'est a dire au lancement du jeu
-    if(i%3 == 1)
-      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Jet")));
-    else if(i%3 == 2)
-      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
-    else if (i%3 == 0)
+    if(i%3 == 1){
       opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Rocket")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(9.f,0.f,-1.2f));
+    }else if(i%3 == 2){
+      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Licorne")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(1.9f,0.f,2.2f));
+    }else if (i%3 == 0){
+      opponents.push_back(new Opponent(Hangar::getSingletonHangar()->createKartInstanceByName("Jet")));
+      opponents[i-1]->getKart().setPosition(glm::vec3(9.f,0.f,4.8f));
+    }
   }
 }
 
