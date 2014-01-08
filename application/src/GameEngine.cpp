@@ -135,6 +135,19 @@ void GameEngine::update()
         for(unsigned int i =0; i< opponents.size(); ++i){
           opponents[i]->validateCheckpoints();
         }
+
+        //gestion du classement, assez sale, à améliorer
+        player->setRank(1);
+        for(unsigned int i =0; i< opponents.size(); ++i){
+          if(player->getNextCheck() < opponents[i]->getNextCheck()){
+            player->setRank(player->getRank()+1);
+          }else if (player->getNextCheck() == opponents[i]->getNextCheck()){
+            if(player->getProgression() < opponents[i]->getProgression()){
+              player->setRank(player->getRank()+1);
+            }
+          }
+        }
+
       }
 
       lag -= TURN_DURATION_IN_MILLIS;

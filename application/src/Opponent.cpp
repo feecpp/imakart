@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0)
+  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f)
 {
   checkpoints.resize(0);
   opponentKart.moveForward();
@@ -37,9 +37,10 @@ void Opponent::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 void Opponent::validateCheckpoints()
 {
   unsigned int cpt = 0;
-  for (unsigned int i = 0; i < checkpoints.size(); ++i)
+
+  for (auto it = checkpoints.begin(); it != checkpoints.end(); ++it)
   {
-    if (checkpoints[i].contains(opponentKart.getPosition()))
+    if (it->contains(opponentKart.getPosition()))
     {
       if(cpt == checkpoints.size()-1){
         cpt = 0;
@@ -49,9 +50,10 @@ void Opponent::validateCheckpoints()
       nextCheck = cpt;
     }
     cpt++;
-
   }
   cpt = 0;
+
+  progression = - sqrt( pow(checkpoints[nextCheck].position.x - opponentKart.getPosition().x, 2) + pow(checkpoints[nextCheck].position.z - opponentKart.getPosition().z, 2));
 
   x = checkpoints[nextCheck].position.x - opponentKart.getPosition().x;
   z = checkpoints[nextCheck].position.z - opponentKart.getPosition().z;
