@@ -1,13 +1,8 @@
-#ifndef MOTIONBLUR_HPP
-#define MOTIONBLUR_HPP
+#pragma once
 
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "VAO.hpp"
 #include "VBO.hpp"
+#include "VAO.hpp"
 #include "ShaderProgram.hpp"
-#include <cassert>
 
 class MotionBlur
 {
@@ -16,31 +11,32 @@ public:
 
   ~MotionBlur()
   {
-    /*
+
     glDeleteTextures(6, blurTextures);
     glDeleteBuffers(1, &pbo);
-    */
   }
 
   void renderFrame();
+  void reinit();
 
 protected:
   void fillPBO();
 
 private:
+
   unsigned int windowWidth;
   unsigned int windowHeight;
 
   unsigned int blurTarget;
+  bool motionBlurReady;
 
   glimac::LowLevelVBO screenquadData;
   glimac::VAO screenquad;
 
-  glimac::ShaderProgram test;
+  glimac::ShaderProgram motionBlur;
 
-  glm::vec2 quad;
+  glm::vec2 quad[4];
   GLuint pbo;
-  GLuint blurTextures;
+  GLuint blurTextures[6];
 };
 
-#endif // MOTIONBLUR_HPP

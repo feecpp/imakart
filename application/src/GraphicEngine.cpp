@@ -10,13 +10,14 @@
 #include "Interface.hpp"
 
 GraphicEngine::GraphicEngine()
-  : world3D(nullptr), interface(nullptr), motionBlur(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT)
+  : world3D(nullptr), interface(nullptr), motionBlur(nullptr), motionBlurEnabled(false)
 {
 }
 
 GraphicEngine::~GraphicEngine()
 {
   reset();
+  delete motionBlur;
 }
 
 sf::RenderWindow& GraphicEngine::init()
@@ -31,6 +32,8 @@ sf::RenderWindow& GraphicEngine::init()
     std::cerr << "Unable to initialize GLEW : " << glewGetErrorString(glewCode) << std::endl;
     return window;
   }
+
+  motionBlur = new MotionBlur(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
 
   //OpenGL initial state
   glEnable(GL_DEPTH_TEST);
@@ -57,11 +60,13 @@ void GraphicEngine::renderFrame()
   //Il existe toujours un World3D meme dans le menu (il fait rien actuellement)
   assert(world3D && interface);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  std::cout << "--------------------------" << std::endl;
+  //std::cout << "--------------------------" << std::endl;
   world3D->draw();
   interface->update();
   interface->draw();
-  motionBlur.renderFrame();
+
+  if (motionBlurEnabled)
+    motionBlur->renderFrame();
 
 }
 
