@@ -11,6 +11,7 @@ Opponent::Opponent(Kart& kart)
   :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0)
 {
   checkpoints.resize(0);
+  opponentKart.moveForward();
 }
 
 const Kart& Opponent::getKart() const
@@ -63,8 +64,6 @@ void Opponent::validateCheckpoints()
   float qw = opponentKart.getOrientation().w;
 
   heading = (atan2(2*qy*qw-2*qx*qz , 1 - 2*qy*qy - 2*qz*qz)) * 360.f / (2*M_PI);
-
-  opponentKart.moveForward();
 
   if(angle != 0.f){
       if(heading <= (angle -2.f) || heading >= (angle +2.f)){
