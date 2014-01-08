@@ -21,7 +21,7 @@ public:
 	static Menu2D* initialiseMainMenu();
 	static Menu2D* initialiseOptionsMenu();
 	static Menu2D* initialiseKartMenu(std::vector <std::string> kartsName);
-	static Menu2D* initialiseMapMenu();
+	static Menu2D* initialiseMapMenu(std::vector <std::string> mapsName);
 	static Menu2D* initialiseRaceMenu();
 
 	void addButton(Button2D* buttonToAdd);
