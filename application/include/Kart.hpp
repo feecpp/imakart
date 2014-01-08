@@ -84,7 +84,10 @@ public:
     {return boundingBox;}
 
   const float* getCurrentSpeed() const
-    {return &speed; }
+    {return &speed;}
+
+  const float& getDirectionAngle() const
+    {return directionAngle;}
 
   void setEventStack(std::stack<GameEvent>* const eventStack);
 

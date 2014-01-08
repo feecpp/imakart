@@ -27,6 +27,11 @@ GameEngine::~GameEngine()
   {
     delete opponents[i];
   }
+
+  for (unsigned int i = 0; i < opponents.size(); ++i)
+  {
+    delete itemsOnMap[i];
+  }
 }
 
 void GameEngine::init()
@@ -95,12 +100,28 @@ void GameEngine::update()
         //Premiere gestion ultra basique de la physique des collisions
         doPhysic();
 
-        auto itemsOnMap = currentMap->getItemsGenerators();
-        for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
+        auto itemsGeneratorsOnMap = currentMap->getItemsGenerators();
+        for (auto it = itemsGeneratorsOnMap.begin(); it != itemsGeneratorsOnMap.end(); ++it)
         {
           if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
           {
             getPlayer().setItem((*it)->getRandomItem());
+          }
+        }
+
+        for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
+        {
+          itemsOnMap[i]->updateLaunch();
+
+          assert(currentMap != nullptr);
+          //Securite
+          auto boundingBoxes = currentMap->getBoudingBoxes();
+          for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
+          {
+            if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
+            {
+              itemsOnMap[i]->colid();
+            }
           }
         }
 
@@ -199,6 +220,11 @@ Kart& GameEngine::getOpponentKart(unsigned int id) const
 {
   assert(opponents[id] != nullptr);
   return opponents[id]->getKart();
+}
+
+void GameEngine::setNewItemOnMap(ItemLogic* newItem)
+{
+  itemsOnMap.push_back(newItem);
 }
 
 void GameEngine::setCurrentMap(Map* newMap)
