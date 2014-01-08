@@ -67,7 +67,6 @@ void Player::validateCheckpoints()
     if (it->contains(myKart.getPosition()))
     {
       it->checked = true;
-      std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
       if(it->start && (newLapNextTime || currentLap == 0))
         newLap = true;
     }

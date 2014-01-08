@@ -48,7 +48,7 @@ Kart::Kart(std::string kartName)
   specifications.weight = atoi(map["Weight"].c_str());
 
   initStates();
- }
+}
 
 Kart::Kart(const Kart& kartToCopy)
   : specifications(kartToCopy.specifications), position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
