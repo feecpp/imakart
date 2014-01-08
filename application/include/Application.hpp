@@ -12,6 +12,7 @@ public:
 
   sf::RenderWindow& setupEverything();
   void startGame(sf::RenderWindow& window);
+  void stopGame();
 
 private:
   void handleEvents(sf::RenderWindow& window);

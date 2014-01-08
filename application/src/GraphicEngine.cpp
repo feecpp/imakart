@@ -82,10 +82,6 @@ void GraphicEngine::setCurrentInterface(Interface* newInterface)
   interface->init();
 }
 
-World3D* GraphicEngine::getWorld3D(){ 
-  return world3D;
-}
-
 sf::RenderWindow& GraphicEngine::getWindow(){
   return window;
 }

@@ -124,6 +124,7 @@ void World3D::draw() const
   const glm::vec4& ambient = getAmbientLight();
   GLint ambientLightId = raceProgram.getUniformIndex("uAmbientLight");
   raceProgram.setUniform(ambientLightId, ambient);
+
   for (auto object3D = objects3D.begin(); object3D != objects3D.end(); ++object3D)
   {
     (*object3D)->setViewMatrix(camera->getViewMatrix());

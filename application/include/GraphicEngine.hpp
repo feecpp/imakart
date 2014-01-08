@@ -71,7 +71,8 @@ public:
   GLuint getTextureFromTabTexture(const unsigned int positionToSelect)
     { return tabTextures[positionToSelect]; }
 
-  World3D* getWorld3D();
+  World3D& getWorld3D()
+    {assert(world3D); return *world3D;}
   
   sf::RenderWindow& getWindow();
 

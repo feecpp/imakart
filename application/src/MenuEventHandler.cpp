@@ -87,7 +87,7 @@ void MenuEventHandler::pressEnter() const
 	        height = atoi(p);
 
 
-	        graphicEngine.getWorld3D()->setSize(width, height);
+	        graphicEngine.getWorld3D().setSize(width, height);
 	        graphicEngine.getWindow().setSize(sf::Vector2u(width, height));
 
 	        graphicEngine.setNewSizeWindow(width, height);
