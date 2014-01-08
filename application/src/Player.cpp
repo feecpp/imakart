@@ -7,7 +7,7 @@
 const unsigned int Player::MAX_LAP = 2;
 
 Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
-  :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false)
+  :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false), progression(0.f), nextCheck(0), rank(0)
 {
   checkpoints.resize(0);
   myCurrentItem = nullptr;
@@ -53,6 +53,11 @@ unsigned int& Player::getCurrentLap()
 void Player::fillCheckpoints(const std::vector<Checkpoint> checkpoints)
 {
   this->checkpoints = checkpoints;
+}
+
+void Player::fillOpponentCheckpoints(const std::vector<Checkpoint> checkpoints)
+{
+  this->opponentCheckpoints = checkpoints;
 }
 
 void Player::validateCheckpoints()
@@ -104,6 +109,23 @@ void Player::validateCheckpoints()
     }
     newLapNextTime = false;
   }
+
+  unsigned int cptOpp = 0;
+  for (auto it = opponentCheckpoints.begin(); it != opponentCheckpoints.end(); ++it)
+  {
+    if (it->contains(myKart.getPosition()))
+    {
+      if(cptOpp == checkpoints.size()-1){
+        cptOpp = 0;
+      }else{
+        cptOpp++;
+      }
+      nextCheck = cptOpp;
+    }
+    cptOpp++;
+    progression = - sqrt( pow(opponentCheckpoints[nextCheck].position.x - myKart.getPosition().x, 2) + pow(opponentCheckpoints[nextCheck].position.z - myKart.getPosition().z, 2));
+  }
+  cptOpp = 0;
 
 }
 

@@ -22,12 +22,22 @@ public:
   const ItemLogic& getItem() const;
   ItemLogic& getItem();
 
+  const float getProgression()const
+    {return progression;}
+  const int getNextCheck()const
+    {return nextCheck;}
+  int& getRank()
+    {return rank;}
+  void setRank(int nb)
+    {rank = nb;}
+
   const bool hasItem() const;
 
   const unsigned int& getCurrentLap() const;
   unsigned int& getCurrentLap();
 
   void fillCheckpoints(const std::vector<Checkpoint> checkpoints);
+  void fillOpponentCheckpoints(const std::vector<Checkpoint> checkpoints);
   void validateCheckpoints();
 
   void moveForward() const;
@@ -52,10 +62,12 @@ private:
   //Gestion des tours / checkpoints
   //Contient une copie des checkpoints de la map en cours (vide si en dehors d'une course)
   std::vector<Checkpoint> checkpoints;
+  std::vector<Checkpoint> opponentCheckpoints;
   unsigned int currentLap;
   bool newLapNextTime;
-  Checkpoint lastCheckPointChecked;
-
+  float progression;
+  int nextCheck;
+  int rank;
 };
 
 #endif // PLAYER_HPP

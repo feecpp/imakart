@@ -1,6 +1,4 @@
 #include "Mesh.hpp"
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 #include <string>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,8 +10,10 @@
 #include <glm/gtx/quaternion.hpp>
 #include <iostream>
 
-Mesh::Mesh()
-  : modelMatrix(1.f)
+Assimp::Importer MeshData::importer;
+
+
+MeshData::MeshData()
 {
   for (glimac::LowLevelVBO*& vbo : meshVBOs)
     vbo = nullptr;
@@ -21,7 +21,7 @@ Mesh::Mesh()
     vao = nullptr;
 }
 
-Mesh::~Mesh()
+MeshData::~MeshData()
 {
   for (glimac::LowLevelVBO*& vbo : meshVBOs)
     delete vbo;
@@ -31,14 +31,8 @@ Mesh::~Mesh()
     delete texture;
 }
 
-void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
+void MeshData::draw(const glimac::ShaderProgram& shaderProgram) const
 {
-  const glm::mat4 MV = viewMatrix * modelMatrix;
-  const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
-  GLint normalId = shaderProgram.getUniformIndex("uNormal");
-  shaderProgram.setUniform(normalId, normalMatrix);
-  GLint modelIndex = shaderProgram.getUniformIndex("model");
-  shaderProgram.setUniform(modelIndex, modelMatrix);
   GLint isTexturedIndex = shaderProgram.getUniformIndex("isTextured");
   GLint diffuseIndex = shaderProgram.getUniformIndex("material.diffuse");
   GLint ambientIndex = shaderProgram.getUniformIndex("material.ambient");
@@ -72,19 +66,10 @@ void Mesh::draw(const glimac::ShaderProgram& shaderProgram) const
   }
 }
 
-void Mesh::update()
+void MeshData::loadFromFile(const std::string& filePath)
 {
-  modelMatrix = glm::mat4(1.f);
-  modelMatrix = glm::toMat4(model->getOrientation()) * modelMatrix;
-  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * modelMatrix;
-}
-
-void Mesh::loadFromFile(const std::string& filePath)
-{
-  Assimp::Importer importer;
-
   const aiScene* scene = importer.ReadFile( filePath,
-         aiProcess_PreTransformVertices);
+           aiProcess_PreTransformVertices);
 
   if (!scene)
   {
@@ -173,4 +158,34 @@ void Mesh::loadFromFile(const std::string& filePath)
     meshVAOs[i]->enableVertexAttribArray(2);
 
   }
+}
+
+
+MeshDataManager::~MeshDataManager()
+{
+  for (auto it = data.begin(); it != data.end(); ++it)
+    delete it->second;
+}
+
+void MeshDataManager::preloadMesh(const std::string& filePath)
+{
+  getMeshData(filePath);
+}
+
+MeshData& MeshDataManager::getMeshData(const std::string& filePath)
+{
+  if (data.find(filePath) != data.end())
+    return *(data[filePath]);
+
+  MeshData* meshData = new MeshData();
+  meshData->loadFromFile(filePath);
+  data.insert(mapPair(filePath, meshData));
+  return *meshData;
+}
+
+void Mesh::update()
+{
+  modelMatrix = glm::mat4(1.f);
+  modelMatrix = glm::toMat4(model->getOrientation()) * modelMatrix;
+  modelMatrix = glm::translate(glm::mat4(1.f), model->getPosition()) * modelMatrix;
 }
