@@ -22,7 +22,14 @@ GraphicEngine::~GraphicEngine()
 
 sf::RenderWindow& GraphicEngine::init()
 {
-  (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart");
+  sf::ContextSettings sfmlSettings;
+  sfmlSettings.antialiasingLevel = settings.ANTIALIAS_LEVEL;
+  sfmlSettings.depthBits = 24;
+  sfmlSettings.stencilBits = 8;
+  sfmlSettings.majorVersion = 3;
+  sfmlSettings.minorVersion = 3;
+
+  (this->window).create(sf::VideoMode(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT), "ImaKart : Minions Karts", sf::Style::Default, sfmlSettings);
   sf::RenderWindow& myWindow = window;
 
   window.setFramerateLimit(settings.FPS);
