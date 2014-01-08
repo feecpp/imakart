@@ -419,6 +419,13 @@ public:
     if (bouncing)
       return;
 
+    //Au cas où (debug un peu sale mais rapide) : on s'assure qu'en cas de bounce pendant un boost
+    //le motion blur est désactivé. En vrai faudrait chainer bounce et boost de la meme maniere que les autres etats
+    //au lieu d'en dur dans Kart
+    GameEventData data;//On s'en fout de la data ici
+    GameEvent boostEvent(USE_BOOST_END, data);
+    eventStack->push(boostEvent);
+
     currentDistance = 0.f;
     distanceToTravel = log(abs(kart.speed)) - 0.5f;//au hasard
     kart.speed = -kart.speed;
@@ -481,7 +488,7 @@ Boost(Kart& kart)
 
     boost = true;
     time = 200;
-    kart.currentAcceleration = kart.specifications.acceleration + 10;
+    kart.currentAcceleration = kart.specifications.acceleration + 25;
   }
 
   virtual void update(float elapsedTimeInSecond)
