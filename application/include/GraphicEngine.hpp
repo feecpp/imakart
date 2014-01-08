@@ -9,6 +9,7 @@
 #include "Observable.hpp"
 #include "World3D.hpp"
 #include "MotionBlur.hpp"
+#include "Mesh.hpp"
 
 class Interface;
 class Camera;
@@ -74,6 +75,9 @@ public:
 
   World3D& getWorld3D()
     {assert(world3D); return *world3D;}
+
+  MeshDataManager& getMeshDataManager()
+    {return meshDataManager;}
   
   sf::RenderWindow& getWindow();
 
@@ -98,7 +102,7 @@ private:
   sf::RenderWindow window;
   std::vector<GLuint> tabTextures;
 
-
+  MeshDataManager meshDataManager;
 
 };
 

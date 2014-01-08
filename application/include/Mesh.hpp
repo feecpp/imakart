@@ -8,14 +8,14 @@
 #include <glm/glm.hpp>
 #include "Texture.hpp"
 #include <assimp/Importer.hpp>      // C++ importer interface
-
+#include <assimp/scene.h>           // Output data structure
 
 /**
  * @brief The Mesh class represente un objet 3D modelise et non anime.
  * Le mesh est charge dans un unique VBO avant d'etre envoye a la carte graphique,
  * aucune notion de graphe de scene n'est prise en compte par cette classe.
  */
-class Mesh : public Object3D
+class MeshData
 {
 public:
 
@@ -27,11 +27,10 @@ public:
     float shininess;
   };
 
-  Mesh();
-  virtual ~Mesh();
+  MeshData();
+  virtual ~MeshData();
 
   virtual void draw(const glimac::ShaderProgram& shaderProgram) const;
-  virtual void update();
 
   /**
    * @brief loadFromFile charge un fichier 3D dans le Mesh et l'envoie directement
@@ -50,7 +49,7 @@ private:
    * A voir plus tard si faut pas faire un truc plus proche, pour l'instant je me suis
    * concentré sur le résultat...
    * Utilisation des pointeurs parce que l'allocation des VBO/VAO est chiante
-   * Ã  gérer.
+   * à gérer.
    */
   std::vector<glimac::LowLevelVBO* > meshVBOs;
   std::vector<glimac::VAO *> meshVAOs;
@@ -58,6 +57,45 @@ private:
   std::vector<glimac::Texture* > textures;
 
   std::vector<std::vector<unsigned int>> indices;
+};
+
+class MeshDataManager
+{
+public:
+  ~MeshDataManager();
+
+  void preloadMesh(const std::string& filePath);
+  MeshData& getMeshData(const std::string& filePath);
+
+private:
+  typedef std::pair<const std::string, MeshData* > mapPair;
+  std::map<const std::string, MeshData* > data;
+};
+
+class Mesh : public Object3D
+{
+public:
+  Mesh(MeshDataManager& dataManager, const std::string& filePath)
+    : meshData(dataManager.getMeshData(filePath)), modelMatrix(1.f)
+  {
+
+  }
+
+  virtual void draw(const glimac::ShaderProgram& shaderProgram) const
+  {
+    const glm::mat4 MV = viewMatrix * modelMatrix;
+    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
+    GLint normalId = shaderProgram.getUniformIndex("uNormal");
+    shaderProgram.setUniform(normalId, normalMatrix);
+    GLint modelIndex = shaderProgram.getUniformIndex("model");
+    shaderProgram.setUniform(modelIndex, modelMatrix);
+    meshData.draw(shaderProgram);
+  }
+
+  virtual void update();
+
+private:
+  MeshData& meshData;
   glm::mat4 modelMatrix;
 
 };

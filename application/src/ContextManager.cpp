@@ -103,14 +103,14 @@ void ContextManager::updateContextIfNeeded()
         break;
 
       case NEW_ITEM_ON_MAP:
-        itemGeneratorMesh = new Mesh();
         try
         {
-          itemGeneratorMesh->loadFromFile("data/itemGenerator.dae");
+          itemGeneratorMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/itemGenerator.dae");
         }
         catch(std::runtime_error er)
         {
           std::cerr << er.what() << std::endl;
+          delete itemGeneratorMesh;
           gameEngine.activateExitFlag();
         }
         gameEngine.setNewItemOnMap(current.data.itemLogicOnMap);
@@ -222,6 +222,9 @@ void ContextManager::setupRaceContext() const
 
   graphicEngine.reset();
 
+  //Preload le mesh du launch item
+  graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
+
   PointLight* light = new PointLight();
 
   SpotLight* spot = new SpotLight();
@@ -243,23 +246,24 @@ void ContextManager::setupRaceContext() const
 
   gameEngine.getPlayer().fillCheckpoints(map->getPlayerCheckpoints());
 
-  Mesh* mapMesh = new Mesh();
+  Mesh* mapMesh = nullptr;
   try
   {
-    mapMesh->loadFromFile("data/" + mapName + ".dae");
+    mapMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/" + mapName + ".dae");
   }
   catch(std::runtime_error er)
   {
     std::cerr << er.what() << std::endl;
     gameEngine.activateExitFlag();
+    delete mapMesh;
   }
   mapMesh->setModelToRepresent(*map);
 
   //---------Chargements relatifs au Kart
-  Mesh* minionMesh = new Mesh();
+  Mesh* minionMesh = nullptr;
   try
   {
-    minionMesh->loadFromFile("data/"+ gameEngine.getPlayerKart().getName() + ".dae");
+    minionMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/"+ gameEngine.getPlayerKart().getName() + ".dae");
   }catch(std::runtime_error er)
   {
     std::cerr << er.what() << std::endl;
@@ -283,15 +287,16 @@ void ContextManager::setupRaceContext() const
   auto itemsOnMap = map->getItemsGenerators();
   for (auto it = itemsOnMap.begin(); it != itemsOnMap.end(); ++it)
   {
-    Mesh* itemGeneratorMesh = new Mesh();
+    Mesh* itemGeneratorMesh = nullptr;
     try
     {
-      itemGeneratorMesh->loadFromFile("data/itemGenerator.dae");
+      itemGeneratorMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/itemGenerator.dae");
     }
     catch(std::runtime_error er)
     {
       std::cerr << er.what() << std::endl;
       gameEngine.activateExitFlag();
+      delete itemGeneratorMesh;
     }
     itemGeneratorMesh->setModelToRepresent(*(*it));
     gameWorld->addObject3D(itemGeneratorMesh);
@@ -311,14 +316,15 @@ void ContextManager::setupRaceContext() const
 
   for(unsigned int i = 0; i< gameEngine.getOpponents().size();++i){
     gameEngine.getOpponent(i).fillCheckpoints(map->getOpponentCheckpoints());
-    Mesh* opponentMesh = new Mesh();
+    Mesh* opponentMesh = nullptr;
     try
     {
-      opponentMesh->loadFromFile("data/"+ gameEngine.getOpponentKart(i).getName() + ".dae");
+      opponentMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/"+ gameEngine.getOpponentKart(i).getName() + ".dae");
     }catch(std::runtime_error er)
     {
       std::cerr << er.what() << std::endl;
       gameEngine.activateExitFlag();
+      delete opponentMesh;
     }
     opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(i));
     gameWorld->addObject3D(opponentMesh);
