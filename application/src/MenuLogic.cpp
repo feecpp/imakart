@@ -1,5 +1,4 @@
 #include "MenuLogic.hpp"
-#include <iostream>
 
 MenuLogic::MenuLogic():
 	nbButtonInMenu(0), positionButtonSelected(0){
@@ -81,7 +80,6 @@ MenuLogic* MenuLogic::initialiseMapMenu(std::vector <std::string> mapsName){
 	MenuLogic* mapMenu = new MenuLogic;
 
 	for(unsigned int i = 0; i < mapsName.size(); ++i){
-		std::cout << "mapsName i : " << mapsName[i] << std::endl;
 		ButtonLogic* map = new ButtonLogic(mapsName[i]);
 		map->setAction(SELECT_MAP);
 		mapMenu->addButton(map);

@@ -21,36 +21,36 @@ void RaceEventHandler::pressDown() const
 {
   gameEngine.getPlayer().moveBackward();
   if(*(gameEngine.getPlayerKart().getCurrentSpeed()) <= 0){
-    graphicEngine.getWorld3D()->switchInBackwardView();
+    graphicEngine.getWorld3D().switchInBackwardView();
   }
 }
 void RaceEventHandler::releaseDown() const
 {
   gameEngine.getPlayer().stopMove();
 
-  graphicEngine.getWorld3D()->switchInForwardView();
+  graphicEngine.getWorld3D().switchInForwardView();
 }
 
 void RaceEventHandler::pressLeft() const
 {
   gameEngine.getPlayer().turnLeft();
-  graphicEngine.getWorld3D()->switchInLeftBendView();
+  graphicEngine.getWorld3D().switchInLeftBendView();
 }
 void RaceEventHandler::releaseLeft() const
 {
   gameEngine.getPlayer().stopTurning();
-  graphicEngine.getWorld3D()->switchInForwardView();
+  graphicEngine.getWorld3D().switchInForwardView();
 }
 
 void RaceEventHandler::pressRight() const
 {
   gameEngine.getPlayer().turnRight();
-  graphicEngine.getWorld3D()->switchInRightBendView();
+  graphicEngine.getWorld3D().switchInRightBendView();
 }
 void RaceEventHandler::releaseRight() const
 {
   gameEngine.getPlayer().stopTurning();
-  graphicEngine.getWorld3D()->switchInForwardView();
+  graphicEngine.getWorld3D().switchInForwardView();
 }
 
 void RaceEventHandler::pressEnter() const
@@ -73,12 +73,12 @@ void RaceEventHandler::releaseSpace() const
 
 void RaceEventHandler::pressNumpad0() const
 {
-  graphicEngine.getWorld3D()->switchInBackwardView();
+  graphicEngine.getWorld3D().switchInBackwardView();
 }
 
 void RaceEventHandler::releaseNumpad0() const
 {
-  graphicEngine.getWorld3D()->switchInForwardView();
+  graphicEngine.getWorld3D().switchInForwardView();
 }
 
 void RaceEventHandler::pressEscape() const

@@ -156,12 +156,22 @@ void Player::setItem(ItemLogic* newItem)
 void Player::useItem()
 {
   if(myCurrentItem != nullptr){
-    if(myCurrentItem->getEffect() == "boost()")
-    {
+    std::string effectItem = myCurrentItem->getEffect();
+    if(effectItem == "boost()"){
       myKart.boost();
+    }else if(effectItem == "launch()"){
+      launchItem();
     }
     
     delete myCurrentItem;
     myCurrentItem = nullptr;
   } 
+}
+
+void Player::launchItem()
+{
+  myCurrentItem->launch(myKart.getPosition(), myKart.getOrientation());
+  GameEventData data;
+  data.itemLogicOnMap = new ItemLogic(*myCurrentItem);
+  eventStack.push(GameEvent(NEW_ITEM_ON_MAP, data));
 }

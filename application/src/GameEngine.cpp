@@ -259,7 +259,6 @@ std::vector<std::string> findMapFiles()
 
     //tous les fichiers du répertoire sont parcourus
     struct dirent* file = NULL;
-    std::cout << "" << std::endl;
     while ((file = readdir(mapsDir)) != NULL){
 
         std::string tmp = std::string(file->d_name); //nom + extension

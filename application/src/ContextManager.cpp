@@ -74,7 +74,10 @@ void ContextManager::updateContextIfNeeded()
     GameEvent current = eventStack.top();
     eventStack.pop();
     Interface& interface = graphicEngine.getCurrentInterface();
+    World3D& world3D = graphicEngine.getWorld3D();
     TimeLimitedText* splashText = nullptr;
+    Mesh* itemGeneratorMesh = nullptr;
+
     switch(current.type)
     {
       case COUNTER_UPDATE:
@@ -96,6 +99,21 @@ void ContextManager::updateContextIfNeeded()
         splashText = new TimeLimitedText(std::string("Course terminee"), 1000, glm::vec2(150,500), 25);
         interface.addTimeLimitedText(splashText);
         gameEngine.setState(END_OF_RACE);
+        break;
+
+      case NEW_ITEM_ON_MAP:
+        itemGeneratorMesh = new Mesh();
+        try
+        {
+          itemGeneratorMesh->loadFromFile("data/itemGenerator.dae");
+        }
+        catch(std::runtime_error er)
+        {
+          std::cerr << er.what() << std::endl;
+          gameEngine.activateExitFlag();
+        }
+        itemGeneratorMesh->setModelToRepresent(*(current.data.itemLogicOnMap));
+        world3D.addObject3D(itemGeneratorMesh);
         break;
 
       case USE_BOOST_BEGIN:

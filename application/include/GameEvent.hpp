@@ -2,11 +2,13 @@
 #define GAMEEVENT_HPP
 
 #include "GameEnumerations.hpp"
+#include "ItemLogic.hpp"
 
 union GameEventData
 {
   int lastSecond;
   unsigned int lapNumber;
+  ItemLogic* itemLogicOnMap;
 };
 
 struct GameEvent

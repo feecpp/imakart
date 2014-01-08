@@ -34,8 +34,6 @@ private:
   std::map<int, std::string> associationIntName;
 
   std::map<std::string, ItemLogic*> itemTemplates;
-  //Les item qui vont conretements être dans la course
-  std::vector<ItemLogic* > instancedItems;
 
 };
 

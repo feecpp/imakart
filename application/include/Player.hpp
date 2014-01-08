@@ -41,6 +41,7 @@ public:
 
   void setItem(ItemLogic* newItem);
   void useItem();
+  void launchItem();
 
 private:
   Kart& myKart;
