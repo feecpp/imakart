@@ -4,6 +4,8 @@
 #include "Positionable.hpp"
 #include <string>
 #include "BoundingBox.hpp"
+#include <stack>
+#include "GameEvent.hpp"
 
 class KartState;
 class ForwardAcceleration;
@@ -51,7 +53,6 @@ public:
 
   Kart();
   Kart(std::string kartName);
-  Kart(glm::vec3 position, glm::quat direction, float speed);
 
   explicit Kart(const Kart& kartToCopy);
 
@@ -84,6 +85,8 @@ public:
 
   const float* getCurrentSpeed() const
     {return &speed; }
+
+  void setEventStack(std::stack<GameEvent>* const eventStack);
 
 Specifications specifications;
 private:
@@ -120,6 +123,7 @@ private:
   float currentAcceleration;
 
   std::string name;
+  std::stack<GameEvent>* eventStack;
 
   KartState* forwardAccelerationState;
   KartState* forwardDecelerationState;
