@@ -23,6 +23,8 @@ private:
   std::vector<Checkpoint> checkpoints;
   float angle;
   float heading;
+  float x, z;
+  bool turnRight;
 };
 
 #endif // OPPONENT_HPP

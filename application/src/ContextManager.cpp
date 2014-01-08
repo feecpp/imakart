@@ -23,6 +23,8 @@
 #include "ItemGenerator.hpp"
 #include "ItemLogic.hpp"
 
+#include <iostream>
+
 ContextManager::ContextManager(GameEngine& gameEngine, GraphicEngine& graphicEngine)
   : gameEngine(gameEngine), graphicEngine(graphicEngine), raceEventHandler(gameEngine, graphicEngine),
     menuEventHandler(gameEngine, graphicEngine), lastGameState(NO_STATE)
@@ -198,7 +200,7 @@ void ContextManager::setupRaceContext() const
   //Plus tard à remplacer par le choix dans le menu
   try
   {
-    map->loadFromFile("maps/plage.txt");
+    map->loadFromFile("maps/road.txt");
   }
   catch(std::runtime_error er)
   {
@@ -211,7 +213,7 @@ void ContextManager::setupRaceContext() const
   Mesh* mapMesh = new Mesh();
   try
   {
-    mapMesh->loadFromFile("data/plage.dae");
+    mapMesh->loadFromFile("data/road.dae");
   }
   catch(std::runtime_error er)
   {
@@ -267,6 +269,7 @@ void ContextManager::setupRaceContext() const
   {
     KartCube* visibleBB = new KartCube();
     visibleBB->setSize(it->getSize());
+    std::cout << it->getSize()[0] << std::endl;
     visibleBB->setModelToRepresent(*it);
     gameWorld->addObject3D(visibleBB);
   }*/
