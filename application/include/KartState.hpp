@@ -8,9 +8,11 @@ class KartState
 {
 public:
   KartState(Kart& kart)
-    : kart(kart) {}
+    : kart(kart), eventStack(nullptr) {}
   virtual ~KartState() {}
 
+  void setEventStack(std::stack<GameEvent>* eventStack)
+    {this->eventStack = eventStack;}
 
   virtual void start() = 0;
   virtual void update(float elapsedTimeInSecond) = 0;
@@ -49,6 +51,7 @@ protected:
   }
 
   Kart& kart;
+  std::stack<GameEvent>* eventStack;
 
 };
 
@@ -416,6 +419,13 @@ public:
     if (bouncing)
       return;
 
+    //Au cas où (debug un peu sale mais rapide) : on s'assure qu'en cas de bounce pendant un boost
+    //le motion blur est désactivé. En vrai faudrait chainer bounce et boost de la meme maniere que les autres etats
+    //au lieu d'en dur dans Kart
+    GameEventData data;//On s'en fout de la data ici
+    GameEvent boostEvent(USE_BOOST_END, data);
+    eventStack->push(boostEvent);
+
     currentDistance = 0.f;
     distanceToTravel = log(abs(kart.speed)) - 0.5f;//au hasard
     kart.speed = -kart.speed;
@@ -458,33 +468,46 @@ private:
 
 };
 
-class Boost: public KartState{
-public:
+class Boost: public KartState
+{
 
+public:
 Boost(Kart& kart)
-    : KartState(kart), time(200), boost(false) {}
+  : KartState(kart), time(200), boost(false) {}
 
   virtual void start()
   {
+    assert(eventStack);
     //Si on est deja en train de booster on reinitialise pas
     if (boost)
       return;
 
+    GameEventData data;//On s'en fout de la data ici
+    GameEvent boostEvent(USE_BOOST_BEGIN, data);
+    eventStack->push(boostEvent);
+
     boost = true;
     time = 200;
-    kart.currentAcceleration = kart.specifications.acceleration + 10;
+    kart.currentAcceleration = kart.specifications.acceleration + 25;
   }
 
   virtual void update(float elapsedTimeInSecond)
   {
+    assert(eventStack);
     time -= 1;
     if (time <= 0)
     {
       kart.currentAcceleration = kart.specifications.acceleration;
       if(kart.speed > kart.specifications.maxSpeed){
         kart.speed = kart.specifications.maxSpeed;
-      }else{
+      }
+      else
+      {
+        GameEventData data;//On s'en fout de la data ici
+        GameEvent boostEvent(USE_BOOST_END, data);
+        eventStack->push(boostEvent);
         kart.setState(kart.forwardAccelerationState);
+
       }
       //Se remet a zero
       boost = false;

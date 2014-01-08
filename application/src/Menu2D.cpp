@@ -43,7 +43,7 @@ Menu2D* Menu2D::initialiseOptionsMenu(){
 	Button2D* sizeWindow2 = new Button2D(-0.25, 0.1, 0.5, 0.5, "textures/options/windowSize2.png", "textures/options/windowSize2Select.png", "1024*768");
 	Button2D* sizeWindow3 = new Button2D(0.3, 0.1, 0.5, 0.5, "textures/options/windowSize3.png", "textures/options/windowSize3Select.png", "1600*1200");
 
-	Button2D* returnMainMenu = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/options/returnMainMenu.png", "textures/options/returnMainMenuSelect.png", "returnMainMenu");
+	Button2D* returnMainMenu = new Button2D(-0.3, -0.3, 0.6, 0.2, "textures/menu/returnMainMenu.png", "textures/menu/returnMainMenuSelect.png", "returnMainMenu");
 
 	optionsMenu->addButton(sizeWindow1);
 	optionsMenu->addButton(sizeWindow2);
@@ -62,7 +62,7 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		textures = textures + kartsName[i];
 		std::string texturesS = textures + "Selected.jpg";
 		textures = textures + ".jpg";
-		Specifications spe = Hangar::getSingletonHangar()->getKartByName(kartsName[i]).specifications;
+    Specifications spe = Hangar::getSingletonHangar()->getKartByName(kartsName[i]).specifications;
 		std::vector<std::string> caracteristique;
 		caracteristique.push_back(glimac::convertToString(spe.acceleration));
 		caracteristique.push_back(glimac::convertToString(spe.maxSpeed));
@@ -71,14 +71,26 @@ Menu2D* Menu2D::initialiseKartMenu(std::vector <std::string> kartsName){
 		kartMenu->addButton(kart);
 	}
 
-	Button2D* returnMainMenu = new Button2D(-0.8, -0.6, 0.6, 0.2, "textures/options/returnMainMenu.png", "textures/options/returnMainMenuSelect.png", "");
+	Button2D* returnMainMenu = new Button2D(-0.8, -0.6, 0.6, 0.2, "textures/menu/returnMainMenu.png", "textures/menu/returnMainMenuSelect.png", "");
 	kartMenu->addButton(returnMainMenu);
 
 	return kartMenu;
 }
 
-Menu2D* Menu2D::initialiseMapMenu(){
+Menu2D* Menu2D::initialiseMapMenu(std::vector <std::string> mapsName){
 	Menu2D* mapMenu = new Menu2D("textures/menu/homePage.jpg");
+
+	for(unsigned int i = 0; i < mapsName.size(); ++i){
+		std::string textures = "textures/maps/";
+		textures = textures + mapsName[i];
+		std::string texturesS = textures + "Selected.jpg";
+		textures = textures + ".jpg";
+    	Button2D* map = new Button2D(- 0.9 + i * 0.6, 0.05, 0.5, 0.5, textures, texturesS, mapsName[i]);
+		mapMenu->addButton(map);
+	}
+
+	Button2D* returnMainMenu = new Button2D(-0.8, -0.6, 0.6, 0.2, "textures/menu/returnMainMenu.png", "textures/menu/returnMainMenuSelect.png", "");
+	mapMenu->addButton(returnMainMenu);
 
 	return mapMenu;
 }

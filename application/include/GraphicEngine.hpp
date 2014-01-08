@@ -8,6 +8,7 @@
 #include <map>
 #include "Observable.hpp"
 #include "World3D.hpp"
+#include "MotionBlur.hpp"
 
 class Interface;
 class Camera;
@@ -74,6 +75,9 @@ public:
   
   sf::RenderWindow& getWindow();
 
+  void setMotionBlur(bool enable)
+    {motionBlurEnabled = enable; motionBlur->reinit();}
+
   void reset();
 
 private:
@@ -86,10 +90,13 @@ private:
 
   //Light* currentLight;
 
+  MotionBlur* motionBlur;
+  bool motionBlurEnabled;
+
   sf::RenderWindow window;
   std::vector<GLuint> tabTextures;
 
-  Observer* scenario;
+
 
 };
 

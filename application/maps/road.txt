@@ -2,7 +2,7 @@ Checkpoint Empty
 location -0.012227 0.336350 -45.077824
 radius 6.777823
 Checkpoint Empty.001
-location 0.465502 0.255406 -47.202438
+location 0.465502 0.255406 -46.840351
 radius 5.525147
 Checkpoint Empty.002
 location 13.044596 0.255406 -71.941322
@@ -157,3 +157,21 @@ radius 5.525147
 Checkpoint Start
 location 0.644525 0.056183 0.252007
 radius 12.420460
+Item Empty.052
+location -3.383914 1.101246 -43.871437
+Item Empty.053
+location 2.463781 1.101246 -43.228191
+Item Empty.054
+location 2.463781 1.101246 -43.228191
+Item Empty.055
+location 205.796432 1.101225 10.472481
+Item Empty.056
+location 211.531464 1.101224 9.951115
+Item Empty.057
+location 124.142197 1.101216 128.872650
+Item Empty.058
+location 124.142197 1.101216 133.984879
+Item Empty.059
+location 106.039726 1.101217 91.444069
+Item Empty.060
+location 106.944847 1.101217 97.779930

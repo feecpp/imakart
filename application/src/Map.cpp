@@ -64,36 +64,6 @@ void Map::loadFromFile(const std::string& filePath)
   mapStream.close();
 }
 
-std::vector<std::string> Map::findMapFiles()
-{
-    std::vector<std::string> fileNames;
-
-    //Ouverture du répertoire des maps
-    DIR* mapsDir = NULL;
-    mapsDir = opendir("maps");
-    if (mapsDir == NULL){
-        std::cout << "Erreur - impossible d'accéder au répertoire des Karts" << std::endl;
-    }
-
-    //tous les fichiers du répertoire sont parcourus
-    struct dirent* file = NULL;
-    std::cout << "" << std::endl;
-    while ((file = readdir(mapsDir)) != NULL){
-
-        std::string tmp = std::string(file->d_name); //nom + extension
-        std::size_t found = tmp.find(".");
-        std::string extension = tmp.substr (found+1);
-        std::string name = tmp.substr (0,found);
-
-        if(extension == "txt"){//L'extension va ptete changer
-            fileNames.push_back(name);
-        }
-    }
-
-    closedir(mapsDir);
-    return fileNames;
-}
-
 const glm::vec3& Map::getPosition() const
   {return position;}
 

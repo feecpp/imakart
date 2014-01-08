@@ -69,10 +69,16 @@ void MenuEventHandler::pressEnter() const
      		gameEngine.activateExitFlag();
 			break;
 
-		case SELECT:
+		case SELECT_KART:
       		gameEngine.setupPlayer(button->name);
 
-      gameEngine.setState(PREPARING_RACE);
+      		gameEngine.setState(IN_MENU_MAP);
+			break;
+
+		case SELECT_MAP:
+			gameEngine.setMapName(button->name);
+
+			gameEngine.setState(PREPARING_RACE);
 			break;
 
 		case WINDOW_RESIZE:
