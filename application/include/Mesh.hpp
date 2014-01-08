@@ -7,6 +7,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "Texture.hpp"
+#include <assimp/Importer.hpp>      // C++ importer interface
+
 
 /**
  * @brief The Mesh class represente un objet 3D modelise et non anime.
@@ -16,6 +18,7 @@
 class Mesh : public Object3D
 {
 public:
+
   struct Material
   {
     glm::vec4 ambientColor;
@@ -40,12 +43,14 @@ public:
   void loadFromFile(const std::string& filePath);
 
 private:
-  /* ImplÃ©mentation basique :
-   * pour un VBO Ã  l'indice 'i' correspond un VAO et un material Ã  l'indice 'i'.
+  static Assimp::Importer importer;
+
+  /* Implémentation basique :
+   * pour un VBO à l'indice 'i' correspond un VAO et un material à l'indice 'i'.
    * A voir plus tard si faut pas faire un truc plus proche, pour l'instant je me suis
-   * concentrÃ© sur le rÃ©sultat...
+   * concentré sur le résultat...
    * Utilisation des pointeurs parce que l'allocation des VBO/VAO est chiante
-   * Ã  gÃ©rer.
+   * Ã  gérer.
    */
   std::vector<glimac::LowLevelVBO* > meshVBOs;
   std::vector<glimac::VAO *> meshVAOs;

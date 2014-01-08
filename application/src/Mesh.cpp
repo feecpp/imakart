@@ -1,5 +1,4 @@
 #include "Mesh.hpp"
-#include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 #include <string>
@@ -11,6 +10,8 @@
 #include "Positionable.hpp"
 #include <glm/gtx/quaternion.hpp>
 #include <iostream>
+
+Assimp::Importer Mesh::importer;
 
 Mesh::Mesh()
   : modelMatrix(1.f)
@@ -81,8 +82,6 @@ void Mesh::update()
 
 void Mesh::loadFromFile(const std::string& filePath)
 {
-  Assimp::Importer importer;
-
   const aiScene* scene = importer.ReadFile( filePath,
          aiProcess_PreTransformVertices);
 
