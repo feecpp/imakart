@@ -110,7 +110,7 @@ void GameEngine::update()
           itemsOnMap[i]->updateLaunch();
 
           assert(currentMap != nullptr);
-          //Securite
+
           auto boundingBoxes = currentMap->getBoudingBoxes();
           for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
           {
@@ -296,8 +296,10 @@ void GameEngine::doPhysic()
     if (getPlayerKart().getBoundingBox().collideWith(*it))
     {
       getPlayerKart().bounce();
+      return;
     }
   }
+
 }
 
 
