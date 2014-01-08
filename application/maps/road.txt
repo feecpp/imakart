@@ -1,4 +1,4 @@
-PlayerCheckpoint Empty
+PlayerCheckpoint Emptyb
 location -0.012227 0.336350 -45.077824
 radius 6.777823
 PlayerCheckpoint EmptyCircle.000
@@ -13,6 +13,9 @@ radius 8.373262
 PlayerCheckpoint Start
 location 5.885511 0.056184 -1.719915
 radius 12.420460
+OpponentCheckpoint Empty.000
+location 1.533298 0.255406 -24.721710
+radius 5.000000
 OpponentCheckpoint Empty.002
 location 13.044596 0.255406 -71.941322
 radius 5.000000
