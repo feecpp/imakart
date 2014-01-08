@@ -155,7 +155,7 @@ Checkpoint Empty.051
 location 1.090411 0.255405 33.400734
 radius 5.525147
 Checkpoint Start
-location 0.644525 0.056183 0.252007
+location 5.885511 0.056184 -1.719915
 radius 12.420460
 Item Empty.052
 location -3.383914 1.101246 -43.871437
