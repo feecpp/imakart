@@ -1,7 +1,9 @@
 #include "Application.hpp"
 #include <SFML/Graphics.hpp>
 #include "EventHandler.hpp"
-#include <iostream>
+#include "Hangar.hpp"
+#include "ItemBox.hpp"
+#include "ItemInterface.hpp"
 
 Application::Application()
   : contextManager(gameEngine, graphicEngine)
@@ -30,6 +32,15 @@ void Application::startGame(sf::RenderWindow& window)
     graphicEngine.swapBuffers();
 
   } while (!gameEngine.getExitFlag());
+
+  stopGame();
+}
+
+void Application::stopGame()
+{
+  Hangar::kill();
+  ItemBox::kill();
+  ItemInterface::kill();
 }
 
 void Application::handleEvents(sf::RenderWindow& window)

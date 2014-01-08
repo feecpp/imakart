@@ -28,7 +28,6 @@ void ItemBox::kill (){
 
 ItemBox::ItemBox()
 {
-  instancedItems.resize(0);
   itemsNames = findItemFiles();
 
   for(unsigned int i=0; i<itemsNames.size(); ++i){
@@ -41,28 +40,20 @@ ItemBox::~ItemBox()
 {
   //Le ItemBox est responsable de la gestion memoire des items,
   //a sa mort il fait donc le menage !
-  for (unsigned int i = 0; i < instancedItems.size(); ++i)
-  {
-    delete instancedItems[i];
-  }
   auto it = itemTemplates.begin();
   for(; it != itemTemplates.end(); ++it)
   {
     delete it->second;
   }
-  instancedItems.erase(instancedItems.begin(), instancedItems.end());
   itemTemplates.erase(itemTemplates.begin(), itemTemplates.end());
 }
 
 ItemLogic* ItemBox::createItemInstanceRandom()
 {
-  //Cette nouvelle instance est stockee dans
-  //instancedItems pour pouvoir etre liberee a la destruction du ItemBox
   srand(time(NULL));
   int randomItem = rand() % itemsNames.size() + 1;
   ItemLogic* newInstance = new ItemLogic(*itemTemplates[associationIntName[randomItem]]);
 
-  instancedItems.push_back(newInstance);
   return newInstance;
 }
 
