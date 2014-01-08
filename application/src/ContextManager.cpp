@@ -242,6 +242,7 @@ void ContextManager::setupRaceContext() const
   gameEngine.setCurrentMap(map);
 
   gameEngine.getPlayer().fillCheckpoints(map->getPlayerCheckpoints());
+  gameEngine.getPlayer().fillOpponentCheckpoints(map->getOpponentCheckpoints());
 
   Mesh* mapMesh = new Mesh();
   try
@@ -341,7 +342,7 @@ void ContextManager::setupRaceContext() const
   gameInterface->addObjectTexte(currentLap);
 
   //Récupérer la position du joueur
-  RankingText* currentRank = new RankingText(gameEngine.getPlayerKart().getCurrentSpeed());
+  RankingText* currentRank = new RankingText(gameEngine.getPlayer().getRank());
   gameInterface->addObjectTexte(currentRank);
 
   //Afficher l'interface de l'item sans item selectionné

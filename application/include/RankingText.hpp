@@ -6,13 +6,13 @@
 
 class RankingText: public Texte2D{
 public:
-  RankingText(const float* rank);
+  RankingText(const int& rank);
   ~RankingText();
 
   void update();
 
 private:
-  const float* pCurrentRank;
+  const int& pCurrentRank;
 };
 
 #endif // RANKINGTEXT_HPP
