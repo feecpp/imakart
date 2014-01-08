@@ -37,12 +37,19 @@ public:
 
   const std::string& getName() const
     {return name;}
-  const std::vector<Checkpoint>& getCheckpoints() const
-    {return checkpoints;}
+
+  const std::vector<Checkpoint>& getPlayerCheckpoints() const
+    {return playerCheckpoints;}
+
+  const std::vector<Checkpoint>& getOpponentCheckpoints() const
+    {return opponentCheckpoints;}
+
   const std::vector<ItemGenerator*>& getItemsGenerators() const
     {return itemsGenerator;}
+
   const std::vector<BoundingBox>& getBoudingBoxes() const
     {return boundingBoxes;}
+
   const std::vector<FrictionArea>& getFrictionAreas() const
     {return frictionAreas;}
 
@@ -55,7 +62,7 @@ public:
   virtual const glm::quat& getOrientation() const;
 
 private :
-  void loadCheckpoint(std::ifstream& mapStream);
+  void loadCheckpoint(std::ifstream& mapStream, bool playerCheckpoint);
   void loadBoundingBox(std::ifstream& mapStream);
   void loadItem(std::ifstream& mapStream);
   void loadFrictionArea(std::ifstream& mapStream);
@@ -64,7 +71,8 @@ private :
   ///qui contenait sa description, sans l'extension
   std::string name;
 
-  std::vector<Checkpoint> checkpoints;
+  std::vector<Checkpoint> playerCheckpoints;
+  std::vector<Checkpoint> opponentCheckpoints;
   std::vector<BoundingBox> boundingBoxes;
   std::vector<ItemGenerator*> itemsGenerator;
   std::vector<FrictionArea> frictionAreas;

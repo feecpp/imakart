@@ -220,7 +220,7 @@ void ContextManager::setupRaceContext() const
   }
   gameEngine.setCurrentMap(map);
 
-  gameEngine.getPlayer().fillCheckpoints(map->getCheckpoints());
+  gameEngine.getPlayer().fillCheckpoints(map->getPlayerCheckpoints());
 
   Mesh* mapMesh = new Mesh();
   try
@@ -287,8 +287,9 @@ void ContextManager::setupRaceContext() const
   }*/
 
   //Dessin d'un adversaire
+
   for(unsigned int i = 0; i< gameEngine.getOpponents().size();++i){
-    gameEngine.getOpponent(i).fillCheckpoints(map->getCheckpoints());
+    gameEngine.getOpponent(i).fillCheckpoints(map->getOpponentCheckpoints());
     Mesh* opponentMesh = new Mesh();
     try
     {

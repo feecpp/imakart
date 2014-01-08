@@ -144,6 +144,7 @@ void Kart::setEventStack(std::stack<GameEvent>* const eventStack)
 {
   this->eventStack = eventStack;
   boostState->setEventStack(eventStack);
+  bounceState->setEventStack(eventStack);
 }
 
 void Kart::setState(KartState* newState)
