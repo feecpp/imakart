@@ -52,7 +52,7 @@ ItemLogic* ItemBox::createItemInstanceRandom()
 {
   srand(time(NULL));
   int randomItem = rand() % itemsNames.size() + 1;
-  ItemLogic* newInstance = new ItemLogic(*itemTemplates[associationIntName[2]]);
+  ItemLogic* newInstance = new ItemLogic(*itemTemplates[associationIntName[randomItem]]);
 
   return newInstance;
 }

@@ -123,12 +123,12 @@ void GameEngine::update()
               }
             }
 
-            for(unsigned int j =0; j< opponents.size(); ++j)
+            for(unsigned int j = 0; j < opponents.size(); ++j)
             {
               if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
               {
                 //Ajouter ici ce que dois faire l'opponent touché 
-                opponents[i]->touched();
+                opponents[j]->touched();
                 itemsOnMap[i]->setNotVisible();
               }
             }

@@ -85,7 +85,7 @@ Menu2D* Menu2D::initialiseMapMenu(std::vector <std::string> mapsName){
     textures = textures + mapsName[i];
     std::string texturesS = textures + "Selected.jpg";
     textures = textures + ".jpg";
-      Button2D* map = new Button2D(- 0.9 + i * 0.6, 0.05, 0.5, 0.5, textures, texturesS, mapsName[i]);
+      Button2D* map = new Button2D(- 0.85 + i * 0.9, -0.2, 0.8, 0.75, textures, texturesS, mapsName[i]);
     mapMenu->addButton(map);
   }
 
