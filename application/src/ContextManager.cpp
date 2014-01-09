@@ -186,7 +186,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
 
   PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec4(300.f,30.f,-100.f,1.0f));
+  PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
