@@ -63,7 +63,7 @@ public:
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
    */
   void addLight(PointLight* newLight)
-      {lights.push_back(newLight);}
+      {std::cout<< "I was here"<<std::endl;lights.push_back(newLight);}
 
   void addLights(const std::string filePath);
 

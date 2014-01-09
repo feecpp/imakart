@@ -87,26 +87,22 @@ void World3D::draw() const
   raceProgram.setUniform(viewId, viewMatrix);
   raceProgram.setUniform(viewProjectionId, viewProjection);
 
-  //Ranger aussi la gestion des lumieres
+  //Gestion de la lumière directionnelle
+  sun->updateLight(viewMatrix);
+  const glm::vec4& direction = sun->getLightDirection();
+  const glm::vec3& intensity = sun->getLightIntensity();
+  GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
+  GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
+  raceProgram.setUniform(lightDirId,direction);
+  raceProgram.setUniform(lightIntensityId, intensity);
+
   //Gestion des lumières ponctuelles
-
-
-  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
-  {
-    (*oneLight)->updateLight(viewMatrix);
-    const glm::vec4& position = (*oneLight)->getLightPosition();
-    const glm::vec3& intensity = (*oneLight)->getLightIntensity();
-    GLint lightPosId = raceProgram.getUniformIndex("point.uLightPos");
-    GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
-    raceProgram.setUniform(lightPosId,position);
-    raceProgram.setUniform(lightIntensityId, intensity);
-  }
-
   char NamePos [50];
   char NameInt [50];
-
-  for (unsigned int i = 0 ; i < lights.size() ; i++) {
-    lights[i]->updateLight(viewMatrix);
+  std::cout<<"NbLights :"<< lights.size()<<std::endl;
+  for (unsigned int i = 0 ; i < lights.size() ; ++i) {
+      std::cout << "lights : "<<lights[i]->getLightPosition().x <<", " << lights[i]->getLightPosition().y <<", "<<lights[i]->getLightPosition().z << std::endl;
+    //lights[i]->updateLight(viewMatrix);
 
     sprintf(NamePos, "points[%u].uLightPos", i);
     sprintf(NameInt, "points[%u].uLi", i);
@@ -116,21 +112,9 @@ void World3D::draw() const
     raceProgram.setUniform(lightPosId,  lights[i]->getLightPosition());
     raceProgram.setUniform(lightIntensityId, lights[i]->getLightIntensity());
   }
-/*  GLint lightPosId0 = raceProgram.getUniformIndex("points[0].uLightPos");
-  std::cout << lightPosId0 << std::endl;
-  GLint lightIntensityId0 = raceProgram.getUniformIndex("points[0].uLi");
-  GLint lightPosId1 = raceProgram.getUniformIndex("points[1].uLightPos");
-  GLint lightIntensityId1 = raceProgram.getUniformIndex("points[1].uLi");
 
-  raceProgram.setUniform(lightPosId0,  lights[0]->getLightPosition());
-  raceProgram.setUniform(lightIntensityId0, lights[0]->getLightIntensity());
-  raceProgram.setUniform(lightPosId1,  lights[1]->getLightPosition());
-  raceProgram.setUniform(lightIntensityId1, lights[1]->getLightIntensity());
-*/
   //Gestion d'une spotLight
   spot->updateLightPosition();
-  //spot->updateLightDirection();
-  //spot->updateLight(viewMatrix);
   const glm::vec4& spotPos = spot->getLightPosition();
   const glm::vec4& spotDir = spot->getLightDirection();
   const glm::vec3& spotIntensity = spot->getLightIntensity();
@@ -143,15 +127,6 @@ void World3D::draw() const
   raceProgram.setUniform(spotDirId,spotDir);
   raceProgram.setUniform(spotIntensityId, spotIntensity);
   raceProgram.setUniform(spotCutId,spotCutoff);
-
-  //Gestion de la lumière directionnelle
-  sun->updateLight(viewMatrix);
-  const glm::vec4& direction = sun->getLightDirection();
-  const glm::vec3& intensity = sun->getLightIntensity();
-  GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
-  GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
-  raceProgram.setUniform(lightDirId,direction);
-  raceProgram.setUniform(lightIntensityId, intensity);
 
   const glm::vec4& ambient = getAmbientLight();
   GLint ambientLightId = raceProgram.getUniformIndex("uAmbientLight");
@@ -200,11 +175,8 @@ void World3D::setSize(const unsigned int width, const unsigned int height){
 }
 
 void World3D::addLights(const std::string filePath){
-  const aiScene* scene = import.ReadFile( filePath,
-             aiProcess_CalcTangentSpace |
-             aiProcess_Triangulate |
-             aiProcess_JoinIdenticalVertices |
-             aiProcess_SortByPType);
+    const aiScene* scene = import.ReadFile( filePath,
+             aiProcess_PreTransformVertices);
 
   if (!scene)
   {
@@ -213,15 +185,17 @@ void World3D::addLights(const std::string filePath){
     throw std::runtime_error(errorMessage.str());
   }
 
-  lights.resize(scene->mNumLights);
-
-  PointLight* l;
   glm::vec4 pos;
-  for(unsigned int i = 0; i < scene->mNumLights; ++i)
+  for (unsigned int i = 0; i < scene->mNumLights; ++i)
   {
     const aiLight* const light = scene->mLights[i];
     pos = glm::vec4(light->mPosition.x,light->mPosition.y,light->mPosition.z,1.0);
-    l = new PointLight(pos);
-    this->addLight(l);
+    PointLight* l = new PointLight(pos);
+    lights.push_back(l);
+  }
+  if (scene->mNumLights > 0)
+  {
+      PointLight* l = new PointLight();
+      lights.push_back(l);
   }
 }
