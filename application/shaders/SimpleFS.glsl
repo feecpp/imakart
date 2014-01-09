@@ -83,7 +83,9 @@ vec4 PointLight(Point point){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / (d);
+
+  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / max(2.f,d);
+
 
   return res;
 }

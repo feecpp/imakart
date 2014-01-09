@@ -46,7 +46,7 @@ public:
   void setCamera(Camera* newCamera);
   void setSize(const unsigned int width, const unsigned int height);
   void setDay()
-    {day = true;}
+  {day = true; sun->setLightIntensity(glm::vec3(1.5f,1.5f,1.5f)); ambientLight = glm::vec4(0.1f,0.1f,0.1f,1.0f);}
 
   /*
    * Vue en marche arriere ou marche avant
@@ -63,7 +63,7 @@ public:
    *addLight permet d'avoir plusieurs lumières ponctuelles dans un vector
    */
   void addLight(PointLight* newLight)
-      {std::cout<< "I was here"<<std::endl;lights.push_back(newLight);}
+      {lights.push_back(newLight);}
 
   void addLights(const std::string filePath);
 
