@@ -7,7 +7,7 @@
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.1f,0.1f,0.1f,1.0f), spot(new SpotLight()) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.1f,0.1f,0.1f,1.0f), spot(new SpotLight()), day(false)//Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -47,17 +47,21 @@ void World3D::init()
     throw std::runtime_error(logInfo);
   }
 
-  /****** SKYBOX JOUR *****
-  if(!skybox.init("textures/skybox/day","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga"))
+  if(day)
   {
-    throw std::runtime_error("Impossible d'initialiser la SkyBox");
+    /****** SKYBOX JOUR ******/
+    if(!skybox.init("textures/skybox/day","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga"))
+    {
+      throw std::runtime_error("Impossible d'initialiser la SkyBox");
+    }
   }
-  */
-
-  /****** SKYBOX NUIT *****/
-  if(!skybox.init("textures/skybox/night","nightsky_north.bmp","nightsky_south.bmp","nightsky_up.bmp","nightsky_down.bmp","nightsky_east.bmp","nightsky_west.bmp"))
+  else
   {
-    throw std::runtime_error("Impossible d'initialiser la SkyBox");
+    /****** SKYBOX NUIT *****/
+    if(!skybox.init("textures/skybox/night","nightsky_north.bmp","nightsky_south.bmp","nightsky_up.bmp","nightsky_down.bmp","nightsky_east.bmp","nightsky_west.bmp"))
+    {
+      throw std::runtime_error("Impossible d'initialiser la SkyBox");
+    }
   }
   
   skybox.setCamera(camera);

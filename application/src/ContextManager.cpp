@@ -279,6 +279,11 @@ void ContextManager::setupRaceContext() const
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
+  //Un peu degeu car en dur
+  if(mapName == "plage")
+  {
+    gameWorld->setDay();
+  }
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
   gameWorld->addLight(l);
