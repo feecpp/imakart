@@ -11,7 +11,7 @@ Assimp::Importer World3D::import;
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.1f,0.1f,0.1f,1.0f), spot(new SpotLight()), day(false)//Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.05f,0.05f,0.05f,1.0f), spot(new SpotLight()), day(false)//Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -99,10 +99,9 @@ void World3D::draw() const
   //Gestion des lumières ponctuelles
   char NamePos [50];
   char NameInt [50];
-  std::cout<<"NbLights :"<< lights.size()<<std::endl;
+
   for (unsigned int i = 0 ; i < lights.size() ; ++i) {
-      std::cout << "lights["<< i<<"] : "<<lights[i]->getLightPosition().x <<", " << lights[i]->getLightPosition().y <<", "<<lights[i]->getLightPosition().z << std::endl;
-    //lights[i]->updateLight(viewMatrix);
+    lights[i]->updateLight(viewMatrix);
 
     sprintf(NamePos, "points[%u].uLightPos", i);
     sprintf(NameInt, "points[%u].uLi", i);
@@ -114,7 +113,6 @@ void World3D::draw() const
   }
 
   const int taille = lights.size();
-  std::cout<< "taille :"<<taille<<std::endl;
   GLint nbLightsID = raceProgram.getUniformIndex("nbLights");
   raceProgram.setUniform(nbLightsID, taille);
 
