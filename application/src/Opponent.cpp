@@ -19,6 +19,11 @@ const Kart& Opponent::getKart() const
   return opponentKart;
 }
 
+void Opponent::init(unsigned int i, std::vector<glm::vec3> startingPoints){
+  startingPoints[i].z += 1.f;
+  getKart().setPosition(startingPoints[i]);
+}
+
 Kart& Opponent::getKart()
 {
   return opponentKart;

@@ -68,6 +68,12 @@ public:
    * Touche Echap
    */
   virtual void pressEscape() const = 0;
+
+  /*
+   * @bried pressK
+   * Touche K
+   */
+  virtual void pressK() const = 0;
    
 };
 

@@ -102,6 +102,9 @@ void Application::handleEvents(sf::RenderWindow& window)
             else if (e.key.code == sf::Keyboard::Escape)
               handler.pressEscape();
 
+            else if (e.key.code == sf::Keyboard::K)
+              handler.pressK();
+
         break;
 
         case sf::Event::KeyReleased:

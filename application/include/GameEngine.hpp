@@ -89,7 +89,7 @@ private:
   static const char TURN_DURATION_IN_MILLIS = 20;
 
   //sf::Music backgroundMusic;
-
+  
   GameState state;
   MenuLogic menu;
   std::stack<GameEvent> eventStack;

@@ -4,6 +4,8 @@
 #include "Checkpoint.hpp"
 #include <vector>
 #include <stack>
+
+#include <SFML/Audio.hpp>
 #include "GameEvent.hpp"
 
 class ItemLogic;
@@ -15,6 +17,7 @@ public:
   static const unsigned int MAX_LAP;
 
   explicit Player(Kart& kart, std::stack<GameEvent>& eventStack);
+  void init(unsigned int i, std::vector<glm::vec3> startingPoints);
 
   const Kart& getKart() const;
   Kart& getKart();
@@ -48,6 +51,9 @@ public:
   void stopTurning() const;
   void brake() const;
   void drift() const;
+  void klaxon();
+
+  sf::Sound loadSound(std::string filename);
 
   void setItem(ItemLogic* newItem);
   void useItem();
@@ -61,6 +67,10 @@ public:
 private:
   Kart& myKart;
   std::stack<GameEvent>& eventStack;
+
+  //Gestion des sons
+  sf::SoundBuffer buffer;
+  sf::Sound sKlaxon;
 
   ItemLogic* myCurrentItem;
 

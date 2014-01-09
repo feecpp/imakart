@@ -14,7 +14,6 @@ GameEngine::GameEngine()
 
 {
   chrono = new ChronoLogic();
-  setupOpponents(3);
 }
 
 GameEngine::~GameEngine()
@@ -37,6 +36,7 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
+  setupOpponents(3);
 }
 
 void GameEngine::update()
@@ -106,6 +106,7 @@ void GameEngine::update()
           (*it)->update();
         }
 
+
         //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
         {
@@ -123,12 +124,12 @@ void GameEngine::update()
               }
             }
 
-            for(unsigned int j =0; j< opponents.size(); ++j)
+            for(unsigned int j = 0; j < opponents.size(); ++j)
             {
               if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
               {
                 //Ajouter ici ce que dois faire l'opponent touché 
-                opponents[i]->touched();
+                opponents[j]->touched();
                 itemsOnMap[i]->setNotVisible();
               }
             }
