@@ -17,7 +17,7 @@
  * depuis Blender faut inverser y et z...
  */
 Map::Map() :
-  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f)))
+  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), visible(true)
 {
 }
 
@@ -50,6 +50,10 @@ void Map::loadFromFile(const std::string& filePath)
     else if (currentWord == "OpponentCheckpoint")
     {
       loadCheckpoint(mapStream, false);
+    }
+    else if (currentWord == "StartingPoint")
+    {
+      loadStartingPoint(mapStream);
     }
     else if (currentWord == "Item")
     {
@@ -198,5 +202,24 @@ void Map::loadFrictionArea(std::ifstream& mapStream)
   }
 
   frictionAreas.push_back(area);
+}
+
+void Map::loadStartingPoint(std::ifstream& mapStream)
+{
+  assert(mapStream);
+
+  glm::vec3 startingPointPosition;
+
+  std::string attribute;
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+  mapStream >> attribute; //je sais que c'est forcement "location"
+
+  mapStream >> startingPointPosition.x;
+  mapStream >> startingPointPosition.y;
+  mapStream >> startingPointPosition.z;
+
+  kartStartingPoints.push_back(startingPointPosition);
 }
 

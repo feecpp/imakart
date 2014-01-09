@@ -17,6 +17,7 @@ void Kart::initStates()
   backwardDecelerationState = new BackwardDeceleration(*this);
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
+  bumpedState = new Bumped(*this);
   bounceState = new Bounce(*this);
   boostState = new Boost(*this);
   forwardBrakeState = new ForwardBrake(*this);
@@ -26,14 +27,14 @@ void Kart::initStates()
 
 Kart::Kart()
   : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(0.f, 0.f, 0.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-    directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), name("standard"), eventStack(nullptr)
+    directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), visible(true), name("standard"), eventStack(nullptr)
 {
   initStates();
 }
 
 Kart::Kart(std::string kartName)
     : BOUNDING_BOX_SIZE(glm::vec3(3.f)), position(1.9f, 0.f, 6.f), boundingBox(position, BOUNDING_BOX_SIZE), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))),
-      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), eventStack(nullptr)
+      directionAngle(0.f), speed(0.f), currentAngularSpeed(0.f), currentAcceleration(0.f), visible(true), eventStack(nullptr)
 {
   const std::string path = "karts/"+kartName+".kart";
 
@@ -52,7 +53,7 @@ Kart::Kart(std::string kartName)
 
 Kart::Kart(const Kart& kartToCopy)
   : specifications(kartToCopy.specifications), position(kartToCopy.position), boundingBox(kartToCopy.boundingBox), orientation(kartToCopy.orientation), directionAngle(0.f), speed(kartToCopy.speed),
-    currentAngularSpeed(0.f), currentAcceleration(0.f), name(kartToCopy.name), eventStack(kartToCopy.eventStack)
+    currentAngularSpeed(0.f), currentAcceleration(0.f), visible(kartToCopy.visible), name(kartToCopy.name), eventStack(kartToCopy.eventStack)
 {
   initStates();
 }
@@ -66,6 +67,7 @@ Kart::~Kart()
   delete backwardDecelerationState;
   delete backwardMaxSpeedReached;
   delete noMoveState;
+  delete bumpedState;
   delete bounceState;
   delete boostState;
   delete forwardBrakeState;
@@ -106,6 +108,11 @@ void Kart::turnRight()
 void Kart::stopMove()
 {
   currentState->stopMove();
+}
+
+void Kart::bumped()
+{
+  setState(bumpedState);
 }
 
 void Kart::stopTurning()

@@ -2,6 +2,7 @@
 #define MESH_HPP
 
 #include "Object3D.hpp"
+#include "Positionable.hpp"
 #include <VBO.hpp>
 #include <VAO.hpp>
 #include <vector>
@@ -83,13 +84,15 @@ public:
 
   virtual void draw(const glimac::ShaderProgram& shaderProgram) const
   {
-    const glm::mat4 MV = viewMatrix * modelMatrix;
-    const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
-    GLint normalId = shaderProgram.getUniformIndex("uNormal");
-    shaderProgram.setUniform(normalId, normalMatrix);
-    GLint modelIndex = shaderProgram.getUniformIndex("model");
-    shaderProgram.setUniform(modelIndex, modelMatrix);
-    meshData.draw(shaderProgram);
+    if(model->isVisible()){
+      const glm::mat4 MV = viewMatrix * modelMatrix;
+      const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
+      GLint normalId = shaderProgram.getUniformIndex("uNormal");
+      shaderProgram.setUniform(normalId, normalMatrix);
+      GLint modelIndex = shaderProgram.getUniformIndex("model");
+      shaderProgram.setUniform(modelIndex, modelMatrix);
+      meshData.draw(shaderProgram);
+    }
   }
 
   virtual void update();

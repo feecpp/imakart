@@ -41,6 +41,9 @@ public:
 
   virtual const glm::quat& getOrientation() const;
 
+  virtual const bool isVisible() const
+    {return visible;}
+
 private:
   glm::vec3 calculPositionNearOrigin()
   {
@@ -54,6 +57,8 @@ private:
 
   //On utilise le point de la BB le plus proche de l'origine pour les calculs
   glm::vec3 positionNearOrigin;
+
+  bool visible;
 };
 
 #endif // BOUNDINGBOX_HPP

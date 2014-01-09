@@ -27,6 +27,9 @@ public:
   const BoundingBox& getBoundingBox() const
     {return boundingBox;}
 
+  virtual const bool isVisible() const
+    {return visible;}
+
   void noInterface();
   void update();
   void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher, const float directionAngleLauncher);
@@ -48,7 +51,9 @@ private:
   bool used;
 
   bool colid;
-  float time; 
+  float time;
+
+  bool visible;
   
   ItemInterface* myInterface;
 };

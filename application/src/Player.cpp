@@ -7,7 +7,7 @@
 const unsigned int Player::MAX_LAP = 3;
 
 Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
-  :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false), progression(0.f), nextCheck(0), rank(0)
+  :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false), progression(0.f), nextCheck(0), rank(0), viewBackward(false)
 {
   checkpoints.resize(0);
   myCurrentItem = nullptr;
@@ -193,7 +193,13 @@ void Player::useItem()
 
 void Player::launchItem()
 {
-  myCurrentItem->launch(myKart.getPosition(), myKart.getOrientation(), myKart.getDirectionAngle());
+  glm::quat orientationLauncher = myKart.getOrientation();
+  float directionAngleLauncher = myKart.getDirectionAngle();
+  //Lancer en arriere
+  if(viewBackward){
+    orientationLauncher = glm::angleAxis(directionAngleLauncher + 180.f, glm::vec3(0.f, 1.f, 0.f));
+  }
+  myCurrentItem->launch(myKart.getPosition(), orientationLauncher, directionAngleLauncher);
   GameEventData data;
   data.itemLogicOnMap = new ItemLogic(*myCurrentItem);
   eventStack.push(GameEvent(NEW_ITEM_ON_MAP, data));

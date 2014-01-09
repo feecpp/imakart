@@ -30,14 +30,9 @@ struct Point
     vec4 uLightPos;
     vec3 uLi;
 };
-uniform Point point;
-/*uniform int nbLights;
-layout (std140) uniform Lights {
-   Point light[nbLights];
-}
-*/
-const int nbLightsMax = 2;
-uniform Point points[nbLightsMax];
+
+const int MAX_PLIGHTS = 2;
+uniform Point points[MAX_PLIGHTS];
 
 struct Spot
 {
@@ -56,7 +51,7 @@ out vec4 oFragColor;
 //Calcul directionalLight
 vec4 ADS()
 {
-  vec4 res = vec4(0);
+  vec4 res;
 
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(directional.uLightDir)));
   vec4 vDiffuseColor = material.diffuse * vec4(directional.uLi,1.0) * fDotProduct;
@@ -64,18 +59,18 @@ vec4 ADS()
   vec4 halfVector = (normalize(-vPosition_vs) + normalize(directional.uLightDir)) * 0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
   float PowProduct = pow(DotProduct,material.shininess);
-  vec4 vSpecularColor = material.specular * vec4(point.uLi,1.0) * PowProduct;
+  vec4 vSpecularColor = material.specular * vec4(directional.uLi,1.0) * PowProduct;
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = res +(vAmbientColor + vDiffuseColor + vSpecularColor);
+  res = vAmbientColor + vDiffuseColor + vSpecularColor;
 
   return res;
 }
 
 //Calcul pointLight
 vec4 blinnPhongPonctuelle(Point point){
-  vec4 res = vec4(0);
+  vec4 res;
 
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(point.uLightPos-vPosition_vs)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
@@ -88,7 +83,7 @@ vec4 blinnPhongPonctuelle(Point point){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / max(1.0f,(d*d)));
+  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / max(1.0f,(d*d));
 
   return res;
 }
@@ -115,8 +110,7 @@ void main(void)
 {
     vec4 TotalLight = vec4(0.f);
 
-    for (int i = 0 ; i < nbLightsMax ; i++) {
-        //TotalLight += blinnPhongPonctuelle(point);
+    for (int i = 0 ; i < MAX_PLIGHTS ; i++) {
         TotalLight += blinnPhongPonctuelle(points[i]);
    }
 

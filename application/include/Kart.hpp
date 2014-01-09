@@ -67,6 +67,7 @@ public:
   void turnLeft();
   void turnRight();
   void stopMove();
+  void bumped();
   void stopTurning();
   void brake();
   void drift();
@@ -76,6 +77,9 @@ public:
   virtual const glm::vec3& getPosition() const;
   void setPosition(glm::vec3 pos);
   virtual const glm::quat& getOrientation() const;
+
+  virtual const bool isVisible() const
+    {return visible;}
 
   std::string getName() const
     {return name;}
@@ -106,6 +110,7 @@ private:
   friend class Acceleration;
   friend class Deceleration;
   friend class NoMove;
+  friend class Bumped;
   friend class Bounce;
   friend class Boost;
   friend class ForwardBrake;
@@ -125,6 +130,8 @@ private:
   float currentAngularSpeed;
   float currentAcceleration;
 
+  bool visible;
+  
   std::string name;
   std::stack<GameEvent>* eventStack;
 
@@ -135,6 +142,7 @@ private:
   KartState* backwardDecelerationState;
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
+  KartState* bumpedState;
   KartState* bounceState;
   KartState* boostState;
   KartState* forwardBrakeState;
