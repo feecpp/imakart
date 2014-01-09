@@ -75,7 +75,7 @@ def write_imakart_map(context, filepath, use_some_setting):
     for checkpoint in opponent_checkpoints:
         f.write("OpponentCheckpoint %s\n" % checkpoint.name)
         f.write("location %f %f %f\n" % (checkpoint.location.x, checkpoint.location.z, -checkpoint.location.y))
-        f.write("radius %f\n" % 5.0)
+        f.write("radius %f\n" % checkpoint.empty_draw_size)
         
     #Puis les Bounding boxes 
     for bbox in bounding_boxes:

@@ -9,6 +9,7 @@ class DirectionalLight
 public:
   DirectionalLight();
   DirectionalLight(glm::vec4 direction);
+  DirectionalLight(glm::vec4 direction, glm::vec3 intensity);
 
   const glm::vec4 getLightDirection() const;
   const glm::vec3 getLightIntensity() const;
@@ -17,6 +18,7 @@ public:
 
 private:
   glm::vec4 direction;
+  glm::vec4 info;
   glm::vec3 intensity;
 };
 
