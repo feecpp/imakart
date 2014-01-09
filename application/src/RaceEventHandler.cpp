@@ -22,6 +22,7 @@ void RaceEventHandler::pressDown() const
   gameEngine.getPlayer().moveBackward();
   if(*(gameEngine.getPlayerKart().getCurrentSpeed()) <= 0){
     graphicEngine.getWorld3D().switchInBackwardView();
+    gameEngine.getPlayer().switchInBackwardView();
   }
 }
 void RaceEventHandler::releaseDown() const
@@ -29,6 +30,7 @@ void RaceEventHandler::releaseDown() const
   gameEngine.getPlayer().stopMove();
 
   graphicEngine.getWorld3D().switchInForwardView();
+  gameEngine.getPlayer().switchInForwardView();
 }
 
 void RaceEventHandler::pressLeft() const
@@ -74,11 +76,14 @@ void RaceEventHandler::releaseSpace() const
 void RaceEventHandler::pressNumpad0() const
 {
   graphicEngine.getWorld3D().switchInBackwardView();
+  gameEngine.getPlayer().switchInBackwardView();
+
 }
 
 void RaceEventHandler::releaseNumpad0() const
 {
   graphicEngine.getWorld3D().switchInForwardView();
+  gameEngine.getPlayer().switchInForwardView();
 }
 
 void RaceEventHandler::pressEscape() const

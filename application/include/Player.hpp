@@ -53,6 +53,11 @@ public:
   void useItem();
   void launchItem();
 
+  void switchInBackwardView()
+    {viewBackward = true;}
+  void switchInForwardView()
+    {viewBackward = false;}
+
 private:
   Kart& myKart;
   std::stack<GameEvent>& eventStack;
@@ -68,6 +73,7 @@ private:
   float progression;
   int nextCheck;
   int rank;
+  bool viewBackward;
 };
 
 #endif // PLAYER_HPP
