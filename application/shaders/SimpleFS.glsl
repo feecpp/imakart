@@ -32,6 +32,7 @@ struct Point
 
 const int MAX_PLIGHTS = 38;
 uniform Point points[MAX_PLIGHTS];
+uniform int nbLights;
 
 struct Spot
 {
@@ -88,7 +89,7 @@ vec4 PointLight(Point point){
 }
 
 //Calcul spotLight
-vec4 CalcSpotLight() {
+vec4 SpotLight() {
     vec4 res = vec4(0);
     vec4 spotDirection  = normalize(spot.uLightDir);
     float spotFactor = dot(spotDirection , normalize(spot.base.uLightPos - vPosition_vs));
@@ -109,7 +110,7 @@ void main(void)
 {
     vec4 TotalLight = DirectionalLight();
 
-    for (int i = 0 ; i < MAX_PLIGHTS ; i++) {
+    for (int i = 0 ; i < nbLights ; i++) {
       TotalLight += PointLight(points[i]);
     }
 

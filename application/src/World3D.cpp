@@ -101,7 +101,7 @@ void World3D::draw() const
   char NameInt [50];
   std::cout<<"NbLights :"<< lights.size()<<std::endl;
   for (unsigned int i = 0 ; i < lights.size() ; ++i) {
-      std::cout << "lights : "<<lights[i]->getLightPosition().x <<", " << lights[i]->getLightPosition().y <<", "<<lights[i]->getLightPosition().z << std::endl;
+      std::cout << "lights["<< i<<"] : "<<lights[i]->getLightPosition().x <<", " << lights[i]->getLightPosition().y <<", "<<lights[i]->getLightPosition().z << std::endl;
     //lights[i]->updateLight(viewMatrix);
 
     sprintf(NamePos, "points[%u].uLightPos", i);
@@ -109,9 +109,14 @@ void World3D::draw() const
 
     GLint lightPosId = raceProgram.getUniformIndex(NamePos);
     GLint lightIntensityId = raceProgram.getUniformIndex(NameInt);
-    raceProgram.setUniform(lightPosId,  lights[i]->getLightPosition());
+    raceProgram.setUniform(lightPosId, lights[i]->getLightPosition());
     raceProgram.setUniform(lightIntensityId, lights[i]->getLightIntensity());
   }
+
+  const int taille = lights.size();
+  std::cout<< "taille :"<<taille<<std::endl;
+  GLint nbLightsID = raceProgram.getUniformIndex("nbLights");
+  raceProgram.setUniform(nbLightsID, taille);
 
   //Gestion d'une spotLight
   spot->updateLightPosition();
@@ -192,10 +197,5 @@ void World3D::addLights(const std::string filePath){
     pos = glm::vec4(light->mPosition.x,light->mPosition.y,light->mPosition.z,1.0);
     PointLight* l = new PointLight(pos);
     lights.push_back(l);
-  }
-  if (scene->mNumLights > 0)
-  {
-      PointLight* l = new PointLight();
-      lights.push_back(l);
   }
 }
