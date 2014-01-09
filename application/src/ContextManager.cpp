@@ -105,7 +105,7 @@ void ContextManager::updateContextIfNeeded()
       case NEW_ITEM_ON_MAP:
         try
         {
-          itemGeneratorMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/itemGenerator.dae");
+          itemGeneratorMesh = new Mesh(graphicEngine.getMeshDataManager(), "data/Papple.dae");
         }
         catch(std::runtime_error er)
         {
