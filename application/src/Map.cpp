@@ -133,9 +133,10 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
   attribute.clear();
 
   glm::vec3 position, size;
+  glm::quat orientation;
 
-  //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par boundingbox...
-  for (int i = 0; i < 2; ++i)
+  //Pour l'instant a la bourrin, je sais que j'ai 3 attributs par boundingbox...
+  for (int i = 0; i < 3; ++i)
   {
     mapStream >> attribute;
     if (attribute == "location")
@@ -150,9 +151,17 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
       mapStream >> size.y;
       mapStream >> size.z;
     }
+    else if (attribute == "rotation")
+    {
+      mapStream >> orientation.w;
+      mapStream >> orientation.x;
+      mapStream >> orientation.y;
+      mapStream >> orientation.z;
+    }
   }
 
   BoundingBox* bb = new BoundingBox(position, size);
+  bb->setOrientation(orientation);
   boundingBoxes.push_back(bb);
 }
 

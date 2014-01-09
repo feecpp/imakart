@@ -3,7 +3,7 @@ bl_info = {
     "category": "Import-Export",
     "author":       "Jean-Noël Chiganne",
     "blender":      (2,6,9),
-    "version":      (0,0,2),
+    "version":      (0,0,3),
     "location":     "File > Import-Export",
     "description":  "Export Imakart map logic",
     "category":     "Import-Export"
@@ -83,11 +83,13 @@ def write_imakart_map(context, filepath, use_some_setting):
         scalex = 2 * bbox.scale.x
         scaley = 2 * bbox.scale.y
         scalez = 2 * bbox.scale.z
+        bbox.rotation_mode = 'QUATERNION'
         print(bbox.name)
         print(scalex)
         f.write("BoundingBox %s\n" % bbox.name)
         f.write("location %f %f %f\n" % (bbox.location.x, bbox.location.z, -bbox.location.y))
         f.write("size %f %f %f\n" % (scalex, scalez, scaley))
+        f.write("rotation %f %f %f %f\n" % (bbox.rotation_quaternion.w, bbox.rotation_quaternion.x, bbox.rotation_quaternion.z, -bbox.rotation_quaternion.y))
         
      #Puis les items 
     for item in items:

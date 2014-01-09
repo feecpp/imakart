@@ -68,11 +68,6 @@ bool BoundingBox::collideWith(const BoundingBox& other) const
 {
   bool result = collisionModel->collision(other.collisionModel);
   //assert(!result);
-  if (result)
-  {
-    float point[3];
-    collisionModel->getCollisionPoint(point, false);
-  }
   return result;
 }
 

@@ -89,7 +89,7 @@ void GameEngine::update()
         //Uniformiser la gestion du temps
         getPlayerKart().update(TURN_DURATION_IN_MILLIS / 1000.f);
         for(unsigned int i =0; i<opponents.size(); ++i){
-          getOpponentKart(i).update(TURN_DURATION_IN_MILLIS / 1000.f);
+          //getOpponentKart(i).update(TURN_DURATION_IN_MILLIS / 1000.f);
         }
         chrono->update(TURN_DURATION_IN_MILLIS / 1000.f);
         //Premiere gestion ultra basique de la physique des collisions
@@ -132,7 +132,7 @@ void GameEngine::update()
 
         player->validateCheckpoints();
         for(unsigned int i =0; i< opponents.size(); ++i){
-          opponents[i]->validateCheckpoints();
+          //opponents[i]->validateCheckpoints();
         }
 
         //gestion du classement, assez sale, à améliorer

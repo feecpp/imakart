@@ -27,6 +27,12 @@ public:
     updateModelMatrix();
   }
 
+  void setOrientation(glm::quat newOrientation)
+  {
+    orientation = newOrientation;
+    updateModelMatrix();
+  }
+
   virtual const glm::vec3& getPosition() const
     {return position;}
 

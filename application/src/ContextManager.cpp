@@ -269,6 +269,7 @@ void ContextManager::setupRaceContext() const
     gameWorld->addObject3D(itemGeneratorMesh);
   }
 
+  /*
   //pour voir les bounding boxes sous forme de cube
   for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
@@ -282,6 +283,7 @@ void ContextManager::setupRaceContext() const
   kartBB->setSize(gameEngine.getPlayerKart().getBoundingBox().getSize());
   kartBB->setModelToRepresent(gameEngine.getPlayerKart());
   gameWorld->addObject3D(kartBB);
+  */
 
   //Dessin d'un adversaire
 
