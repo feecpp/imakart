@@ -7,12 +7,12 @@
 class DirectionalLight
 {
 public:
-    DirectionalLight();
-    DirectionalLight(glm::vec4 direction);
+  DirectionalLight();
+  DirectionalLight(glm::vec4 direction);
 
-    const glm::vec4 getLightDirection() const;
-    const glm::vec3 getLightIntensity() const;
-    void updateLight(const glm::mat4 viewMatrix);
+  const glm::vec4 getLightDirection() const;
+  const glm::vec3 getLightIntensity() const;
+  void updateLight(const glm::mat4 viewMatrix);
 
 
 private:

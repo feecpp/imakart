@@ -6,22 +6,22 @@
 
 class ItemInterface: public InterfaceElement{
 public:
-	static ItemInterface* getSingletonItemInterface();
-  	static void kill ();
+  static ItemInterface* getSingletonItemInterface();
+  static void kill ();
 
-	const bool isSelected() const;
+  const bool isSelected() const;
 
-	void noSelected();
+  void noSelected();
 
-	void setName(const std::string iName);
+  void setName(const std::string iName);
 
 private:
-	ItemInterface();
-	~ItemInterface();
+  ItemInterface();
+  ~ItemInterface();
 
-	static ItemInterface* singletonItemInterface;
+  static ItemInterface* singletonItemInterface;
 
-	bool used;
+  bool used;
 };
 
 #endif

@@ -6,13 +6,13 @@
 
 class SpeedTexte: public Texte2D{
 public:
-	SpeedTexte(const float* pSpeedKart); 
-	~SpeedTexte();
+  SpeedTexte(const float* pSpeedKart); 
+  ~SpeedTexte();
 
-	void update();
+  void update();
 
 private:
-	const float* pCurrentSpeedKart;
+  const float* pCurrentSpeedKart;
 };
 
 #endif

@@ -96,7 +96,7 @@ private:
 
   Player* player;
   std::vector<Opponent*> opponents;
-  std::vector<ItemLogic*> itemsOnMap;
+  std::map<int, ItemLogic*> itemsOnMap;
   Map* currentMap;
   std::string selectMapName;
   sf::Clock clock;
