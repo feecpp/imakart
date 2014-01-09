@@ -111,8 +111,8 @@ void main(void)
     vec4 TotalLight = ADS();
 
     for (int i = 0 ; i < MAX_PLIGHTS ; i++) {
-        TotalLight += blinnPhongPonctuelle(points[i]);
-   }
+      TotalLight += blinnPhongPonctuelle(points[i]);
+    }
 
   if (isTextured)
   {
