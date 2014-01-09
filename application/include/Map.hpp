@@ -63,6 +63,8 @@ public:
 
   virtual const glm::vec3& getPosition() const;
   virtual const glm::quat& getOrientation() const;
+  virtual const bool isVisible() const
+    {return visible;}
 
 private :
   void loadCheckpoint(std::ifstream& mapStream, bool playerCheckpoint);
@@ -85,5 +87,6 @@ private :
 
   glm::vec3 position;
   glm::quat orientation;
+  bool visible;
 };
 

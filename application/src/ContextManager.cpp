@@ -240,7 +240,7 @@ void ContextManager::setupRaceContext() const
 
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
   //Un peu degeu car en dur
-  if(mapName == "plage")
+  if(mapName == "PlayaBanana")
   {
     gameWorld->setDay();
   }

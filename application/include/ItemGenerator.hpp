@@ -25,12 +25,21 @@ public:
 
   ItemLogic* getRandomItem() const;
 
+  virtual const bool isVisible() const
+    {return visible;}
+
+  void setNotVisible();
+  void update();
+
 private:
   glm::vec3 itemPosition;
   glm::quat itemOrientation;
 
   ItemBox* itemBox;
   BoundingBox boundingBox;
+
+  bool visible;
+  float time;
 };
 
 #endif

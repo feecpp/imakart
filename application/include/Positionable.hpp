@@ -15,6 +15,8 @@ public:
 
   virtual const glm::vec3& getPosition() const = 0;
   virtual const glm::quat& getOrientation() const = 0;
+
+  virtual const bool isVisible() const = 0;
 };
 
 #endif // POSITIONABLE_HPP
