@@ -114,7 +114,7 @@ void GameEngine::update()
           auto boundingBoxes = currentMap->getBoudingBoxes();
           for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
           {
-            if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
+            if (itemsOnMap[i]->getBoundingBox().collideWith(**it))
             {
               itemsOnMap[i]->colision();
             }
@@ -292,7 +292,7 @@ void GameEngine::doPhysic()
   for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
   {
     //Oui, c'est sale
-    if (getPlayerKart().getBoundingBox().collideWith(*it))
+    if (getPlayerKart().getBoundingBox().collideWith(**it))
     {
       getPlayerKart().bounce();
       return;
