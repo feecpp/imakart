@@ -184,7 +184,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   //Preload le mesh du launch item
-  graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
+  graphicEngine.getMeshDataManager().preloadMesh("data/Papple.dae");
 
   //PointLight* light = new PointLight();
   //PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
