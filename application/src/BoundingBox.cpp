@@ -9,6 +9,7 @@ std::map<CollisionModel3D*, unsigned int> BoundingBox::memoryMap;
 BoundingBox::BoundingBox(const BoundingBox& other)
   : collisionModel(other.collisionModel), position(other.position), size(other.size), orientation(other.orientation)
 {
+  memoryMap[collisionModel]++;
   updateModelMatrix();
 }
 
@@ -66,17 +67,31 @@ BoundingBox::~BoundingBox()
 bool BoundingBox::collideWith(const BoundingBox& other) const
 {
   bool result = collisionModel->collision(other.collisionModel);
-  assert(!result);
+  //assert(!result);
+  if (result)
+  {
+    float point[3];
+    collisionModel->getCollisionPoint(point, false);
+  }
+  return result;
 }
 
 void BoundingBox::updateModelMatrix()
 {
   modelMatrix = glm::mat4(1.f);
-  //modelMatrix = glm::toMat4(orientation) * modelMatrix;
+  modelMatrix = glm::toMat4(orientation) * modelMatrix;
   modelMatrix = glm::translate(glm::mat4(1.f), position) * modelMatrix;
-  rowMajorModelMatrix = glm::rowMajor4(modelMatrix);
 
-  collisionModel->setTransform(glm::value_ptr(modelMatrix));
+  float tmp[16];
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+    {
+      tmp[4*i + j] = modelMatrix[i][j];
+    }
+  }
+
+  collisionModel->setTransform(tmp);
 }
 
 const glm::quat& BoundingBox::getOrientation() const

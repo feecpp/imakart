@@ -20,6 +20,7 @@ public:
   BoundingBox(glm::vec3 position, glm::vec3 size);
   ~BoundingBox();
 
+
   void setPosition(glm::vec3 newPosition)
   {
     position = newPosition;

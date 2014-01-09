@@ -295,10 +295,9 @@ void GameEngine::doPhysic()
     if (getPlayerKart().getBoundingBox().collideWith(**it))
     {
       getPlayerKart().bounce();
-      return;
+      //return;
     }
   }
-
 }
 
 
