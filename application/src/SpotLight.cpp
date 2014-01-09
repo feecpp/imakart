@@ -4,7 +4,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 SpotLight::SpotLight()
-    :position(0.f,3.f,-3.f,1.f),direction(0.f,-2.f,-3.f,0.f),intensity(5.5f,5.5f,5.5f), cutoff(0.f), objectToFollow(nullptr)
+    :objectToFollow(nullptr), position(0.f,3.f,-3.f,1.f),direction(0.f,0.f,-3.f,0.f),intensity(5.5f,5.5f,5.5f), cutoff(0.f)
 {
 }
 
@@ -25,7 +25,7 @@ const float SpotLight::getLightCutoff() const {
 }
 
 void SpotLight::updateLightPosition(){
-    glm::vec3 initialDirection = glm::vec3(0.f, -2.f, -3.f);
+    glm::vec3 initialDirection = glm::vec3(0.f, 0.f, -3.f);
     if (objectToFollow != nullptr) {
       direction = glm::vec4(glm::toMat3(objectToFollow->getOrientation()) * initialDirection,1.0f);
       position = glm::vec4(objectToFollow->getPosition(),1.0f)  - direction + glm::vec4(0.f,0.f,-5.f,1.f);

@@ -7,6 +7,8 @@
 
 class GameEngine;
 class GraphicEngine;
+class Menu2D;
+class MenuLogic;
 
 
 /*
@@ -39,6 +41,7 @@ public:
   const EventHandler& getHandler() const;
 
 private:
+  void setupMenu(Menu2D* menu2D, MenuLogic* menuLogic, bool text) const;
   void setupMenuContext() const;
   void setupMenuOptionsContext() const;
   void setupMenuKartContext() const;

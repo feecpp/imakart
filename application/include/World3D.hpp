@@ -43,6 +43,8 @@ public:
    */
   void setCamera(Camera* newCamera);
   void setSize(const unsigned int width, const unsigned int height);
+  void setDay()
+    {day = true;}
 
   /*
    * Vue en marche arriere ou marche avant
@@ -78,6 +80,8 @@ private:
   DirectionalLight* sun;
   glm::vec4 ambientLight;
   SpotLight* spot;
+
+  bool day;
 
 };
 

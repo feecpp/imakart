@@ -131,14 +131,20 @@ void ContextManager::updateContextIfNeeded()
   //Ajouter gestion du menu en course
 }
 
-void ContextManager::setupMenuContext() const
+void ContextManager::setupMenu(Menu2D* menu2D, MenuLogic* menuLogic, bool text) const
 {
   graphicEngine.reset();
-  Menu2D* menu2D = Menu2D::initialiseMainMenu();
-  MenuLogic* menuLogic = MenuLogic::initialiseMainMenu();
+
   Interface* interfaceMenu = new Interface();
   for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
     menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
+
+    if(text)
+    {
+      for(unsigned int j = 0; j<menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText().size(); ++j){
+        interfaceMenu->addObjectTexte((menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText())[j]);
+      }
+    }
   }
 
   gameEngine.setMenu(menuLogic);
@@ -149,72 +155,26 @@ void ContextManager::setupMenuContext() const
 
   World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
   graphicEngine.setCurrentWorld3D(menuWorld);
+}
+
+void ContextManager::setupMenuContext() const
+{
+  setupMenu(Menu2D::initialiseMainMenu(), MenuLogic::initialiseMainMenu(), false);
 }
 
 void ContextManager::setupMenuOptionsContext() const
 {
-  graphicEngine.reset();
-  Menu2D* menu2D = Menu2D::initialiseOptionsMenu();
-  MenuLogic* menuLogic = MenuLogic::initialiseOptionsMenu();
-  Interface* interfaceMenu = new Interface();
-  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
-    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-  }
-
-  gameEngine.setMenu(menuLogic);
-  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-  interfaceMenu->addObject2D(menu2D);
-
-  graphicEngine.setCurrentInterface(interfaceMenu);
-
-  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
-  graphicEngine.setCurrentWorld3D(menuWorld);
+  setupMenu(Menu2D::initialiseOptionsMenu(), MenuLogic::initialiseOptionsMenu(), false);
 }
 
 void ContextManager::setupMenuKartContext() const
 {
-  graphicEngine.reset();
-  Menu2D* menu2D = Menu2D::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
-  MenuLogic* menuLogic = MenuLogic::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName());
-
-  Interface* menuInterface = new Interface();
-  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
-    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-
-    for(unsigned int j = 0; j<menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText().size(); ++j){
-      menuInterface->addObjectTexte((menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText())[j]);
-    }
-  }
-  gameEngine.setMenu(menuLogic);
-  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-
-  menuInterface->addObject2D(menu2D);
-  graphicEngine.setCurrentInterface(menuInterface);
-
-  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
-  graphicEngine.setCurrentWorld3D(menuWorld);
+  setupMenu(Menu2D::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName()), MenuLogic::initialiseKartMenu(Hangar::getSingletonHangar()->getKartsName()), true);
 }
 
 void ContextManager::setupMenuMapContext() const
 {
-  graphicEngine.reset();
-  Menu2D* menu2D = Menu2D::initialiseMapMenu(findMapFiles());
-  MenuLogic* menuLogic = MenuLogic::initialiseMapMenu(findMapFiles());
-
-  Interface* menuInterface = new Interface();
-  for (unsigned int i = 0; i < menu2D->nbButtonInMenu; ++i){
-    menu2D->getTab2DMenu(i)->setModelToRepresent( *(menuLogic->getTabInterfaceElement(i)) );
-    menuInterface->addObjectTexte(menu2D->getTab2DMenu(i)->getOwnershipOnGeneratedText()[0]);
-  }
-
-  gameEngine.setMenu(menuLogic);
-  menu2D->setModelToRepresent(gameEngine.getMenuLogic());
-
-  menuInterface->addObject2D(menu2D);
-  graphicEngine.setCurrentInterface(menuInterface);
-
-  World3D* menuWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);//Vide
-  graphicEngine.setCurrentWorld3D(menuWorld);
+  setupMenu(Menu2D::initialiseMapMenu(findMapFiles()), MenuLogic::initialiseMapMenu(findMapFiles()), true);
 }
 
 void ContextManager::setupRaceContext() const
@@ -226,6 +186,7 @@ void ContextManager::setupRaceContext() const
   graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
 
   PointLight* light = new PointLight();
+  PointLight* l = new PointLight(glm::vec4(300.f,30.f,-100.f,1.0f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
@@ -278,8 +239,14 @@ void ContextManager::setupRaceContext() const
   camera->linkToPositionable(gameEngine.getPlayerKart());
 
   World3D* gameWorld = new World3D(graphicEngine.getSettings().WINDOW_WIDTH, graphicEngine.getSettings().WINDOW_HEIGHT);
+  //Un peu degeu car en dur
+  if(mapName == "plage")
+  {
+    gameWorld->setDay();
+  }
   gameWorld->setCamera(camera);
   gameWorld->addLight(light);
+  gameWorld->addLight(l);
   gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
