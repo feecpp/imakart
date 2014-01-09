@@ -83,22 +83,22 @@ void ContextManager::updateContextIfNeeded()
     switch(current.type)
     {
       case COUNTER_UPDATE:
-        splashText = new TimeLimitedText(glimac::convertToString(current.data.lastSecond), 1000, glm::vec2(400,400), 50);
+        splashText = new TimeLimitedText(glimac::convertToString(current.data.lastSecond), 1000, glm::vec2(400,350), 50);
         interface.addTimeLimitedText(splashText);
         break;
 
       case RACE_BEGIN:
-        splashText = new TimeLimitedText(std::string("GO !"), 1000, glm::vec2(400,400), 50);
+        splashText = new TimeLimitedText(std::string("GO !"), 1000, glm::vec2(400,350), 50);
         interface.addTimeLimitedText(splashText);
         break;
 
       case NEW_LAP:
-        splashText = new TimeLimitedText(std::string("Tour " + glimac::convertToString(current.data.lapNumber)), 1000, glm::vec2(150,500), 50);
+        splashText = new TimeLimitedText(std::string("Tour " + glimac::convertToString(current.data.lapNumber)), 1000, glm::vec2(150,450), 50);
         interface.addTimeLimitedText(splashText);
         break;
 
       case RACE_FINISHED:
-        splashText = new TimeLimitedText(std::string("Course terminee"), 1000, glm::vec2(150,500), 25);
+        splashText = new TimeLimitedText(std::string("Course terminee"), 1000, glm::vec2(150,450), 25);
         interface.addTimeLimitedText(splashText);
         gameEngine.setState(END_OF_RACE);
         break;

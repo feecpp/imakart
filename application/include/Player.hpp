@@ -4,6 +4,8 @@
 #include "Checkpoint.hpp"
 #include <vector>
 #include <stack>
+
+#include <SFML/Audio.hpp>
 #include "GameEvent.hpp"
 
 class ItemLogic;
@@ -48,6 +50,9 @@ public:
   void stopTurning() const;
   void brake() const;
   void drift() const;
+  void klaxon();
+
+  sf::Sound loadSound(std::string filename);
 
   void setItem(ItemLogic* newItem);
   void useItem();
@@ -61,6 +66,10 @@ public:
 private:
   Kart& myKart;
   std::stack<GameEvent>& eventStack;
+
+  //Gestion des sons
+  sf::SoundBuffer buffer;
+  sf::Sound sKlaxon;
 
   ItemLogic* myCurrentItem;
 
