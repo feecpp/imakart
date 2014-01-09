@@ -17,6 +17,7 @@ void Kart::initStates()
   backwardDecelerationState = new BackwardDeceleration(*this);
   backwardMaxSpeedReached = new BackwardMaxSpeedReached(*this);
   noMoveState = new NoMove(*this);
+  bumpedState = new Bumped(*this);
   bounceState = new Bounce(*this);
   boostState = new Boost(*this);
   forwardBrakeState = new ForwardBrake(*this);
@@ -66,6 +67,7 @@ Kart::~Kart()
   delete backwardDecelerationState;
   delete backwardMaxSpeedReached;
   delete noMoveState;
+  delete bumpedState;
   delete bounceState;
   delete boostState;
   delete forwardBrakeState;
@@ -106,6 +108,11 @@ void Kart::turnRight()
 void Kart::stopMove()
 {
   currentState->stopMove();
+}
+
+void Kart::bumped()
+{
+  setState(bumpedState);
 }
 
 void Kart::stopTurning()

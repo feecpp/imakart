@@ -4,7 +4,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 SpotLight::SpotLight()
-    :position(0.f,3.f,-3.f,1.f),direction(0.f,0.f,-3.f,0.f),intensity(5.5f,5.5f,5.5f), cutoff(0.f), objectToFollow(nullptr)
+    :objectToFollow(nullptr), position(0.f,3.f,-3.f,1.f),direction(0.f,0.f,-3.f,0.f),intensity(5.5f,5.5f,5.5f), cutoff(0.f)
 {
 }
 
