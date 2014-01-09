@@ -1,9 +1,13 @@
 #include "World3D.hpp"
+#include <assimp/postprocess.h>
 #include "Object3D.hpp"
 #include <stdexcept>
+#include <sstream>
 #include "Camera.hpp"
 #include <iostream>
 #include <cstdio>
+
+Assimp::Importer World3D::import;
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
@@ -193,4 +197,31 @@ void World3D::switchInRightBendView(){
 
 void World3D::setSize(const unsigned int width, const unsigned int height){
   camera->setSize(width, height);
+}
+
+void World3D::addLights(const std::string filePath){
+  const aiScene* scene = import.ReadFile( filePath,
+             aiProcess_CalcTangentSpace |
+             aiProcess_Triangulate |
+             aiProcess_JoinIdenticalVertices |
+             aiProcess_SortByPType);
+
+  if (!scene)
+  {
+    std::ostringstream errorMessage;
+    errorMessage << "Light : Impossible de trouver le fichier de modele 3D : " << filePath << "." << std::endl;
+    throw std::runtime_error(errorMessage.str());
+  }
+
+  lights.resize(scene->mNumLights);
+
+  PointLight* l;
+  glm::vec4 pos;
+  for(unsigned int i = 0; i < scene->mNumLights; ++i)
+  {
+    const aiLight* const light = scene->mLights[i];
+    pos = glm::vec4(light->mPosition.x,light->mPosition.y,light->mPosition.z,1.0);
+    l = new PointLight(pos);
+    this->addLight(l);
+  }
 }

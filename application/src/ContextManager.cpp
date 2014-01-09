@@ -185,8 +185,8 @@ void ContextManager::setupRaceContext() const
   //Preload le mesh du launch item
   graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
 
-  PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
+  //PointLight* light = new PointLight();
+  //PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
@@ -245,8 +245,9 @@ void ContextManager::setupRaceContext() const
     gameWorld->setDay();
   }
   gameWorld->setCamera(camera);
-  gameWorld->addLight(light);
-  gameWorld->addLight(l);
+  //gameWorld->addLight(light);
+  //gameWorld->addLight(l);
+  gameWorld->addLights("data/" + mapName + ".dae");
   gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
