@@ -12,10 +12,15 @@ public:
   explicit Opponent(Kart& kart);
 
   const Kart& getKart() const;
+
   const float getProgression()const
     {return progression;}
+
   const int getNextCheck()const
     {return nextCheck;}
+
+  const unsigned int getCurrentLap()const
+    {return currentLap;}
   Kart& getKart();
   void startMovement();
   void touched();
@@ -31,6 +36,8 @@ private:
   float x, z;
   int nextCheck;
   float progression;
+  unsigned int currentLap;
+  bool trigger;
 };
 
 #endif // OPPONENT_HPP

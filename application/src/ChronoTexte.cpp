@@ -122,7 +122,7 @@ void ChronoTexte::setPosition(int x, int y, int size)
 
   //Je suppose que ces variables devraient pouvoir etre definies
   std::string time = prepareText();
-  std::string text = "Time: "+time;
+  std::string text = "Chrono : "+time;
   unsigned int length = text.size();
 
   vertices.clear();

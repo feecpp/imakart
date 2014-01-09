@@ -78,6 +78,9 @@ public:
   void setPosition(glm::vec3 pos);
   virtual const glm::quat& getOrientation() const;
 
+  virtual const bool isVisible() const
+    {return visible;}
+
   std::string getName() const
     {return name;}
 
@@ -127,6 +130,8 @@ private:
   float currentAngularSpeed;
   float currentAcceleration;
 
+  bool visible;
+  
   std::string name;
   std::stack<GameEvent>* eventStack;
 

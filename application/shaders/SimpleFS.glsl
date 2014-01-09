@@ -74,7 +74,7 @@ vec4 blinnPhongPonctuelle(Point point){
 
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(point.uLightPos-vPosition_vs)));
   vec4 vDiffuseColor = vec4(material.diffuse.rgb * point.uLi * fDotProduct, 1.0);
-  float d = length(normalize(point.uLightPos-vPosition_vs));
+  float d = distance(normalize(point.uLightPos),normalize(vPosition_vs));
 
   vec4 halfVector = (normalize(-vPosition_vs)+normalize(point.uLightPos-vPosition_vs))*0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
@@ -83,7 +83,7 @@ vec4 blinnPhongPonctuelle(Point point){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / max(1.0f,(d*d));
+  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / (d);
 
   return res;
 }
@@ -108,7 +108,7 @@ vec4 CalcSpotLight() {
 
 void main(void)
 {
-    vec4 TotalLight = vec4(0.f);
+    vec4 TotalLight = ADS();
 
     for (int i = 0 ; i < MAX_PLIGHTS ; i++) {
         TotalLight += blinnPhongPonctuelle(points[i]);

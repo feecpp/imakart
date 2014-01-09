@@ -9,6 +9,6 @@ RankingText::~RankingText(){}
 
 void RankingText::update(){
   myText = glimac::convertToIntString(pCurrentRank);
-  myText = "Rank " +myText + "/4";
+  myText = "Classement " +myText + "/4";
   setPosition(10, 510, 20);
 }

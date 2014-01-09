@@ -17,7 +17,7 @@
  * depuis Blender faut inverser y et z...
  */
 Map::Map() :
-  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f)))
+  completed(false), position(0.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), visible(true)
 {
 }
 

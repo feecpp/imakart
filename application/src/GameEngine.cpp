@@ -98,10 +98,12 @@ void GameEngine::update()
         auto itemsGeneratorsOnMap = currentMap->getItemsGenerators();
         for (auto it = itemsGeneratorsOnMap.begin(); it != itemsGeneratorsOnMap.end(); ++it)
         {
-          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
+          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem() && (*it)->isVisible())
           {
             getPlayer().setItem((*it)->getRandomItem());
+            (*it)->setNotVisible();
           }
+          (*it)->update();
         }
 
         //Gestion de la physique des items
@@ -137,15 +139,20 @@ void GameEngine::update()
 
         //gestion du classement, assez sale, à améliorer
         player->setRank(1);
-        for(unsigned int i =0; i< opponents.size(); ++i){
-          if(player->getNextCheck() < opponents[i]->getNextCheck()){
+
+       for(unsigned int i =0; i< opponents.size(); ++i){
+          if(player->getCurrentLap() < opponents[i]->getCurrentLap()){
             player->setRank(player->getRank()+1);
-          }else if (player->getNextCheck() == opponents[i]->getNextCheck()){
-            if(player->getProgression() < opponents[i]->getProgression()){
+          }else if(player->getCurrentLap() == opponents[i]->getCurrentLap()){
+            if(player->getNextCheck() < opponents[i]->getNextCheck()){
               player->setRank(player->getRank()+1);
+            }else if (player->getNextCheck() == opponents[i]->getNextCheck()){
+              if(player->getProgression() < opponents[i]->getProgression()){
+                player->setRank(player->getRank()+1);
+              }
             }
           }
-        }
+       }
 
       }
 
