@@ -46,10 +46,19 @@ void World3D::init()
     throw std::runtime_error(logInfo);
   }
 
-  if(!skybox.init("textures/new_skybox","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga"))
+  /****** SKYBOX JOUR *****
+  if(!skybox.init("textures/skybox/day","_deserted_back.tga","_deserted_front.tga","_deserted_up.tga","_deserted_bottom.tga","_deserted_right.tga","_deserted_left.tga"))
   {
     throw std::runtime_error("Impossible d'initialiser la SkyBox");
   }
+  */
+
+  /****** SKYBOX NUIT *****/
+  if(!skybox.init("textures/skybox/night","nightsky_north.bmp","nightsky_south.bmp","nightsky_up.bmp","nightsky_down.bmp","nightsky_east.bmp","nightsky_west.bmp"))
+  {
+    throw std::runtime_error("Impossible d'initialiser la SkyBox");
+  }
+  
   skybox.setCamera(camera);
 }
 
