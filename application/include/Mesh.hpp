@@ -10,6 +10,7 @@
 #include "Texture.hpp"
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
+#include <iostream>
 
 /**
  * @brief The Mesh class represente un objet 3D modelise et non anime.
@@ -84,14 +85,18 @@ public:
 
   virtual void draw(const glimac::ShaderProgram& shaderProgram) const
   {
-    if(model->isVisible()){
-      const glm::mat4 MV = viewMatrix * modelMatrix;
-      const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
-      GLint normalId = shaderProgram.getUniformIndex("uNormal");
-      shaderProgram.setUniform(normalId, normalMatrix);
-      GLint modelIndex = shaderProgram.getUniformIndex("model");
-      shaderProgram.setUniform(modelIndex, modelMatrix);
-      meshData.draw(shaderProgram);
+    if(model != nullptr)
+    {
+      if(model->isVisible())
+      {
+        const glm::mat4 MV = viewMatrix * modelMatrix;
+        const glm::mat4& normalMatrix = glm::transpose(glm::inverse(MV));
+        GLint normalId = shaderProgram.getUniformIndex("uNormal");
+        shaderProgram.setUniform(normalId, normalMatrix);
+        GLint modelIndex = shaderProgram.getUniformIndex("model");
+        shaderProgram.setUniform(modelIndex, modelMatrix);
+        meshData.draw(shaderProgram);
+      }
     }
   }
 

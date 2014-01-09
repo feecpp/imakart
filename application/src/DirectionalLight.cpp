@@ -1,7 +1,7 @@
 #include "DirectionalLight.hpp"
 
 DirectionalLight::DirectionalLight()
-  :direction(-10.f,300.f,-100.f,0.f),info(-10.f,300.f,-100.f,0.f),intensity(1.5f,1.5f,1.5f)
+  :direction(-50.f,100.f,-100.f,0.f),info(-50.f,100.f,-100.f,0.f),intensity(1.5f,1.5f,1.5f)
 {
 }
 

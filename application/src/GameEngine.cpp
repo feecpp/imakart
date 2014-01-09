@@ -109,25 +109,33 @@ void GameEngine::update()
         //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
         {
-          itemsOnMap[i]->updateLaunch();
+          if(itemsOnMap[i] != nullptr){
+            itemsOnMap[i]->updateLaunch();
 
-          assert(currentMap != nullptr);
+            assert(currentMap != nullptr);
 
-          auto boundingBoxes = currentMap->getBoudingBoxes();
-          for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
-          {
-            if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
+            auto boundingBoxes = currentMap->getBoudingBoxes();
+            for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
             {
-              itemsOnMap[i]->colision();
+              if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
+              {
+                itemsOnMap[i]->colision();
+              }
             }
-          }
 
-          for(unsigned int j =0; j< opponents.size(); ++j)
-          {
-            if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
+            for(unsigned int j = 0; j < opponents.size(); ++j)
             {
-              //Ajouter ici ce que dois faire l'opponent touché 
-              opponents[i]->touched();
+              if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
+              {
+                //Ajouter ici ce que dois faire l'opponent touché 
+                opponents[j]->touched();
+                itemsOnMap[i]->setNotVisible();
+              }
+            }
+
+            if(!itemsOnMap[i]->isVisible())
+            {
+              itemsOnMap[i] = nullptr;
             }
           }
         }
@@ -259,7 +267,7 @@ Kart& GameEngine::getOpponentKart(unsigned int id) const
 
 void GameEngine::setNewItemOnMap(ItemLogic* newItem)
 {
-  itemsOnMap.push_back(newItem);
+  itemsOnMap.insert(std::pair<int, ItemLogic*>(itemsOnMap.size(), newItem));
 }
 
 void GameEngine::setCurrentMap(Map* newMap)

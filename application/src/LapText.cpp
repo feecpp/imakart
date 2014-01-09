@@ -10,7 +10,7 @@ LapText::~LapText(){}
 void LapText::update(){
 	myText = "Tour ";
 	myText = myText + glimac::convertToIntString(currentLap);
-  myText = myText + "/2";
+  myText = myText + "/3";
 	setPosition(10, 540, 20);
 
 }

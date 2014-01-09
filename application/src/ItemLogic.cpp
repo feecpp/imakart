@@ -5,7 +5,7 @@
 #include <cassert>
 
 ItemLogic::ItemLogic(const std::string oName):
-	boundingBox(glm::vec3(0), glm::vec3(2)), position(glm::vec3(0)), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), directionAngle(0), name(oName), used(false), colid(false), time(0), visible(true), myInterface(ItemInterface::getSingletonItemInterface())
+	boundingBox(glm::vec3(0), glm::vec3(2)), position(glm::vec3(0)), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), directionAngle(0), name(oName), used(false), colid(false), timeBeforeOtherColid(0), visible(true), lifeTime(300), myInterface(ItemInterface::getSingletonItemInterface())
 {
   const std::string path = "items/"+name+".item";
   //Je crée un ObjectFile à partir du fichier.item et récupère un std::map
@@ -17,7 +17,7 @@ ItemLogic::ItemLogic(const std::string oName):
 }
 
 ItemLogic::ItemLogic(const ItemLogic& other):
-  boundingBox(other.boundingBox), position(other.position), orientation(other.orientation), directionAngle(other.directionAngle), name(other.name), effect(other.effect), used(other.used), colid(other.colid), time(other.time), visible(true), myInterface(other.myInterface)
+  boundingBox(other.boundingBox), position(other.position), orientation(other.orientation), directionAngle(other.directionAngle), name(other.name), effect(other.effect), used(other.used), colid(other.colid), timeBeforeOtherColid(other.timeBeforeOtherColid), visible(true), lifeTime(300), myInterface(other.myInterface)
 {}
 
 ItemLogic::~ItemLogic(){}
@@ -53,21 +53,26 @@ void ItemLogic::launch(const glm::vec3 positionLauncher, const glm::quat orienta
 void ItemLogic::updateLaunch()
 {
   position += getDirection();
-  time -= 1;
+  timeBeforeOtherColid -= 1;
+  lifeTime -= 1;
   boundingBox.setPosition(position);
+
+  if(lifeTime <= 0){
+    visible = false;
+  }
 }
 
 void ItemLogic::colision()
 {
   if(!colid){
     colid = true;
-    time = 10;
+    timeBeforeOtherColid = 10;
     directionAngle = -directionAngle;
 
     orientation = glm::angleAxis(directionAngle, glm::vec3(0.f, 1.f, 0.f));
   }
 
-  if(time <= 0){
+  if(timeBeforeOtherColid <= 0){
     colid = false;
   }
 }

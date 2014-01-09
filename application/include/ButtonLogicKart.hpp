@@ -7,12 +7,12 @@
 
 class ButtonLogicKart : public ButtonLogic
 {
-public:	
-	ButtonLogicKart(const std::string name); // Create a logical button with no graphic representation
-	~ButtonLogicKart();
+public:  
+  ButtonLogicKart(const std::string name); // Create a logical button with no graphic representation
+  ~ButtonLogicKart();
 
 private:;
-	Kart& kart;
+  Kart& kart;
 };
 
 #endif // BUTTONLOGIC_HPP

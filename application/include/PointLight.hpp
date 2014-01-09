@@ -7,13 +7,13 @@
 class PointLight
 {
 public:
-    PointLight();
-    PointLight(glm::vec4 position);
-    PointLight(glm::vec4 position, glm::vec3 intensity);
+  PointLight();
+  PointLight(glm::vec4 position);
+  PointLight(glm::vec4 position, glm::vec3 intensity);
 
-    const glm::vec4 getLightPosition() const;
-    const glm::vec3 getLightIntensity() const;
-    void updateLight(const glm::mat4 viewMatrix);
+  const glm::vec4 getLightPosition() const;
+  const glm::vec3 getLightIntensity() const;
+  void updateLight(const glm::mat4 viewMatrix);
 
 private:
   glm::vec4 position;
