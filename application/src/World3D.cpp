@@ -99,9 +99,7 @@ void World3D::draw() const
   //Gestion des lumières ponctuelles
   char NamePos [50];
   char NameInt [50];
-  std::cout<<"NbLights :"<< lights.size()<<std::endl;
   for (unsigned int i = 0 ; i < lights.size() ; ++i) {
-      std::cout << "lights["<< i<<"] : "<<lights[i]->getLightPosition().x <<", " << lights[i]->getLightPosition().y <<", "<<lights[i]->getLightPosition().z << std::endl;
     //lights[i]->updateLight(viewMatrix);
 
     sprintf(NamePos, "points[%u].uLightPos", i);
