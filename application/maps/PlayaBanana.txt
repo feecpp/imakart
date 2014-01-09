@@ -1,3 +1,11 @@
+StartingPoint Mark
+location 9.177999 0.082370 -2.167130
+StartingPoint Mark_001
+location 2.178065 0.054743 0.846242
+StartingPoint Mark_002
+location 9.228262 0.054743 3.888059
+StartingPoint Mark_003
+location 2.199450 0.054743 6.849603
 PlayerCheckpoint EmptyCircle.002
 location 43.069702 0.738261 -178.183670
 radius 15.089786
@@ -29,10 +37,10 @@ PlayerCheckpoint Start
 location 5.482278 0.513663 1.343740
 radius 7.480153
 OpponentCheckpoint EmptyCone.000
-location 5.762536 0.050000 -79.496346
+location 5.762536 0.050000 -43.120453
 radius 5.000000
 OpponentCheckpoint EmptyCone.001
-location 5.293326 0.050000 -48.997730
+location 5.293326 0.050000 -78.672806
 radius 5.000000
 OpponentCheckpoint EmptyCone.002
 location 4.354908 0.050000 -110.933380
