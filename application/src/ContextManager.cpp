@@ -298,7 +298,6 @@ void ContextManager::setupRaceContext() const
     }
     opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(i));
     gameWorld->addObject3D(opponentMesh);
-    gameEngine.getOpponent(i).startMovement();
   }
 
   //initialisation de la position du player

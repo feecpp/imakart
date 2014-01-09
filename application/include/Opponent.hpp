@@ -23,7 +23,7 @@ public:
   const unsigned int getCurrentLap()const
     {return currentLap;}
   Kart& getKart();
-  void startMovement();
+  void endMovement();
   void touched();
   
   void fillCheckpoints(const std::vector<Checkpoint> checkpoints);
