@@ -4,7 +4,7 @@
 #include "ItemBox.hpp"
 #include <iostream>
 
-const unsigned int Player::MAX_LAP = 2;
+const unsigned int Player::MAX_LAP = 3;
 
 Player::Player(Kart& kart, std::stack<GameEvent>& eventStack)
   :myKart(kart), eventStack(eventStack), myCurrentItem(nullptr), currentLap(0), newLapNextTime(false), progression(0.f), nextCheck(0), rank(0)

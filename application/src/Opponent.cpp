@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f)
+  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f), currentLap(1), trigger(false)
 {
   checkpoints.resize(0);
   opponentKart.moveForward();
@@ -44,8 +44,13 @@ void Opponent::validateCheckpoints()
     {
       if(cpt == checkpoints.size()-1){
         cpt = 0;
+        if(trigger == true || currentLap == 1){
+          currentLap++;
+          trigger = false;
+        }
       }else{
         cpt++;
+        trigger = true;
       }
       nextCheck = cpt;
     }
