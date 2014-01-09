@@ -1,5 +1,4 @@
 #version 330
-in vec4 FragColor;
 in vec4 vNormal_vs; //Normale de "l'objet"
 in vec4 vPosition_vs; //Position en fonction de la caméra
 in vec2 TexCoord;
@@ -37,6 +36,8 @@ layout (std140) uniform Lights {
    Point light[nbLights];
 }
 */
+const int nbLightsMax = 2;
+uniform Point points[nbLightsMax];
 
 struct Spot
 {
@@ -51,25 +52,28 @@ uniform vec4 uAmbientLight;
 
 out vec4 oFragColor;
 
-//Calcul de la luminosite
+
+//Calcul directionalLight
 vec4 ADS()
 {
-  float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(directional.uLightDir)));
-  vec4 vDiffuseColor = vec4(material.diffuse.rgb * directional.uLi * fDotProduct, 1.0);
+  vec4 res = vec4(0);
 
-  vec4 halfVector = (normalize(-vPosition_vs)+normalize(directional.uLightDir))*0.5f;
+  float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(directional.uLightDir)));
+  vec4 vDiffuseColor = material.diffuse * vec4(directional.uLi,1.0) * fDotProduct;
+
+  vec4 halfVector = (normalize(-vPosition_vs) + normalize(directional.uLightDir)) * 0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
   float PowProduct = pow(DotProduct,material.shininess);
-  vec4 vSpecularColor = vec4(material.specular.rgb * directional.uLi * PowProduct,1.0);
+  vec4 vSpecularColor = material.specular * vec4(point.uLi,1.0) * PowProduct;
 
-  vec4 vAmbientColor = vec4(0);
-  if( material.ambient != vec4(0.f,0.f,0.f,1.f)){
-    vAmbientColor = uAmbientLight * material.ambient;
-  }
+  vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  return vAmbientColor + vDiffuseColor + vSpecularColor;
+  res = res +(vAmbientColor + vDiffuseColor + vSpecularColor);
+
+  return res;
 }
 
+//Calcul pointLight
 vec4 blinnPhongPonctuelle(Point point){
   vec4 res = vec4(0);
 
@@ -80,26 +84,28 @@ vec4 blinnPhongPonctuelle(Point point){
   vec4 halfVector = (normalize(-vPosition_vs)+normalize(point.uLightPos-vPosition_vs))*0.5f;
   float DotProduct = max(0.0f, dot(vNormal_vs,halfVector));
   float PowProduct = pow(DotProduct,material.shininess);
-  vec4 vSpecularColor = vec4(material.specular.rgb * point.uLi * PowProduct,1.0);
+  vec4 vSpecularColor = material.specular * vec4(point.uLi,1.0) * PowProduct;
 
-  vec4 vAmbientColor = vec4(0);
-  if( material.ambient != vec4(0.f,0.f,0.f,1.f)){
-    vAmbientColor = uAmbientLight * material.ambient;
-  }
+  vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d));
+  res = res +((vAmbientColor + vDiffuseColor + vSpecularColor) / max(1.0f,(d*d)));
 
   return res;
 }
 
+//Calcul spotLight
 vec4 CalcSpotLight() {
     vec4 res = vec4(0);
-    vec4 spotDirection  = normalize(spot.uLightDir * vNormal_vs);
-    float spotFactor = max(0.0f, dot(spotDirection ,normalize(spot.base.uLightPos-vPosition_vs)));
+    vec4 spotDirection  = normalize(spot.uLightDir);
+    float spotFactor = dot(spotDirection , normalize(spot.base.uLightPos - vPosition_vs));
+    spotFactor = max(0.0f, spotFactor);
+//Problème dans le calcul de l'angle spotFactor...
 
-    if (spotFactor > spot.uCutoff) {
+    if (acos(spotFactor) > spot.uCutoff ) {
         res = blinnPhongPonctuelle(spot.base);
-
+        //res = vec4(1.f,1.f,1.f,0.f); // Pour les tests
+    }else{
+        res = uAmbientLight * material.ambient;
     }
 
     return res;
@@ -107,12 +113,17 @@ vec4 CalcSpotLight() {
 
 void main(void)
 {
-  //oFragColor = CalcSpotLight();
+    vec4 TotalLight = vec4(0.f);
+
+    for (int i = 0 ; i < nbLightsMax ; i++) {
+        //TotalLight += blinnPhongPonctuelle(point);
+        TotalLight += blinnPhongPonctuelle(points[i]);
+   }
+
   if (isTextured)
   {
-    oFragColor = texture(uTexture, TexCoord) * (ADS() + blinnPhongPonctuelle(point));
+    oFragColor = texture(uTexture, TexCoord) * TotalLight;
+  }else{
+    oFragColor = TotalLight;
   }
-  else
-    oFragColor = ADS() + blinnPhongPonctuelle(point);
-  //oFragColor = material.ambient + material.diffuse + material.specular;
 }

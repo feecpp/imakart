@@ -3,10 +3,11 @@
 #include <stdexcept>
 #include "Camera.hpp"
 #include <iostream>
+#include <cstdio>
 
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.3f,0.3f,0.3f,1.0f), spot(new SpotLight()) //Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.1f,0.1f,0.1f,1.0f), spot(new SpotLight()) //Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -71,13 +72,8 @@ void World3D::draw() const
 
   //Ranger aussi la gestion des lumieres
   //Gestion des lumières ponctuelles
-  /*GLuint m_lightsUBO;
-  glGenBuffers(1,&m_lightsUBO);
-  glBindBuffer(GL_UNIFORM_BUFFER, m_lightsUBO);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(PointLight)* lights.size(), (const GLvoid*) lights[0], GL_DYNAMIC_DRAW);
-  glBindBufferRange(GL_UNIFORM_BUFFER, 1, m_lightsUBO, 0, sizeof(PointLight)* lights.size()); */
 
-  int i =0;
+
   for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
   {
     (*oneLight)->updateLight(viewMatrix);
@@ -87,14 +83,33 @@ void World3D::draw() const
     GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
     raceProgram.setUniform(lightPosId,position);
     raceProgram.setUniform(lightIntensityId, intensity);
-    ++i;
   }
-  /*glBindBuffer(GL_UNIFORM_BUFFER,m_lightsUBO);
-  glBufferSubData(GL_UNIFORM_BUFFER,0,lights.size(),lights.data());
-  glBindBuffer(GL_UNIFORM_BUFFER,0);*/
-  GLint nbLightsId = raceProgram.getUniformIndex("nbLights");
-  raceProgram.setUniform(nbLightsId,i);
 
+  char NamePos [50];
+  char NameInt [50];
+
+  for (unsigned int i = 0 ; i < lights.size() ; i++) {
+    lights[i]->updateLight(viewMatrix);
+
+    sprintf(NamePos, "points[%u].uLightPos", i);
+    sprintf(NameInt, "points[%u].uLi", i);
+
+    GLint lightPosId = raceProgram.getUniformIndex(NamePos);
+    GLint lightIntensityId = raceProgram.getUniformIndex(NameInt);
+    raceProgram.setUniform(lightPosId,  lights[i]->getLightPosition());
+    raceProgram.setUniform(lightIntensityId, lights[i]->getLightIntensity());
+  }
+/*  GLint lightPosId0 = raceProgram.getUniformIndex("points[0].uLightPos");
+  std::cout << lightPosId0 << std::endl;
+  GLint lightIntensityId0 = raceProgram.getUniformIndex("points[0].uLi");
+  GLint lightPosId1 = raceProgram.getUniformIndex("points[1].uLightPos");
+  GLint lightIntensityId1 = raceProgram.getUniformIndex("points[1].uLi");
+
+  raceProgram.setUniform(lightPosId0,  lights[0]->getLightPosition());
+  raceProgram.setUniform(lightIntensityId0, lights[0]->getLightIntensity());
+  raceProgram.setUniform(lightPosId1,  lights[1]->getLightPosition());
+  raceProgram.setUniform(lightIntensityId1, lights[1]->getLightIntensity());
+*/
   //Gestion d'une spotLight
   spot->updateLightPosition();
   //spot->updateLightDirection();
