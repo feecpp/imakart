@@ -115,9 +115,8 @@ void Opponent::validateCheckpoints()
   }
 }
 
-void Opponent::startMovement(){
-   //opponentKart.moveForward();
-   //opponentKart.turnLeft();
+void Opponent::endMovement(){
+  opponentKart.stopMove();
 }
 
 

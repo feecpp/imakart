@@ -163,8 +163,14 @@ void GameEngine::update()
           }
        }
 
-      }
+       //Fin de course
+       for(unsigned int i =0; i< opponents.size(); ++i){
+         if(opponents[i]->getCurrentLap() > Player::MAX_LAP){
+           opponents[i]->endMovement();
+         }
+       }
 
+      }
       lag -= TURN_DURATION_IN_MILLIS;
     }
   }
