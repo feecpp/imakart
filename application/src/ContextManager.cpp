@@ -23,6 +23,7 @@
 #include "ItemInterface.hpp"
 #include "ItemGenerator.hpp"
 #include "ItemLogic.hpp"
+#include "MapViewer2D.hpp"
 
 #include <iostream>
 
@@ -323,6 +324,10 @@ void ContextManager::setupRaceContext() const
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);
+
+  // Afficher un aperçu de la map
+  MapViewer2D* mapViewer2D = new MapViewer2D(0.5,-0.9,0.5,0.5,"textures/apercu" + mapName + ".png");
+  gameInterface->addObject2D(mapViewer2D);
 
   graphicEngine.setCurrentInterface(gameInterface);
   graphicEngine.setCurrentWorld3D(gameWorld);
