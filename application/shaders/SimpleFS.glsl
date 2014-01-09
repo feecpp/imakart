@@ -83,8 +83,7 @@ vec4 blinnPhongPonctuelle(Point point){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  //res = (vAmbientColor + vDiffuseColor + vSpecularColor) / (d*d);
-  res = vec4(1/(d*d));
+  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / (d);
 
   return res;
 }
