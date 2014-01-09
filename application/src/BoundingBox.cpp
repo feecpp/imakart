@@ -2,7 +2,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 BoundingBox::BoundingBox()
-  : position(0.f), size(1.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), positionNearOrigin(0.5f)
+  : position(0.f), size(1.f), orientation(glm::angleAxis(0.f, glm::vec3(0.f, 1.f, 0.f))), positionNearOrigin(0.5f), visible(true)
 {
 
 }

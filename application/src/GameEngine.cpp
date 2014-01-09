@@ -98,10 +98,12 @@ void GameEngine::update()
         auto itemsGeneratorsOnMap = currentMap->getItemsGenerators();
         for (auto it = itemsGeneratorsOnMap.begin(); it != itemsGeneratorsOnMap.end(); ++it)
         {
-          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
+          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem() && (*it)->isVisible())
           {
             getPlayer().setItem((*it)->getRandomItem());
+            (*it)->setNotVisible();
           }
+          (*it)->update();
         }
 
         //Gestion de la physique des items
