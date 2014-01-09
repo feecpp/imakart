@@ -1,3 +1,11 @@
+StartingPoint Mark
+location 9.253773 0.064914 -2.000000
+StartingPoint Mark.001
+location 2.283870 0.064914 1.146606
+StartingPoint Mark.002
+location 9.287607 0.064914 4.191710
+StartingPoint Mark.003
+location 2.283870 0.064914 7.202978
 PlayerCheckpoint EmptyCircle.000
 location 6.630672 0.255406 -55.268238
 radius 7.762522
