@@ -218,7 +218,6 @@ void ContextManager::setupRaceContext() const
   {
     std::cerr << er.what() << std::endl;
     gameEngine.activateExitFlag();
-    delete mapMesh;
   }
   mapMesh->setModelToRepresent(*map);
 
@@ -272,15 +271,21 @@ void ContextManager::setupRaceContext() const
     gameWorld->addObject3D(itemGeneratorMesh);
   }
 
+  /*
   //pour voir les bounding boxes sous forme de cube
-  /*for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
+  for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
-    visibleBB->setSize(it->getSize());
-    std::cout << it->getSize()[0] << std::endl;
-    visibleBB->setModelToRepresent(*it);
+    visibleBB->setSize((*it)->getSize());
+    std::cout << (*it)->getSize()[0] << std::endl;
+    visibleBB->setModelToRepresent(**it);
     gameWorld->addObject3D(visibleBB);
-  }*/
+  }
+  KartCube* kartBB = new KartCube();
+  kartBB->setSize(gameEngine.getPlayerKart().getBoundingBox().getSize());
+  kartBB->setModelToRepresent(gameEngine.getPlayerKart());
+  gameWorld->addObject3D(kartBB);
+  */
 
   //Dessin d'un adversaire
 
