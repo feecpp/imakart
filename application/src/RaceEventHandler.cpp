@@ -94,3 +94,8 @@ void RaceEventHandler::pressEscape() const
   gameEngine.setState(IN_RACE_MENU);
   gameEngine.switchPause();
 }
+
+void RaceEventHandler::pressK() const
+{
+  gameEngine.getPlayer().klaxon();
+}

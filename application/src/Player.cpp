@@ -174,6 +174,18 @@ void Player::drift() const
   myKart.drift();
 }
 
+sf::Sound Player::loadSound(std::string filename)
+{
+    buffer.loadFromFile(filename);
+    return sf::Sound(buffer);
+}
+
+void Player::klaxon()
+{
+  sKlaxon = loadSound("data/klaxon-SF.ogg");
+  sKlaxon.play(); 
+}
+
 void Player::setItem(ItemLogic* newItem)
 {
   myCurrentItem = newItem;
