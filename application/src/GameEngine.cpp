@@ -14,7 +14,6 @@ GameEngine::GameEngine()
 
 {
   chrono = new ChronoLogic();
-  setupOpponents(3);
 }
 
 GameEngine::~GameEngine()
@@ -37,6 +36,7 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
+  setupOpponents(3);
 }
 
 void GameEngine::update()
@@ -105,6 +105,7 @@ void GameEngine::update()
           }
           (*it)->update();
         }
+
 
         //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)

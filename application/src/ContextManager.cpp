@@ -283,6 +283,7 @@ void ContextManager::setupRaceContext() const
   //Dessin d'un adversaire
 
   for(unsigned int i = 0; i< gameEngine.getOpponents().size();++i){
+    gameEngine.getOpponent(i).init(i, map->getKartStartingPoints());
     gameEngine.getOpponent(i).fillCheckpoints(map->getOpponentCheckpoints());
     Mesh* opponentMesh = nullptr;
     try
@@ -298,6 +299,9 @@ void ContextManager::setupRaceContext() const
     gameWorld->addObject3D(opponentMesh);
     gameEngine.getOpponent(i).startMovement();
   }
+
+  //initialisation de la position du player
+  gameEngine.getPlayer().init(gameEngine.getOpponents().size(), map->getKartStartingPoints());
 
   //Init de l'interface
   Interface* gameInterface = new Interface();

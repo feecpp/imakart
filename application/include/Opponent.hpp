@@ -10,6 +10,7 @@ class Opponent
 {
 public:
   explicit Opponent(Kart& kart);
+  void init(unsigned int i, std::vector<glm::vec3> startingPoints);
 
   const Kart& getKart() const;
 

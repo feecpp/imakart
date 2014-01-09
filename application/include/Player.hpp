@@ -15,6 +15,7 @@ public:
   static const unsigned int MAX_LAP;
 
   explicit Player(Kart& kart, std::stack<GameEvent>& eventStack);
+  void init(unsigned int i, std::vector<glm::vec3> startingPoints);
 
   const Kart& getKart() const;
   Kart& getKart();
