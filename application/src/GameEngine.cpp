@@ -134,7 +134,7 @@ void GameEngine::update()
 
         player->validateCheckpoints();
         for(unsigned int i =0; i< opponents.size(); ++i){
-          opponents[0]->validateCheckpoints();
+          opponents[i]->validateCheckpoints();
         }
 
         //gestion du classement, assez sale, à améliorer
