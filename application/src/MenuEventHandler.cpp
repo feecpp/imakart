@@ -133,3 +133,4 @@ void MenuEventHandler::pressEscape() const {
 	}
 }
 
+void MenuEventHandler::pressK() const {}
