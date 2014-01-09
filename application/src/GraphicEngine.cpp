@@ -4,7 +4,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <TextFile.hpp>
 #include "Camera.hpp"
-#include "Light.hpp"
 #include <cassert>
 #include <SFML/OpenGL.hpp>
 #include "Interface.hpp"
