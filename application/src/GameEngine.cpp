@@ -133,21 +133,36 @@ void GameEngine::update()
         }
 
         player->validateCheckpoints();
-        for(unsigned int i =0; i< opponents.size(); ++i){
-          opponents[i]->validateCheckpoints();
-        }
+        //for(unsigned int i =0; i< opponents.size(); ++i){
+          opponents[0]->validateCheckpoints();
+        //}
 
         //gestion du classement, assez sale, à améliorer
         player->setRank(1);
-        for(unsigned int i =0; i< opponents.size(); ++i){
-          if(player->getNextCheck() < opponents[i]->getNextCheck()){
+        std::cout << "player tr: " << player->getCurrentLap() << std::endl;
+        std::cout << "player tr: " << player->getNextCheck() << std::endl;
+        std::cout << "player tr: " << player->getProgression() << std::endl;
+
+          std::cout << "opponent tr: " << opponents[0]->getCurrentLap() << std::endl;
+          std::cout << "opponent tr: " << opponents[0]->getNextCheck() << std::endl;
+          std::cout << "opponent tr: " << opponents[0]->getProgression() << std::endl;
+
+       // for(unsigned int i =0; i< opponents.size(); ++i){
+          if(player->getCurrentLap() < opponents[0]->getCurrentLap()){
             player->setRank(player->getRank()+1);
-          }else if (player->getNextCheck() == opponents[i]->getNextCheck()){
-            if(player->getProgression() < opponents[i]->getProgression()){
+            std::cout << "1" << std::endl;
+          }else if(player->getCurrentLap() == opponents[0]->getCurrentLap()){
+            if(player->getNextCheck() < opponents[0]->getNextCheck()){
               player->setRank(player->getRank()+1);
+              std::cout << "2" << std::endl;
+            }else if (player->getNextCheck() == opponents[0]->getNextCheck()){
+              if(player->getProgression() < opponents[0]->getProgression()){
+                player->setRank(player->getRank()+1);
+                std::cout << "3" << std::endl;
+              }
             }
           }
-        }
+       // }
 
       }
 
