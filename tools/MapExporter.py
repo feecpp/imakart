@@ -3,7 +3,7 @@ bl_info = {
     "category": "Import-Export",
     "author":       "Jean-Noël Chiganne",
     "blender":      (2,6,9),
-    "version":      (0,0,1),
+    "version":      (0,0,2),
     "location":     "File > Import-Export",
     "description":  "Export Imakart map logic",
     "category":     "Import-Export"
@@ -39,6 +39,12 @@ def isFrictionArea(object):
         return False
     return object.type == 'LATTICE' 
 
+#ATTENTION : les starting points sont des MESH, pas des EMPTY
+def isKartStartingPoint(object):
+    if object.name.find("Mark") == 0:
+        return True
+    return False
+
 # !!!!!!!!!! BLENDER INVERSE Y et Z et Z et dans l'autre sens !!!!!!!!!!
 def write_imakart_map(context, filepath, use_some_setting):
     print("Export Imakart map objects...")
@@ -46,6 +52,7 @@ def write_imakart_map(context, filepath, use_some_setting):
     
     #On récupère les objets logiques de la map
     logic_objects = list(filter(isLogicObject, bpy.data.objects))
+    kart_starting_points = list(filter(isKartStartingPoint, bpy.data.objects))
     
     #On les trie : checkpoints, bouding boxes, items, surface de friction !
     opponent_checkpoints = list(filter(isOpponentCheckpoint, logic_objects))
@@ -53,6 +60,11 @@ def write_imakart_map(context, filepath, use_some_setting):
     bounding_boxes = list(filter(isBoundingBox, logic_objects))
     items = list(filter(isItem, logic_objects))
     friction_areas = list(filter(isFrictionArea, logic_objects))
+    
+    #On écrit les Kart starting point
+    for starting_point in kart_starting_points:
+        f.write("StartingPoint %s\n" % starting_point.name)
+        f.write("location %f %f %f\n" % (starting_point.location.x, starting_point.location.z, -starting_point.location.y))
     
     #On écrit les checkpoints...
     for checkpoint in player_checkpoints:

@@ -51,6 +51,10 @@ void Map::loadFromFile(const std::string& filePath)
     {
       loadCheckpoint(mapStream, false);
     }
+    else if (currentWord == "StartingPoint")
+    {
+      loadStartingPoint(mapStream);
+    }
     else if (currentWord == "Item")
     {
       loadItem(mapStream);
@@ -198,5 +202,24 @@ void Map::loadFrictionArea(std::ifstream& mapStream)
   }
 
   frictionAreas.push_back(area);
+}
+
+void Map::loadStartingPoint(std::ifstream& mapStream)
+{
+  assert(mapStream);
+
+  glm::vec3 startingPointPosition;
+
+  std::string attribute;
+  //Pour l'instant on zappe le name;
+  mapStream >> attribute;
+  attribute.clear();
+  mapStream >> attribute; //je sais que c'est forcement "location"
+
+  mapStream >> startingPointPosition.x;
+  mapStream >> startingPointPosition.y;
+  mapStream >> startingPointPosition.z;
+
+  kartStartingPoints.push_back(startingPointPosition);
 }
 

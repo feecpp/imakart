@@ -53,6 +53,9 @@ public:
   const std::vector<FrictionArea>& getFrictionAreas() const
     {return frictionAreas;}
 
+  const std::vector<glm::vec3>& getKartStartingPoints() const
+    {return kartStartingPoints;}
+
   /* TODO
   Checkpoint getStart() const;
   Checkpoint getEnd() const;
@@ -66,6 +69,7 @@ private :
   void loadBoundingBox(std::ifstream& mapStream);
   void loadItem(std::ifstream& mapStream);
   void loadFrictionArea(std::ifstream& mapStream);
+  void loadStartingPoint(std::ifstream& mapStream);
 
   ///Le nom de la map est pour l'instant le nom du fichier
   ///qui contenait sa description, sans l'extension
@@ -76,6 +80,7 @@ private :
   std::vector<BoundingBox> boundingBoxes;
   std::vector<ItemGenerator*> itemsGenerator;
   std::vector<FrictionArea> frictionAreas;
+  std::vector<glm::vec3> kartStartingPoints;
   bool completed;
 
   glm::vec3 position;
