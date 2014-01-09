@@ -6,13 +6,13 @@
 
 class LapText: public Texte2D{
 public:
-	LapText(const unsigned int& currentLap); 
-	~LapText();
+  LapText(const unsigned int& currentLap); 
+  ~LapText();
 
-	void update();
+  void update();
 
 private:
-	const unsigned int& currentLap;
+  const unsigned int& currentLap;
 };
 
 #endif

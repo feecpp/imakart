@@ -30,6 +30,9 @@ public:
   virtual const bool isVisible() const
     {return visible;}
 
+  void setNotVisible()
+    {visible = false;}
+
   void noInterface();
   void update();
   void launch(const glm::vec3 positionLauncher, const glm::quat orientationLauncher, const float directionAngleLauncher);
@@ -51,9 +54,10 @@ private:
   bool used;
 
   bool colid;
-  float time;
+  float timeBeforeOtherColid;
 
   bool visible;
+  float lifeTime;
   
   ItemInterface* myInterface;
 };
