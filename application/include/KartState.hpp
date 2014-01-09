@@ -35,6 +35,11 @@ public:
     kart.setState(kart.bounceState);
   }
 
+  //Implem par defaut
+  virtual void boost()
+  {
+    kart.setState(kart.boostState);
+  }
   virtual void drift() = 0;
 
 protected:
@@ -407,6 +412,40 @@ public:
   virtual void drift() {}
 };
 
+class Bumped : public NoMove
+{
+public:
+  Bumped(Kart& kart)
+    : NoMove(kart) {}
+
+  virtual void start()
+  {
+    if(!effect){
+      effect = true;
+      time = 50.f;
+      kart.speed = 0.f;
+      kart.currentAcceleration = 0.f;
+    }
+  }
+
+  virtual void update(float elapsedTimeInSecond)
+  {
+    if(time > 40.f){
+      kart.position.y += 0.2;
+    }else if(time <= 40.f && time > 0.f){
+      kart.position.y -= 0.05;
+    }else{
+      kart.position.y = 0;
+      effect = false;
+      kart.setState(kart.forwardAccelerationState);
+    }
+    time -= 1;
+  }
+private:
+  float time;
+  bool effect;
+};
+
 class Bounce : public KartState
 {
 public:
@@ -478,9 +517,11 @@ Boost(Kart& kart)
   virtual void start()
   {
     assert(eventStack);
-    //Si on est deja en train de booster on reinitialise pas
-    if (boost)
-      return;
+    //Si on est deja en train de booster on remet l'autre bosst a 0
+    if (boost){
+      time = 0;
+      kart.currentAcceleration = kart.specifications.acceleration;
+    }
 
     GameEventData data;//On s'en fout de la data ici
     GameEvent boostEvent(USE_BOOST_BEGIN, data);
@@ -510,6 +551,7 @@ Boost(Kart& kart)
 
       }
       //Se remet a zero
+      time = 0;
       boost = false;
       return;
     }

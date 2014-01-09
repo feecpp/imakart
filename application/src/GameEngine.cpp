@@ -124,9 +124,8 @@ void GameEngine::update()
           {
             if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
             {
-              std::cout << "TOUCHEEE" << std::endl;
               //Ajouter ici ce que dois faire l'opponent touché 
-              //opponents[i]->touched();
+              opponents[i]->touched();
             }
           }
         }
