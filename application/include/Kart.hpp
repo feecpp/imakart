@@ -67,6 +67,7 @@ public:
   void turnLeft();
   void turnRight();
   void stopMove();
+  void bumped();
   void stopTurning();
   void brake();
   void drift();
@@ -106,6 +107,7 @@ private:
   friend class Acceleration;
   friend class Deceleration;
   friend class NoMove;
+  friend class Bumped;
   friend class Bounce;
   friend class Boost;
   friend class ForwardBrake;
@@ -135,6 +137,7 @@ private:
   KartState* backwardDecelerationState;
   KartState* backwardMaxSpeedReached;
   KartState* noMoveState;
+  KartState* bumpedState;
   KartState* bounceState;
   KartState* boostState;
   KartState* forwardBrakeState;
