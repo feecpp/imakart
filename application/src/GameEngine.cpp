@@ -133,36 +133,26 @@ void GameEngine::update()
         }
 
         player->validateCheckpoints();
-        //for(unsigned int i =0; i< opponents.size(); ++i){
-          opponents[0]->validateCheckpoints();
-        //}
+        for(unsigned int i =0; i< opponents.size(); ++i){
+          opponents[1]->validateCheckpoints();
+        }
 
         //gestion du classement, assez sale, à améliorer
         player->setRank(1);
-        std::cout << "player tr: " << player->getCurrentLap() << std::endl;
-        std::cout << "player tr: " << player->getNextCheck() << std::endl;
-        std::cout << "player tr: " << player->getProgression() << std::endl;
 
-          std::cout << "opponent tr: " << opponents[0]->getCurrentLap() << std::endl;
-          std::cout << "opponent tr: " << opponents[0]->getNextCheck() << std::endl;
-          std::cout << "opponent tr: " << opponents[0]->getProgression() << std::endl;
-
-       // for(unsigned int i =0; i< opponents.size(); ++i){
-          if(player->getCurrentLap() < opponents[0]->getCurrentLap()){
+       for(unsigned int i =0; i< opponents.size(); ++i){
+          if(player->getCurrentLap() < opponents[i]->getCurrentLap()){
             player->setRank(player->getRank()+1);
-            std::cout << "1" << std::endl;
-          }else if(player->getCurrentLap() == opponents[0]->getCurrentLap()){
-            if(player->getNextCheck() < opponents[0]->getNextCheck()){
+          }else if(player->getCurrentLap() == opponents[i]->getCurrentLap()){
+            if(player->getNextCheck() < opponents[i]->getNextCheck()){
               player->setRank(player->getRank()+1);
-              std::cout << "2" << std::endl;
-            }else if (player->getNextCheck() == opponents[0]->getNextCheck()){
-              if(player->getProgression() < opponents[0]->getProgression()){
+            }else if (player->getNextCheck() == opponents[i]->getNextCheck()){
+              if(player->getProgression() < opponents[i]->getProgression()){
                 player->setRank(player->getRank()+1);
-                std::cout << "3" << std::endl;
               }
             }
           }
-       // }
+       }
 
       }
 
