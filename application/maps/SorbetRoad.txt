@@ -16,8 +16,11 @@ PlayerCheckpoint EmptyCircle.002
 location 166.474945 0.255405 52.486954
 radius 8.373262
 PlayerCheckpoint Start
-location 5.885511 0.056184 -1.719915
+location 5.895510 0.056184 -1.719915
 radius 12.420460
+OpponentCheckpoint Empty
+location 5.895510 0.056180 -1.719910
+radius 12.420000
 OpponentCheckpoint Empty.0
 location 7.454911 0.255405 -25.593451
 radius 5.000000
@@ -32,19 +35,19 @@ location 32.445129 0.255406 -95.387756
 radius 5.000000
 OpponentCheckpoint Empty.002
 location 54.522949 0.255405 -95.719414
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.003
 location 71.483437 0.255405 -84.243690
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.004
 location 97.219551 0.255405 -55.518806
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.005
 location 114.608932 0.255405 -39.446800
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.006
 location 142.381348 0.255405 -29.885801
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.007
 location 183.072021 0.255405 -23.931114
 radius 5.000000
@@ -56,13 +59,13 @@ location 207.181961 0.255405 2.694634
 radius 5.000000
 OpponentCheckpoint Empty.010
 location 211.549652 0.255405 60.697529
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.011
 location 206.832550 0.255405 133.899979
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.012
 location 200.193665 0.255405 155.389008
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.013
 location 181.150543 0.255405 166.744995
 radius 5.000000
@@ -74,115 +77,112 @@ location 53.439346 0.255405 184.390457
 radius 5.000000
 OpponentCheckpoint Empty.016
 location 1.725925 0.255405 178.799820
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.017
 location -16.443655 0.255405 163.774979
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.018
 location -22.733124 0.255405 141.412415
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.019
 location -21.859587 0.255405 111.013306
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.020
 location -7.533572 0.255405 94.241379
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.021
 location 10.636008 0.255405 97.560822
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.022
 location 26.359684 0.255405 111.013298
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.023
 location 35.968597 0.255405 128.309341
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.024
 location 54.837006 0.255405 132.502319
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.025
 location 102.881569 0.255405 132.152908
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.026
 location 140.094269 0.255405 127.261093
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.027
 location 154.245575 0.255405 109.091507
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.028
 location 164.553192 0.255405 79.740997
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.029
 location 166.474945 0.255405 52.486954
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.030
 location 156.866150 0.255405 23.136446
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.031
 location 136.941345 0.255405 6.532442
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.032
 location 113.091957 0.255405 -2.524286
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.033
 location 85.619881 0.255405 -6.750760
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.034
 location 59.959145 0.255405 -7.656433
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.035
 location 37.619213 0.255405 -2.524287
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.036
 location 24.939793 0.255405 11.362698
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.037
 location 22.826555 0.255405 26.759138
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.038
 location 30.373829 0.255405 38.834778
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.039
 location 46.977833 0.255405 46.985832
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.040
 location 70.827217 0.255405 46.985832
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.041
 location 95.280388 0.255405 45.174488
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.042
 location 114.903305 0.255405 49.099072
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.043
 location 126.677055 0.255405 60.872818
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.044
 location 126.978943 0.255405 78.684387
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.045
 location 116.110870 0.255405 91.363808
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.046
 location 98.299301 0.255405 94.986496
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.047
 location 67.506424 0.255405 94.080826
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.048
 location 37.619217 0.255405 88.344894
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.049
 location 14.373613 0.255405 77.778709
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.050
 location 1.392302 0.255405 60.570923
-radius 5.000000
+radius 5.525147
 OpponentCheckpoint Empty.051
 location 1.090411 0.255405 33.400734
-radius 5.000000
-BoundingBox Empty
-location 14.592348 1.000000 -56.756969
-size 2.000000 2.000000 2.000000
+radius 5.525147
 BoundingBox Empty.053
 location 32.500744 1.000000 -86.945419
 size 2.000000 2.000000 2.000000
@@ -3581,6 +3581,9 @@ location 103.077148 1.000003 37.237488
 size 2.000000 2.000000 2.000000
 BoundingBox Empty.999
 location 105.575882 1.000003 37.310982
+size 2.000000 2.000000 2.000000
+BoundingBox EmptyBB
+location 14.592348 1.000000 -56.756969
 size 2.000000 2.000000 2.000000
 Item Empty.052
 location 3.734019 1.101246 -55.157616

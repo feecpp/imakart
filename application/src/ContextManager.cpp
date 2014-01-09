@@ -319,7 +319,7 @@ void ContextManager::setupRaceContext() const
   gameInterface->addObjectTexte(currentRank);
 
   //Afficher l'interface de l'item sans item selectionné
-  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.7,0.7,0.2,0.2,"textures/items/noItem.png");
+  ItemGraphic2D* playerItem2D = new ItemGraphic2D(0.65,0.65,0.3,0.3,"textures/items/noItem.png");
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);
