@@ -1,13 +1,17 @@
 #include "World3D.hpp"
+#include <assimp/postprocess.h>
 #include "Object3D.hpp"
 #include <stdexcept>
+#include <sstream>
 #include "Camera.hpp"
 #include <iostream>
 #include <cstdio>
 
+Assimp::Importer World3D::import;
+
 
 World3D::World3D(const unsigned int width, const unsigned int height)
-    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.1f,0.1f,0.1f,1.0f), spot(new SpotLight()), day(false)//Un peu degueu, a voir, c'est pour simplifier
+    : camera(new Camera(width,height)), sun(new DirectionalLight()), ambientLight(0.05f,0.05f,0.05f,1.0f), spot(new SpotLight()), day(false)//Un peu degueu, a voir, c'est pour simplifier
 {
   //Pour le dessin du monde 3D
   raceProgram.addShader(GL_VERTEX_SHADER, "shaders/Simple3DVS.glsl");
@@ -83,25 +87,20 @@ void World3D::draw() const
   raceProgram.setUniform(viewId, viewMatrix);
   raceProgram.setUniform(viewProjectionId, viewProjection);
 
-  //Ranger aussi la gestion des lumieres
+  //Gestion de la lumière directionnelle
+  sun->updateLight(viewMatrix);
+  const glm::vec4& direction = sun->getLightDirection();
+  const glm::vec3& intensity = sun->getLightIntensity();
+  GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
+  GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
+  raceProgram.setUniform(lightDirId,direction);
+  raceProgram.setUniform(lightIntensityId, intensity);
+
   //Gestion des lumières ponctuelles
-
-
-  for (auto oneLight = lights.begin(); oneLight != lights.end(); ++oneLight)
-  {
-    (*oneLight)->updateLight(viewMatrix);
-    const glm::vec4& position = (*oneLight)->getLightPosition();
-    const glm::vec3& intensity = (*oneLight)->getLightIntensity();
-    GLint lightPosId = raceProgram.getUniformIndex("point.uLightPos");
-    GLint lightIntensityId = raceProgram.getUniformIndex("point.uLi");
-    raceProgram.setUniform(lightPosId,position);
-    raceProgram.setUniform(lightIntensityId, intensity);
-  }
-
   char NamePos [50];
   char NameInt [50];
 
-  for (unsigned int i = 0 ; i < lights.size() ; i++) {
+  for (unsigned int i = 0 ; i < lights.size() ; ++i) {
     lights[i]->updateLight(viewMatrix);
 
     sprintf(NamePos, "points[%u].uLightPos", i);
@@ -109,24 +108,16 @@ void World3D::draw() const
 
     GLint lightPosId = raceProgram.getUniformIndex(NamePos);
     GLint lightIntensityId = raceProgram.getUniformIndex(NameInt);
-    raceProgram.setUniform(lightPosId,  lights[i]->getLightPosition());
+    raceProgram.setUniform(lightPosId, lights[i]->getLightPosition());
     raceProgram.setUniform(lightIntensityId, lights[i]->getLightIntensity());
   }
-/*  GLint lightPosId0 = raceProgram.getUniformIndex("points[0].uLightPos");
-  std::cout << lightPosId0 << std::endl;
-  GLint lightIntensityId0 = raceProgram.getUniformIndex("points[0].uLi");
-  GLint lightPosId1 = raceProgram.getUniformIndex("points[1].uLightPos");
-  GLint lightIntensityId1 = raceProgram.getUniformIndex("points[1].uLi");
 
-  raceProgram.setUniform(lightPosId0,  lights[0]->getLightPosition());
-  raceProgram.setUniform(lightIntensityId0, lights[0]->getLightIntensity());
-  raceProgram.setUniform(lightPosId1,  lights[1]->getLightPosition());
-  raceProgram.setUniform(lightIntensityId1, lights[1]->getLightIntensity());
-*/
+  const int taille = lights.size();
+  GLint nbLightsID = raceProgram.getUniformIndex("nbLights");
+  raceProgram.setUniform(nbLightsID, taille);
+
   //Gestion d'une spotLight
   spot->updateLightPosition();
-  //spot->updateLightDirection();
-  //spot->updateLight(viewMatrix);
   const glm::vec4& spotPos = spot->getLightPosition();
   const glm::vec4& spotDir = spot->getLightDirection();
   const glm::vec3& spotIntensity = spot->getLightIntensity();
@@ -139,15 +130,6 @@ void World3D::draw() const
   raceProgram.setUniform(spotDirId,spotDir);
   raceProgram.setUniform(spotIntensityId, spotIntensity);
   raceProgram.setUniform(spotCutId,spotCutoff);
-
-  //Gestion de la lumière directionnelle
-  sun->updateLight(viewMatrix);
-  const glm::vec4& direction = sun->getLightDirection();
-  const glm::vec3& intensity = sun->getLightIntensity();
-  GLint lightDirId = raceProgram.getUniformIndex("directional.uLightDir");
-  GLint lightIntensityId = raceProgram.getUniformIndex("directional.uLi");
-  raceProgram.setUniform(lightDirId,direction);
-  raceProgram.setUniform(lightIntensityId, intensity);
 
   const glm::vec4& ambient = getAmbientLight();
   GLint ambientLightId = raceProgram.getUniformIndex("uAmbientLight");
@@ -193,4 +175,25 @@ void World3D::switchInRightBendView(){
 
 void World3D::setSize(const unsigned int width, const unsigned int height){
   camera->setSize(width, height);
+}
+
+void World3D::addLights(const std::string filePath){
+    const aiScene* scene = import.ReadFile( filePath,
+             aiProcess_PreTransformVertices);
+
+  if (!scene)
+  {
+    std::ostringstream errorMessage;
+    errorMessage << "Light : Impossible de trouver le fichier de modele 3D : " << filePath << "." << std::endl;
+    throw std::runtime_error(errorMessage.str());
+  }
+
+  glm::vec4 pos;
+  for (unsigned int i = 0; i < scene->mNumLights; ++i)
+  {
+    const aiLight* const light = scene->mLights[i];
+    pos = glm::vec4(light->mPosition.x,light->mPosition.y,light->mPosition.z,1.0);
+    PointLight* l = new PointLight(pos);
+    lights.push_back(l);
+  }
 }

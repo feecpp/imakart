@@ -186,10 +186,10 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   //Preload le mesh du launch item
-  graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
+  graphicEngine.getMeshDataManager().preloadMesh("data/Papple.dae");
 
-  PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
+  //PointLight* light = new PointLight();
+  //PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
@@ -220,7 +220,6 @@ void ContextManager::setupRaceContext() const
   {
     std::cerr << er.what() << std::endl;
     gameEngine.activateExitFlag();
-    delete mapMesh;
   }
   mapMesh->setModelToRepresent(*map);
 
@@ -248,8 +247,9 @@ void ContextManager::setupRaceContext() const
     gameWorld->setDay();
   }
   gameWorld->setCamera(camera);
-  gameWorld->addLight(light);
-  gameWorld->addLight(l);
+  //gameWorld->addLight(light);
+  //gameWorld->addLight(l);
+  gameWorld->addLights("data/" + mapName + ".dae");
   gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
@@ -273,19 +273,26 @@ void ContextManager::setupRaceContext() const
     gameWorld->addObject3D(itemGeneratorMesh);
   }
 
+  /*
   //pour voir les bounding boxes sous forme de cube
-  /*for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
+  for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
-    visibleBB->setSize(it->getSize());
-    std::cout << it->getSize()[0] << std::endl;
-    visibleBB->setModelToRepresent(*it);
+    visibleBB->setSize((*it)->getSize());
+    std::cout << (*it)->getSize()[0] << std::endl;
+    visibleBB->setModelToRepresent(**it);
     gameWorld->addObject3D(visibleBB);
-  }*/
+  }
+  KartCube* kartBB = new KartCube();
+  kartBB->setSize(gameEngine.getPlayerKart().getBoundingBox().getSize());
+  kartBB->setModelToRepresent(gameEngine.getPlayerKart());
+  gameWorld->addObject3D(kartBB);
+  */
 
   //Dessin d'un adversaire
 
   for(unsigned int i = 0; i< gameEngine.getOpponents().size();++i){
+    gameEngine.getOpponent(i).init(i, map->getKartStartingPoints());
     gameEngine.getOpponent(i).fillCheckpoints(map->getOpponentCheckpoints());
     Mesh* opponentMesh = nullptr;
     try
@@ -299,8 +306,10 @@ void ContextManager::setupRaceContext() const
     }
     opponentMesh->setModelToRepresent(gameEngine.getOpponentKart(i));
     gameWorld->addObject3D(opponentMesh);
-    gameEngine.getOpponent(i).startMovement();
   }
+
+  //initialisation de la position du player
+  gameEngine.getPlayer().init(gameEngine.getOpponents().size(), map->getKartStartingPoints());
 
   //Init de l'interface
   Interface* gameInterface = new Interface();

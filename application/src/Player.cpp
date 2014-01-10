@@ -24,6 +24,11 @@ Kart& Player::getKart()
   return myKart;
 }
 
+void Player::init(unsigned int i, std::vector<glm::vec3> startingPoints){
+  startingPoints[i].z += 1.f;
+  getKart().setPosition(startingPoints[i]);
+}
+
 const ItemLogic& Player::getItem() const
 {
   return *myCurrentItem;

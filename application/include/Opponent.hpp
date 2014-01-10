@@ -10,6 +10,7 @@ class Opponent
 {
 public:
   explicit Opponent(Kart& kart);
+  void init(unsigned int i, std::vector<glm::vec3> startingPoints);
 
   const Kart& getKart() const;
 
@@ -22,7 +23,7 @@ public:
   const unsigned int getCurrentLap()const
     {return currentLap;}
   Kart& getKart();
-  void startMovement();
+  void endMovement();
   void touched();
   
   void fillCheckpoints(const std::vector<Checkpoint> checkpoints);

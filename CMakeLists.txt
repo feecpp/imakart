@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "-std=gnu++0x ${CMAKE_CXX_FLAGS}")
 
 include_directories(${OPENGL_INCLUDE_DIR} ${SFML_INCLUDE_DIR})
 
+
 #-----THIRD PARTY LIBS-------------
 #glew
 include_directories(third-party/glew-1.10.0/include)
@@ -25,6 +26,12 @@ set_target_properties(assimp PROPERTIES COMPILE_FLAGS "-w")
 
 #glm
 include_directories(third-party/glm)
+
+#coldet
+include_directories(third-party/coldet)
+add_definitions(-DGCC)
+add_subdirectory(third-party/coldet)
+set_target_properties(coldet PROPERTIES COMPILE_FLAGS "-w")
 
 #--------Imakart------------------
 add_definitions(-Wall)
@@ -48,7 +55,7 @@ ENDIF(WIN32)
 include_directories(glimac/include)
 add_subdirectory(glimac)
 
-set(ALL_LIBRARIES assimp glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
+set(ALL_LIBRARIES assimp coldet glew glimac ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} )
 
 add_subdirectory(application)
 
