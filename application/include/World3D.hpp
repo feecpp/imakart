@@ -4,6 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <ShaderProgram.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
 #include "Skybox.hpp"
 #include "DirectionalLight.hpp"
 #include "PointLight.hpp"
@@ -44,7 +46,7 @@ public:
   void setCamera(Camera* newCamera);
   void setSize(const unsigned int width, const unsigned int height);
   void setDay()
-    {day = true;}
+  {day = true; sun->setLightIntensity(glm::vec3(1.5f,1.5f,1.5f)); ambientLight = glm::vec4(0.1f,0.1f,0.1f,1.0f);}
 
   /*
    * Vue en marche arriere ou marche avant
@@ -63,6 +65,8 @@ public:
   void addLight(PointLight* newLight)
       {lights.push_back(newLight);}
 
+  void addLights(const std::string filePath);
+
   void setSpot(SpotLight* newspot);
 
   const glm::vec4 getAmbientLight() const
@@ -70,6 +74,8 @@ public:
 
 
 private:
+  static Assimp::Importer import;
+
   std::vector<Object3D* > objects3D;
   glimac::ShaderProgram raceProgram;
   glimac::ShaderProgram skyboxProgram;

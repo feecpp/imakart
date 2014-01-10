@@ -16,7 +16,6 @@ struct Material
 };
 uniform Material material;
 
-uniform mat4 model = mat4(1);
 /////// EN RAPPORT AVEC LA SOURCE DE LUMIERE ////////
 struct Directional
 {
@@ -31,8 +30,9 @@ struct Point
     vec3 uLi;
 };
 
-const int MAX_PLIGHTS = 2;
+const int MAX_PLIGHTS = 38;
 uniform Point points[MAX_PLIGHTS];
+uniform int nbLights;
 
 struct Spot
 {
@@ -49,7 +49,7 @@ out vec4 oFragColor;
 
 
 //Calcul directionalLight
-vec4 ADS()
+vec4 DirectionalLight()
 {
   vec4 res;
 
@@ -69,7 +69,7 @@ vec4 ADS()
 }
 
 //Calcul pointLight
-vec4 blinnPhongPonctuelle(Point point){
+vec4 PointLight(Point point){
   vec4 res;
 
   float fDotProduct = max(0.0f, dot(vNormal_vs, normalize(point.uLightPos-vPosition_vs)));
@@ -83,13 +83,15 @@ vec4 blinnPhongPonctuelle(Point point){
 
   vec4 vAmbientColor = uAmbientLight * material.ambient;
 
-  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / (d);
+
+  res = (vAmbientColor + vDiffuseColor + vSpecularColor) / max(2.f,d);
+
 
   return res;
 }
 
 //Calcul spotLight
-vec4 CalcSpotLight() {
+vec4 SpotLight() {
     vec4 res = vec4(0);
     vec4 spotDirection  = normalize(spot.uLightDir);
     float spotFactor = dot(spotDirection , normalize(spot.base.uLightPos - vPosition_vs));
@@ -97,7 +99,7 @@ vec4 CalcSpotLight() {
 //Problème dans le calcul de l'angle spotFactor...
 
     if (acos(spotFactor) > spot.uCutoff ) {
-        res = blinnPhongPonctuelle(spot.base);
+        res = PointLight(spot.base);
         //res = vec4(1.f,1.f,1.f,0.f); // Pour les tests
     }else{
         res = uAmbientLight * material.ambient;
@@ -108,10 +110,10 @@ vec4 CalcSpotLight() {
 
 void main(void)
 {
-    vec4 TotalLight = ADS();
+    vec4 TotalLight = DirectionalLight();
 
-    for (int i = 0 ; i < MAX_PLIGHTS ; i++) {
-      TotalLight += blinnPhongPonctuelle(points[i]);
+    for (int i = 0 ; i < nbLights ; i++) {
+      TotalLight += PointLight(points[i]);
     }
 
   if (isTextured)

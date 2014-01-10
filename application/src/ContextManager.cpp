@@ -24,6 +24,8 @@
 #include "ItemGenerator.hpp"
 #include "ItemLogic.hpp"
 #include "MapViewer2D.hpp"
+#include "CursorPlayer2D.hpp"
+#include "CursorPlayerInterface.hpp"
 
 #include <iostream>
 
@@ -184,10 +186,10 @@ void ContextManager::setupRaceContext() const
   graphicEngine.reset();
 
   //Preload le mesh du launch item
-  graphicEngine.getMeshDataManager().preloadMesh("data/itemGenerator.dae");
+  graphicEngine.getMeshDataManager().preloadMesh("data/Papple.dae");
 
-  PointLight* light = new PointLight();
-  PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
+  //PointLight* light = new PointLight();
+  //PointLight* l = new PointLight(glm::vec4(300.f,10.f,-100.f,1.0f));
 
   SpotLight* spot = new SpotLight();
   spot->linkToPositionable(gameEngine.getPlayerKart());
@@ -218,7 +220,6 @@ void ContextManager::setupRaceContext() const
   {
     std::cerr << er.what() << std::endl;
     gameEngine.activateExitFlag();
-    delete mapMesh;
   }
   mapMesh->setModelToRepresent(*map);
 
@@ -246,8 +247,9 @@ void ContextManager::setupRaceContext() const
     gameWorld->setDay();
   }
   gameWorld->setCamera(camera);
-  gameWorld->addLight(light);
-  gameWorld->addLight(l);
+  //gameWorld->addLight(light);
+  //gameWorld->addLight(l);
+  gameWorld->addLights("data/" + mapName + ".dae");
   gameWorld->setSpot(spot);
   gameWorld->addObject3D(minionMesh);
   gameWorld->addObject3D(mapMesh);
@@ -271,15 +273,29 @@ void ContextManager::setupRaceContext() const
     gameWorld->addObject3D(itemGeneratorMesh);
   }
 
+  /*
   //pour voir les bounding boxes sous forme de cube
-  /*for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
+  for (auto it = map->getBoudingBoxes().begin(); it != map->getBoudingBoxes().end(); ++it)
   {
     KartCube* visibleBB = new KartCube();
-    visibleBB->setSize(it->getSize());
-    std::cout << it->getSize()[0] << std::endl;
-    visibleBB->setModelToRepresent(*it);
+    visibleBB->setSize((*it)->getSize());
+    std::cout << (*it)->getSize()[0] << std::endl;
+    visibleBB->setModelToRepresent(**it);
     gameWorld->addObject3D(visibleBB);
-  }*/
+  }
+
+  for (unsigned int i = 0; i < gameEngine.getOpponents().size(); ++i)
+  {
+    KartCube* oppBB = new KartCube();
+    oppBB->setSize(gameEngine.getOpponent(i).getKart().getBoundingBox().getSize());
+    oppBB->setModelToRepresent(gameEngine.getOpponent(i).getKart());
+    gameWorld->addObject3D(oppBB);
+  }
+  KartCube* kartBB = new KartCube();
+  kartBB->setSize(gameEngine.getPlayerKart().getBoundingBox().getSize());
+  kartBB->setModelToRepresent(gameEngine.getPlayerKart());
+  gameWorld->addObject3D(kartBB);
+  */
 
   //Dessin d'un adversaire
 
@@ -327,6 +343,12 @@ void ContextManager::setupRaceContext() const
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);
+
+  // Initiliser le cursor du player
+  /*CursorPlayer2D* cursorPlayer = new CursorPlayer2D(0.5, -0.9, 0.02, 0.02, "textures/cursorPlayer.png");
+  CursorPlayerInterface* cursor = new CursorPlayerInterface(gameEngine.getPlayer().getKart().getPosition());
+  cursorPlayer->setModelToRepresent(*cursor);
+  gameInterface->addObject2D(cursorPlayer);*/
 
   // Afficher un aperçu de la map
   MapViewer2D* mapViewer2D = new MapViewer2D(0.5,-0.9,0.5,0.5,"textures/apercu" + mapName + ".png");

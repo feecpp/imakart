@@ -47,7 +47,7 @@ public:
   const std::vector<ItemGenerator*>& getItemsGenerators() const
     {return itemsGenerator;}
 
-  const std::vector<BoundingBox>& getBoudingBoxes() const
+  const std::vector<BoundingBox* >& getBoudingBoxes() const
     {return boundingBoxes;}
 
   const std::vector<FrictionArea>& getFrictionAreas() const
@@ -79,7 +79,7 @@ private :
 
   std::vector<Checkpoint> playerCheckpoints;
   std::vector<Checkpoint> opponentCheckpoints;
-  std::vector<BoundingBox> boundingBoxes;
+  std::vector<BoundingBox* > boundingBoxes;
   std::vector<ItemGenerator*> itemsGenerator;
   std::vector<FrictionArea> frictionAreas;
   std::vector<glm::vec3> kartStartingPoints;

@@ -39,6 +39,7 @@ sf::RenderWindow& GraphicEngine::init()
     return window;
   }
 
+  delete motionBlur;
   motionBlur = new MotionBlur(settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT);
 
   //OpenGL initial state

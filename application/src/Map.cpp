@@ -27,6 +27,12 @@ Map::~Map()
     delete itemsGenerator[i];
   }
   itemsGenerator.erase(itemsGenerator.begin(),itemsGenerator.end());
+
+  for (unsigned int i = 0; i < boundingBoxes.size(); ++i)
+  {
+    delete boundingBoxes[i];
+  }
+  boundingBoxes.erase(boundingBoxes.begin(), boundingBoxes.end());
 }
 
 void Map::loadFromFile(const std::string& filePath)
@@ -120,34 +126,42 @@ void Map::loadBoundingBox(std::ifstream& mapStream)
 {
   assert(mapStream);
 
-  BoundingBox bb;
   std::string attribute;
 
   //Pour l'instant on zappe le name;
   mapStream >> attribute;
   attribute.clear();
 
-  //Pour l'instant a la bourrin, je sais que j'ai 2 attributs par boundingbox...
-  for (int i = 0; i < 2; ++i)
+  glm::vec3 position, size;
+  glm::quat orientation;
+
+  //Pour l'instant a la bourrin, je sais que j'ai 3 attributs par boundingbox...
+  for (int i = 0; i < 3; ++i)
   {
-    glm::vec3 position, size;
     mapStream >> attribute;
     if (attribute == "location")
     {
       mapStream >> position.x;
       mapStream >> position.y;
       mapStream >> position.z;
-      bb.setPosition(position);
     }
     else if (attribute == "size")
     {
       mapStream >> size.x;
       mapStream >> size.y;
       mapStream >> size.z;
-      bb.setSize(size);
+    }
+    else if (attribute == "rotation")
+    {
+      mapStream >> orientation.w;
+      mapStream >> orientation.x;
+      mapStream >> orientation.y;
+      mapStream >> orientation.z;
     }
   }
 
+  BoundingBox* bb = new BoundingBox(position, size);
+  bb->setOrientation(orientation);
   boundingBoxes.push_back(bb);
 }
 

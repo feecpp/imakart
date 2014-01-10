@@ -14,6 +14,7 @@ GameEngine::GameEngine()
 
 {
   chrono = new ChronoLogic();
+  setupOpponents(3);
 }
 
 GameEngine::~GameEngine()
@@ -36,7 +37,6 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
-  setupOpponents(3);
 }
 
 void GameEngine::update()
@@ -98,7 +98,7 @@ void GameEngine::update()
         auto itemsGeneratorsOnMap = currentMap->getItemsGenerators();
         for (auto it = itemsGeneratorsOnMap.begin(); it != itemsGeneratorsOnMap.end(); ++it)
         {
-          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem() && (*it)->isVisible())
+          if (getPlayerKart().getBoundingBox().collideWith((*it)->getBoundingBox()) && !getPlayer().hasItem())
           {
             getPlayer().setItem((*it)->getRandomItem());
             (*it)->setNotVisible();
@@ -116,11 +116,11 @@ void GameEngine::update()
           (*it)->update();
         }
 
-
         //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
         {
-          if(itemsOnMap[i] != nullptr){
+          if(itemsOnMap[i] != nullptr)
+          {
             itemsOnMap[i]->updateLaunch();
 
             assert(currentMap != nullptr);
@@ -128,22 +128,21 @@ void GameEngine::update()
             auto boundingBoxes = currentMap->getBoudingBoxes();
             for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
             {
-              if (itemsOnMap[i]->getBoundingBox().collideWith(*it))
+              if (itemsOnMap[i]->getBoundingBox().collideWith(**it))
               {
                 itemsOnMap[i]->colision();
               }
             }
 
-            for(unsigned int j = 0; j < opponents.size(); ++j)
+            for(unsigned int j =0; j< opponents.size(); ++j)
             {
               if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
               {
-                //Ajouter ici ce que dois faire l'opponent touché 
-                opponents[j]->touched();
+                //Ajouter ici ce que dois faire l'opponent touché
+                opponents[i]->touched();
                 itemsOnMap[i]->setNotVisible();
               }
             }
-
             if(!itemsOnMap[i]->isVisible())
             {
               itemsOnMap[i] = nullptr;
@@ -171,16 +170,15 @@ void GameEngine::update()
               }
             }
           }
-       }
-
+        }
        //Fin de course
        for(unsigned int i =0; i< opponents.size(); ++i){
          if(opponents[i]->getCurrentLap() > Player::MAX_LAP){
            opponents[i]->endMovement();
          }
        }
-
       }
+
       lag -= TURN_DURATION_IN_MILLIS;
     }
   }
@@ -324,7 +322,16 @@ void GameEngine::doPhysic()
   for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
   {
     //Oui, c'est sale
-    if (getPlayerKart().getBoundingBox().collideWith(*it))
+    if (getPlayerKart().getBoundingBox().collideWith(**it))
+    {
+      getPlayerKart().bounce();
+      return;
+    }
+  }
+
+  for (unsigned int i = 0; i < opponents.size(); ++i)
+  {
+    if (getPlayerKart().getBoundingBox().collideWith(opponents[i]->getKart().getBoundingBox()))
     {
       getPlayerKart().bounce();
       return;
