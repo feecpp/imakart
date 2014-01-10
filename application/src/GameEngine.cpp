@@ -319,6 +319,15 @@ void GameEngine::doPhysic()
     }
   }
 
+  for (unsigned int i = 0; i < opponents.size(); ++i)
+  {
+    if (getPlayerKart().getBoundingBox().collideWith(opponents[i]->getKart().getBoundingBox()))
+    {
+      getPlayerKart().bounce();
+      return;
+    }
+  }
+
 }
 
 
