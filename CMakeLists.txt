@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "-std=gnu++0x ${CMAKE_CXX_FLAGS}")
 
 include_directories(${OPENGL_INCLUDE_DIR} ${SFML_INCLUDE_DIR})
 
-
+set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
 #-----THIRD PARTY LIBS-------------
 #glew
 include_directories(third-party/glew-1.10.0/include)
@@ -36,7 +36,6 @@ set_target_properties(coldet PROPERTIES COMPILE_FLAGS "-w")
 #--------Imakart------------------
 add_definitions(-Wall)
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG ${CMAKE_CXX_FLAGS_DEBUG}")
-set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
 
 file(COPY application/shaders DESTINATION ./application)
 file(COPY application/data DESTINATION ./application)
