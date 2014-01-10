@@ -283,6 +283,14 @@ void ContextManager::setupRaceContext() const
     visibleBB->setModelToRepresent(**it);
     gameWorld->addObject3D(visibleBB);
   }
+
+  for (unsigned int i = 0; i < gameEngine.getOpponents().size(); ++i)
+  {
+    KartCube* oppBB = new KartCube();
+    oppBB->setSize(gameEngine.getOpponent(i).getKart().getBoundingBox().getSize());
+    oppBB->setModelToRepresent(gameEngine.getOpponent(i).getKart());
+    gameWorld->addObject3D(oppBB);
+  }
   KartCube* kartBB = new KartCube();
   kartBB->setSize(gameEngine.getPlayerKart().getBoundingBox().getSize());
   kartBB->setModelToRepresent(gameEngine.getPlayerKart());
