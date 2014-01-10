@@ -1,12 +1,17 @@
 #include "DirectionalLight.hpp"
 
 DirectionalLight::DirectionalLight()
-  :direction(-50.f,100.f,-100.f,0.f),info(-50.f,100.f,-100.f,0.f),intensity(1.5f,1.5f,1.5f)
+  :direction(-50.f,100.f,-100.f,0.f),info(-50.f,100.f,-100.f,0.f),intensity(0.5f,0.5f,0.5f)
 {
 }
 
 DirectionalLight::DirectionalLight(glm::vec4 direction)
     :direction(direction),info(direction),intensity(1.5f,1.5f,1.5f)
+{
+}
+
+DirectionalLight::DirectionalLight(glm::vec3 intensity)
+    :direction(-50.f,100.f,-100.f,0.f),info(-50.f,100.f,-100.f,0.f),intensity(intensity)
 {
 }
 
@@ -21,6 +26,10 @@ const glm::vec4 DirectionalLight::getLightDirection() const {
 
 const glm::vec3 DirectionalLight::getLightIntensity() const {
   return intensity;
+}
+
+void DirectionalLight::setLightIntensity(glm::vec3 intensity_){
+    intensity = intensity_;
 }
 
 void DirectionalLight::updateLight(const glm::mat4 viewMatrix){
