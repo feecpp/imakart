@@ -1,12 +1,12 @@
 #include "PointLight.hpp"
 
 PointLight::PointLight()
-  :position(0.f,10.f,0.f,1.f),info(0.f,10.f,0.f,1.f),intensity(0.5f,0.5f,0.5f)
+  :position(0.f,10.f,0.f,1.f),info(0.f,10.f,0.f,1.f),intensity(0.4f,0.4f,0.4f)
 {
 }
 
 PointLight::PointLight(glm::vec4 position)
-    :position(position),info(position),intensity(0.5f,0.5f,0.5f)
+    :position(position),info(position),intensity(0.4f,0.4f,0.4f)
 {
 }
 
