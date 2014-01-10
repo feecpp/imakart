@@ -103,6 +103,16 @@ void GameEngine::update()
             getPlayer().setItem((*it)->getRandomItem());
             (*it)->setNotVisible();
           }
+          for(unsigned int j = 0; j < opponents.size(); ++j)
+          {
+            if (getOpponentKart(j).getBoundingBox().collideWith((*it)->getBoundingBox()) && !getOpponent(j).hasItem() && (*it)->isVisible())
+            {
+              ItemLogic* item = (*it)->getRandomItem();
+              getOpponent(j).setItem(item);
+              item->noInterface();
+              (*it)->setNotVisible();
+            }
+          }
           (*it)->update();
         }
 

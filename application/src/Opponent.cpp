@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f), currentLap(1), trigger(false)
+  :opponentKart(kart), angle(0.f), myCurrentItem(nullptr), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f), currentLap(1), trigger(false)
 {
   checkpoints.resize(0);
   opponentKart.moveForward();
@@ -32,6 +32,28 @@ Kart& Opponent::getKart()
 void Opponent::touched()
 {
   opponentKart.bumped();
+}
+
+const ItemLogic& Opponent::getItem() const
+{
+  return *myCurrentItem;
+}
+
+ItemLogic& Opponent::getItem()
+{
+  return *myCurrentItem;
+}
+
+const bool Opponent::hasItem() const{
+  if(myCurrentItem == nullptr)
+    return false;
+  return true;
+}
+
+void Opponent::setItem(ItemLogic* newItem)
+{
+  myCurrentItem = newItem;
+  myCurrentItem->update();
 }
 
 void Opponent::fillCheckpoints(const std::vector<Checkpoint> checkpoints)

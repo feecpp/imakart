@@ -5,6 +5,7 @@
 #include <vector>
 
 class Kart;
+class ItemLogic;
 
 class Opponent
 {
@@ -19,6 +20,13 @@ public:
 
   const int getNextCheck()const
     {return nextCheck;}
+
+  const ItemLogic& getItem() const;
+  ItemLogic& getItem();
+
+  const bool hasItem() const;
+  void setItem(ItemLogic* newItem);
+  void useItem();
 
   const unsigned int getCurrentLap()const
     {return currentLap;}
@@ -39,6 +47,7 @@ private:
   float progression;
   unsigned int currentLap;
   bool trigger;
+  ItemLogic* myCurrentItem;
 };
 
 #endif // OPPONENT_HPP
