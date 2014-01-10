@@ -109,7 +109,8 @@ void GameEngine::update()
         //Gestion de la physique des items
         for (unsigned int i = 0; i < itemsOnMap.size(); ++i)
         {
-          if(itemsOnMap[i] != nullptr){
+          if(itemsOnMap[i] != nullptr)
+          {
             itemsOnMap[i]->updateLaunch();
 
             assert(currentMap != nullptr);
@@ -127,7 +128,7 @@ void GameEngine::update()
             {
               if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
               {
-                //Ajouter ici ce que dois faire l'opponent touché 
+                //Ajouter ici ce que dois faire l'opponent touché
                 opponents[i]->touched();
                 itemsOnMap[i]->setNotVisible();
               }
@@ -136,7 +137,7 @@ void GameEngine::update()
             {
               itemsOnMap[i] = nullptr;
             }
-		   }
+          }
         }
 
         player->validateCheckpoints();

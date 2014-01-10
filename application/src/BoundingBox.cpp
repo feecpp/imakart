@@ -4,17 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/matrix_major_storage.hpp>
 
-std::map<CollisionModel3D*, unsigned int> BoundingBox::memoryMap;
-
-BoundingBox::BoundingBox(const BoundingBox& other)
-  : collisionModel(other.collisionModel), position(other.position), size(other.size), orientation(other.orientation), visible(other.visible)
-{
-  memoryMap[collisionModel]++;
-  updateModelMatrix();
-}
-
-BoundingBox::BoundingBox(glm::vec3 position, glm::vec3 size)
-  : position(position), size(size), visible(true)
+void BoundingBox::initCollisionModel()
 {
   float v1[3], v2[3], v3[3], v4[3], v5[3], v6[3], v7[3], v8[3];
   v1[0] = -0.5 * size.x; v1[1] = -0.5 * size.y, v1[2] = +0.5 * size.z;
@@ -25,10 +15,6 @@ BoundingBox::BoundingBox(glm::vec3 position, glm::vec3 size)
   v6[0] = -0.5 * size.x; v6[1] = +0.5 * size.y, v6[2] = -0.5 * size.z;
   v7[0] = +0.5 * size.x; v7[1] = +0.5 * size.y, v7[2] = -0.5 * size.z;
   v8[0] = +0.5 * size.x; v8[1] = -0.5 * size.y, v8[2] = -0.5 * size.z;
-
-
-  collisionModel = newCollisionModel3D();
-  memoryMap.insert(std::pair<CollisionModel3D* , unsigned int>(collisionModel, 1));
 
   //Face avant
   collisionModel->addTriangle(v1, v2, v3);
@@ -54,21 +40,27 @@ BoundingBox::BoundingBox(glm::vec3 position, glm::vec3 size)
   updateModelMatrix();
 }
 
+BoundingBox::BoundingBox(const BoundingBox& other)
+  : collisionModel(newCollisionModel3D()), position(other.position), size(other.size), orientation(other.orientation), visible(other.visible)
+{
+  initCollisionModel();
+  updateModelMatrix();
+}
+
+BoundingBox::BoundingBox(glm::vec3 position, glm::vec3 size)
+  : collisionModel(newCollisionModel3D()), position(position), size(size), visible(true)
+{
+  initCollisionModel();
+}
+
 BoundingBox::~BoundingBox()
 {
-  memoryMap[collisionModel]--;
-  if (memoryMap[collisionModel] == 0)
-  {
-    delete collisionModel;
-    memoryMap.erase(collisionModel);
-  }
+  delete collisionModel;
 }
 
 bool BoundingBox::collideWith(const BoundingBox& other) const
 {
-  bool result = collisionModel->collision(other.collisionModel);
-  //assert(!result);
-  return result;
+  return collisionModel->collision(other.collisionModel);
 }
 
 void BoundingBox::updateModelMatrix()

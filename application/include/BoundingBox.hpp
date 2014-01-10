@@ -39,7 +39,6 @@ public:
   const glm::vec3& getSize() const
     {return size;}
 
-  //http://fr.openclassrooms.com/informatique/cours/theorie-des-collisions/aabb-3d
   bool collideWith(const BoundingBox& other) const;
 
   virtual const glm::quat& getOrientation() const;
@@ -48,11 +47,10 @@ public:
     {return visible;}
 
 private:
-  static std::map<CollisionModel3D*, unsigned int> memoryMap;
 
+  void initCollisionModel();
   void updateModelMatrix();
   CollisionModel3D* collisionModel;
-  bool owner;
 
   ///La position de la BB est son centre
   glm::vec3 position;
