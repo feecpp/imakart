@@ -24,6 +24,8 @@
 #include "ItemGenerator.hpp"
 #include "ItemLogic.hpp"
 #include "MapViewer2D.hpp"
+#include "CursorPlayer2D.hpp"
+#include "CursorPlayerInterface.hpp"
 
 #include <iostream>
 
@@ -324,6 +326,12 @@ void ContextManager::setupRaceContext() const
   InterfaceElement* item = ItemInterface::getSingletonItemInterface();
   playerItem2D->setModelToRepresent(*item);
   gameInterface->addObject2D(playerItem2D);
+
+  // Initiliser le cursor du player
+  /*CursorPlayer2D* cursorPlayer = new CursorPlayer2D(0.5, -0.9, 0.02, 0.02, "textures/cursorPlayer.png");
+  CursorPlayerInterface* cursor = new CursorPlayerInterface(gameEngine.getPlayer().getKart().getPosition());
+  cursorPlayer->setModelToRepresent(*cursor);
+  gameInterface->addObject2D(cursorPlayer);*/
 
   // Afficher un aperçu de la map
   MapViewer2D* mapViewer2D = new MapViewer2D(0.5,-0.9,0.5,0.5,"textures/apercu" + mapName + ".png");

@@ -20,6 +20,9 @@ public:
   virtual float getTime() const
     {return 0;}
 
+  virtual const glm::vec3 getPosition() const
+  	{return glm::vec3(0);}
+
 protected:
   std::string name;
 };
