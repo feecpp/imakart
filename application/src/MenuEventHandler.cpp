@@ -86,12 +86,10 @@ void MenuEventHandler::pressEnter() const
 	        p = strtok(NULL," ");
 	        height = atoi(p);
 
-
 	        graphicEngine.getWorld3D().setSize(width, height);
-	        graphicEngine.getWindow().setSize(sf::Vector2u(width, height));
-
 	        graphicEngine.setNewSizeWindow(width, height);
 	        graphicEngine.init();
+	        graphicEngine.reset();
 	        gameEngine.setState(IN_MENU);
 	        
 			break;
