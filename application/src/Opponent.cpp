@@ -8,7 +8,7 @@
 #endif
 
 Opponent::Opponent(Kart& kart)
-  :opponentKart(kart), angle(0.f), myCurrentItem(nullptr), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f), currentLap(1), trigger(false)
+  :opponentKart(kart), angle(0.f), heading(0.f), x(0.f), z(0.f), nextCheck(0), progression(0.f), currentLap(1), trigger(false), myCurrentItem(nullptr)
 {
   checkpoints.resize(0);
   opponentKart.moveForward();

@@ -84,6 +84,15 @@ public:
   void setMotionBlur(bool enable)
     {motionBlurEnabled = enable; motionBlur->reinit();}
 
+
+  void activateLoadingScreen()
+    {loadingScreenEnabled = true;}
+
+  void unactivateLoadingScreen()
+    {loadingScreenEnabled = false;}
+
+  void showLoadingScreen();
+
   void reset();
 
 private:
@@ -103,6 +112,13 @@ private:
   std::vector<GLuint> tabTextures;
 
   MeshDataManager meshDataManager;
+
+  glimac::LowLevelVBO* screenquadData;
+  glimac::VAO* screenquad;
+
+  glimac::ShaderProgram* loadingScreen;
+  glimac::Texture* loadingScreenTexture;
+  bool loadingScreenEnabled;
 
 };
 

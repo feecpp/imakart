@@ -184,6 +184,7 @@ void ContextManager::setupRaceContext() const
 {
 
   graphicEngine.reset();
+  graphicEngine.showLoadingScreen();
 
   //Preload le mesh du launch item
   graphicEngine.getMeshDataManager().preloadMesh("data/Papple.dae");
