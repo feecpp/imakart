@@ -54,6 +54,7 @@ public:
   void klaxon();
 
   sf::Sound loadSound(std::string filename);
+  sf::Sound loadSoundBoost(std::string filename);
 
   void setItem(ItemLogic* newItem);
   void useItem();
@@ -70,7 +71,9 @@ private:
 
   //Gestion des sons
   sf::SoundBuffer buffer;
+  sf::SoundBuffer bufferBoost;
   sf::Sound sKlaxon;
+  sf::Sound sBoost;
 
   ItemLogic* myCurrentItem;
 

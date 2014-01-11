@@ -15,7 +15,7 @@
 #include <vector>
 #include <stack>
 #include "GameEvent.hpp"
-
+#include <SFML/Audio.hpp>
 /**
  * @brief Classe principale d'Imakart
  * Gère le déroulement du jeu. C'est le GameEngine
@@ -88,7 +88,7 @@ private:
   void doPhysic();
   static const char TURN_DURATION_IN_MILLIS = 20;
 
-  //sf::Music backgroundMusic;
+  sf::Music backgroundMusic;
   
   GameState state;
   MenuLogic menu;

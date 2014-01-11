@@ -180,6 +180,12 @@ sf::Sound Player::loadSound(std::string filename)
     return sf::Sound(buffer);
 }
 
+sf::Sound Player::loadSoundBoost(std::string filename)
+{
+   bufferBoost.loadFromFile(filename);
+   return sf::Sound(bufferBoost);
+}
+
 void Player::klaxon()
 {
   sKlaxon = loadSound("data/klaxon-SF.ogg");
@@ -197,6 +203,8 @@ void Player::useItem()
   if(myCurrentItem != nullptr){
     std::string effectItem = myCurrentItem->getEffect();
     if(effectItem == "boost()"){
+      sKlaxon = loadSound("data/klaxon-SF.ogg");
+      sKlaxon.play();  
       myKart.boost();
     }else if(effectItem == "launch()"){
       launchItem();

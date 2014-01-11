@@ -37,6 +37,15 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
   clock.restart();
+  if (backgroundMusic.openFromFile("data/03_Astat_-_Daily_Dozen.ogg"))
+  {
+    backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(75.f);
+  }
+  else
+  {
+    std::cerr << "Impossible de charger la musique" << std::endl;
+  }
 }
 
 void GameEngine::update()
@@ -53,6 +62,7 @@ void GameEngine::update()
 
     if (!counterStarted)
     {
+      backgroundMusic.play();
       counter.restart();
       counterStarted = true;
     }
@@ -134,12 +144,12 @@ void GameEngine::update()
               }
             }
 
-            for(unsigned int j =0; j< opponents.size(); ++j)
+            for(unsigned int j =0; j < opponents.size(); ++j)
             {
               if (itemsOnMap[i]->getBoundingBox().collideWith(opponents[j]->getKart().getBoundingBox()))
               {
                 //Ajouter ici ce que dois faire l'opponent touché
-                opponents[i]->touched();
+                opponents[j]->touched();
                 itemsOnMap[i]->setNotVisible();
               }
             }
@@ -202,6 +212,7 @@ void GameEngine::update()
       finishTimerStarted = false;
       counterStarted = false;
       lastSecond = 3;
+      backgroundMusic.stop();
     }
   }
 }
